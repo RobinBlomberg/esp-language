@@ -1,13 +1,6 @@
 import { expect, suite, test } from 'vitest';
-import { createNode } from './create-node';
-import { NodeType } from './node-type';
-import {
-  IdentifierNode,
-  Literal,
-  Node,
-  PrimaryExpression,
-  Property,
-} from './nodes';
+import * as ast from './node-factory';
+import { Node } from './nodes';
 import {
   parseArrayLiteral,
   parseIdentifier,
@@ -15,29 +8,6 @@ import {
   parseObjectLiteral,
   parsePrimaryExpression,
 } from './parse';
-
-const ast = {
-  arrayLiteral: (start: number, end: number, elements: PrimaryExpression[]) => {
-    return createNode(start, end, NodeType.ArrayLiteral, { elements });
-  },
-  identifier: (start: number, end: number, name: string) => {
-    return createNode(start, end, NodeType.Identifier, { name });
-  },
-  literal: (start: number, end: number, value: Literal) => {
-    return createNode(start, end, NodeType.Literal, { value });
-  },
-  objectLiteral: (start: number, end: number, properties: Property[]) => {
-    return createNode(start, end, NodeType.ObjectLiteral, { properties });
-  },
-  property: (
-    start: number,
-    end: number,
-    key: IdentifierNode,
-    value: PrimaryExpression,
-  ) => {
-    return createNode(start, end, NodeType.Property, { key, value });
-  },
-};
 
 const createParser = <T extends Node>(
   parse: (data: string, i: number) => T | null,

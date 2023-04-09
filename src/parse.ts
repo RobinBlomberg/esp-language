@@ -1,13 +1,12 @@
-import { createNode } from './create-node';
 import { lex } from './lex';
-import { NodeType as nt } from './node-type';
+import * as ast from './node-factory';
 import {
-  PrimaryExpression,
+  ArrayLiteralNode,
   IdentifierNode,
   LiteralNode,
-  ArrayLiteralNode,
-  Property,
   ObjectLiteralNode,
+  PrimaryExpression,
+  Property,
 } from './nodes';
 import { reservedWords } from './reserved-words';
 import { Token } from './token';
@@ -42,29 +41,26 @@ export const parseArrayLiteral = (
   let i = start;
 
   const open = consume(data, i, tt.Punctuator, '[');
-  if (open) {
-    i = open.end;
-  } else return null;
+  if (open) i = open.end;
+  else return null;
 
   const elements: PrimaryExpression[] = [];
 
   while (true) {
     const close = consume(data, i, tt.Punctuator, ']');
     if (close) {
-      return createNode(open.start, close.end, nt.ArrayLiteral, { elements });
+      return ast.arrayLiteral(open.start, close.end, elements);
     }
 
     if (elements.length >= 1) {
       const comma = consume(data, i, tt.Punctuator, ',');
-      if (comma) {
-        i = comma.end;
-      } else return null;
+      if (comma) i = comma.end;
+      else return null;
     }
 
     const element = parsePrimaryExpression(data, i);
-    if (element) {
-      i = element.end;
-    } else return null;
+    if (element) i = element.end;
+    else return null;
 
     elements.push(element);
   }
@@ -75,12 +71,9 @@ export const parseIdentifier = (
   start: number,
 ): IdentifierNode | null => {
   const node = parseIdentifierName(data, start);
-
-  if (!node || reservedWords.has(node.name)) {
-    return null;
-  }
-
-  return createNode(node.start, node.end, nt.Identifier, { name: node.name });
+  return node && !reservedWords.has(node.name)
+    ? ast.identifier(node.start, node.end, node.name)
+    : null;
 };
 
 export const parseIdentifierName = (
@@ -88,12 +81,9 @@ export const parseIdentifierName = (
   start: number,
 ): IdentifierNode | null => {
   const node = lex(data, start);
-
-  if (!match(node, tt.Name)) {
-    return null;
-  }
-
-  return createNode(node.start, node.end, nt.Identifier, { name: node.value });
+  return match(node, tt.Name)
+    ? ast.identifier(node.start, node.end, node.value)
+    : null;
 };
 
 export const parseLiteral = (
@@ -101,43 +91,28 @@ export const parseLiteral = (
   start: number,
 ): LiteralNode | null => {
   const token = lex(data, start);
-
-  if (!token) {
-    return null;
-  }
+  if (!token) return null;
 
   switch (token.type) {
     case tt.Name:
       switch (token.value) {
         case 'false':
-          return createNode(token.start, token.end, nt.Literal, {
-            value: false,
-          });
+          return ast.literal(token.start, token.end, false);
         case 'Infinity':
-          return createNode(token.start, token.end, nt.Literal, {
-            value: Infinity,
-          });
+          return ast.literal(token.start, token.end, Infinity);
         case 'NaN':
-          return createNode(token.start, token.end, nt.Literal, { value: NaN });
+          return ast.literal(token.start, token.end, NaN);
         case 'null':
-          return createNode(token.start, token.end, nt.Literal, {
-            value: null,
-          });
+          return ast.literal(token.start, token.end, null);
         case 'true':
-          return createNode(token.start, token.end, nt.Literal, {
-            value: true,
-          });
+          return ast.literal(token.start, token.end, true);
         case 'undefined':
-          return createNode(token.start, token.end, nt.Literal, {
-            value: undefined,
-          });
+          return ast.literal(token.start, token.end, undefined);
         default:
           return null;
       }
     case tt.Number:
-      return createNode(token.start, token.end, nt.Literal, {
-        value: Number(token.value),
-      });
+      return ast.literal(token.start, token.end, Number(token.value));
     case tt.String:
       let value = '';
 
@@ -149,7 +124,7 @@ export const parseLiteral = (
         value += token.value[start];
       }
 
-      return createNode(token.start, token.end, nt.Literal, { value });
+      return ast.literal(token.start, token.end, value);
     default:
       return null;
   }
@@ -162,45 +137,36 @@ export const parseObjectLiteral = (
   let i = start;
 
   const open = consume(data, i, tt.Punctuator, '{');
-  if (open) {
-    i = open.end;
-  } else return null;
+  if (open) i = open.end;
+  else return null;
 
   const properties: Property[] = [];
 
   while (true) {
     const close = consume(data, i, tt.Punctuator, '}');
     if (close) {
-      return createNode(open.start, close.end, nt.ObjectLiteral, {
-        properties,
-      });
+      return ast.objectLiteral(open.start, close.end, properties);
     }
 
     if (properties.length >= 1) {
       const comma = consume(data, i, tt.Punctuator, ',');
-      if (comma) {
-        i = comma.end;
-      } else return null;
+      if (comma) i = comma.end;
+      else return null;
     }
 
     const key = parseIdentifierName(data, i);
-    if (key) {
-      i = key.end;
-    } else return null;
+    if (key) i = key.end;
+    else return null;
 
     const colon = consume(data, i, tt.Punctuator, ':');
-    if (colon) {
-      i = colon.end;
-    } else return null;
+    if (colon) i = colon.end;
+    else return null;
 
     const value = parsePrimaryExpression(data, i);
-    if (value) {
-      i = value.end;
-    } else return null;
+    if (value) i = value.end;
+    else return null;
 
-    properties.push(
-      createNode(key.start, value.end, nt.Property, { key, value }),
-    );
+    properties.push(ast.property(key.start, value.end, key, value));
   }
 };
 
