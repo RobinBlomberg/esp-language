@@ -1,4 +1,5 @@
 import { BinaryExpression, Expression } from '../ast';
+import { NodeType } from '../node-type';
 import { TokenType } from '../token-type';
 import { Parser, consume } from '../token-utils';
 import { parseUnaryExpression } from './unary-expression';
@@ -19,8 +20,10 @@ export const parseExponentiationExpression: Parser<Expression> = (data, i) => {
   else return null;
 
   const operator = consume(data, i, TokenType.Punctuator, '**');
-  if (operator) i = operator.end;
-  else return left;
+  if (operator) {
+    if (left.type === NodeType.UnaryExpression) return null;
+    i = operator.end;
+  } else return left;
 
   const right = parseExponentiationExpression(data, operator.end);
   if (!right) return null;

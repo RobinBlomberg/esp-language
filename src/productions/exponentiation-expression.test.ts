@@ -1,43 +1,44 @@
 import { describe, it, suite, test } from 'vitest';
-import { BinaryExpression, Identifier, UnaryExpression } from '../ast';
+import { BinaryExpression, Identifier, UpdateExpression } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseExponentiationExpression } from './exponentiation-expression';
 
-const { ok } = createParseAssert(parseExponentiationExpression);
+const { fail, ok } = createParseAssert(parseExponentiationExpression);
 
 suite('ExponentiationExpression', () => {
-  test('UnaryExpression', () => {
+  test('"UnaryExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
-  describe('UpdateExpression ** ExponentiationExpression', () => {
+  describe('"UpdateExpression ** ExponentiationExpression"', () => {
     it('should handle non-nested exponentiation expressions', () => {
       ok(
-        'a ** b',
+        '++a ** b',
         BinaryExpression(
           0,
-          6,
+          8,
           '**',
-          Identifier(0, 1, 'a'),
-          Identifier(5, 6, 'b'),
+          UpdateExpression(0, 3, '++', Identifier(2, 3, 'a'), true),
+          Identifier(7, 8, 'b'),
         ),
       );
+      fail('-a ** b');
     });
 
     it('should handle nested exponentiation expressions', () => {
       ok(
-        'a ** -b ** c',
+        'a ** --b ** c',
         BinaryExpression(
           0,
-          12,
+          13,
           '**',
           Identifier(0, 1, 'a'),
           BinaryExpression(
             5,
-            12,
+            13,
             '**',
-            UnaryExpression(5, 7, '-', Identifier(6, 7, 'b')),
-            Identifier(11, 12, 'c'),
+            UpdateExpression(5, 8, '--', Identifier(7, 8, 'b'), true),
+            Identifier(12, 13, 'c'),
           ),
         ),
       );
