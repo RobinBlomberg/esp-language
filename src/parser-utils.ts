@@ -39,10 +39,13 @@ export const matchToken = <T extends TokenMatcher>(
   actual: Token | null,
   expected: T | T[],
 ): actual is Token<T['type'], T['value']> => {
+  if (actual === null) {
+    return false;
+  }
+
   if (Array.isArray(expected)) {
     for (const expectedToken of expected) {
       if (
-        actual !== null &&
         actual.type === expectedToken.type &&
         actual.value === expectedToken.value
       ) {
@@ -53,9 +56,5 @@ export const matchToken = <T extends TokenMatcher>(
     return false;
   }
 
-  return (
-    actual !== null &&
-    actual.type === expected.type &&
-    actual.value === expected.value
-  );
+  return actual.type === expected.type && actual.value === expected.value;
 };
