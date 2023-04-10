@@ -1,4 +1,4 @@
-import { it, suite, test } from 'vitest';
+import { describe, it, suite } from 'vitest';
 import { Identifier, UnaryExpression } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseUnaryExpression } from './unary-expression';
@@ -10,7 +10,7 @@ suite('UnaryExpression', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
-  test('UnaryExpression', () => {
+  describe('UnaryExpression', () => {
     it('should handle non-nested unary expressions', () => {
       ok('delete a', UnaryExpression(0, 8, 'delete', Identifier(7, 8, 'a')));
       ok('void a', UnaryExpression(0, 6, 'void', Identifier(5, 6, 'a')));

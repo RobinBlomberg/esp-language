@@ -235,15 +235,10 @@ export type UnaryOperator =
   | '~'
   | '!';
 
-export const UnaryOperatorTokenMatch = [
-  TokenMatcher(tt.Name, 'delete'),
-  TokenMatcher(tt.Name, 'void'),
-  TokenMatcher(tt.Name, 'typeof'),
-  TokenMatcher(tt.Punctuator, '+'),
-  TokenMatcher(tt.Punctuator, '-'),
-  TokenMatcher(tt.Punctuator, '~'),
-  TokenMatcher(tt.Punctuator, '!'),
-];
+export const UnaryOperatorTokenMatcher: TokenMatcher<UnaryOperator> = {
+  [tt.Name]: ['delete', 'void', 'typeof'],
+  [tt.Punctuator]: ['+', '-', '~', '!'],
+};
 
 export type UpdateExpression = {
   type: NodeType.UpdateExpression;
@@ -271,3 +266,7 @@ export const UpdateExpression = (
 export type UpdateOperator = '++' | '--';
 
 export const UpdateOperator: UpdateOperator[] = ['++', '--'];
+
+export const UpdateOperatorTokenMatcher: TokenMatcher<UpdateOperator> = {
+  [tt.Punctuator]: UpdateOperator,
+};

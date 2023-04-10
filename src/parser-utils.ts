@@ -17,8 +17,8 @@ export const consume = <T extends TokenType, V extends string = string>(
 export const consumeToken = <T extends TokenMatcher>(
   data: string,
   start: number,
-  expected: T | T[],
-): Token<T['type'], T['value']> | null => {
+  expected: T,
+): (T extends TokenMatcher<infer V> ? Token<TokenType, V> : never) | null => {
   const token = lex(data, start);
   return matchToken(token, expected) ? token : null;
 };
@@ -37,24 +37,9 @@ export const match = <T extends TokenType, V extends string = string>(
 
 export const matchToken = <T extends TokenMatcher>(
   actual: Token | null,
-  expected: T | T[],
-): actual is Token<T['type'], T['value']> => {
-  if (actual === null) {
-    return false;
-  }
-
-  if (Array.isArray(expected)) {
-    for (const expectedToken of expected) {
-      if (
-        actual.type === expectedToken.type &&
-        actual.value === expectedToken.value
-      ) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  return actual.type === expected.type && actual.value === expected.value;
+  expected: T,
+): actual is T extends TokenMatcher<infer V> ? Token<TokenType, V> : never => {
+  return actual === null
+    ? false
+    : !!expected[actual.type]?.includes(actual.value);
 };

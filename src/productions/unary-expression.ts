@@ -1,11 +1,11 @@
-import { Expression, UnaryExpression, UnaryOperatorTokenMatch } from '../ast';
+import { Expression, UnaryExpression, UnaryOperatorTokenMatcher } from '../ast';
 import { Parser, consumeToken } from '../parser-utils';
 import { parseUpdateExpression } from './update-expression';
 
 export const parseUnaryExpression: Parser<Expression> = (data, start) => {
   let i = start;
 
-  const operator = consumeToken(data, i, UnaryOperatorTokenMatch);
+  const operator = consumeToken(data, i, UnaryOperatorTokenMatcher);
 
   if (operator) {
     i = operator.end;
