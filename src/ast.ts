@@ -28,13 +28,13 @@ export type ArrayLiteral = {
   type: NodeType.ArrayLiteral;
   start: number;
   end: number;
-  elements: Arguments;
+  elements: Expression[];
 };
 
 export const ArrayLiteral = (
   start: number,
   end: number,
-  elements: Arguments,
+  elements: Expression[],
 ) => {
   return createNode(start, end, NodeType.ArrayLiteral, { elements });
 };
