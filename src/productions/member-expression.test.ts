@@ -12,11 +12,23 @@ import { parseMemberExpression } from './member-expression';
 const { ok } = createParseAssert(parseMemberExpression);
 
 suite('MemberExpression', () => {
-  it('should be able to parse basic expressions', () => {
+  test('PrimaryExpression', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
-  suite('StaticMemberExpression', () => {
+  test('MemberExpression [ Expression ]', () => {
+    ok(
+      ' a[b] ',
+      ComputedMemberExpression(
+        1,
+        5,
+        Identifier(1, 2, 'a'),
+        Identifier(3, 4, 'b'),
+      ),
+    );
+  });
+
+  suite('MemberExpression . IdentifierName', () => {
     it('should handle non-nested member expressions', () => {
       ok(
         ' a.b ',
@@ -47,19 +59,7 @@ suite('MemberExpression', () => {
     });
   });
 
-  test('ComputedMemberExpression', () => {
-    ok(
-      ' a[b] ',
-      ComputedMemberExpression(
-        1,
-        5,
-        Identifier(1, 2, 'a'),
-        Identifier(3, 4, 'b'),
-      ),
-    );
-  });
-
-  describe('NewExpression', () => {
+  describe('new MemberExpression Arguments', () => {
     it('should handle non-nested new expressions', () => {
       ok(
         'new a.b.c(d, e)',

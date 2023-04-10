@@ -1,4 +1,4 @@
-import { describe, it, suite } from 'vitest';
+import { describe, it, suite, test } from 'vitest';
 import { Arguments, CallExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
@@ -6,7 +6,7 @@ import { parseLeftHandSideExpression } from './left-hand-side-expression';
 const { ok } = createParseAssert(parseLeftHandSideExpression);
 
 suite('LeftHandSideExpression', () => {
-  it('should be able to parse basic expressions', () => {
+  test('NewExpression', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
