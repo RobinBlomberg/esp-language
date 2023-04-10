@@ -152,5 +152,41 @@ suite('parse', () => {
         ),
       );
     });
+
+    suite('NewExpression', () => {
+      it('should handle non-nested new expressions', () => {
+        is.memberExpression.ok(
+          'new a.b.c(d, e)',
+          ast.newExpression(
+            0,
+            15,
+            ast.staticMemberExpression(
+              4,
+              9,
+              ast.staticMemberExpression(
+                4,
+                7,
+                ast.identifier(4, 5, 'a'),
+                ast.identifier(6, 7, 'b'),
+              ),
+              ast.identifier(8, 9, 'c'),
+            ),
+            [ast.identifier(10, 11, 'd'), ast.identifier(13, 14, 'e')],
+          ),
+        );
+      });
+
+      it('should handle nested new expressions', () => {
+        is.memberExpression.ok(
+          'new new a()()',
+          ast.newExpression(
+            0,
+            13,
+            ast.newExpression(4, 11, ast.identifier(8, 9, 'a'), []),
+            [],
+          ),
+        );
+      });
+    });
   });
 });

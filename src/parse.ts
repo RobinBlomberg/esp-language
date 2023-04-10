@@ -165,6 +165,45 @@ export const parseMemberExpression = (
 ): Expression | null => {
   let i = start;
 
+  const newKeyword = consume(data, i, tt.Name, 'new');
+  if (newKeyword) {
+    i = newKeyword.end;
+
+    const callee = parseMemberExpression(data, i);
+    if (callee) i = callee.end;
+    else return null;
+
+    const open = consume(data, i, tt.Punctuator, '(');
+    if (open) i = open.end;
+    else return null;
+
+    const arguments_: Expression[] = [];
+
+    while (true) {
+      const close = consume(data, i, tt.Punctuator, ')');
+      if (close) {
+        return ast.newExpression(
+          newKeyword.start,
+          close.end,
+          callee,
+          arguments_,
+        );
+      }
+
+      if (arguments_.length >= 1) {
+        const comma = consume(data, i, tt.Punctuator, ',');
+        if (comma) i = comma.end;
+        else return null;
+      }
+
+      const element = parsePrimaryExpression(data, i);
+      if (element) i = element.end;
+      else return null;
+
+      arguments_.push(element);
+    }
+  }
+
   let object = parsePrimaryExpression(data, i);
   if (object) i = object.end;
   else return null;
@@ -203,8 +242,10 @@ export const parseMemberExpression = (
       continue;
     }
 
-    return object;
+    break;
   }
+
+  return object;
 };
 
 export const parseObjectLiteral = (
