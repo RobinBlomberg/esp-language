@@ -44,6 +44,18 @@ export const literal = (start: number, end: number, value: Literal) => {
   return createNode(start, end, NodeType.Literal, { value });
 };
 
+export const newExpression = (
+  start: number,
+  end: number,
+  callee: Expression,
+  arguments_: Expression[],
+) => {
+  return createNode(start, end, NodeType.NewExpression, {
+    callee,
+    arguments: arguments_,
+  });
+};
+
 export const objectLiteral = (
   start: number,
   end: number,

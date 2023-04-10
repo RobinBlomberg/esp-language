@@ -20,6 +20,7 @@ export type Expression =
   | ComputedMemberExpressionNode
   | IdentifierNode
   | LiteralNode
+  | NewExpressionNode
   | ObjectLiteralNode
   | StaticMemberExpressionNode;
 
@@ -39,6 +40,14 @@ export type LiteralNode = {
   value: Literal;
 };
 
+export type NewExpressionNode = {
+  type: NodeType.NewExpression;
+  start: number;
+  end: number;
+  callee: Expression;
+  arguments: Expression[];
+};
+
 export type Node = Expression;
 
 export type NodeMap = {
@@ -46,6 +55,7 @@ export type NodeMap = {
   [NodeType.ComputedMemberExpression]: ComputedMemberExpressionNode;
   [NodeType.Identifier]: IdentifierNode;
   [NodeType.Literal]: LiteralNode;
+  [NodeType.NewExpression]: NewExpressionNode;
   [NodeType.ObjectLiteral]: ObjectLiteralNode;
   [NodeType.Property]: Property;
   [NodeType.StaticMemberExpression]: StaticMemberExpressionNode;

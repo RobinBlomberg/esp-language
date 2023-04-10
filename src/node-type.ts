@@ -3,6 +3,7 @@ export const enum NodeType {
   ComputedMemberExpression = 'ComputedMemberExpression',
   Identifier = 'Identifier',
   Literal = 'Literal',
+  NewExpression = 'NewExpression',
   ObjectLiteral = 'ObjectLiteral',
   Property = 'Property',
   StaticMemberExpression = 'StaticMemberExpression',

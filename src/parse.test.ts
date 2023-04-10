@@ -1,4 +1,4 @@
-import { expect, suite, test } from 'vitest';
+import { expect, it, suite, test } from 'vitest';
 import * as ast from './node-factory';
 import { Node } from './nodes';
 import {
@@ -110,16 +110,35 @@ suite('parse', () => {
       is.memberExpression.ok(' a ', ast.identifier(1, 2, 'a'));
     });
 
-    test('StaticMemberExpression', () => {
-      is.memberExpression.ok(
-        ' a.b ',
-        ast.staticMemberExpression(
-          1,
-          4,
-          ast.identifier(1, 2, 'a'),
-          ast.identifier(3, 4, 'b'),
-        ),
-      );
+    suite('StaticMemberExpression', () => {
+      it('should handle non-nested member expressions', () => {
+        is.memberExpression.ok(
+          ' a.b ',
+          ast.staticMemberExpression(
+            1,
+            4,
+            ast.identifier(1, 2, 'a'),
+            ast.identifier(3, 4, 'b'),
+          ),
+        );
+      });
+
+      it('should handle nested member expressions', () => {
+        is.memberExpression.ok(
+          'a.b.c',
+          ast.staticMemberExpression(
+            0,
+            5,
+            ast.staticMemberExpression(
+              0,
+              3,
+              ast.identifier(0, 1, 'a'),
+              ast.identifier(2, 3, 'b'),
+            ),
+            ast.identifier(4, 5, 'c'),
+          ),
+        );
+      });
     });
 
     test('ComputedMemberExpression', () => {

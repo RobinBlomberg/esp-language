@@ -8,6 +8,7 @@ import {
   ObjectLiteralNode,
   Expression,
   Property,
+  NewExpressionNode,
 } from './nodes';
 import { reservedWords } from './reserved-words';
 import { Token } from './token';
@@ -138,48 +139,72 @@ export const parseLiteral = (
   }
 };
 
+/**
+ * Supported from ECMA-262:
+ *
+ * ```ecmarkup
+ * MemberExpression[Yield, Await] :
+ *   PrimaryExpression[?Yield, ?Await]
+ *   MemberExpression[?Yield, ?Await] [ Expression[+In, ?Yield, ?Await] ]
+ *   MemberExpression[?Yield, ?Await] . IdentifierName
+ *   new MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
+ * ```
+ *
+ * Not supported from ECMA-262:
+ * ```ecmarkup
+ * MemberExpression[Yield, Await] :
+ *   MemberExpression[?Yield, ?Await] TemplateLiteral[?Yield, ?Await, +Tagged]
+ *   SuperProperty[?Yield, ?Await]
+ *   MetaProperty
+ *   MemberExpression[?Yield, ?Await] . PrivateIdentifier
+ * ```
+ */
 export const parseMemberExpression = (
   data: string,
   start: number,
 ): Expression | null => {
   let i = start;
 
-  const object = parsePrimaryExpression(data, i);
+  let object = parsePrimaryExpression(data, i);
   if (object) i = object.end;
   else return null;
 
-  const dot = consume(data, i, tt.Punctuator, '.');
-  if (dot) {
-    i = dot.end;
+  while (true) {
+    const dot = consume(data, i, tt.Punctuator, '.');
+    if (dot) {
+      i = dot.end;
 
-    const property = parseIdentifierName(data, i);
-    if (property) i = property.end;
-    else return null;
+      const property = parseIdentifierName(data, i);
+      if (property) i = property.end;
+      else return null;
 
-    return ast.staticMemberExpression(
-      object.start,
-      property.end,
-      object,
-      property,
-    );
+      object = ast.staticMemberExpression(
+        object.start,
+        property.end,
+        object,
+        property,
+      );
+      continue;
+    }
+
+    const open = consume(data, i, tt.Punctuator, '[');
+    if (open) {
+      i = open.end;
+
+      const property = parseExpression(data, i);
+      if (property) i = property.end;
+      else return null;
+
+      const close = consume(data, i, tt.Punctuator, ']');
+      if (close) i = close.end;
+      else return null;
+
+      object = ast.computedMemberExpression(object.start, i, object, property);
+      continue;
+    }
+
+    return object;
   }
-
-  const open = consume(data, i, tt.Punctuator, '[');
-  if (open) {
-    i = open.end;
-
-    const property = parseExpression(data, i);
-    if (property) i = property.end;
-    else return null;
-
-    const close = consume(data, i, tt.Punctuator, ']');
-    if (close) i = close.end;
-    else return null;
-
-    return ast.computedMemberExpression(object.start, i, object, property);
-  }
-
-  return object;
 };
 
 export const parseObjectLiteral = (
