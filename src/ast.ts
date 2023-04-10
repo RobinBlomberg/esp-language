@@ -1,6 +1,6 @@
 import { NodeType } from './node-type';
 import { TokenMatcher } from './token';
-import { TokenType as tt } from './token-type';
+import { TokenType } from './token-type';
 
 const createNode = <T extends NodeType>(
   start: number,
@@ -236,8 +236,8 @@ export type UnaryOperator =
   | '!';
 
 export const UnaryOperatorTokenMatcher: TokenMatcher<UnaryOperator> = {
-  [tt.Name]: ['delete', 'void', 'typeof'],
-  [tt.Punctuator]: ['+', '-', '~', '!'],
+  [TokenType.Name]: ['delete', 'void', 'typeof'],
+  [TokenType.Punctuator]: ['+', '-', '~', '!'],
 };
 
 export type UpdateExpression = {
@@ -268,5 +268,5 @@ export type UpdateOperator = '++' | '--';
 export const UpdateOperator: UpdateOperator[] = ['++', '--'];
 
 export const UpdateOperatorTokenMatcher: TokenMatcher<UpdateOperator> = {
-  [tt.Punctuator]: UpdateOperator,
+  [TokenType.Punctuator]: UpdateOperator,
 };

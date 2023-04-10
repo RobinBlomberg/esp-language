@@ -1,6 +1,6 @@
 import { ObjectLiteral, Property } from '../ast';
 import { Parser, consume } from '../parser-utils';
-import { TokenType as tt } from '../token-type';
+import { TokenType } from '../token-type';
 import { parseIdentifierName } from './identifier-name';
 import { parsePrimaryExpression } from './primary-expression';
 
@@ -18,20 +18,20 @@ import { parsePrimaryExpression } from './primary-expression';
 export const parseObjectLiteral: Parser<ObjectLiteral> = (data, start) => {
   let i = start;
 
-  const open = consume(data, i, tt.Punctuator, '{');
+  const open = consume(data, i, TokenType.Punctuator, '{');
   if (open) i = open.end;
   else return null;
 
   const properties: Property[] = [];
 
   while (true) {
-    const close = consume(data, i, tt.Punctuator, '}');
+    const close = consume(data, i, TokenType.Punctuator, '}');
     if (close) {
       return ObjectLiteral(open.start, close.end, properties);
     }
 
     if (properties.length >= 1) {
-      const comma = consume(data, i, tt.Punctuator, ',');
+      const comma = consume(data, i, TokenType.Punctuator, ',');
       if (comma) i = comma.end;
       else return null;
     }
@@ -40,7 +40,7 @@ export const parseObjectLiteral: Parser<ObjectLiteral> = (data, start) => {
     if (key) i = key.end;
     else return null;
 
-    const colon = consume(data, i, tt.Punctuator, ':');
+    const colon = consume(data, i, TokenType.Punctuator, ':');
     if (colon) i = colon.end;
     else return null;
 

@@ -1,7 +1,7 @@
 import { Identifier } from '../ast';
 import { lex } from '../lex';
 import { Parser, match } from '../parser-utils';
-import { TokenType as tt } from '../token-type';
+import { TokenType } from '../token-type';
 
 /**
  * Supported from ECMA-262:
@@ -13,7 +13,7 @@ import { TokenType as tt } from '../token-type';
  */
 export const parseIdentifierName: Parser<Identifier> = (data, start) => {
   const node = lex(data, start);
-  return match(node, tt.Name)
+  return match(node, TokenType.Name)
     ? Identifier(node.start, node.end, node.value)
     : null;
 };

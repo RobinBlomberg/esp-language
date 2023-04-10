@@ -1,11 +1,11 @@
 import {
   ComputedMemberExpression,
+  Expression,
   NewExpression,
   StaticMemberExpression,
-  Expression,
 } from '../ast';
 import { Parser, consume } from '../parser-utils';
-import { TokenType as tt } from '../token-type';
+import { TokenType } from '../token-type';
 import { parseArguments } from './arguments';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
@@ -36,7 +36,7 @@ import { parsePrimaryExpression } from './primary-expression';
 export const parseMemberExpression: Parser<Expression> = (data, start) => {
   let i = start;
 
-  const newKeyword = consume(data, i, tt.Name, 'new');
+  const newKeyword = consume(data, i, TokenType.Name, 'new');
   if (newKeyword) {
     i = newKeyword.end;
 
@@ -56,7 +56,7 @@ export const parseMemberExpression: Parser<Expression> = (data, start) => {
   else return null;
 
   while (true) {
-    const dot = consume(data, i, tt.Punctuator, '.');
+    const dot = consume(data, i, TokenType.Punctuator, '.');
     if (dot) {
       i = dot.end;
 
@@ -73,7 +73,7 @@ export const parseMemberExpression: Parser<Expression> = (data, start) => {
       continue;
     }
 
-    const open = consume(data, i, tt.Punctuator, '[');
+    const open = consume(data, i, TokenType.Punctuator, '[');
     if (open) {
       i = open.end;
 
@@ -81,7 +81,7 @@ export const parseMemberExpression: Parser<Expression> = (data, start) => {
       if (property) i = property.end;
       else return null;
 
-      const close = consume(data, i, tt.Punctuator, ']');
+      const close = consume(data, i, TokenType.Punctuator, ']');
       if (close) i = close.end;
       else return null;
 

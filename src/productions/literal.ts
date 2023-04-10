@@ -1,7 +1,7 @@
 import { Literal } from '../ast';
 import { lex } from '../lex';
 import { Parser } from '../parser-utils';
-import { TokenType as tt } from '../token-type';
+import { TokenType } from '../token-type';
 
 /**
  * Supported from ECMA-262:
@@ -20,7 +20,7 @@ export const parseLiteral: Parser<Literal> = (data, start) => {
   if (!token) return null;
 
   switch (token.type) {
-    case tt.Name:
+    case TokenType.Name:
       switch (token.value) {
         case 'false':
           return Literal(token.start, token.end, false);
@@ -37,9 +37,9 @@ export const parseLiteral: Parser<Literal> = (data, start) => {
         default:
           return null;
       }
-    case tt.Number:
+    case TokenType.Number:
       return Literal(token.start, token.end, Number(token.value));
-    case tt.String: {
+    case TokenType.String: {
       let value = '';
 
       for (let i = 1; i < token.value.length - 1; i++) {

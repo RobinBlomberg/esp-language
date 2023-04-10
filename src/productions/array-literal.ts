@@ -1,6 +1,6 @@
 import { ArrayLiteral, Expression } from '../ast';
 import { Parser, consume } from '../parser-utils';
-import { TokenType as tt } from '../token-type';
+import { TokenType } from '../token-type';
 import { parsePrimaryExpression } from './primary-expression';
 
 /**
@@ -22,20 +22,20 @@ import { parsePrimaryExpression } from './primary-expression';
 export const parseArrayLiteral: Parser<ArrayLiteral> = (data, start) => {
   let i = start;
 
-  const open = consume(data, i, tt.Punctuator, '[');
+  const open = consume(data, i, TokenType.Punctuator, '[');
   if (open) i = open.end;
   else return null;
 
   const elements: Expression[] = [];
 
   while (true) {
-    const close = consume(data, i, tt.Punctuator, ']');
+    const close = consume(data, i, TokenType.Punctuator, ']');
     if (close) {
       return ArrayLiteral(open.start, close.end, elements);
     }
 
     if (elements.length >= 1) {
-      const comma = consume(data, i, tt.Punctuator, ',');
+      const comma = consume(data, i, TokenType.Punctuator, ',');
       if (comma) i = comma.end;
       else return null;
     }
