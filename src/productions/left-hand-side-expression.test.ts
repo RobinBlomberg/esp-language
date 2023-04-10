@@ -1,16 +1,17 @@
 import { it, suite, test } from 'vitest';
 import {
+  Arguments,
   ComputedMemberExpression,
   Identifier,
   NewExpression,
   StaticMemberExpression,
 } from '../ast';
 import { createParseAssert } from '../test-utils';
-import { parseMemberExpression } from './member-expression';
+import { parseLeftHandSideExpression } from './left-hand-side-expression';
 
-const { ok } = createParseAssert(parseMemberExpression);
+const { ok } = createParseAssert(parseLeftHandSideExpression);
 
-suite('MemberExpression', () => {
+suite('LeftHandSideExpression', () => {
   test('Identifier', () => {
     ok(' a ', Identifier(1, 2, 'a'));
   });
@@ -60,6 +61,10 @@ suite('MemberExpression', () => {
 
   suite('NewExpression', () => {
     it('should handle non-nested new expressions', () => {
+      console.dir(parseLeftHandSideExpression('new a.b.c(d, e)', 0), {
+        depth: null,
+      });
+
       ok(
         'new a.b.c(d, e)',
         NewExpression(
@@ -76,7 +81,7 @@ suite('MemberExpression', () => {
             ),
             Identifier(8, 9, 'c'),
           ),
-          [Identifier(10, 11, 'd'), Identifier(13, 14, 'e')],
+          Arguments(9, 15, [Identifier(10, 11, 'd'), Identifier(13, 14, 'e')]),
         ),
       );
     });
@@ -87,8 +92,8 @@ suite('MemberExpression', () => {
         NewExpression(
           0,
           13,
-          NewExpression(4, 11, Identifier(8, 9, 'a'), []),
-          [],
+          NewExpression(4, 11, Identifier(8, 9, 'a'), Arguments(9, 11, [])),
+          Arguments(11, 13, []),
         ),
       );
     });

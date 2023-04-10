@@ -1,28 +1,62 @@
 import { NodeType } from './node-type';
-import * as ast from './ast';
 
 const createNode = <T extends NodeType>(
   start: number,
   end: number,
   type: T,
-  properties: Omit<ast.NodeMap[T], 'start' | 'end' | 'type'>,
+  properties: Omit<NodeMap[T], 'start' | 'end' | 'type'>,
 ) => {
-  return { start, end, type, ...properties } as ast.NodeMap[T];
+  return { start, end, type, ...properties } as NodeMap[T];
+};
+
+export type Arguments = {
+  type: NodeType.Arguments;
+  start: number;
+  end: number;
+  arguments: Expression[];
+};
+
+export const Arguments = (
+  start: number,
+  end: number,
+  arguments_: Expression[],
+) => {
+  return createNode(start, end, NodeType.Arguments, { arguments: arguments_ });
 };
 
 export type ArrayLiteral = {
   type: NodeType.ArrayLiteral;
   start: number;
   end: number;
-  elements: Expression[];
+  elements: Arguments;
 };
 
 export const ArrayLiteral = (
   start: number,
   end: number,
-  elements: ast.Expression[],
+  elements: Arguments,
 ) => {
   return createNode(start, end, NodeType.ArrayLiteral, { elements });
+};
+
+export type CallExpression = {
+  type: NodeType.CallExpression;
+  start: number;
+  end: number;
+  callee: Expression;
+  arguments: Arguments;
+};
+
+export const CallExpression = (
+  start: number,
+  end: number,
+  callee: Expression,
+  arguments_: Arguments,
+) => {
+  return createNode(start, end, NodeType.CallExpression, {
+    callee,
+    arguments: arguments_,
+  });
 };
 
 export type ComputedMemberExpression = {
@@ -36,8 +70,8 @@ export type ComputedMemberExpression = {
 export const ComputedMemberExpression = (
   start: number,
   end: number,
-  object: ast.Expression,
-  property: ast.Expression,
+  object: Expression,
+  property: Expression,
 ) => {
   return createNode(start, end, NodeType.ComputedMemberExpression, {
     object,
@@ -47,6 +81,7 @@ export const ComputedMemberExpression = (
 
 export type Expression =
   | ArrayLiteral
+  | CallExpression
   | ComputedMemberExpression
   | Identifier
   | Literal
@@ -72,11 +107,7 @@ export type Literal = {
   value: LiteralValue;
 };
 
-export const Literal = (
-  start: number,
-  end: number,
-  value: ast.LiteralValue,
-) => {
+export const Literal = (start: number, end: number, value: LiteralValue) => {
   return createNode(start, end, NodeType.Literal, { value });
 };
 
@@ -87,14 +118,14 @@ export type NewExpression = {
   start: number;
   end: number;
   callee: Expression;
-  arguments: Expression[];
+  arguments: Arguments;
 };
 
 export const NewExpression = (
   start: number,
   end: number,
-  callee: ast.Expression,
-  arguments_: ast.Expression[],
+  callee: Expression,
+  arguments_: Arguments,
 ) => {
   return createNode(start, end, NodeType.NewExpression, {
     callee,
@@ -105,7 +136,9 @@ export const NewExpression = (
 export type Node = Expression;
 
 export type NodeMap = {
+  [NodeType.Arguments]: Arguments;
   [NodeType.ArrayLiteral]: ArrayLiteral;
+  [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
   [NodeType.Identifier]: Identifier;
   [NodeType.Literal]: Literal;
@@ -125,7 +158,7 @@ export type ObjectLiteral = {
 export const ObjectLiteral = (
   start: number,
   end: number,
-  properties: ast.Property[],
+  properties: Property[],
 ) => {
   return createNode(start, end, NodeType.ObjectLiteral, { properties });
 };
@@ -141,8 +174,8 @@ export type Property = {
 export const Property = (
   start: number,
   end: number,
-  key: ast.Identifier,
-  value: ast.Expression,
+  key: Identifier,
+  value: Expression,
 ) => {
   return createNode(start, end, NodeType.Property, { key, value });
 };
@@ -158,8 +191,8 @@ export type StaticMemberExpression = {
 export const StaticMemberExpression = (
   start: number,
   end: number,
-  object: ast.Expression,
-  property: ast.Identifier,
+  object: Expression,
+  property: Identifier,
 ) => {
   return createNode(start, end, NodeType.StaticMemberExpression, {
     object,

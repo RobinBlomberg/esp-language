@@ -1,5 +1,7 @@
 export const enum NodeType {
+  Arguments = 'Arguments',
   ArrayLiteral = 'ArrayLiteral',
+  CallExpression = 'CallExpression',
   ComputedMemberExpression = 'ComputedMemberExpression',
   Identifier = 'Identifier',
   Literal = 'Literal',

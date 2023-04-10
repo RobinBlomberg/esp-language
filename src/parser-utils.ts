@@ -1,9 +1,8 @@
 import { lex } from './lex';
-import { Node } from './ast';
 import { Token } from './token';
 import { TokenType } from './token-type';
 
-export type Parser<T extends Node> = (data: string, start: number) => T | null;
+export type Parser<T> = (data: string, start: number) => T | null;
 
 export const consume = <T extends TokenType, V extends string = string>(
   data: string,

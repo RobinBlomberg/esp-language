@@ -1,3 +1,4 @@
+import { Parser } from './parser-utils';
 import { punctuators } from './punctuators';
 import { Token } from './token';
 import { TokenType } from './token-type';
@@ -10,7 +11,7 @@ const createError = (c: string | undefined, i: number) => {
   );
 };
 
-export const lex = (data: string, i: number): Token | null => {
+export const lex: Parser<Token> = (data, i) => {
   let c = data[i];
 
   while (c === ' ' || c === '\t' || c === '\n' || c === '\r') {
