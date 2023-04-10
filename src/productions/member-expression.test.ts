@@ -7,11 +7,11 @@ import {
   StaticMemberExpression,
 } from '../ast';
 import { createParseAssert } from '../test-utils';
-import { parseLeftHandSideExpression } from './left-hand-side-expression';
+import { parseMemberExpression } from './member-expression';
 
-const { ok } = createParseAssert(parseLeftHandSideExpression);
+const { ok } = createParseAssert(parseMemberExpression);
 
-suite('LeftHandSideExpression', () => {
+suite('MemberExpression', () => {
   test('Identifier', () => {
     ok(' a ', Identifier(1, 2, 'a'));
   });

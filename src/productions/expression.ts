@@ -1,6 +1,6 @@
 import { Expression } from '../ast';
 import { Parser } from '../parser-utils';
-import { parseLeftHandSideExpression } from './left-hand-side-expression';
+import { parseMemberExpression } from './member-expression';
 
 /**
  * Not supported from ECMA-262:
@@ -13,5 +13,5 @@ import { parseLeftHandSideExpression } from './left-hand-side-expression';
  * @see https://tc39.es/ecma262/#prod-Expression
  */
 export const parseExpression: Parser<Expression> = (data, start) => {
-  return parseLeftHandSideExpression(data, start);
+  return parseMemberExpression(data, start);
 };

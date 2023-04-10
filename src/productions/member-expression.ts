@@ -15,10 +15,6 @@ import { parsePrimaryExpression } from './primary-expression';
  * Supported from ECMA-262:
  *
  * ```ecmarkup
- * LeftHandSideExpression[Yield, Await] :
- *   NewExpression[?Yield, ?Await]
- *   CallExpression[?Yield, ?Await]
- *
  * MemberExpression[Yield, Await] :
  *   PrimaryExpression[?Yield, ?Await]
  *   MemberExpression[?Yield, ?Await] [ Expression[+In, ?Yield, ?Await] ]
@@ -28,9 +24,6 @@ import { parsePrimaryExpression } from './primary-expression';
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
- * LeftHandSideExpression[Yield, Await] :
- *   OptionalExpression[?Yield, ?Await]
- *
  * MemberExpression[Yield, Await] :
  *   MemberExpression[?Yield, ?Await] TemplateLiteral[?Yield, ?Await, +Tagged]
  *   SuperProperty[?Yield, ?Await]
@@ -40,17 +33,14 @@ import { parsePrimaryExpression } from './primary-expression';
  *
  * @see https://tc39.es/ecma262/#prod-MemberExpression
  */
-export const parseLeftHandSideExpression: Parser<Expression> = (
-  data,
-  start,
-) => {
+export const parseMemberExpression: Parser<Expression> = (data, start) => {
   let i = start;
 
   const newKeyword = consume(data, i, tt.Name, 'new');
   if (newKeyword) {
     i = newKeyword.end;
 
-    const callee = parseLeftHandSideExpression(data, i);
+    const callee = parseMemberExpression(data, i);
     if (callee) i = callee.end;
     else return null;
 
