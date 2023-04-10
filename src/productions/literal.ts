@@ -1,6 +1,5 @@
+import { Literal } from '../ast';
 import { lex } from '../lex';
-import * as ast from '../node-factory';
-import { Literal } from '../nodes';
 import { Parser } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 
@@ -24,22 +23,22 @@ export const parseLiteral: Parser<Literal> = (data, start) => {
     case tt.Name:
       switch (token.value) {
         case 'false':
-          return ast.literal(token.start, token.end, false);
+          return Literal(token.start, token.end, false);
         case 'Infinity':
-          return ast.literal(token.start, token.end, Infinity);
+          return Literal(token.start, token.end, Infinity);
         case 'NaN':
-          return ast.literal(token.start, token.end, NaN);
+          return Literal(token.start, token.end, NaN);
         case 'null':
-          return ast.literal(token.start, token.end, null);
+          return Literal(token.start, token.end, null);
         case 'true':
-          return ast.literal(token.start, token.end, true);
+          return Literal(token.start, token.end, true);
         case 'undefined':
-          return ast.literal(token.start, token.end, undefined);
+          return Literal(token.start, token.end, undefined);
         default:
           return null;
       }
     case tt.Number:
-      return ast.literal(token.start, token.end, Number(token.value));
+      return Literal(token.start, token.end, Number(token.value));
     case tt.String: {
       let value = '';
 
@@ -51,7 +50,7 @@ export const parseLiteral: Parser<Literal> = (data, start) => {
         value += token.value[i]!;
       }
 
-      return ast.literal(token.start, token.end, value);
+      return Literal(token.start, token.end, value);
     }
     default:
       return null;

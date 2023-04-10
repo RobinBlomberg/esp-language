@@ -1,5 +1,5 @@
 import { lex } from './lex';
-import { Node } from './nodes';
+import { Node } from './ast';
 import { Token } from './token';
 import { TokenType } from './token-type';
 

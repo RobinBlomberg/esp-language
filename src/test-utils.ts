@@ -1,5 +1,5 @@
 import { expect } from 'vitest';
-import { Node } from './nodes';
+import { Node } from './ast';
 
 export const createParseAssert = <T extends Node>(
   parse: (data: string, i: number) => T | null,

@@ -1,5 +1,4 @@
-import * as ast from '../node-factory';
-import { ObjectLiteral, Property } from '../nodes';
+import { ObjectLiteral, Property } from '../ast';
 import { Parser, consume } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 import { parseIdentifierName } from './identifier-name';
@@ -28,7 +27,7 @@ export const parseObjectLiteral: Parser<ObjectLiteral> = (data, start) => {
   while (true) {
     const close = consume(data, i, tt.Punctuator, '}');
     if (close) {
-      return ast.objectLiteral(open.start, close.end, properties);
+      return ObjectLiteral(open.start, close.end, properties);
     }
 
     if (properties.length >= 1) {
@@ -49,6 +48,6 @@ export const parseObjectLiteral: Parser<ObjectLiteral> = (data, start) => {
     if (value) i = value.end;
     else return null;
 
-    properties.push(ast.property(key.start, value.end, key, value));
+    properties.push(Property(key.start, value.end, key, value));
   }
 };

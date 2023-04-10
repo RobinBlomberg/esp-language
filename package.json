@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
+    "check": "tsc",
     "lint": "eslint src",
     "test": "vitest"
   },

@@ -1,5 +1,9 @@
-import * as ast from '../node-factory';
-import { Expression } from '../nodes';
+import {
+  ComputedMemberExpression,
+  NewExpression,
+  StaticMemberExpression,
+  Expression,
+} from '../ast';
 import { Parser, consume } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 import { parseExpression } from './expression';
@@ -48,12 +52,7 @@ export const parseMemberExpression: Parser<Expression> = (data, start) => {
     while (true) {
       const close = consume(data, i, tt.Punctuator, ')');
       if (close) {
-        return ast.newExpression(
-          newKeyword.start,
-          close.end,
-          callee,
-          arguments_,
-        );
+        return NewExpression(newKeyword.start, close.end, callee, arguments_);
       }
 
       if (arguments_.length >= 1) {
@@ -83,7 +82,7 @@ export const parseMemberExpression: Parser<Expression> = (data, start) => {
       if (property) i = property.end;
       else return null;
 
-      object = ast.staticMemberExpression(
+      object = StaticMemberExpression(
         object.start,
         property.end,
         object,
@@ -104,7 +103,7 @@ export const parseMemberExpression: Parser<Expression> = (data, start) => {
       if (close) i = close.end;
       else return null;
 
-      object = ast.computedMemberExpression(object.start, i, object, property);
+      object = ComputedMemberExpression(object.start, i, object, property);
       continue;
     }
 

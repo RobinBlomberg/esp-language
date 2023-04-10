@@ -1,4 +1,4 @@
-import { Expression } from '../nodes';
+import { Expression } from '../ast';
 import { Parser } from '../parser-utils';
 import { parseMemberExpression } from './member-expression';
 

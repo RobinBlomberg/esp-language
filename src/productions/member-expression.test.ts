@@ -1,10 +1,10 @@
 import { it, suite, test } from 'vitest';
 import {
-  computedMemberExpression,
-  identifier,
-  newExpression,
-  staticMemberExpression,
-} from '../node-factory';
+  ComputedMemberExpression,
+  Identifier,
+  NewExpression,
+  StaticMemberExpression,
+} from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseMemberExpression } from './member-expression';
 
@@ -12,18 +12,18 @@ const { ok } = createParseAssert(parseMemberExpression);
 
 suite('MemberExpression', () => {
   test('Identifier', () => {
-    ok(' a ', identifier(1, 2, 'a'));
+    ok(' a ', Identifier(1, 2, 'a'));
   });
 
   suite('StaticMemberExpression', () => {
     it('should handle non-nested member expressions', () => {
       ok(
         ' a.b ',
-        staticMemberExpression(
+        StaticMemberExpression(
           1,
           4,
-          identifier(1, 2, 'a'),
-          identifier(3, 4, 'b'),
+          Identifier(1, 2, 'a'),
+          Identifier(3, 4, 'b'),
         ),
       );
     });
@@ -31,16 +31,16 @@ suite('MemberExpression', () => {
     it('should handle nested member expressions', () => {
       ok(
         'a.b.c',
-        staticMemberExpression(
+        StaticMemberExpression(
           0,
           5,
-          staticMemberExpression(
+          StaticMemberExpression(
             0,
             3,
-            identifier(0, 1, 'a'),
-            identifier(2, 3, 'b'),
+            Identifier(0, 1, 'a'),
+            Identifier(2, 3, 'b'),
           ),
-          identifier(4, 5, 'c'),
+          Identifier(4, 5, 'c'),
         ),
       );
     });
@@ -49,11 +49,11 @@ suite('MemberExpression', () => {
   test('ComputedMemberExpression', () => {
     ok(
       ' a[b] ',
-      computedMemberExpression(
+      ComputedMemberExpression(
         1,
         5,
-        identifier(1, 2, 'a'),
-        identifier(3, 4, 'b'),
+        Identifier(1, 2, 'a'),
+        Identifier(3, 4, 'b'),
       ),
     );
   });
@@ -62,21 +62,21 @@ suite('MemberExpression', () => {
     it('should handle non-nested new expressions', () => {
       ok(
         'new a.b.c(d, e)',
-        newExpression(
+        NewExpression(
           0,
           15,
-          staticMemberExpression(
+          StaticMemberExpression(
             4,
             9,
-            staticMemberExpression(
+            StaticMemberExpression(
               4,
               7,
-              identifier(4, 5, 'a'),
-              identifier(6, 7, 'b'),
+              Identifier(4, 5, 'a'),
+              Identifier(6, 7, 'b'),
             ),
-            identifier(8, 9, 'c'),
+            Identifier(8, 9, 'c'),
           ),
-          [identifier(10, 11, 'd'), identifier(13, 14, 'e')],
+          [Identifier(10, 11, 'd'), Identifier(13, 14, 'e')],
         ),
       );
     });
@@ -84,10 +84,10 @@ suite('MemberExpression', () => {
     it('should handle nested new expressions', () => {
       ok(
         'new new a()()',
-        newExpression(
+        NewExpression(
           0,
           13,
-          newExpression(4, 11, identifier(8, 9, 'a'), []),
+          NewExpression(4, 11, Identifier(8, 9, 'a'), []),
           [],
         ),
       );

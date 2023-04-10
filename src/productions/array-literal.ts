@@ -1,5 +1,4 @@
-import * as ast from '../node-factory';
-import { ArrayLiteral, Expression } from '../nodes';
+import { ArrayLiteral, Expression } from '../ast';
 import { Parser, consume } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 import { parsePrimaryExpression } from './primary-expression';
@@ -32,7 +31,7 @@ export const parseArrayLiteral: Parser<ArrayLiteral> = (data, start) => {
   while (true) {
     const close = consume(data, i, tt.Punctuator, ']');
     if (close) {
-      return ast.arrayLiteral(open.start, close.end, elements);
+      return ArrayLiteral(open.start, close.end, elements);
     }
 
     if (elements.length >= 1) {
