@@ -3,6 +3,22 @@ import { Parser } from '../token-utils';
 import { parseArguments } from './arguments';
 import { parseMemberExpression } from './member-expression';
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * LeftHandSideExpression[Yield, Await] :
+ *   NewExpression[?Yield, ?Await]
+ *   CallExpression[?Yield, ?Await]
+ * ```
+ *
+ * Not supported from ECMA-262:
+ * ```ecmarkup
+ * LeftHandSideExpression[Yield, Await] :
+ *   OptionalExpression[?Yield, ?Await]
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-LeftHandSideExpression
+ */
 export const parseLeftHandSideExpression: Parser<Expression> = (
   data,
   start,

@@ -3,6 +3,17 @@ import { TokenType } from '../token-type';
 import { Parser, consume } from '../token-utils';
 import { parseExpression } from './expression';
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * Arguments[Yield, Await] :
+ *   ( )
+ *   ( ArgumentList[?Yield, ?Await] )
+ *   ( ArgumentList[?Yield, ?Await] , )
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-Arguments
+ */
 export const parseArguments: Parser<Arguments> = (data, start) => {
   let i = start;
 

@@ -10,6 +10,19 @@ import { parseUnaryExpression } from './unary-expression';
 
 const EARLY_ERROR = 'Invalid left-hand side in assignment';
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * UpdateExpression[Yield, Await] :
+ *   LeftHandSideExpression[?Yield, ?Await]
+ *   LeftHandSideExpression[?Yield, ?Await] [no LineTerminator here] ++
+ *   LeftHandSideExpression[?Yield, ?Await] [no LineTerminator here] --
+ *   ++ UnaryExpression[?Yield, ?Await]
+ *   -- UnaryExpression[?Yield, ?Await]
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-UpdateExpression
+ */
 export const parseUpdateExpression: Parser<Expression> = (data, start) => {
   let i = start;
 

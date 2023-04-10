@@ -3,6 +3,16 @@ import { TokenType } from '../token-type';
 import { Parser, consume } from '../token-utils';
 import { parseUnaryExpression } from './unary-expression';
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * ExponentiationExpression[Yield, Await] :
+ *   UnaryExpression[?Yield, ?Await]
+ *   UpdateExpression[?Yield, ?Await] ** ExponentiationExpression[?Yield, ?Await]
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ExponentiationExpression
+ */
 export const parseExponentiationExpression: Parser<Expression> = (data, i) => {
   const left = parseUnaryExpression(data, i);
   if (left) i = left.end;
