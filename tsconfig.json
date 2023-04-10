@@ -2,7 +2,8 @@
   "compilerOptions": {
     "checkJs": true,
     "downlevelIteration": true,
-    "lib": ["ESNext"],
+    "esModuleInterop": true,
+    "lib": ["DOM", "ESNext"],
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "strict": true
