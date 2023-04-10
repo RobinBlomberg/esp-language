@@ -61,10 +61,6 @@ suite('LeftHandSideExpression', () => {
 
   suite('NewExpression', () => {
     it('should handle non-nested new expressions', () => {
-      console.dir(parseLeftHandSideExpression('new a.b.c(d, e)', 0), {
-        depth: null,
-      });
-
       ok(
         'new a.b.c(d, e)',
         NewExpression(
