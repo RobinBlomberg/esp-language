@@ -4,8 +4,9 @@ import {
   ArrayLiteralNode,
   IdentifierNode,
   LiteralNode,
+  StaticMemberExpressionNode,
   ObjectLiteralNode,
-  PrimaryExpression,
+  Expression,
   Property,
 } from './nodes';
 import { reservedWords } from './reserved-words';
@@ -44,7 +45,7 @@ export const parseArrayLiteral = (
   if (open) i = open.end;
   else return null;
 
-  const elements: PrimaryExpression[] = [];
+  const elements: Expression[] = [];
 
   while (true) {
     const close = consume(data, i, tt.Punctuator, ']');
@@ -64,6 +65,13 @@ export const parseArrayLiteral = (
 
     elements.push(element);
   }
+};
+
+export const parseExpression = (
+  data: string,
+  start: number,
+): Expression | null => {
+  return parseMemberExpression(data, start);
 };
 
 export const parseIdentifier = (
@@ -130,6 +138,50 @@ export const parseLiteral = (
   }
 };
 
+export const parseMemberExpression = (
+  data: string,
+  start: number,
+): Expression | null => {
+  let i = start;
+
+  const object = parsePrimaryExpression(data, i);
+  if (object) i = object.end;
+  else return null;
+
+  const dot = consume(data, i, tt.Punctuator, '.');
+  if (dot) {
+    i = dot.end;
+
+    const property = parseIdentifierName(data, i);
+    if (property) i = property.end;
+    else return null;
+
+    return ast.staticMemberExpression(
+      object.start,
+      property.end,
+      object,
+      property,
+    );
+  }
+
+  const open = consume(data, i, tt.Punctuator, '[');
+  if (open) {
+    i = open.end;
+
+    const property = parseExpression(data, i);
+    if (property) i = property.end;
+    else return null;
+
+    const close = consume(data, i, tt.Punctuator, ']');
+    if (close) i = close.end;
+    else return null;
+
+    return ast.computedMemberExpression(object.start, i, object, property);
+  }
+
+  return object;
+};
+
 export const parseObjectLiteral = (
   data: string,
   start: number,
@@ -173,6 +225,6 @@ export const parseObjectLiteral = (
 export const parsePrimaryExpression = (
   data: string,
   start: number,
-): PrimaryExpression | null => {
+): Expression | null => {
   return parseLiteral(data, start) ?? parseIdentifier(data, start);
 };

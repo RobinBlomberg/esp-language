@@ -5,6 +5,7 @@ import {
   parseArrayLiteral,
   parseIdentifier,
   parseLiteral,
+  parseMemberExpression,
   parseObjectLiteral,
   parsePrimaryExpression,
 } from './parse';
@@ -24,6 +25,7 @@ const is = {
   arrayLiteral: createParser(parseArrayLiteral),
   identifier: createParser(parseIdentifier),
   literal: createParser(parseLiteral),
+  memberExpression: createParser(parseMemberExpression),
   objectLiteral: createParser(parseObjectLiteral),
   primaryExpression: createParser(parsePrimaryExpression),
 };
@@ -89,5 +91,47 @@ suite('parse', () => {
         ast.property(7, 11, ast.identifier(7, 8, 'b'), ast.literal(10, 11, 2)),
       ]),
     );
+    is.objectLiteral.fail('{');
+    is.objectLiteral.fail('{a');
+    is.objectLiteral.fail('{a:');
+    is.objectLiteral.fail('{a: 1');
+    is.objectLiteral.fail('{a: 1,');
+    is.objectLiteral.fail('{a: 1, b');
+    is.objectLiteral.fail('{a: 1, b:');
+    is.objectLiteral.fail('{a: 1, b: 2');
+    is.objectLiteral.fail('{a: 1,}');
+    is.objectLiteral.fail('{a: }');
+    is.objectLiteral.fail('{a}');
+    is.objectLiteral.fail('{, b: 2}');
+  });
+
+  suite('MemberExpression', () => {
+    test('Identifier', () => {
+      is.memberExpression.ok(' a ', ast.identifier(1, 2, 'a'));
+    });
+
+    test('StaticMemberExpression', () => {
+      is.memberExpression.ok(
+        ' a.b ',
+        ast.staticMemberExpression(
+          1,
+          4,
+          ast.identifier(1, 2, 'a'),
+          ast.identifier(3, 4, 'b'),
+        ),
+      );
+    });
+
+    test('ComputedMemberExpression', () => {
+      is.memberExpression.ok(
+        ' a[b] ',
+        ast.computedMemberExpression(
+          1,
+          5,
+          ast.identifier(1, 2, 'a'),
+          ast.identifier(3, 4, 'b'),
+        ),
+      );
+    });
   });
 });

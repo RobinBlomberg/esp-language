@@ -3,7 +3,7 @@ import {
   IdentifierNode,
   Literal,
   NodeMap,
-  PrimaryExpression,
+  Expression,
   Property,
 } from './nodes';
 
@@ -19,9 +19,21 @@ const createNode = <T extends NodeType>(
 export const arrayLiteral = (
   start: number,
   end: number,
-  elements: PrimaryExpression[],
+  elements: Expression[],
 ) => {
   return createNode(start, end, NodeType.ArrayLiteral, { elements });
+};
+
+export const computedMemberExpression = (
+  start: number,
+  end: number,
+  object: Expression,
+  property: Expression,
+) => {
+  return createNode(start, end, NodeType.ComputedMemberExpression, {
+    object,
+    property,
+  });
 };
 
 export const identifier = (start: number, end: number, name: string) => {
@@ -44,7 +56,19 @@ export const property = (
   start: number,
   end: number,
   key: IdentifierNode,
-  value: PrimaryExpression,
+  value: Expression,
 ) => {
   return createNode(start, end, NodeType.Property, { key, value });
+};
+
+export const staticMemberExpression = (
+  start: number,
+  end: number,
+  object: Expression,
+  property: IdentifierNode,
+) => {
+  return createNode(start, end, NodeType.StaticMemberExpression, {
+    object,
+    property,
+  });
 };

@@ -4,8 +4,24 @@ export type ArrayLiteralNode = {
   type: NodeType.ArrayLiteral;
   start: number;
   end: number;
-  elements: PrimaryExpression[];
+  elements: Expression[];
 };
+
+export type ComputedMemberExpressionNode = {
+  type: NodeType.ComputedMemberExpression;
+  start: number;
+  end: number;
+  object: Expression;
+  property: Expression;
+};
+
+export type Expression =
+  | ArrayLiteralNode
+  | ComputedMemberExpressionNode
+  | IdentifierNode
+  | LiteralNode
+  | ObjectLiteralNode
+  | StaticMemberExpressionNode;
 
 export type IdentifierNode = {
   type: NodeType.Identifier;
@@ -23,14 +39,16 @@ export type LiteralNode = {
   value: Literal;
 };
 
-export type Node = PrimaryExpression;
+export type Node = Expression;
 
 export type NodeMap = {
   [NodeType.ArrayLiteral]: ArrayLiteralNode;
+  [NodeType.ComputedMemberExpression]: ComputedMemberExpressionNode;
   [NodeType.Identifier]: IdentifierNode;
   [NodeType.Literal]: LiteralNode;
   [NodeType.ObjectLiteral]: ObjectLiteralNode;
   [NodeType.Property]: Property;
+  [NodeType.StaticMemberExpression]: StaticMemberExpressionNode;
 };
 
 export type ObjectLiteralNode = {
@@ -40,16 +58,18 @@ export type ObjectLiteralNode = {
   properties: Property[];
 };
 
-export type PrimaryExpression =
-  | ArrayLiteralNode
-  | IdentifierNode
-  | LiteralNode
-  | ObjectLiteralNode;
-
 export type Property = {
   type: NodeType.Property;
   start: number;
   end: number;
   key: IdentifierNode;
-  value: PrimaryExpression;
+  value: Expression;
+};
+
+export type StaticMemberExpressionNode = {
+  type: NodeType.StaticMemberExpression;
+  start: number;
+  end: number;
+  object: Expression;
+  property: IdentifierNode;
 };
