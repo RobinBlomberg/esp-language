@@ -2,6 +2,14 @@ import { punctuators } from './punctuators';
 import { Token } from './token';
 import { TokenType } from './token-type';
 
+const createError = (c: string | undefined, i: number) => {
+  return new SyntaxError(
+    `Unexpected ${
+      c ? `character ${JSON.stringify(c)}` : 'end of input'
+    } at index ${i}`,
+  );
+};
+
 export const lex = (data: string, i: number): Token | null => {
   let c = data[i];
 
@@ -14,12 +22,6 @@ export const lex = (data: string, i: number): Token | null => {
   }
 
   const start = i;
-
-  const createError = () => {
-    return new SyntaxError(
-      `Unexpected character ${JSON.stringify(c)} at index ${i}`,
-    );
-  };
 
   if (punctuators.has(c)) {
     let value = c;
@@ -48,7 +50,7 @@ export const lex = (data: string, i: number): Token | null => {
         c = data[++i];
 
         if (c === undefined) {
-          throw createError();
+          throw createError(c, i);
         }
       }
 
@@ -57,7 +59,7 @@ export const lex = (data: string, i: number): Token | null => {
     }
 
     if (c !== '"') {
-      throw createError();
+      throw createError(c, i);
     }
 
     value += '"';
@@ -86,7 +88,7 @@ export const lex = (data: string, i: number): Token | null => {
           c = data[++i];
         }
       } else {
-        throw createError();
+        throw createError(c, i);
       }
     }
 
@@ -115,5 +117,5 @@ export const lex = (data: string, i: number): Token | null => {
     return { end: i, start, type: TokenType.Name, value: name };
   }
 
-  throw createError();
+  throw createError(c, i);
 };
