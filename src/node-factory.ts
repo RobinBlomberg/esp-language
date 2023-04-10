@@ -77,6 +77,7 @@ export const staticMemberExpression = (
   start: number,
   end: number,
   object: Expression,
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   property: Identifier,
 ) => {
   return createNode(start, end, NodeType.StaticMemberExpression, {

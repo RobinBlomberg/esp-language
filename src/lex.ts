@@ -31,11 +31,11 @@ export const lex = (data: string, i: number): Token | null => {
     }
 
     if (value === '.' && c === '.' && data[i + 1] === '.') {
-      value += c + data[++i];
+      value += c + data[++i]!;
       c = data[++i];
     }
 
-    return { type: TokenType.Punctuator, value, start, end: i };
+    return { end: i, start, type: TokenType.Punctuator, value };
   }
 
   if (c === '"') {
@@ -62,7 +62,7 @@ export const lex = (data: string, i: number): Token | null => {
 
     value += '"';
     c = data[++i];
-    return { type: TokenType.String, value, start, end: i };
+    return { end: i, start, type: TokenType.String, value };
   }
 
   if (c >= '0' && c <= '9') {
@@ -90,7 +90,7 @@ export const lex = (data: string, i: number): Token | null => {
       }
     }
 
-    return { type: TokenType.Number, value, start, end: i };
+    return { end: i, start, type: TokenType.Number, value };
   }
 
   if (
@@ -112,7 +112,7 @@ export const lex = (data: string, i: number): Token | null => {
       c = data[++i];
     }
 
-    return { type: TokenType.Name, value: name, start, end: i };
+    return { end: i, start, type: TokenType.Name, value: name };
   }
 
   throw createError();

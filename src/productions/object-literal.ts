@@ -1,6 +1,6 @@
 import * as ast from '../node-factory';
 import { ObjectLiteral, Property } from '../nodes';
-import { consume } from '../parse-utils';
+import { Parser, consume } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 import { parseIdentifierName } from './identifier-name';
 import { parsePrimaryExpression } from './primary-expression';
@@ -16,10 +16,7 @@ import { parsePrimaryExpression } from './primary-expression';
  *
  * @see https://tc39.es/ecma262/#prod-ObjectLiteral
  */
-export const parseObjectLiteral = (
-  data: string,
-  start: number,
-): ObjectLiteral | null => {
+export const parseObjectLiteral: Parser<ObjectLiteral> = (data, start) => {
   let i = start;
 
   const open = consume(data, i, tt.Punctuator, '{');

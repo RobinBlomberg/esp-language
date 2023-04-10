@@ -1,6 +1,7 @@
 import { lex } from '../lex';
 import * as ast from '../node-factory';
 import { Literal } from '../nodes';
+import { Parser } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 
 /**
@@ -15,7 +16,7 @@ import { TokenType as tt } from '../token-type';
  *
  * @see https://tc39.es/ecma262/#prod-Literal
  */
-export const parseLiteral = (data: string, start: number): Literal | null => {
+export const parseLiteral: Parser<Literal> = (data, start) => {
   const token = lex(data, start);
   if (!token) return null;
 
@@ -39,18 +40,19 @@ export const parseLiteral = (data: string, start: number): Literal | null => {
       }
     case tt.Number:
       return ast.literal(token.start, token.end, Number(token.value));
-    case tt.String:
+    case tt.String: {
       let value = '';
 
-      for (let start = 1; start < token.value.length - 1; start++) {
-        if (token.value[start] === '\\') {
-          start++;
+      for (let i = 1; i < token.value.length - 1; i++) {
+        if (token.value[i] === '\\') {
+          i++;
         }
 
-        value += token.value[start];
+        value += token.value[i]!;
       }
 
       return ast.literal(token.start, token.end, value);
+    }
     default:
       return null;
   }

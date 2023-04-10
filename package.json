@@ -1,9 +1,18 @@
 {
   "type": "module",
   "scripts": {
+    "lint": "eslint src",
     "test": "vitest"
   },
   "devDependencies": {
+    "@robinblomberg/eslint-config-robinblomberg": "^0.14.0",
     "vitest": "^0.29.8"
+  },
+  "eslintConfig": {
+    "extends": "@robinblomberg/eslint-config-robinblomberg",
+    "rules": {
+      "curly": 0,
+      "sort-keys/sort-keys-fix": 0
+    }
   }
 }

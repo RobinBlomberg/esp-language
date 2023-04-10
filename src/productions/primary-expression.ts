@@ -1,4 +1,5 @@
 import { Expression } from '../nodes';
+import { Parser } from '../parser-utils';
 import { parseIdentifier } from './identifier';
 import { parseLiteral } from './literal';
 
@@ -28,9 +29,6 @@ import { parseLiteral } from './literal';
  *
  * @see https://tc39.es/ecma262/#prod-PrimaryExpression
  */
-export const parsePrimaryExpression = (
-  data: string,
-  start: number,
-): Expression | null => {
+export const parsePrimaryExpression: Parser<Expression> = (data, start) => {
   return parseLiteral(data, start) ?? parseIdentifier(data, start);
 };

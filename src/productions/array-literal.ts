@@ -1,6 +1,6 @@
 import * as ast from '../node-factory';
 import { ArrayLiteral, Expression } from '../nodes';
-import { consume } from '../parse-utils';
+import { Parser, consume } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 import { parsePrimaryExpression } from './primary-expression';
 
@@ -20,10 +20,7 @@ import { parsePrimaryExpression } from './primary-expression';
  *
  * @see https://tc39.es/ecma262/#prod-ArrayLiteral
  */
-export const parseArrayLiteral = (
-  data: string,
-  start: number,
-): ArrayLiteral | null => {
+export const parseArrayLiteral: Parser<ArrayLiteral> = (data, start) => {
   let i = start;
 
   const open = consume(data, i, tt.Punctuator, '[');

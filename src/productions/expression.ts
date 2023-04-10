@@ -1,4 +1,5 @@
 import { Expression } from '../nodes';
+import { Parser } from '../parser-utils';
 import { parseMemberExpression } from './member-expression';
 
 /**
@@ -11,9 +12,6 @@ import { parseMemberExpression } from './member-expression';
  *
  * @see https://tc39.es/ecma262/#prod-Expression
  */
-export const parseExpression = (
-  data: string,
-  start: number,
-): Expression | null => {
+export const parseExpression: Parser<Expression> = (data, start) => {
   return parseMemberExpression(data, start);
 };

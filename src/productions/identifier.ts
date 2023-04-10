@@ -1,5 +1,6 @@
 import * as ast from '../node-factory';
 import { Identifier } from '../nodes';
+import { Parser } from '../parser-utils';
 import { reservedWords } from '../reserved-words';
 import { parseIdentifierName } from './identifier-name';
 
@@ -12,10 +13,7 @@ import { parseIdentifierName } from './identifier-name';
  *
  * @see https://tc39.es/ecma262/#prod-Identifier
  */
-export const parseIdentifier = (
-  data: string,
-  start: number,
-): Identifier | null => {
+export const parseIdentifier: Parser<Identifier> = (data, start) => {
   const node = parseIdentifierName(data, start);
   return node && !reservedWords.has(node.name)
     ? ast.identifier(node.start, node.end, node.name)

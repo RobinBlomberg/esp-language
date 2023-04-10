@@ -1,6 +1,6 @@
 import * as ast from '../node-factory';
 import { Expression } from '../nodes';
-import { consume } from '../parse-utils';
+import { Parser, consume } from '../parser-utils';
 import { TokenType as tt } from '../token-type';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
@@ -28,10 +28,7 @@ import { parsePrimaryExpression } from './primary-expression';
  *
  * @see https://tc39.es/ecma262/#prod-MemberExpression
  */
-export const parseMemberExpression = (
-  data: string,
-  start: number,
-): Expression | null => {
+export const parseMemberExpression: Parser<Expression> = (data, start) => {
   let i = start;
 
   const newKeyword = consume(data, i, tt.Name, 'new');
