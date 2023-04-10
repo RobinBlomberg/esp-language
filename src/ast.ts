@@ -41,6 +41,54 @@ export const ArrayLiteral = (
   return createNode(start, end, NodeType.ArrayLiteral, { elements });
 };
 
+export type BinaryExpression = {
+  type: NodeType.BinaryExpression;
+  start: number;
+  end: number;
+  operator: BinaryOperator;
+  left: Expression;
+  right: Expression;
+};
+
+export const BinaryExpression = (
+  start: number,
+  end: number,
+  operator: BinaryOperator,
+  left: Expression,
+  right: Expression,
+) => {
+  return createNode(start, end, NodeType.BinaryExpression, {
+    left,
+    operator,
+    right,
+  });
+};
+
+export type BinaryOperator =
+  | '**'
+  | '*'
+  | '/'
+  | '%'
+  | '+'
+  | '-'
+  | '<<'
+  | '>>'
+  | '>>>'
+  | '<'
+  | '>'
+  | '<='
+  | '>='
+  | 'instanceof'
+  | 'in'
+  | '=='
+  | '!='
+  | '&'
+  | '^'
+  | '|'
+  | '&&'
+  | '||'
+  | '??';
+
 export type CallExpression = {
   type: NodeType.CallExpression;
   start: number;
@@ -83,6 +131,7 @@ export const ComputedMemberExpression = (
 
 export type Expression =
   | ArrayLiteral
+  | BinaryExpression
   | CallExpression
   | ComputedMemberExpression
   | Identifier
@@ -142,6 +191,7 @@ export type Node = Expression;
 export type NodeMap = {
   [NodeType.Arguments]: Arguments;
   [NodeType.ArrayLiteral]: ArrayLiteral;
+  [NodeType.BinaryExpression]: BinaryExpression;
   [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
   [NodeType.Identifier]: Identifier;
