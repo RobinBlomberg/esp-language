@@ -1,4 +1,4 @@
-import { it, suite, test } from 'vitest';
+import { describe, it, suite } from 'vitest';
 import { Arguments, CallExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
@@ -6,11 +6,11 @@ import { parseLeftHandSideExpression } from './left-hand-side-expression';
 const { ok } = createParseAssert(parseLeftHandSideExpression);
 
 suite('LeftHandSideExpression', () => {
-  test('Identifier', () => {
-    ok(' a ', Identifier(1, 2, 'a'));
+  it('should be able to parse basic expressions', () => {
+    ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
-  suite('CallExpression', () => {
+  describe('CallExpression', () => {
     it('should handle non-nested call expressions', () => {
       ok(
         'a()',

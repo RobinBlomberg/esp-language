@@ -1,4 +1,4 @@
-import { suite, test } from 'vitest';
+import { it, suite, test } from 'vitest';
 import { Identifier, UnaryExpression } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseUnaryExpression } from './unary-expression';
@@ -6,7 +6,7 @@ import { parseUnaryExpression } from './unary-expression';
 const { ok } = createParseAssert(parseUnaryExpression);
 
 suite('UnaryExpression', () => {
-  test('Identifier', () => {
+  it('should be able to parse basic expressions', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 

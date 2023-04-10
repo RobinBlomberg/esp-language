@@ -1,4 +1,4 @@
-import { it, suite, test } from 'vitest';
+import { describe, it, suite, test } from 'vitest';
 import {
   Arguments,
   ComputedMemberExpression,
@@ -12,8 +12,8 @@ import { parseMemberExpression } from './member-expression';
 const { ok } = createParseAssert(parseMemberExpression);
 
 suite('MemberExpression', () => {
-  test('Identifier', () => {
-    ok(' a ', Identifier(1, 2, 'a'));
+  it('should be able to parse basic expressions', () => {
+    ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
   suite('StaticMemberExpression', () => {
@@ -59,7 +59,7 @@ suite('MemberExpression', () => {
     );
   });
 
-  suite('NewExpression', () => {
+  describe('NewExpression', () => {
     it('should handle non-nested new expressions', () => {
       ok(
         'new a.b.c(d, e)',
