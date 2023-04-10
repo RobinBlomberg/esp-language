@@ -2,13 +2,11 @@ import { lex } from './lex';
 import * as ast from './node-factory';
 import {
   ArrayLiteralNode,
+  Expression,
   IdentifierNode,
   LiteralNode,
-  StaticMemberExpressionNode,
   ObjectLiteralNode,
-  Expression,
   Property,
-  NewExpressionNode,
 } from './nodes';
 import { reservedWords } from './reserved-words';
 import { Token } from './token';
@@ -36,6 +34,22 @@ const match = <T extends tt, V extends string = string>(
   );
 };
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * ArrayLiteral[Yield, Await] :
+ *   [ ElementList[?Yield, ?Await] ]
+ * ```
+ *
+ * Not supported from ECMA-262:
+ * ```ecmarkup
+ * ArrayLiteral[Yield, Await] :
+ *   [ Elisionopt ]
+ *   [ ElementList[?Yield, ?Await] , Elisionopt ]
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ArrayLiteral
+ */
 export const parseArrayLiteral = (
   data: string,
   start: number,
@@ -68,6 +82,16 @@ export const parseArrayLiteral = (
   }
 };
 
+/**
+ * Not supported from ECMA-262:
+ * ```ecmarkup
+ * Expression[In, Yield, Await] :
+ *   AssignmentExpression[?In, ?Yield, ?Await]
+ *   Expression[?In, ?Yield, ?Await] , AssignmentExpression[?In, ?Yield, ?Await]
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-Expression
+ */
 export const parseExpression = (
   data: string,
   start: number,
@@ -75,6 +99,15 @@ export const parseExpression = (
   return parseMemberExpression(data, start);
 };
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * Identifier :
+ *   IdentifierName but not ReservedWord
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-Identifier
+ */
 export const parseIdentifier = (
   data: string,
   start: number,
@@ -85,6 +118,14 @@ export const parseIdentifier = (
     : null;
 };
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * IdentifierName ::
+ *   IdentifierStart
+ *   IdentifierName IdentifierPart
+ * ```
+ */
 export const parseIdentifierName = (
   data: string,
   start: number,
@@ -95,6 +136,18 @@ export const parseIdentifierName = (
     : null;
 };
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * Literal :
+ *   NullLiteral
+ *   BooleanLiteral
+ *   NumericLiteral
+ *   StringLiteral
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-Literal
+ */
 export const parseLiteral = (
   data: string,
   start: number,
@@ -158,6 +211,8 @@ export const parseLiteral = (
  *   MetaProperty
  *   MemberExpression[?Yield, ?Await] . PrivateIdentifier
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-MemberExpression
  */
 export const parseMemberExpression = (
   data: string,
@@ -248,6 +303,17 @@ export const parseMemberExpression = (
   return object;
 };
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * ObjectLiteral[Yield, Await] :
+ *   { }
+ *   { PropertyDefinitionList[?Yield, ?Await] }
+ *   { PropertyDefinitionList[?Yield, ?Await] , }
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ObjectLiteral
+ */
 export const parseObjectLiteral = (
   data: string,
   start: number,
@@ -288,6 +354,32 @@ export const parseObjectLiteral = (
   }
 };
 
+/**
+ * Supported from ECMA-262:
+ * ```ecmarkup
+ * PrimaryExpression[Yield, Await] :
+ *   IdentifierReference[?Yield, ?Await]
+ *   Literal
+ *   ArrayLiteral[?Yield, ?Await]
+ *   ObjectLiteral[?Yield, ?Await]
+ * ```
+ *
+ * Not supported from ECMA-262:
+ * ```ecmarkup
+ * PrimaryExpression[Yield, Await] :
+ *   this
+ *   FunctionExpression
+ *   ClassExpression[?Yield, ?Await]
+ *   GeneratorExpression
+ *   AsyncFunctionExpression
+ *   AsyncGeneratorExpression
+ *   RegularExpressionLiteral
+ *   TemplateLiteral[?Yield, ?Await, ~Tagged]
+ *   CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-PrimaryExpression
+ */
 export const parsePrimaryExpression = (
   data: string,
   start: number,
