@@ -4,8 +4,8 @@ import {
   NewExpression,
   StaticMemberExpression,
 } from '../ast';
-import { Parser, consume } from '../parser-utils';
 import { TokenType } from '../token-type';
+import { Parser, consume } from '../token-utils';
 import { parseArguments } from './arguments';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';

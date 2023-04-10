@@ -1,5 +1,5 @@
 import { CallExpression, Expression } from '../ast';
-import { Parser } from '../parser-utils';
+import { Parser } from '../token-utils';
 import { parseArguments } from './arguments';
 import { parseMemberExpression } from './member-expression';
 

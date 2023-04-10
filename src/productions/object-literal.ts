@@ -1,6 +1,6 @@
 import { ObjectLiteral, Property } from '../ast';
-import { Parser, consume } from '../parser-utils';
 import { TokenType } from '../token-type';
+import { Parser, consume } from '../token-utils';
 import { parseIdentifierName } from './identifier-name';
 import { parsePrimaryExpression } from './primary-expression';
 

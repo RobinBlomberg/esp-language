@@ -1,7 +1,7 @@
-import { Parser } from './parser-utils';
 import { punctuators } from './punctuators';
 import { Token } from './token';
 import { TokenType } from './token-type';
+import { Parser } from './token-utils';
 
 const createError = (c: string | undefined, i: number) => {
   return new SyntaxError(

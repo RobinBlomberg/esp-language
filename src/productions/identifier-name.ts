@@ -1,7 +1,7 @@
 import { Identifier } from '../ast';
 import { lex } from '../lex';
-import { Parser, match } from '../parser-utils';
 import { TokenType } from '../token-type';
+import { Parser, match } from '../token-utils';
 
 /**
  * Supported from ECMA-262:

@@ -3,9 +3,12 @@ import {
   UpdateExpression,
   UpdateOperatorTokenMatcher,
 } from '../ast';
-import { Parser, consumeToken } from '../parser-utils';
+import { isNodeSimple } from '../ast-utils';
+import { Parser, consumeToken } from '../token-utils';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
 import { parseUnaryExpression } from './unary-expression';
+
+const EARLY_ERROR = 'Invalid left-hand side in assignment';
 
 export const parseUpdateExpression: Parser<Expression> = (data, start) => {
   let i = start;
@@ -16,6 +19,10 @@ export const parseUpdateExpression: Parser<Expression> = (data, start) => {
 
     const argument = parseUnaryExpression(data, i);
     if (!argument) return null;
+
+    if (!isNodeSimple(argument)) {
+      throw new SyntaxError(EARLY_ERROR);
+    }
 
     return UpdateExpression(
       prefixOperator.start,
@@ -29,6 +36,10 @@ export const parseUpdateExpression: Parser<Expression> = (data, start) => {
   const argument = parseLeftHandSideExpression(data, i);
   if (argument) {
     i = argument.end;
+
+    if (!isNodeSimple(argument)) {
+      throw new SyntaxError(EARLY_ERROR);
+    }
 
     const postfixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
     if (postfixOperator) {

@@ -1,5 +1,5 @@
 import { Expression, UnaryExpression, UnaryOperatorTokenMatcher } from '../ast';
-import { Parser, consumeToken } from '../parser-utils';
+import { Parser, consumeToken } from '../token-utils';
 import { parseUpdateExpression } from './update-expression';
 
 export const parseUnaryExpression: Parser<Expression> = (data, start) => {

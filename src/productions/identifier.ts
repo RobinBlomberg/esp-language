@@ -1,6 +1,6 @@
 import { Identifier } from '../ast';
-import { Parser } from '../parser-utils';
 import { reservedWords } from '../reserved-words';
+import { Parser } from '../token-utils';
 import { parseIdentifierName } from './identifier-name';
 
 /**

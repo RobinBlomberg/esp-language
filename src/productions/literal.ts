@@ -1,7 +1,7 @@
 import { Literal } from '../ast';
 import { lex } from '../lex';
-import { Parser } from '../parser-utils';
 import { TokenType } from '../token-type';
+import { Parser } from '../token-utils';
 
 /**
  * Supported from ECMA-262:

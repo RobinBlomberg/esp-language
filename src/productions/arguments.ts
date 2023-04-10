@@ -1,6 +1,6 @@
 import { Arguments, Expression } from '../ast';
-import { Parser, consume } from '../parser-utils';
 import { TokenType } from '../token-type';
+import { Parser, consume } from '../token-utils';
 import { parseExpression } from './expression';
 
 export const parseArguments: Parser<Arguments> = (data, start) => {

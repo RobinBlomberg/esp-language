@@ -1,5 +1,5 @@
 import { Expression } from '../ast';
-import { Parser } from '../parser-utils';
+import { Parser } from '../token-utils';
 import { parseIdentifier } from './identifier';
 import { parseLiteral } from './literal';
 

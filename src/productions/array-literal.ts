@@ -1,6 +1,6 @@
 import { ArrayLiteral, Expression } from '../ast';
-import { Parser, consume } from '../parser-utils';
 import { TokenType } from '../token-type';
+import { Parser, consume } from '../token-utils';
 import { parsePrimaryExpression } from './primary-expression';
 
 /**

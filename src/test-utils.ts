@@ -10,4 +10,7 @@ export const createParseAssert = <T extends Node>(
   ok: (data: string, expected: T) => {
     expect(parse(data, 0)).toEqual(expected);
   },
+  throws: (data: string) => {
+    expect(() => parse(data, 0)).toThrow(SyntaxError);
+  },
 });
