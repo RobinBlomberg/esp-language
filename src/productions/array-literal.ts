@@ -1,5 +1,5 @@
 import * as ast from '../node-factory';
-import { ArrayLiteralNode, Expression } from '../nodes';
+import { ArrayLiteral, Expression } from '../nodes';
 import { consume } from '../parse-utils';
 import { TokenType as tt } from '../token-type';
 import { parsePrimaryExpression } from './primary-expression';
@@ -23,7 +23,7 @@ import { parsePrimaryExpression } from './primary-expression';
 export const parseArrayLiteral = (
   data: string,
   start: number,
-): ArrayLiteralNode | null => {
+): ArrayLiteral | null => {
   let i = start;
 
   const open = consume(data, i, tt.Punctuator, '[');

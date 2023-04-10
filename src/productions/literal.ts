@@ -1,6 +1,6 @@
 import { lex } from '../lex';
 import * as ast from '../node-factory';
-import { LiteralNode } from '../nodes';
+import { Literal } from '../nodes';
 import { TokenType as tt } from '../token-type';
 
 /**
@@ -15,10 +15,7 @@ import { TokenType as tt } from '../token-type';
  *
  * @see https://tc39.es/ecma262/#prod-Literal
  */
-export const parseLiteral = (
-  data: string,
-  start: number,
-): LiteralNode | null => {
+export const parseLiteral = (data: string, start: number): Literal | null => {
   const token = lex(data, start);
   if (!token) return null;
 

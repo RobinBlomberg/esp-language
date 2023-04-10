@@ -1,9 +1,9 @@
 import { NodeType } from './node-type';
 import {
-  IdentifierNode,
-  Literal,
-  NodeMap,
   Expression,
+  Identifier,
+  LiteralValue,
+  NodeMap,
   Property,
 } from './nodes';
 
@@ -40,7 +40,7 @@ export const identifier = (start: number, end: number, name: string) => {
   return createNode(start, end, NodeType.Identifier, { name });
 };
 
-export const literal = (start: number, end: number, value: Literal) => {
+export const literal = (start: number, end: number, value: LiteralValue) => {
   return createNode(start, end, NodeType.Literal, { value });
 };
 
@@ -67,7 +67,7 @@ export const objectLiteral = (
 export const property = (
   start: number,
   end: number,
-  key: IdentifierNode,
+  key: Identifier,
   value: Expression,
 ) => {
   return createNode(start, end, NodeType.Property, { key, value });
@@ -77,7 +77,7 @@ export const staticMemberExpression = (
   start: number,
   end: number,
   object: Expression,
-  property: IdentifierNode,
+  property: Identifier,
 ) => {
   return createNode(start, end, NodeType.StaticMemberExpression, {
     object,

@@ -1,6 +1,6 @@
 import { lex } from '../lex';
 import * as ast from '../node-factory';
-import { IdentifierNode } from '../nodes';
+import { Identifier } from '../nodes';
 import { match } from '../parse-utils';
 import { TokenType as tt } from '../token-type';
 
@@ -15,7 +15,7 @@ import { TokenType as tt } from '../token-type';
 export const parseIdentifierName = (
   data: string,
   start: number,
-): IdentifierNode | null => {
+): Identifier | null => {
   const node = lex(data, start);
   return match(node, tt.Name)
     ? ast.identifier(node.start, node.end, node.value)

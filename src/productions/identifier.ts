@@ -1,5 +1,5 @@
 import * as ast from '../node-factory';
-import { IdentifierNode } from '../nodes';
+import { Identifier } from '../nodes';
 import { reservedWords } from '../reserved-words';
 import { parseIdentifierName } from './identifier-name';
 
@@ -15,7 +15,7 @@ import { parseIdentifierName } from './identifier-name';
 export const parseIdentifier = (
   data: string,
   start: number,
-): IdentifierNode | null => {
+): Identifier | null => {
   const node = parseIdentifierName(data, start);
   return node && !reservedWords.has(node.name)
     ? ast.identifier(node.start, node.end, node.name)
