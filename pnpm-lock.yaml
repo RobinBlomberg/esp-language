@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 devDependencies:
+  '@robinblomberg/eslint-config-prettier':
+    specifier: ^0.1.4
+    version: 0.1.4
   '@robinblomberg/eslint-config-robinblomberg':
     specifier: ^0.14.0
     version: 0.14.0
@@ -557,6 +560,10 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+    dev: true
+
+  /@robinblomberg/eslint-config-prettier@0.1.4:
+    resolution: {integrity: sha512-gAGbmxj3fJFS2VQWfhyNCQ/GS96BrEDak+Axh1usVLkibVh7fTPIulR3RkttQP84BT8EP0OF+Uast4pqpDTKzg==}
     dev: true
 
   /@robinblomberg/eslint-config-robinblomberg@0.14.0:

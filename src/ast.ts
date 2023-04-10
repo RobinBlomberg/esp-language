@@ -1,4 +1,6 @@
 import { NodeType } from './node-type';
+import { TokenMatcher } from './token';
+import { TokenType as tt } from './token-type';
 
 const createNode = <T extends NodeType>(
   start: number,
@@ -87,7 +89,9 @@ export type Expression =
   | Literal
   | NewExpression
   | ObjectLiteral
-  | StaticMemberExpression;
+  | StaticMemberExpression
+  | UnaryExpression
+  | UpdateExpression;
 
 export type Identifier = {
   type: NodeType.Identifier;
@@ -146,6 +150,8 @@ export type NodeMap = {
   [NodeType.ObjectLiteral]: ObjectLiteral;
   [NodeType.Property]: Property;
   [NodeType.StaticMemberExpression]: StaticMemberExpression;
+  [NodeType.UnaryExpression]: UnaryExpression;
+  [NodeType.UpdateExpression]: UpdateExpression;
 };
 
 export type ObjectLiteral = {
@@ -199,3 +205,69 @@ export const StaticMemberExpression = (
     property,
   });
 };
+
+export type UnaryExpression = {
+  type: NodeType.UnaryExpression;
+  start: number;
+  end: number;
+  operator: UnaryOperator;
+  argument: Expression;
+};
+
+export const UnaryExpression = (
+  start: number,
+  end: number,
+  operator: UnaryOperator,
+  argument: Expression,
+) => {
+  return createNode(start, end, NodeType.UnaryExpression, {
+    operator,
+    argument,
+  });
+};
+
+export type UnaryOperator =
+  | 'delete'
+  | 'void'
+  | 'typeof'
+  | '+'
+  | '-'
+  | '~'
+  | '!';
+
+export const UnaryOperatorTokenMatch = [
+  TokenMatcher(tt.Name, 'delete'),
+  TokenMatcher(tt.Name, 'void'),
+  TokenMatcher(tt.Name, 'typeof'),
+  TokenMatcher(tt.Punctuator, '+'),
+  TokenMatcher(tt.Punctuator, '-'),
+  TokenMatcher(tt.Punctuator, '~'),
+  TokenMatcher(tt.Punctuator, '!'),
+];
+
+export type UpdateExpression = {
+  type: NodeType.UpdateExpression;
+  start: number;
+  end: number;
+  operator: UpdateOperator;
+  argument: Expression;
+  prefix: boolean;
+};
+
+export const UpdateExpression = (
+  start: number,
+  end: number,
+  operator: UpdateOperator,
+  argument: Expression,
+  prefix: boolean,
+) => {
+  return createNode(start, end, NodeType.UpdateExpression, {
+    operator,
+    argument,
+    prefix,
+  });
+};
+
+export type UpdateOperator = '++' | '--';
+
+export const UpdateOperator: UpdateOperator[] = ['++', '--'];

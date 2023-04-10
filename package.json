@@ -6,13 +6,16 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@robinblomberg/eslint-config-prettier": "^0.1.4",
     "@robinblomberg/eslint-config-robinblomberg": "^0.14.0",
     "vitest": "^0.29.8"
   },
   "eslintConfig": {
-    "extends": "@robinblomberg/eslint-config-robinblomberg",
+    "extends": [
+      "@robinblomberg/eslint-config-robinblomberg",
+      "@robinblomberg/eslint-config-prettier"
+    ],
     "rules": {
-      "@typescript-eslint/indent": 0,
       "curly": 0,
       "sort-keys/sort-keys-fix": 0
     }

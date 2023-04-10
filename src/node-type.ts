@@ -9,4 +9,6 @@ export const enum NodeType {
   ObjectLiteral = 'ObjectLiteral',
   Property = 'Property',
   StaticMemberExpression = 'StaticMemberExpression',
+  UnaryExpression = 'UnaryExpression',
+  UpdateExpression = 'UpdateExpression',
 }
