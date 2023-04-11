@@ -249,6 +249,14 @@ export const Property = (
   return createNode(start, end, NodeType.Property, { key, value });
 };
 
+export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
+
+export const RelationalOperatorTokenMatcher: TokenMatcher<RelationalOperator> =
+  {
+    [TokenType.Name]: ['instanceof', 'in'],
+    [TokenType.Punctuator]: ['<', '>', '<=', '>='],
+  };
+
 export type ShiftOperator = '<<' | '>>' | '>>>';
 
 export const ShiftOperatorTokenMatcher: TokenMatcher<ShiftOperator> = {
