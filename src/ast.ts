@@ -249,6 +249,12 @@ export const Property = (
   return createNode(start, end, NodeType.Property, { key, value });
 };
 
+export type ShiftOperator = '<<' | '>>' | '>>>';
+
+export const ShiftOperatorTokenMatcher: TokenMatcher<ShiftOperator> = {
+  [TokenType.Punctuator]: ['<<', '>>', '>>>'],
+};
+
 export type StaticMemberExpression = {
   type: NodeType.StaticMemberExpression;
   start: number;
