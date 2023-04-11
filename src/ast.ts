@@ -11,6 +11,12 @@ const createNode = <T extends NodeType>(
   return { start, end, type, ...properties } as NodeMap[T];
 };
 
+export type AdditiveOperator = '+' | '-';
+
+export const AdditiveOperatorTokenMatcher: TokenMatcher<AdditiveOperator> = {
+  [TokenType.Punctuator]: ['+', '-'],
+};
+
 export type Arguments = {
   type: NodeType.Arguments;
   start: number;

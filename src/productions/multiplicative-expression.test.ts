@@ -6,7 +6,7 @@ import { parseMultiplicativeExpression } from './multiplicative-expression';
 const { ok } = createParseAssert(parseMultiplicativeExpression);
 
 suite('MultiplicativeExpression', () => {
-  test('ExponentiationExpression', () => {
+  test('"ExponentiationExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
