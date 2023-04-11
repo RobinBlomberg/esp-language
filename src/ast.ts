@@ -58,8 +58,8 @@ export const BinaryExpression = (
   right: Expression,
 ) => {
   return createNode(start, end, NodeType.BinaryExpression, {
-    left,
     operator,
+    left,
     right,
   });
 };
@@ -165,6 +165,13 @@ export const Literal = (start: number, end: number, value: LiteralValue) => {
 };
 
 export type LiteralValue = boolean | null | number | string | undefined;
+
+export type MultiplicativeOperator = '*' | '/' | '%';
+
+export const MultiplicativeOperatorTokenMatcher: TokenMatcher<MultiplicativeOperator> =
+  {
+    [TokenType.Punctuator]: ['*', '/', '%'],
+  };
 
 export type NewExpression = {
   type: NodeType.NewExpression;

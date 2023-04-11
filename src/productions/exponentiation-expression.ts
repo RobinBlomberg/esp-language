@@ -21,6 +21,7 @@ export const parseExponentiationExpression: Parser<Expression> = (data, i) => {
 
   const operator = consume(data, i, TokenType.Punctuator, '**');
   if (operator) {
+    // TODO: Allow unary expressions here (e.g. `+a ** 2`).
     if (left.type === NodeType.UnaryExpression) return null;
     i = operator.end;
   } else return left;
