@@ -2,6 +2,7 @@ import { Statement } from '../ast';
 import { Parser } from '../token-utils';
 import { parseBlockStatement } from './block-statement';
 import { parseExpressionStatement } from './expression-statement';
+import { parseIfStatement } from './if-statement';
 
 /**
  * Supported from ECMA-262:
@@ -9,6 +10,7 @@ import { parseExpressionStatement } from './expression-statement';
  * Statement :
  *   BlockStatement
  *   ExpressionStatement
+ *   IfStatement
  * ```
  *
  * Not supported from ECMA-262:
@@ -16,7 +18,6 @@ import { parseExpressionStatement } from './expression-statement';
  * Statement :
  *   VariableStatement
  *   EmptyStatement
- *   IfStatement
  *   BreakableStatement
  *   ContinueStatement
  *   BreakStatement
@@ -31,5 +32,9 @@ import { parseExpressionStatement } from './expression-statement';
  * @see https://tc39.es/ecma262/#prod-Statement
  */
 export const parseStatement: Parser<Statement> = (data, i) => {
-  return parseBlockStatement(data, i) ?? parseExpressionStatement(data, i);
+  return (
+    parseBlockStatement(data, i) ??
+    parseIfStatement(data, i) ??
+    parseExpressionStatement(data, i)
+  );
 };

@@ -9,6 +9,7 @@ export const enum NodeType {
   ConditionalExpression = 'ConditionalExpression',
   ExpressionStatement = 'ExpressionStatement',
   Identifier = 'Identifier',
+  IfStatement = 'IfStatement',
   Literal = 'Literal',
   NewExpression = 'NewExpression',
   ObjectLiteral = 'ObjectLiteral',

@@ -273,6 +273,29 @@ export const Identifier = (start: number, end: number, name: string) => {
   return createNode(start, end, NodeType.Identifier, { name });
 };
 
+export type IfStatement = {
+  type: NodeType.IfStatement;
+  start: number;
+  end: number;
+  test: Expression;
+  consequent: Statement;
+  alternate: Statement | null;
+};
+
+export const IfStatement = (
+  start: number,
+  end: number,
+  test: Expression,
+  consequent: Statement,
+  alternate: Statement | null,
+) => {
+  return createNode(start, end, NodeType.IfStatement, {
+    test,
+    consequent,
+    alternate,
+  });
+};
+
 export type Literal = {
   type: NodeType.Literal;
   start: number;
@@ -321,6 +344,7 @@ export type NodeMap = {
   [NodeType.ConditionalExpression]: ConditionalExpression;
   [NodeType.ExpressionStatement]: ExpressionStatement;
   [NodeType.Identifier]: Identifier;
+  [NodeType.IfStatement]: IfStatement;
   [NodeType.Literal]: Literal;
   [NodeType.NewExpression]: NewExpression;
   [NodeType.ObjectLiteral]: ObjectLiteral;
@@ -366,7 +390,7 @@ export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
 
 export type ShiftOperator = '<<' | '>>' | '>>>';
 
-export type Statement = BlockStatement | ExpressionStatement;
+export type Statement = BlockStatement | ExpressionStatement | IfStatement;
 
 export type StaticMemberExpression = {
   type: NodeType.StaticMemberExpression;
