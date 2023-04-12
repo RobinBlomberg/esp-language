@@ -247,6 +247,21 @@ export type Expression =
   | UnaryExpression
   | UpdateExpression;
 
+export type ExpressionStatement = {
+  type: NodeType.ExpressionStatement;
+  start: number;
+  end: number;
+  expression: Expression;
+};
+
+export const ExpressionStatement = (
+  start: number,
+  end: number,
+  expression: Expression,
+) => {
+  return createNode(start, end, NodeType.ExpressionStatement, { expression });
+};
+
 export type Identifier = {
   type: NodeType.Identifier;
   start: number;
@@ -304,6 +319,7 @@ export type NodeMap = {
   [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
   [NodeType.ConditionalExpression]: ConditionalExpression;
+  [NodeType.ExpressionStatement]: ExpressionStatement;
   [NodeType.Identifier]: Identifier;
   [NodeType.Literal]: Literal;
   [NodeType.NewExpression]: NewExpression;
@@ -350,7 +366,7 @@ export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
 
 export type ShiftOperator = '<<' | '>>' | '>>>';
 
-export type Statement = BlockStatement;
+export type Statement = BlockStatement | ExpressionStatement;
 
 export type StaticMemberExpression = {
   type: NodeType.StaticMemberExpression;

@@ -6,8 +6,8 @@ import { parseStatement } from './statement';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * BlockStatement[Yield, Await, Return] :
- *   Block[?Yield, ?Await, ?Return]
+ * BlockStatement :
+ *   Block
  *
  * Block :
  *   { StatementList(opt) }

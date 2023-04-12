@@ -1,5 +1,5 @@
 import { suite, test } from 'vitest';
-import { BlockStatement } from '../ast';
+import { BlockStatement, ExpressionStatement, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseBlockStatement } from './block-statement';
 
@@ -16,10 +16,24 @@ suite('BlockStatement', () => {
         BlockStatement(3, 5, []),
       ]),
     );
+    ok(
+      '{a;}',
+      BlockStatement(0, 4, [ExpressionStatement(1, 3, Identifier(1, 2, 'a'))]),
+    );
+    ok(
+      '{{}a;}',
+      BlockStatement(0, 6, [
+        BlockStatement(1, 3, []),
+        ExpressionStatement(3, 5, Identifier(3, 4, 'a')),
+      ]),
+    );
     fail('{');
     fail('{{');
     fail('{{}');
     fail('{{}{');
     fail('{{}{}');
+    fail('{a');
+    fail('{a;');
+    fail('{a}');
   });
 });

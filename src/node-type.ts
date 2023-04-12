@@ -7,6 +7,7 @@ export const enum NodeType {
   CallExpression = 'CallExpression',
   ComputedMemberExpression = 'ComputedMemberExpression',
   ConditionalExpression = 'ConditionalExpression',
+  ExpressionStatement = 'ExpressionStatement',
   Identifier = 'Identifier',
   Literal = 'Literal',
   NewExpression = 'NewExpression',
