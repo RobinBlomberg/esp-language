@@ -13,10 +13,6 @@ const createNode = <T extends NodeType>(
 
 export type AdditiveOperator = '+' | '-';
 
-export const AdditiveOperatorTokenMatcher: TokenMatcher<AdditiveOperator> = {
-  [TokenType.Punctuator]: ['+', '-'],
-};
-
 export type Arguments = {
   type: NodeType.Arguments;
   start: number;
@@ -137,10 +133,6 @@ export const ComputedMemberExpression = (
 
 export type EqualityOperator = '==' | '!=';
 
-export const EqualityOperatorTokenMatcher: TokenMatcher<EqualityOperator> = {
-  [TokenType.Punctuator]: ['==', '!='],
-};
-
 export type Expression =
   | ArrayLiteral
   | BinaryExpression
@@ -179,11 +171,6 @@ export const Literal = (start: number, end: number, value: LiteralValue) => {
 export type LiteralValue = boolean | null | number | string | undefined;
 
 export type MultiplicativeOperator = '*' | '/' | '%';
-
-export const MultiplicativeOperatorTokenMatcher: TokenMatcher<MultiplicativeOperator> =
-  {
-    [TokenType.Punctuator]: ['*', '/', '%'],
-  };
 
 export type NewExpression = {
   type: NodeType.NewExpression;
@@ -257,17 +244,7 @@ export const Property = (
 
 export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
 
-export const RelationalOperatorTokenMatcher: TokenMatcher<RelationalOperator> =
-  {
-    [TokenType.Name]: ['instanceof', 'in'],
-    [TokenType.Punctuator]: ['<', '>', '<=', '>='],
-  };
-
 export type ShiftOperator = '<<' | '>>' | '>>>';
-
-export const ShiftOperatorTokenMatcher: TokenMatcher<ShiftOperator> = {
-  [TokenType.Punctuator]: ['<<', '>>', '>>>'],
-};
 
 export type StaticMemberExpression = {
   type: NodeType.StaticMemberExpression;

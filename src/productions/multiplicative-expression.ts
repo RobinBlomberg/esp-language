@@ -1,9 +1,5 @@
-import {
-  BinaryExpression,
-  Expression,
-  MultiplicativeOperatorTokenMatcher,
-} from '../ast';
-import { Parser, consumeToken } from '../token-utils';
+import { createLeftAssociativeBinaryExpressionParser } from '../parser-utils';
+import { TokenType } from '../token-type';
 import { parseExponentiationExpression } from './exponentiation-expression';
 
 /**
@@ -17,26 +13,7 @@ import { parseExponentiationExpression } from './exponentiation-expression';
  *
  * @see https://tc39.es/ecma262/#prod-MultiplicativeExpression
  */
-export const parseMultiplicativeExpression: Parser<Expression> = (data, i) => {
-  let expression = parseExponentiationExpression(data, i);
-  if (expression) i = expression.end;
-  else return null;
-
-  while (true) {
-    const operator = consumeToken(data, i, MultiplicativeOperatorTokenMatcher);
-    if (operator) i = operator.end;
-    else return expression;
-
-    const right = parseExponentiationExpression(data, operator.end);
-    if (right) i = right.end;
-    else return null;
-
-    expression = BinaryExpression(
-      expression.start,
-      right.end,
-      operator.value,
-      expression,
-      right,
-    );
-  }
-};
+export const parseMultiplicativeExpression =
+  createLeftAssociativeBinaryExpressionParser(parseExponentiationExpression, {
+    [TokenType.Punctuator]: ['*', '/', '%'],
+  });
