@@ -32,9 +32,12 @@ suite('ObjectLiteral', () => {
     fail('{a: 1, b');
     fail('{a: 1, b:');
     fail('{a: 1, b: 2');
+    fail('{a: 1, b: 2,');
     fail('{a: 1,}');
     fail('{a: }');
     fail('{a}');
+    fail('{,');
+    fail('{,}');
     fail('{, b: 2}');
   });
 });

@@ -9,36 +9,40 @@ import {
 import { createParseAssert } from '../test-utils';
 import { parseMemberExpression } from './member-expression';
 
-const { ok } = createParseAssert(parseMemberExpression);
+const { fail, ok } = createParseAssert(parseMemberExpression);
 
 suite('MemberExpression', () => {
   test('"PrimaryExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   test('"MemberExpression [ Expression ]"', () => {
     ok(
-      ' a[b] ',
+      'a[b]',
       ComputedMemberExpression(
-        1,
-        5,
-        Identifier(1, 2, 'a'),
-        Identifier(3, 4, 'b'),
+        0,
+        4,
+        Identifier(0, 1, 'a'),
+        Identifier(2, 3, 'b'),
       ),
     );
+    fail('a[');
+    fail('a[b');
   });
 
   suite('"MemberExpression . IdentifierName"', () => {
     it('should handle non-nested member expressions', () => {
       ok(
-        ' a.b ',
+        'a.b',
         StaticMemberExpression(
-          1,
-          4,
-          Identifier(1, 2, 'a'),
-          Identifier(3, 4, 'b'),
+          0,
+          3,
+          Identifier(0, 1, 'a'),
+          Identifier(2, 3, 'b'),
         ),
       );
+      fail('a.');
     });
 
     it('should handle nested member expressions', () => {
@@ -56,6 +60,7 @@ suite('MemberExpression', () => {
           Identifier(4, 5, 'c'),
         ),
       );
+      fail('a.b.');
     });
   });
 
@@ -80,6 +85,16 @@ suite('MemberExpression', () => {
           Arguments(9, 15, [Identifier(10, 11, 'd'), Identifier(13, 14, 'e')]),
         ),
       );
+      fail('new');
+      fail('new a');
+      fail('new a.');
+      fail('new a.b');
+      fail('new a.b.');
+      fail('new a.b.c');
+      fail('new a.b.c(');
+      fail('new a.b.c(d');
+      fail('new a.b.c(d,');
+      fail('new a.b.c(d, e');
     });
 
     it('should handle nested new expressions', () => {
@@ -92,6 +107,11 @@ suite('MemberExpression', () => {
           Arguments(11, 13, []),
         ),
       );
+      fail('new new');
+      fail('new new a');
+      fail('new new a(');
+      fail('new new a()');
+      fail('new new a()(');
     });
   });
 });

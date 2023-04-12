@@ -3,14 +3,20 @@ import { BinaryExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseBitwiseANDExpression } from './bitwise-and-expression';
 
-const { ok } = createParseAssert(parseBitwiseANDExpression);
+const { fail, ok } = createParseAssert(parseBitwiseANDExpression);
 
 suite('BitwiseANDExpression', () => {
   test('"EqualityExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"BitwiseANDExpression & EqualityExpression"', () => {
+    it('should parse', () => {
+      ok('a & b');
+      fail('a &');
+    });
+
     it('should respect operator precedence', () => {
       ok(
         'a & b == c & d != e',

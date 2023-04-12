@@ -8,9 +8,15 @@ const { fail, ok } = createParseAssert(parseExponentiationExpression);
 suite('ExponentiationExpression', () => {
   test('"UnaryExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"UpdateExpression ** ExponentiationExpression"', () => {
+    it('should parse', () => {
+      ok('a ** b');
+      fail('a **');
+    });
+
     it('should handle non-nested exponentiation expressions', () => {
       ok(
         '++a ** b',
@@ -22,7 +28,6 @@ suite('ExponentiationExpression', () => {
           Identifier(7, 8, 'b'),
         ),
       );
-      fail('-a ** b');
     });
 
     it('should handle nested exponentiation expressions', () => {

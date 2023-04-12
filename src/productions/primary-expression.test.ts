@@ -3,7 +3,7 @@ import { ArrayLiteral, Identifier, Literal, ObjectLiteral } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parsePrimaryExpression } from './primary-expression';
 
-const { ok } = createParseAssert(parsePrimaryExpression);
+const { fail, ok } = createParseAssert(parsePrimaryExpression);
 
 suite('PrimaryExpression', () => {
   test('"IdentifierReference"', () => {
@@ -23,9 +23,11 @@ suite('PrimaryExpression', () => {
 
   test('"ArrayLiteral"', () => {
     ok('[]', ArrayLiteral(0, 2, []));
+    fail('[');
   });
 
   test('"ObjectLiteral"', () => {
     ok('{}', ObjectLiteral(0, 2, []));
+    fail('{');
   });
 });

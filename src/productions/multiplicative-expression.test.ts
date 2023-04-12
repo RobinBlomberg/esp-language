@@ -3,15 +3,16 @@ import { BinaryExpression, Identifier, UnaryExpression } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseMultiplicativeExpression } from './multiplicative-expression';
 
-const { ok } = createParseAssert(parseMultiplicativeExpression);
+const { fail, ok } = createParseAssert(parseMultiplicativeExpression);
 
 suite('MultiplicativeExpression', () => {
   test('"ExponentiationExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"MultiplicativeExpression MultiplicativeOperator ExponentiationExpression"', () => {
-    it('should handle non-nested multiplicative expressions', () => {
+    it('should parse', () => {
       ok(
         'a * b',
         BinaryExpression(
@@ -22,6 +23,11 @@ suite('MultiplicativeExpression', () => {
           Identifier(4, 5, 'b'),
         ),
       );
+      ok('a / b');
+      ok('a % b');
+      fail('a *');
+      fail('a /');
+      fail('a %');
     });
 
     it('should handle nested multiplicative expressions', () => {

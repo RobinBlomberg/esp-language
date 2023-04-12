@@ -32,7 +32,9 @@ suite('ExpressionStatement', () => {
         ),
       ),
     );
+    fail(' ');
     fail('a');
     fail(';');
+    fail('a b');
   });
 });

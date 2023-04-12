@@ -3,14 +3,20 @@ import { BinaryExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseBitwiseORExpression } from './bitwise-or-expression';
 
-const { ok } = createParseAssert(parseBitwiseORExpression);
+const { fail, ok } = createParseAssert(parseBitwiseORExpression);
 
 suite('BitwiseORExpression', () => {
   test('"BitwiseXORExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"BitwiseORExpression ^ BitwiseXORExpression"', () => {
+    it('should parse', () => {
+      ok('a | b');
+      fail('a |');
+    });
+
     it('should respect operator precedence', () => {
       ok(
         'a | b ^ c | d ^ e',

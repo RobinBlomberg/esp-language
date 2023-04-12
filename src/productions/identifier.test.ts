@@ -9,6 +9,7 @@ suite('Identifier', () => {
   describe('"IdentifierName IdentifierPart"', () => {
     it('should accept non-reserved words', () => {
       ok(' falsey ', Identifier(1, 7, 'falsey'));
+      fail(' ');
     });
 
     it('should not accept reserved words', () => {

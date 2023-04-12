@@ -8,12 +8,6 @@ export const createParseAssert = <T extends Node>(
     expect(parse(data, 0)).toBeNull();
   };
 
-  const failAllSubstrings = (data: string, startIndex = 0) => {
-    for (let i = startIndex; i < data.length; i++) {
-      expect(parse(data.slice(0, i), 0)).toBeNull();
-    }
-  };
-
   const ok = (data: string, expected?: T) => {
     if (expected === undefined) {
       expect(parse(data, 0)).not.toBeNull();
@@ -26,5 +20,5 @@ export const createParseAssert = <T extends Node>(
     expect(() => parse(data, 0)).toThrow(SyntaxError);
   };
 
-  return { fail, failAllSubstrings, ok, throws };
+  return { fail, ok, throws };
 };

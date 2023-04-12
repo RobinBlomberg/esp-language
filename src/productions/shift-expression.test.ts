@@ -3,14 +3,24 @@ import { BinaryExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseShiftExpression } from './shift-expression';
 
-const { ok } = createParseAssert(parseShiftExpression);
+const { fail, ok } = createParseAssert(parseShiftExpression);
 
 suite('ShiftExpression', () => {
   test('"AdditiveExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"ShiftExpression (<<|>>|>>>) AdditiveExpression"', () => {
+    it('should parse', () => {
+      ok('a << b');
+      ok('a >> b');
+      ok('a >>> b');
+      fail('a <<');
+      fail('a >>');
+      fail('a >>>');
+    });
+
     it('should respect operator precedence', () => {
       ok(
         'a << b + c >> d - e',

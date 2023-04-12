@@ -3,14 +3,22 @@ import { BinaryExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseEqualityExpression } from './equality-expression';
 
-const { ok } = createParseAssert(parseEqualityExpression);
+const { fail, ok } = createParseAssert(parseEqualityExpression);
 
 suite('EqualityExpression', () => {
   test('"RelationalExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"EqualityExpression (==|!=) RelationalExpression"', () => {
+    it('should parse', () => {
+      ok('a == b');
+      ok('a != b');
+      fail('a ==');
+      fail('a !=');
+    });
+
     it('should respect operator precedence', () => {
       ok(
         'a == b < c != d in e',

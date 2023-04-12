@@ -3,14 +3,20 @@ import { BinaryExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseLogicalORExpression } from './logical-or-expression';
 
-const { ok } = createParseAssert(parseLogicalORExpression);
+const { fail, ok } = createParseAssert(parseLogicalORExpression);
 
 suite('LogicalORExpression', () => {
   test('"LogicalANDExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"LogicalORExpression || LogicalANDExpression"', () => {
+    it('should parse', () => {
+      ok('a || b');
+      fail('a ||');
+    });
+
     it('should respect operator precedence', () => {
       ok(
         'a || b && c || d && e',

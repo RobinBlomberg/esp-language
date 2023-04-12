@@ -9,6 +9,7 @@ suite('UnaryExpression', () => {
   test('"UpdateExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
     ok('deletes a', Identifier(0, 7, 'deletes'));
+    fail(' ');
   });
 
   test('"delete UnaryExpression"', () => {

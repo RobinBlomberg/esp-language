@@ -3,14 +3,22 @@ import { BinaryExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseAdditiveExpression } from './additive-expression';
 
-const { ok } = createParseAssert(parseAdditiveExpression);
+const { fail, ok } = createParseAssert(parseAdditiveExpression);
 
 suite('AdditiveExpression', () => {
   test('"MultiplicativeExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    fail(' ');
   });
 
   describe('"AdditiveExpression (+|-) MultiplicativeExpression"', () => {
+    it('should parse', () => {
+      ok('a + b');
+      ok('a - b');
+      fail('a +');
+      fail('a -');
+    });
+
     it('should respect operator precedence', () => {
       ok(
         'a + b * c - d / e',

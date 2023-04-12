@@ -1,21 +1,49 @@
 import { describe, it, suite, test } from 'vitest';
-import { Arguments, CallExpression, Identifier } from '../ast';
+import {
+  Arguments,
+  CallExpression,
+  ComputedMemberExpression,
+  Identifier,
+  StaticMemberExpression,
+} from '../ast';
 import { createParseAssert } from '../test-utils';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
 
-const { ok } = createParseAssert(parseLeftHandSideExpression);
+const { fail, ok } = createParseAssert(parseLeftHandSideExpression);
 
 suite('LeftHandSideExpression', () => {
   test('"NewExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    ok(
+      'a.b',
+      StaticMemberExpression(
+        0,
+        3,
+        Identifier(0, 1, 'a'),
+        Identifier(2, 3, 'b'),
+      ),
+    );
+    ok(
+      'a[b]',
+      ComputedMemberExpression(
+        0,
+        4,
+        Identifier(0, 1, 'a'),
+        Identifier(2, 3, 'b'),
+      ),
+    );
+    fail(' ');
   });
 
   describe('"CallExpression"', () => {
-    it('should handle non-nested call expressions', () => {
+    it('should parse', () => {
       ok(
         'a()',
         CallExpression(0, 3, Identifier(0, 1, 'a'), Arguments(1, 3, [])),
       );
+    });
+
+    it('should handle non-nested call expressions', () => {
       ok(
         'a(b)',
         CallExpression(

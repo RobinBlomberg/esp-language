@@ -8,6 +8,8 @@ const { fail, ok } = createParseAssert(parseLiteral);
 suite('Literal', () => {
   test('"NullLiteral"', () => {
     ok(' null ', Literal(1, 5, null));
+    fail(' ');
+    fail('nul');
   });
 
   test('"BooleanLiteral"', () => {
@@ -17,10 +19,14 @@ suite('Literal', () => {
   });
 
   test('"NumericLiteral"', () => {
+    ok('0', Literal(0, 1, 0));
     ok('0.123', Literal(0, 5, 0.123));
+    ok('456', Literal(0, 3, 456));
+    ok('987.6543210', Literal(0, 11, 987.654321));
   });
 
   test('"StringLiteral"', () => {
+    ok('""', Literal(0, 2, ''));
     ok('"ab\\"cd"', Literal(0, 8, 'ab"cd'));
   });
 

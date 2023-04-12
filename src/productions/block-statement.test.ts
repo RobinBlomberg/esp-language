@@ -35,5 +35,6 @@ suite('BlockStatement', () => {
     fail('{a');
     fail('{a;');
     fail('{a}');
+    fail('{;}');
   });
 });

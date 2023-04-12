@@ -9,6 +9,7 @@ suite('Expression', () => {
   test('"ConditionalExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
     ok('a()');
+    fail(' ');
   });
 
   describe('"LeftHandSideExpression AssignmentOperator Expression"', () => {
@@ -39,6 +40,20 @@ suite('Expression', () => {
       ok('a &&= b');
       ok('a ||= b');
       fail('a =');
+      fail('a *=');
+      fail('a /=');
+      fail('a %=');
+      fail('a +=');
+      fail('a -=');
+      fail('a <<=');
+      fail('a >>=');
+      fail('a >>>=');
+      fail('a &=');
+      fail('a ^=');
+      fail('a |=');
+      fail('a **=');
+      fail('a &&=');
+      fail('a ||=');
     });
 
     it('should throw an early error if the left-hand side is not simple', () => {
