@@ -43,6 +43,67 @@ export const ArrayLiteral = (
   return createNode(start, end, NodeType.ArrayLiteral, { elements });
 };
 
+export type AssignmentExpression = {
+  type: NodeType.AssignmentExpression;
+  start: number;
+  end: number;
+  operator: AssignmentOperator;
+  left: Expression;
+  right: Expression;
+};
+
+export const AssignmentExpression = (
+  start: number,
+  end: number,
+  operator: AssignmentOperator,
+  left: Expression,
+  right: Expression,
+) => {
+  return createNode(start, end, NodeType.AssignmentExpression, {
+    operator,
+    left,
+    right,
+  });
+};
+
+export type AssignmentOperator =
+  | '='
+  | '*='
+  | '/='
+  | '%='
+  | '+='
+  | '-='
+  | '<<='
+  | '>>='
+  | '>>>='
+  | '&='
+  | '^='
+  | '|='
+  | '**='
+  | '&&='
+  | '||=';
+
+export const AssignmentOperatorTokenMatcher: TokenMatcher<AssignmentOperator> =
+  {
+    [TokenType.Punctuator]: [
+      '=',
+      '*=',
+      '/=',
+      '%=',
+      '+=',
+      '-=',
+      '<<=',
+      '>>=',
+      '>>>=',
+      '&=',
+      '^=',
+      '|=',
+      '**=',
+      '&&=',
+      '||=',
+    ],
+  };
+
 export type BinaryExpression = {
   type: NodeType.BinaryExpression;
   start: number;
@@ -135,6 +196,7 @@ export type EqualityOperator = '==' | '!=';
 
 export type Expression =
   | ArrayLiteral
+  | AssignmentExpression
   | BinaryExpression
   | CallExpression
   | ComputedMemberExpression
@@ -197,6 +259,7 @@ export type Node = Expression;
 export type NodeMap = {
   [NodeType.Arguments]: Arguments;
   [NodeType.ArrayLiteral]: ArrayLiteral;
+  [NodeType.AssignmentExpression]: AssignmentExpression;
   [NodeType.BinaryExpression]: BinaryExpression;
   [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
