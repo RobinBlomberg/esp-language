@@ -49,12 +49,12 @@ export const parseUpdateExpression: Parser<Expression> = (data, start) => {
   if (argument) {
     i = argument.end;
 
-    if (!isNodeSimple(argument)) {
-      throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
-    }
-
     const postfixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
     if (postfixOperator) {
+      if (!isNodeSimple(argument)) {
+        throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
+      }
+
       return UpdateExpression(
         argument.start,
         postfixOperator.end,

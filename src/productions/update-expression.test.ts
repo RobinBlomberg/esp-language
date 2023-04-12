@@ -8,6 +8,7 @@ const { ok, throws } = createParseAssert(parseUpdateExpression);
 suite('UpdateExpression', () => {
   test('"LeftHandSideExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    ok('a()');
   });
 
   test('"LeftHandSideExpression (++|--)"', () => {

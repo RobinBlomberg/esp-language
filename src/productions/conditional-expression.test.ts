@@ -5,9 +5,10 @@ import { parseConditionalExpression } from './conditional-expression';
 
 const { fail, ok } = createParseAssert(parseConditionalExpression);
 
-suite('AssignmentExpression', () => {
+suite('ConditionalExpression', () => {
   test('"LogicalORExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    ok('a()');
   });
 
   test('"LogicalORExpression ? AssignmentExpression : AssignmentExpression"', () => {

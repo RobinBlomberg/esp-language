@@ -8,6 +8,7 @@ const { fail, ok, throws } = createParseAssert(parseAssignmentExpression);
 suite('AssignmentExpression', () => {
   test('"ConditionalExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
+    ok('a()');
   });
 
   describe('"LeftHandSideExpression AssignmentOperator AssignmentExpression"', () => {
