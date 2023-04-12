@@ -25,7 +25,7 @@ import { parseShiftExpression } from './shift-expression';
  *   PrivateIdentifier in ShiftExpression
  * ```
  *
- * @see https://tc39.es/ecma262/#prod-ShiftExpression
+ * @see https://tc39.es/ecma262/#prod-RelationalExpression
  */
 export const parseRelationalExpression: Parser<Expression> = (data, i) => {
   let expression = parseShiftExpression(data, i);

@@ -135,6 +135,12 @@ export const ComputedMemberExpression = (
   });
 };
 
+export type EqualityOperator = '==' | '!=';
+
+export const EqualityOperatorTokenMatcher: TokenMatcher<EqualityOperator> = {
+  [TokenType.Punctuator]: ['==', '!='],
+};
+
 export type Expression =
   | ArrayLiteral
   | BinaryExpression
