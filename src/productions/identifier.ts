@@ -12,8 +12,8 @@ import { parseIdentifierName } from './identifier-name';
  *
  * @see https://tc39.es/ecma262/#prod-Identifier
  */
-export const parseIdentifier: Parser<Identifier> = (data, start) => {
-  const node = parseIdentifierName(data, start);
+export const parseIdentifier: Parser<Identifier> = (data, i) => {
+  const node = parseIdentifierName(data, i);
   return node && !reservedWords.has(node.name)
     ? Identifier(node.start, node.end, node.name)
     : null;

@@ -31,11 +31,11 @@ import { parseObjectLiteral } from './object-literal';
  *
  * @see https://tc39.es/ecma262/#prod-PrimaryExpression
  */
-export const parsePrimaryExpression: Parser<Expression> = (data, start) => {
+export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
   return (
-    parseLiteral(data, start) ??
-    parseIdentifier(data, start) ??
-    parseArrayLiteral(data, start) ??
-    parseObjectLiteral(data, start)
+    parseLiteral(data, i) ??
+    parseIdentifier(data, i) ??
+    parseArrayLiteral(data, i) ??
+    parseObjectLiteral(data, i)
   );
 };

@@ -21,8 +21,8 @@ import { Parser } from '../token-utils';
  *
  * @see https://tc39.es/ecma262/#prod-Literal
  */
-export const parseLiteral: Parser<Literal> = (data, start) => {
-  const token = lex(data, start);
+export const parseLiteral: Parser<Literal> = (data, i) => {
+  const token = lex(data, i);
   if (!token) return null;
 
   switch (token.type) {
@@ -48,7 +48,7 @@ export const parseLiteral: Parser<Literal> = (data, start) => {
     case TokenType.String: {
       let value = '';
 
-      for (let i = 1; i < token.value.length - 1; i++) {
+      for (i = 1; i < token.value.length - 1; i++) {
         if (token.value[i] === '\\') {
           i++;
         }

@@ -22,9 +22,7 @@ import { parseUnaryExpression } from './unary-expression';
  *
  * @see https://tc39.es/ecma262/#prod-UpdateExpression
  */
-export const parseUpdateExpression: Parser<Expression> = (data, start) => {
-  let i = start;
-
+export const parseUpdateExpression: Parser<Expression> = (data, i) => {
   const prefixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
   if (prefixOperator) {
     i = prefixOperator.end;

@@ -11,8 +11,8 @@ import { Parser, match } from '../token-utils';
  *   IdentifierName IdentifierPart
  * ```
  */
-export const parseIdentifierName: Parser<Identifier> = (data, start) => {
-  const node = lex(data, start);
+export const parseIdentifierName: Parser<Identifier> = (data, i) => {
+  const node = lex(data, i);
   return match(node, TokenType.Name)
     ? Identifier(node.start, node.end, node.value)
     : null;

@@ -19,11 +19,8 @@ import { parseMemberExpression } from './member-expression';
  *
  * @see https://tc39.es/ecma262/#prod-LeftHandSideExpression
  */
-export const parseLeftHandSideExpression: Parser<Expression> = (
-  data,
-  start,
-) => {
-  let callee = parseMemberExpression(data, start);
+export const parseLeftHandSideExpression: Parser<Expression> = (data, i) => {
+  let callee = parseMemberExpression(data, i);
   if (!callee) return null;
 
   while (true) {

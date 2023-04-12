@@ -24,9 +24,7 @@ import { parseUpdateExpression } from './update-expression';
  *
  * @see https://tc39.es/ecma262/#prod-UnaryExpression
  */
-export const parseUnaryExpression: Parser<Expression> = (data, start) => {
-  let i = start;
-
+export const parseUnaryExpression: Parser<Expression> = (data, i) => {
   const operator = consumeToken(data, i, UnaryOperatorTokenMatcher);
 
   if (operator) {

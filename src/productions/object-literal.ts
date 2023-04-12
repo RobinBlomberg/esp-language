@@ -20,9 +20,7 @@ import { parsePrimaryExpression } from './primary-expression';
  *
  * @see https://tc39.es/ecma262/#prod-ObjectLiteral
  */
-export const parseObjectLiteral: Parser<ObjectLiteral> = (data, start) => {
-  let i = start;
-
+export const parseObjectLiteral: Parser<ObjectLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '{');
   if (open) i = open.end;
   else return null;

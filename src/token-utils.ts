@@ -2,24 +2,24 @@ import { lex } from './lex';
 import { Token, TokenMatcher } from './token';
 import { TokenType } from './token-type';
 
-export type Parser<T> = (data: string, start: number) => T | null;
+export type Parser<T> = (data: string, i: number) => T | null;
 
 export const consume = <T extends TokenType, V extends string = string>(
   data: string,
-  start: number,
+  i: number,
   type: T,
   value?: V,
 ): Token<T, V> | null => {
-  const token = lex(data, start);
+  const token = lex(data, i);
   return match(token, type, value) ? token : null;
 };
 
 export const consumeToken = <T extends TokenMatcher>(
   data: string,
-  start: number,
+  i: number,
   expected: T,
 ): (T extends TokenMatcher<infer V> ? Token<TokenType, V> : never) | null => {
-  const token = lex(data, start);
+  const token = lex(data, i);
   return matchToken(token, expected) ? token : null;
 };
 

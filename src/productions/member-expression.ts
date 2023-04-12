@@ -33,9 +33,7 @@ import { parsePrimaryExpression } from './primary-expression';
  *
  * @see https://tc39.es/ecma262/#prod-MemberExpression
  */
-export const parseMemberExpression: Parser<Expression> = (data, start) => {
-  let i = start;
-
+export const parseMemberExpression: Parser<Expression> = (data, i) => {
   const newKeyword = consume(data, i, TokenType.Name, 'new');
   if (newKeyword) {
     i = newKeyword.end;
