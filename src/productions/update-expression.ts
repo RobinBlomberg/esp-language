@@ -4,11 +4,10 @@ import {
   UpdateOperatorTokenMatcher,
 } from '../ast';
 import { isNodeSimple } from '../ast-utils';
+import { errors } from '../errors';
 import { Parser, consumeToken } from '../token-utils';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
 import { parseUnaryExpression } from './unary-expression';
-
-const EARLY_ERROR = 'Invalid left-hand side in assignment';
 
 /**
  * Supported from ECMA-262:
@@ -34,7 +33,7 @@ export const parseUpdateExpression: Parser<Expression> = (data, start) => {
     if (!argument) return null;
 
     if (!isNodeSimple(argument)) {
-      throw new SyntaxError(EARLY_ERROR);
+      throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
     }
 
     return UpdateExpression(
@@ -51,7 +50,7 @@ export const parseUpdateExpression: Parser<Expression> = (data, start) => {
     i = argument.end;
 
     if (!isNodeSimple(argument)) {
-      throw new SyntaxError(EARLY_ERROR);
+      throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
     }
 
     const postfixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);

@@ -5,6 +5,7 @@ export const enum NodeType {
   BinaryExpression = 'BinaryExpression',
   CallExpression = 'CallExpression',
   ComputedMemberExpression = 'ComputedMemberExpression',
+  ConditionalExpression = 'ConditionalExpression',
   Identifier = 'Identifier',
   Literal = 'Literal',
   NewExpression = 'NewExpression',

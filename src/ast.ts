@@ -192,6 +192,29 @@ export const ComputedMemberExpression = (
   });
 };
 
+export type ConditionalExpression = {
+  type: NodeType.ConditionalExpression;
+  start: number;
+  end: number;
+  test: Expression;
+  alternate: Expression;
+  consequent: Expression;
+};
+
+export const ConditionalExpression = (
+  start: number,
+  end: number,
+  test: Expression,
+  alternate: Expression,
+  consequent: Expression,
+) => {
+  return createNode(start, end, NodeType.ConditionalExpression, {
+    test,
+    alternate,
+    consequent,
+  });
+};
+
 export type EqualityOperator = '==' | '!=';
 
 export type Expression =
@@ -200,6 +223,7 @@ export type Expression =
   | BinaryExpression
   | CallExpression
   | ComputedMemberExpression
+  | ConditionalExpression
   | Identifier
   | Literal
   | NewExpression
@@ -263,6 +287,7 @@ export type NodeMap = {
   [NodeType.BinaryExpression]: BinaryExpression;
   [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
+  [NodeType.ConditionalExpression]: ConditionalExpression;
   [NodeType.Identifier]: Identifier;
   [NodeType.Literal]: Literal;
   [NodeType.NewExpression]: NewExpression;
