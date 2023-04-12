@@ -352,6 +352,7 @@ export type NodeMap = {
   [NodeType.StaticMemberExpression]: StaticMemberExpression;
   [NodeType.UnaryExpression]: UnaryExpression;
   [NodeType.UpdateExpression]: UpdateExpression;
+  [NodeType.WhileStatement]: WhileStatement;
 };
 
 export type ObjectLiteral = {
@@ -390,7 +391,11 @@ export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
 
 export type ShiftOperator = '<<' | '>>' | '>>>';
 
-export type Statement = BlockStatement | ExpressionStatement | IfStatement;
+export type Statement =
+  | BlockStatement
+  | ExpressionStatement
+  | IfStatement
+  | WhileStatement;
 
 export type StaticMemberExpression = {
   type: NodeType.StaticMemberExpression;
@@ -475,4 +480,21 @@ export const UpdateOperator: UpdateOperator[] = ['++', '--'];
 
 export const UpdateOperatorTokenMatcher: TokenMatcher<UpdateOperator> = {
   [TokenType.Punctuator]: UpdateOperator,
+};
+
+export type WhileStatement = {
+  type: NodeType.WhileStatement;
+  start: number;
+  end: number;
+  test: Expression;
+  body: Statement;
+};
+
+export const WhileStatement = (
+  start: number,
+  end: number,
+  test: Expression,
+  body: Statement,
+) => {
+  return createNode(start, end, NodeType.WhileStatement, { test, body });
 };

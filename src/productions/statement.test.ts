@@ -34,4 +34,12 @@ suite('Statement', () => {
     );
     fail('if (a)');
   });
+
+  test('"WhileStatement"', () => {
+    ok('while ( Expression ) Statement;');
+    fail('while');
+    fail('while (');
+    fail('while ( Expression');
+    fail('while ( Expression )');
+  });
 });

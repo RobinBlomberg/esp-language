@@ -17,4 +17,5 @@ export const enum NodeType {
   StaticMemberExpression = 'StaticMemberExpression',
   UnaryExpression = 'UnaryExpression',
   UpdateExpression = 'UpdateExpression',
+  WhileStatement = 'WhileStatement',
 }
