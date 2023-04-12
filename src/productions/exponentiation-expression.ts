@@ -7,9 +7,9 @@ import { parseUnaryExpression } from './unary-expression';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * ExponentiationExpression[Yield, Await] :
- *   UnaryExpression[?Yield, ?Await]
- *   UpdateExpression[?Yield, ?Await] ** ExponentiationExpression[?Yield, ?Await]
+ * ExponentiationExpression :
+ *   UnaryExpression
+ *   UpdateExpression ** ExponentiationExpression
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-ExponentiationExpression

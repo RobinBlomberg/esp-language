@@ -3,11 +3,11 @@ import { Parser } from '../token-utils';
 import { parseMemberExpression } from './member-expression';
 
 /**
- * Not supported from ECMA-262:
+ * Supported from ECMA-262:
  * ```ecmarkup
- * Expression[In, Yield, Await] :
- *   AssignmentExpression[?In, ?Yield, ?Await]
- *   Expression[?In, ?Yield, ?Await] , AssignmentExpression[?In, ?Yield, ?Await]
+ * Expression :
+ *   AssignmentExpression
+ *   Expression , AssignmentExpression
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-Expression

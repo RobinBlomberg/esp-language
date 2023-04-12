@@ -7,10 +7,10 @@ import { parsePrimaryExpression } from './primary-expression';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * ObjectLiteral[Yield, Await] :
+ * ObjectLiteral :
  *   { }
- *   { PropertyDefinitionList[?Yield, ?Await] }
- *   { PropertyDefinitionList[?Yield, ?Await] , }
+ *   { PropertyDefinitionList }
+ *   { PropertyDefinitionList , }
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-ObjectLiteral

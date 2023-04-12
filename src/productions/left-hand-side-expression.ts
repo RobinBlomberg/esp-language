@@ -6,15 +6,15 @@ import { parseMemberExpression } from './member-expression';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * LeftHandSideExpression[Yield, Await] :
- *   NewExpression[?Yield, ?Await]
- *   CallExpression[?Yield, ?Await]
+ * LeftHandSideExpression :
+ *   NewExpression
+ *   CallExpression
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
- * LeftHandSideExpression[Yield, Await] :
- *   OptionalExpression[?Yield, ?Await]
+ * LeftHandSideExpression :
+ *   OptionalExpression
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-LeftHandSideExpression

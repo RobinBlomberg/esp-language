@@ -15,20 +15,20 @@ import { parsePrimaryExpression } from './primary-expression';
  * Supported from ECMA-262:
  *
  * ```ecmarkup
- * MemberExpression[Yield, Await] :
- *   PrimaryExpression[?Yield, ?Await]
- *   MemberExpression[?Yield, ?Await] [ Expression[+In, ?Yield, ?Await] ]
- *   MemberExpression[?Yield, ?Await] . IdentifierName
- *   new MemberExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
+ * MemberExpression :
+ *   PrimaryExpression
+ *   MemberExpression [ Expression ]
+ *   MemberExpression . IdentifierName
+ *   new MemberExpression Arguments
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
- * MemberExpression[Yield, Await] :
- *   MemberExpression[?Yield, ?Await] TemplateLiteral[?Yield, ?Await, +Tagged]
- *   SuperProperty[?Yield, ?Await]
+ * MemberExpression :
+ *   MemberExpression TemplateLiteral
+ *   SuperProperty
  *   MetaProperty
- *   MemberExpression[?Yield, ?Await] . PrivateIdentifier
+ *   MemberExpression . PrivateIdentifier
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-MemberExpression

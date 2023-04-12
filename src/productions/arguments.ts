@@ -6,10 +6,10 @@ import { parseExpression } from './expression';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * Arguments[Yield, Await] :
+ * Arguments :
  *   ( )
- *   ( ArgumentList[?Yield, ?Await] )
- *   ( ArgumentList[?Yield, ?Await] , )
+ *   ( ArgumentList )
+ *   ( ArgumentList , )
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-Arguments

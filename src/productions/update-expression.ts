@@ -12,12 +12,12 @@ import { parseUnaryExpression } from './unary-expression';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * UpdateExpression[Yield, Await] :
- *   LeftHandSideExpression[?Yield, ?Await]
- *   LeftHandSideExpression[?Yield, ?Await] [no LineTerminator here] ++
- *   LeftHandSideExpression[?Yield, ?Await] [no LineTerminator here] --
- *   ++ UnaryExpression[?Yield, ?Await]
- *   -- UnaryExpression[?Yield, ?Await]
+ * UpdateExpression :
+ *   LeftHandSideExpression
+ *   LeftHandSideExpression ++
+ *   LeftHandSideExpression --
+ *   ++ UnaryExpression
+ *   -- UnaryExpression
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-UpdateExpression

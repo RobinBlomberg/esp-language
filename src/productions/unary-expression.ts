@@ -5,21 +5,21 @@ import { parseUpdateExpression } from './update-expression';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * UnaryExpression[Yield, Await] :
- *   UpdateExpression[?Yield, ?Await]
- *   delete UnaryExpression[?Yield, ?Await]
- *   void UnaryExpression[?Yield, ?Await]
- *   typeof UnaryExpression[?Yield, ?Await]
- *   + UnaryExpression[?Yield, ?Await]
- *   - UnaryExpression[?Yield, ?Await]
- *   ~ UnaryExpression[?Yield, ?Await]
- *   ! UnaryExpression[?Yield, ?Await]
+ * UnaryExpression :
+ *   UpdateExpression
+ *   delete UnaryExpression
+ *   void UnaryExpression
+ *   typeof UnaryExpression
+ *   + UnaryExpression
+ *   - UnaryExpression
+ *   ~ UnaryExpression
+ *   ! UnaryExpression
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
- * UnaryExpression[Yield, Await] :
- *   [+Await] AwaitExpression[?Yield]
+ * UnaryExpression :
+ *   AwaitExpression
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-UnaryExpression

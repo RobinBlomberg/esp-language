@@ -6,15 +6,15 @@ import { parsePrimaryExpression } from './primary-expression';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * ArrayLiteral[Yield, Await] :
- *   [ ElementList[?Yield, ?Await] ]
+ * ArrayLiteral :
+ *   [ ElementList ]
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
- * ArrayLiteral[Yield, Await] :
- *   [ Elisionopt ]
- *   [ ElementList[?Yield, ?Await] , Elisionopt ]
+ * ArrayLiteral
+ *   [ Elision(opt) ]
+ *   [ ElementList , Elision(opt) ]
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-ArrayLiteral

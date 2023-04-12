@@ -8,25 +8,25 @@ import { parseObjectLiteral } from './object-literal';
 /**
  * Supported from ECMA-262:
  * ```ecmarkup
- * PrimaryExpression[Yield, Await] :
- *   IdentifierReference[?Yield, ?Await]
+ * PrimaryExpression :
+ *   IdentifierReference
  *   Literal
- *   ArrayLiteral[?Yield, ?Await]
- *   ObjectLiteral[?Yield, ?Await]
+ *   ArrayLiteral
+ *   ObjectLiteral
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
- * PrimaryExpression[Yield, Await] :
+ * PrimaryExpression :
  *   this
  *   FunctionExpression
- *   ClassExpression[?Yield, ?Await]
+ *   ClassExpression
  *   GeneratorExpression
  *   AsyncFunctionExpression
  *   AsyncGeneratorExpression
  *   RegularExpressionLiteral
- *   TemplateLiteral[?Yield, ?Await, ~Tagged]
- *   CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
+ *   TemplateLiteral
+ *   CoverParenthesizedExpressionAndArrowParameterList
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-PrimaryExpression
