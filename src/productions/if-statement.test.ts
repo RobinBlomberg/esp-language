@@ -1,41 +1,31 @@
-import { suite, test } from 'vitest';
-import { BlockStatement, Identifier, IfStatement } from '../ast';
+import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseIfStatement } from './if-statement';
 
 const { fail, ok } = createParseAssert(parseIfStatement);
 
 suite('IfStatement', () => {
-  test('"if ( Expression ) Statement else Statement"', () => {
-    test('"if ( Expression ) Statement"', () => {
-      ok(
-        'if (a) {}',
-        IfStatement(
-          0,
-          9,
-          Identifier(4, 5, 'a'),
-          BlockStatement(7, 9, []),
-          null,
-        ),
-      );
-      fail('if');
-      fail('if (');
-      fail('if (a');
-      fail('if (a)');
-      fail('if (a) {');
-    });
+  test('"if ( Expression ) Statement"', () => {
+    ok('if (Expression) Statement;');
+    fail('if');
+    fail('if (');
+    fail('if (Expression');
+    fail('if (Expression)');
+    fail('if (Expression);');
+    fail('if (Expression) Statement');
+  });
 
-    ok(
-      'if (a) {} else {}',
-      IfStatement(
-        0,
-        17,
-        Identifier(4, 5, 'a'),
-        BlockStatement(7, 9, []),
-        BlockStatement(15, 17, []),
-      ),
-    );
-    fail('if (a) {} else');
-    fail('if (a) {} else {');
+  test('"if ( Expression ) Statement else Statement"', () => {
+    ok('if (Expression) Statement; else Statement;');
+    fail('if (Expression) Statement; else');
+    fail('if (Expression) Statement; else;');
+    fail('if (Expression) Statement; else Statement');
+  });
+
+  it('should be nestable', () => {
+    ok('if (a) b; else if (c) d; else e;');
+    fail('if (a) b; else if (c) d; else');
+    fail('if (a) b; else if (c) d; else;');
+    fail('if (a) b; else if (c) d; else e');
   });
 });

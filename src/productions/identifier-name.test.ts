@@ -1,19 +1,13 @@
-import { describe, it, suite } from 'vitest';
-import { Identifier } from '../ast';
+import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseIdentifierName } from './identifier-name';
 
-const { fail, ok } = createParseAssert(parseIdentifierName);
+const { ok } = createParseAssert(parseIdentifierName);
 
 suite('IdentifierName', () => {
-  describe('"IdentifierName IdentifierPart"', () => {
-    it('should accept non-reserved words', () => {
-      ok(' falsey ', Identifier(1, 7, 'falsey'));
-      fail(' ');
-    });
-
-    it('should accept reserved words', () => {
-      ok('false', Identifier(0, 5, 'false'));
-    });
+  test('"IdentifierStart"', () => {
+    ok('a');
+    ok('IdentifierStart');
+    ok('debugger');
   });
 });

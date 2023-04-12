@@ -10,6 +10,11 @@ import { parsePrimaryExpression } from './primary-expression';
  * ObjectLiteral :
  *   { }
  *   { PropertyDefinitionList }
+ * ```
+ *
+ * Not supported from ECMA-262:
+ * ```ecmarkup
+ * ObjectLiteral :
  *   { PropertyDefinitionList , }
  * ```
  *

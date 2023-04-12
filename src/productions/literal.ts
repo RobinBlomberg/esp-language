@@ -13,6 +13,12 @@ import { Parser } from '../token-utils';
  *   StringLiteral
  * ```
  *
+ * Added productions:
+ * ```ecmarkup
+ * Literal :
+ *   undefined
+ * ```
+ *
  * @see https://tc39.es/ecma262/#prod-Literal
  */
 export const parseLiteral: Parser<Literal> = (data, start) => {

@@ -6,10 +6,10 @@ const { fail, ok } = createParseAssert(parseWhileStatement);
 
 suite('WhileStatement', () => {
   test('"while ( Expression ) Statement"', () => {
-    ok('while ( Expression ) Statement;');
+    ok('while (Expression) Statement;');
     fail('while');
     fail('while (');
-    fail('while ( Expression');
-    fail('while ( Expression )');
+    fail('while (Expression');
+    fail('while (Expression)');
   });
 });

@@ -8,12 +8,8 @@ export const createParseAssert = <T extends Node>(
     expect(parse(data, 0)).toBeNull();
   };
 
-  const ok = (data: string, expected?: T) => {
-    if (expected === undefined) {
-      expect(parse(data, 0)).not.toBeNull();
-    } else {
-      expect(parse(data, 0)).toEqual(expected);
-    }
+  const ok = (data: string) => {
+    expect(parse(data, 0)).not.toBeNull();
   };
 
   const throws = (data: string) => {

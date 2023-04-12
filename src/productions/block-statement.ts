@@ -4,12 +4,9 @@ import { Parser, consume } from '../token-utils';
 import { parseStatement } from './statement';
 
 /**
- * Supported from ECMA-262:
+ * Modified from ECMA-262:
  * ```ecmarkup
  * BlockStatement :
- *   Block
- *
- * Block :
  *   { StatementList(opt) }
  * ```
  *

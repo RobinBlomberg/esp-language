@@ -7,8 +7,7 @@ import { parseExponentiationExpression } from './exponentiation-expression';
  * ```ecmarkup
  * MultiplicativeExpression :
  *   ExponentiationExpression
- *   MultiplicativeExpression MultiplicativeOperator
- *     ExponentiationExpression
+ *   MultiplicativeExpression MultiplicativeOperator ExponentiationExpression
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-MultiplicativeExpression

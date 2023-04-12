@@ -9,6 +9,10 @@ import { parseRelationalExpression } from './relational-expression';
  *   RelationalExpression
  *   EqualityExpression == RelationalExpression
  *   EqualityExpression != RelationalExpression
+ * ```
+ *
+ * Not supported from ECMA-262:
+ * ```ecmarkup
  *   EqualityExpression === RelationalExpression
  *   EqualityExpression !== RelationalExpression
  * ```

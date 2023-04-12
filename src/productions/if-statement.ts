@@ -8,8 +8,8 @@ import { parseStatement } from './statement';
  * Supported from ECMA-262:
  * ```ecmarkup
  * IfStatement :
+ *   if ( Expression ) Statement
  *   if ( Expression ) Statement else Statement
- *   if ( Expression ) Statement [lookahead ≠ else]
  * ```
  */
 export const parseIfStatement: Parser<IfStatement> = (data, i) => {

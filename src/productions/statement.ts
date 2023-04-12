@@ -6,13 +6,13 @@ import { parseIfStatement } from './if-statement';
 import { parseWhileStatement } from './while-statement';
 
 /**
- * Supported from ECMA-262:
+ * Modified from ECMA-262:
  * ```ecmarkup
  * Statement :
  *   BlockStatement
- *   [partially] BreakableStatement
  *   ExpressionStatement
  *   IfStatement
+ *   WhileStatement
  * ```
  *
  * Not supported from ECMA-262:
