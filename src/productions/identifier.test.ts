@@ -6,7 +6,7 @@ import { parseIdentifier } from './identifier';
 const { fail, ok } = createParseAssert(parseIdentifier);
 
 suite('Identifier', () => {
-  describe('IdentifierName IdentifierPart', () => {
+  describe('"IdentifierName IdentifierPart"', () => {
     it('should accept non-reserved words', () => {
       ok(' falsey ', Identifier(1, 7, 'falsey'));
     });

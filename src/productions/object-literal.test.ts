@@ -6,12 +6,12 @@ import { parseObjectLiteral } from './object-literal';
 const { fail, ok } = createParseAssert(parseObjectLiteral);
 
 suite('ObjectLiteral', () => {
-  test('{ }', () => {
+  test('"{ }"', () => {
     ok(' {} ', ObjectLiteral(1, 3, []));
     fail('{');
   });
 
-  test('{ PropertyDefinitionList }', () => {
+  test('"{ PropertyDefinitionList }"', () => {
     ok(
       '{a: 1}',
       ObjectLiteral(0, 6, [

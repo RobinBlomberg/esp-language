@@ -6,11 +6,11 @@ import { parseUpdateExpression } from './update-expression';
 const { ok, throws } = createParseAssert(parseUpdateExpression);
 
 suite('UpdateExpression', () => {
-  test('LeftHandSideExpression', () => {
+  test('"LeftHandSideExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
-  test('LeftHandSideExpression ++, LeftHandSideExpression --', () => {
+  test('"LeftHandSideExpression (++|--)"', () => {
     ok('a++', UpdateExpression(0, 3, '++', Identifier(0, 1, 'a'), false));
     ok(
       'a.b++',
@@ -30,7 +30,7 @@ suite('UpdateExpression', () => {
     throws('a()++');
   });
 
-  test('++ UnaryExpression, -- UnaryExpression', () => {
+  test('"(++|--) UnaryExpression"', () => {
     ok('++a', UpdateExpression(0, 3, '++', Identifier(2, 3, 'a'), true));
     ok(
       '++a.b',

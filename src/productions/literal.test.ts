@@ -1,26 +1,26 @@
 import { it, suite, test } from 'vitest';
 import { Literal } from '../ast';
-import { parseLiteral } from './literal';
 import { createParseAssert } from '../test-utils';
+import { parseLiteral } from './literal';
 
 const { fail, ok } = createParseAssert(parseLiteral);
 
 suite('Literal', () => {
-  test('NullLiteral', () => {
+  test('"NullLiteral"', () => {
     ok(' null ', Literal(1, 5, null));
   });
 
-  test('BooleanLiteral', () => {
+  test('"BooleanLiteral"', () => {
     ok('false', Literal(0, 5, false));
     ok('true', Literal(0, 4, true));
     fail('falsey');
   });
 
-  test('NumericLiteral', () => {
+  test('"NumericLiteral"', () => {
     ok('0.123', Literal(0, 5, 0.123));
   });
 
-  test('StringLiteral', () => {
+  test('"StringLiteral"', () => {
     ok('"ab\\"cd"', Literal(0, 8, 'ab"cd'));
   });
 

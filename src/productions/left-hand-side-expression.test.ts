@@ -6,11 +6,11 @@ import { parseLeftHandSideExpression } from './left-hand-side-expression';
 const { ok } = createParseAssert(parseLeftHandSideExpression);
 
 suite('LeftHandSideExpression', () => {
-  test('NewExpression', () => {
+  test('"NewExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
   });
 
-  describe('CallExpression', () => {
+  describe('"CallExpression"', () => {
     it('should handle non-nested call expressions', () => {
       ok(
         'a()',

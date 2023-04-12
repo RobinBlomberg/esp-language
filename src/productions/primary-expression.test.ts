@@ -6,11 +6,11 @@ import { parsePrimaryExpression } from './primary-expression';
 const { ok } = createParseAssert(parsePrimaryExpression);
 
 suite('PrimaryExpression', () => {
-  test('IdentifierReference', () => {
+  test('"IdentifierReference"', () => {
     ok('falsey', Identifier(0, 6, 'falsey'));
   });
 
-  test('Literal', () => {
+  test('"Literal"', () => {
     ok('false', Literal(0, 5, false));
     ok('Infinity', Literal(0, 8, Infinity));
     ok('NaN', Literal(0, 3, NaN));
@@ -21,11 +21,11 @@ suite('PrimaryExpression', () => {
     ok('"ab\\"cd"', Literal(0, 8, 'ab"cd'));
   });
 
-  test('ArrayLiteral', () => {
+  test('"ArrayLiteral"', () => {
     ok('[]', ArrayLiteral(0, 2, []));
   });
 
-  test('ObjectLiteral', () => {
+  test('"ObjectLiteral"', () => {
     ok('{}', ObjectLiteral(0, 2, []));
   });
 });
