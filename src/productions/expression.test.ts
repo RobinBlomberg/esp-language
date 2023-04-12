@@ -1,17 +1,17 @@
 import { describe, it, suite, test } from 'vitest';
 import { AssignmentExpression, Identifier } from '../ast';
 import { createParseAssert } from '../test-utils';
-import { parseAssignmentExpression } from './assignment-expression';
+import { parseExpression } from './expression';
 
-const { fail, ok, throws } = createParseAssert(parseAssignmentExpression);
+const { fail, ok, throws } = createParseAssert(parseExpression);
 
-suite('AssignmentExpression', () => {
+suite('Expression', () => {
   test('"ConditionalExpression"', () => {
     ok(' abc ', Identifier(1, 4, 'abc'));
     ok('a()');
   });
 
-  describe('"LeftHandSideExpression AssignmentOperator AssignmentExpression"', () => {
+  describe('"LeftHandSideExpression AssignmentOperator Expression"', () => {
     it('should handle simple assigments', () => {
       ok(
         'a = b',

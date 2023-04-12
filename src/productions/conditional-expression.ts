@@ -1,7 +1,7 @@
 import { ConditionalExpression, Expression } from '../ast';
 import { TokenType } from '../token-type';
 import { Parser, consume } from '../token-utils';
-import { parseAssignmentExpression } from './assignment-expression';
+import { parseExpression } from './expression';
 import { parseLogicalORExpression } from './logical-or-expression';
 
 /**
@@ -9,7 +9,7 @@ import { parseLogicalORExpression } from './logical-or-expression';
  * ```ecmarkup
  * ConditionalExpression :
  *   LogicalORExpression
- *   LogicalORExpression ? AssignmentExpression : AssignmentExpression
+ *   LogicalORExpression ? Expression : Expression
  * ```
  */
 export const parseConditionalExpression: Parser<Expression> = (data, i) => {
@@ -21,7 +21,7 @@ export const parseConditionalExpression: Parser<Expression> = (data, i) => {
   if (consequentOperator) i = consequentOperator.end;
   else return test;
 
-  const consequent = parseAssignmentExpression(data, i);
+  const consequent = parseExpression(data, i);
   if (consequent) i = consequent.end;
   else return null;
 
@@ -29,7 +29,7 @@ export const parseConditionalExpression: Parser<Expression> = (data, i) => {
   if (alternateOperator) i = alternateOperator.end;
   else return null;
 
-  const alternate = parseAssignmentExpression(data, i);
+  const alternate = parseExpression(data, i);
   if (!alternate) return null;
 
   return ConditionalExpression(

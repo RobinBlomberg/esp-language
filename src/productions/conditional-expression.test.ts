@@ -11,7 +11,7 @@ suite('ConditionalExpression', () => {
     ok('a()');
   });
 
-  test('"LogicalORExpression ? AssignmentExpression : AssignmentExpression"', () => {
+  test('"LogicalORExpression ? Expression : Expression"', () => {
     ok(
       'a ? b : c',
       ConditionalExpression(
