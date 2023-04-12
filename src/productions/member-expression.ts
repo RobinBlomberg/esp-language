@@ -44,11 +44,10 @@ export const parseMemberExpression: Parser<Expression> = (data, start) => {
     if (callee) i = callee.end;
     else return null;
 
-    const arguments_ = parseArguments(data, i);
-    if (arguments_) i = arguments_.end;
-    else return null;
+    const args = parseArguments(data, i);
+    if (!args) return null;
 
-    return NewExpression(newKeyword.start, arguments_.end, callee, arguments_);
+    return NewExpression(newKeyword.start, args.end, callee, args.arguments);
   }
 
   let object = parsePrimaryExpression(data, i);

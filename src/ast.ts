@@ -13,21 +13,6 @@ const createNode = <T extends NodeType>(
 
 export type AdditiveOperator = '+' | '-';
 
-export type Arguments = {
-  type: NodeType.Arguments;
-  start: number;
-  end: number;
-  arguments: Expression[];
-};
-
-export const Arguments = (
-  start: number,
-  end: number,
-  arguments_: Expression[],
-) => {
-  return createNode(start, end, NodeType.Arguments, { arguments: arguments_ });
-};
-
 export type ArrayLiteral = {
   type: NodeType.ArrayLiteral;
   start: number;
@@ -172,14 +157,14 @@ export type CallExpression = {
   start: number;
   end: number;
   callee: Expression;
-  arguments: Arguments;
+  arguments: Expression[];
 };
 
 export const CallExpression = (
   start: number,
   end: number,
   callee: Expression,
-  arguments_: Arguments,
+  arguments_: Expression[],
 ) => {
   return createNode(start, end, NodeType.CallExpression, {
     callee,
@@ -316,14 +301,14 @@ export type NewExpression = {
   start: number;
   end: number;
   callee: Expression;
-  arguments: Arguments;
+  arguments: Expression[];
 };
 
 export const NewExpression = (
   start: number,
   end: number,
   callee: Expression,
-  arguments_: Arguments,
+  arguments_: Expression[],
 ) => {
   return createNode(start, end, NodeType.NewExpression, {
     callee,
@@ -334,7 +319,6 @@ export const NewExpression = (
 export type Node = Expression | Statement;
 
 export type NodeMap = {
-  [NodeType.Arguments]: Arguments;
   [NodeType.ArrayLiteral]: ArrayLiteral;
   [NodeType.AssignmentExpression]: AssignmentExpression;
   [NodeType.BinaryExpression]: BinaryExpression;

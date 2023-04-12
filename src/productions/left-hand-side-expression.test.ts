@@ -16,9 +16,9 @@ suite('LeftHandSideExpression', () => {
     ok('CallExpression(a)');
     ok('CallExpression(a, b)');
     ok('CallExpression()()');
-    // fail('CallExpression(');
-    // fail('CallExpression(a,');
-    // fail('CallExpression(a, b');
-    // fail('CallExpression()(');
+    fail('CallExpression(');
+    fail('CallExpression(a,');
+    fail('CallExpression(a, b');
+    fail('CallExpression()(');
   });
 });

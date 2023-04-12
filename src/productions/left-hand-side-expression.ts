@@ -27,12 +27,11 @@ export const parseLeftHandSideExpression: Parser<Expression> = (
   if (!callee) return null;
 
   while (true) {
-    const arguments_ = parseArguments(data, callee.end);
-    if (arguments_) {
-      callee = CallExpression(callee.start, arguments_.end, callee, arguments_);
-      continue;
-    }
+    const args = parseArguments(data, callee.end);
+    if (args === undefined) return callee;
+    else if (args === null) return null;
 
-    return callee;
+    callee = CallExpression(callee.start, args.end, callee, args.arguments);
+    continue;
   }
 };
