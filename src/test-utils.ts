@@ -4,17 +4,15 @@ import { Node } from './ast';
 export const createParseAssert = <T extends Node>(
   parse: (data: string, i: number) => T | null,
 ) => {
-  const fail = (data: string) => {
-    expect(parse(data, 0)).toBeNull();
+  return {
+    fail: (data: string) => {
+      expect(parse(data, 0)).toBeNull();
+    },
+    ok: (data: string) => {
+      expect(parse(data, 0)).not.toBeNull();
+    },
+    throws: (data: string) => {
+      expect(() => parse(data, 0)).toThrow(SyntaxError);
+    },
   };
-
-  const ok = (data: string) => {
-    expect(parse(data, 0)).not.toBeNull();
-  };
-
-  const throws = (data: string) => {
-    expect(() => parse(data, 0)).toThrow(SyntaxError);
-  };
-
-  return { fail, ok, throws };
 };
