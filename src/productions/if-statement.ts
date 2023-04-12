@@ -1,4 +1,4 @@
-import { IfStatement } from '../ast';
+import { IfStatement, Statement } from '../ast';
 import { TokenType } from '../token-type';
 import { Parser, consume } from '../token-utils';
 import { parseExpression } from './expression';
@@ -34,9 +34,14 @@ export const parseIfStatement: Parser<IfStatement> = (data, i) => {
   else return null;
 
   const elseKeyword = consume(data, i, TokenType.Name, 'else');
-  if (elseKeyword) i = elseKeyword.end;
+  let alternate: Statement | null = null;
 
-  const alternate = elseKeyword ? parseStatement(data, i) : null;
+  if (elseKeyword) {
+    i = elseKeyword.end;
+
+    alternate = parseStatement(data, i);
+    if (!alternate) return null;
+  }
 
   return IfStatement(
     ifKeyword.start,
