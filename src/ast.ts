@@ -152,6 +152,21 @@ export type BinaryOperator =
   | '||'
   | '??';
 
+export type BlockStatement = {
+  type: NodeType.BlockStatement;
+  start: number;
+  end: number;
+  body: Statement[];
+};
+
+export const BlockStatement = (
+  start: number,
+  end: number,
+  body: Statement[],
+) => {
+  return createNode(start, end, NodeType.BlockStatement, { body });
+};
+
 export type CallExpression = {
   type: NodeType.CallExpression;
   start: number;
@@ -278,13 +293,14 @@ export const NewExpression = (
   });
 };
 
-export type Node = Expression;
+export type Node = Expression | Statement;
 
 export type NodeMap = {
   [NodeType.Arguments]: Arguments;
   [NodeType.ArrayLiteral]: ArrayLiteral;
   [NodeType.AssignmentExpression]: AssignmentExpression;
   [NodeType.BinaryExpression]: BinaryExpression;
+  [NodeType.BlockStatement]: BlockStatement;
   [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
   [NodeType.ConditionalExpression]: ConditionalExpression;
@@ -333,6 +349,8 @@ export const Property = (
 export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
 
 export type ShiftOperator = '<<' | '>>' | '>>>';
+
+export type Statement = BlockStatement;
 
 export type StaticMemberExpression = {
   type: NodeType.StaticMemberExpression;

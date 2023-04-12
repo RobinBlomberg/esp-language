@@ -3,6 +3,7 @@ export const enum NodeType {
   ArrayLiteral = 'ArrayLiteral',
   AssignmentExpression = 'AssignmentExpression',
   BinaryExpression = 'BinaryExpression',
+  BlockStatement = 'BlockStatement',
   CallExpression = 'CallExpression',
   ComputedMemberExpression = 'ComputedMemberExpression',
   ConditionalExpression = 'ConditionalExpression',
