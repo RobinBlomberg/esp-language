@@ -375,6 +375,7 @@ export type NodeMap = {
   [NodeType.Property]: Property;
   [NodeType.ReturnStatement]: ReturnStatement;
   [NodeType.StaticMemberExpression]: StaticMemberExpression;
+  [NodeType.ThrowStatement]: ThrowStatement;
   [NodeType.UnaryExpression]: UnaryExpression;
   [NodeType.UpdateExpression]: UpdateExpression;
   [NodeType.VariableDeclaration]: VariableDeclaration;
@@ -440,6 +441,7 @@ export type Statement =
   | ExpressionStatement
   | IfStatement
   | ReturnStatement
+  | ThrowStatement
   | VariableDeclaration
   | WhileStatement;
 
@@ -461,6 +463,21 @@ export const StaticMemberExpression = (
     object,
     property,
   });
+};
+
+export type ThrowStatement = {
+  type: NodeType.ThrowStatement;
+  start: number;
+  end: number;
+  argument: Expression;
+};
+
+export const ThrowStatement = (
+  start: number,
+  end: number,
+  argument: Expression,
+) => {
+  return createNode(start, end, NodeType.ThrowStatement, { argument });
 };
 
 export type UnaryExpression = {

@@ -34,6 +34,10 @@ suite('Statement', () => {
     ok('return Expression;');
   });
 
+  test('"ThrowStatement"', () => {
+    ok('throw Expression;');
+  });
+
   test('"VariableDeclaration"', () => {
     ok('let Identifier = Expression;');
   });

@@ -7,6 +7,7 @@ import { parseDoWhileStatement } from './do-while-statement';
 import { parseExpressionStatement } from './expression-statement';
 import { parseIfStatement } from './if-statement';
 import { parseReturnStatement } from './return-statement';
+import { parseThrowStatement } from './throw-statement';
 import { parseVariableDeclaration } from './variable-declaration';
 import { parseWhileStatement } from './while-statement';
 
@@ -15,10 +16,13 @@ import { parseWhileStatement } from './while-statement';
  * ```ecmarkup
  * Statement :
  *   BlockStatement
+ *   BreakStatement
  *   ContinueStatement
  *   DoWhileStatement
  *   ExpressionStatement
  *   IfStatement
+ *   ReturnStatement
+ *   ThrowStatement
  *   VariableDeclaration
  *   WhileStatement
  * ```
@@ -28,11 +32,8 @@ import { parseWhileStatement } from './while-statement';
  * Statement :
  *   VariableStatement
  *   EmptyStatement
- *   BreakStatement
- *   ReturnStatement
  *   WithStatement
  *   LabelledStatement
- *   ThrowStatement
  *   TryStatement
  *   DebuggerStatement
  * ```
@@ -47,6 +48,7 @@ export const parseStatement: Parser<Statement> = (data, i) => {
     parseDoWhileStatement(data, i) ??
     parseIfStatement(data, i) ??
     parseReturnStatement(data, i) ??
+    parseThrowStatement(data, i) ??
     parseVariableDeclaration(data, i) ??
     parseWhileStatement(data, i) ??
     parseExpressionStatement(data, i)
