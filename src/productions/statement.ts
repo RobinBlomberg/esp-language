@@ -4,6 +4,7 @@ import { parseBlockStatement } from './block-statement';
 import { parseDoWhileStatement } from './do-while-statement';
 import { parseExpressionStatement } from './expression-statement';
 import { parseIfStatement } from './if-statement';
+import { parseVariableDeclaration } from './variable-declaration';
 import { parseWhileStatement } from './while-statement';
 
 /**
@@ -14,6 +15,7 @@ import { parseWhileStatement } from './while-statement';
  *   DoWhileStatement
  *   ExpressionStatement
  *   IfStatement
+ *   VariableDeclaration
  *   WhileStatement
  * ```
  *
@@ -39,6 +41,7 @@ export const parseStatement: Parser<Statement> = (data, i) => {
     parseBlockStatement(data, i) ??
     parseDoWhileStatement(data, i) ??
     parseIfStatement(data, i) ??
+    parseVariableDeclaration(data, i) ??
     parseWhileStatement(data, i) ??
     parseExpressionStatement(data, i)
   );

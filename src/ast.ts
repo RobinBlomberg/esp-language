@@ -354,6 +354,7 @@ export type NodeMap = {
   [NodeType.StaticMemberExpression]: StaticMemberExpression;
   [NodeType.UnaryExpression]: UnaryExpression;
   [NodeType.UpdateExpression]: UpdateExpression;
+  [NodeType.VariableDeclaration]: VariableDeclaration;
   [NodeType.WhileStatement]: WhileStatement;
 };
 
@@ -398,6 +399,7 @@ export type Statement =
   | DoWhileStatement
   | ExpressionStatement
   | IfStatement
+  | VariableDeclaration
   | WhileStatement;
 
 export type StaticMemberExpression = {
@@ -483,6 +485,23 @@ export const UpdateOperator: UpdateOperator[] = ['++', '--'];
 
 export const UpdateOperatorTokenMatcher: TokenMatcher<UpdateOperator> = {
   [TokenType.Punctuator]: UpdateOperator,
+};
+
+export type VariableDeclaration = {
+  type: NodeType.VariableDeclaration;
+  start: number;
+  end: number;
+  id: string;
+  init: Expression;
+};
+
+export const VariableDeclaration = (
+  start: number,
+  end: number,
+  id: string,
+  init: Expression,
+) => {
+  return createNode(start, end, NodeType.VariableDeclaration, { id, init });
 };
 
 export type WhileStatement = {

@@ -22,6 +22,10 @@ suite('Statement', () => {
     ok('if (a) b; else if (c) d; else e;');
   });
 
+  test('"VariableDeclaration"', () => {
+    ok('let Identifier = Expression;');
+  });
+
   test('"WhileStatement"', () => {
     ok('while ( Expression ) Statement;');
   });
