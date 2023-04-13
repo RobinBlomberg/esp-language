@@ -19,7 +19,6 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   else return null;
 
   const id = consume(data, i, TokenType.Name);
-  console.log(id);
   if (id) i = id.end;
   else return null;
 
