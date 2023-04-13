@@ -6,6 +6,7 @@ import { parseContinueStatement } from './continue-statement';
 import { parseDoWhileStatement } from './do-while-statement';
 import { parseExpressionStatement } from './expression-statement';
 import { parseIfStatement } from './if-statement';
+import { parseReturnStatement } from './return-statement';
 import { parseVariableDeclaration } from './variable-declaration';
 import { parseWhileStatement } from './while-statement';
 
@@ -45,6 +46,7 @@ export const parseStatement: Parser<Statement> = (data, i) => {
     parseContinueStatement(data, i) ??
     parseDoWhileStatement(data, i) ??
     parseIfStatement(data, i) ??
+    parseReturnStatement(data, i) ??
     parseVariableDeclaration(data, i) ??
     parseWhileStatement(data, i) ??
     parseExpressionStatement(data, i)

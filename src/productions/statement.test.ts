@@ -30,6 +30,10 @@ suite('Statement', () => {
     ok('if (a) b; else if (c) d; else e;');
   });
 
+  test('"ReturnStatement"', () => {
+    ok('return Expression;');
+  });
+
   test('"VariableDeclaration"', () => {
     ok('let Identifier = Expression;');
   });

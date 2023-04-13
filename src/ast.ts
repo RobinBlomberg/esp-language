@@ -373,6 +373,7 @@ export type NodeMap = {
   [NodeType.NewExpression]: NewExpression;
   [NodeType.ObjectLiteral]: ObjectLiteral;
   [NodeType.Property]: Property;
+  [NodeType.ReturnStatement]: ReturnStatement;
   [NodeType.StaticMemberExpression]: StaticMemberExpression;
   [NodeType.UnaryExpression]: UnaryExpression;
   [NodeType.UpdateExpression]: UpdateExpression;
@@ -414,6 +415,21 @@ export const Property = (
 
 export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
 
+export type ReturnStatement = {
+  type: NodeType.ReturnStatement;
+  start: number;
+  end: number;
+  argument: Expression;
+};
+
+export const ReturnStatement = (
+  start: number,
+  end: number,
+  argument: Expression,
+) => {
+  return createNode(start, end, NodeType.ReturnStatement, { argument });
+};
+
 export type ShiftOperator = '<<' | '>>' | '>>>';
 
 export type Statement =
@@ -423,6 +439,7 @@ export type Statement =
   | DoWhileStatement
   | ExpressionStatement
   | IfStatement
+  | ReturnStatement
   | VariableDeclaration
   | WhileStatement;
 
