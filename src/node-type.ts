@@ -6,6 +6,7 @@ export const enum NodeType {
   CallExpression = 'CallExpression',
   ComputedMemberExpression = 'ComputedMemberExpression',
   ConditionalExpression = 'ConditionalExpression',
+  ContinueStatement = 'ContinueStatement',
   DoWhileStatement = 'DoWhileStatement',
   ExpressionStatement = 'ExpressionStatement',
   Identifier = 'Identifier',

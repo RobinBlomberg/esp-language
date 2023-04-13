@@ -1,6 +1,7 @@
 import { Statement } from '../ast';
 import { Parser } from '../token-utils';
 import { parseBlockStatement } from './block-statement';
+import { parseContinueStatement } from './continue-statement';
 import { parseDoWhileStatement } from './do-while-statement';
 import { parseExpressionStatement } from './expression-statement';
 import { parseIfStatement } from './if-statement';
@@ -12,6 +13,7 @@ import { parseWhileStatement } from './while-statement';
  * ```ecmarkup
  * Statement :
  *   BlockStatement
+ *   ContinueStatement
  *   DoWhileStatement
  *   ExpressionStatement
  *   IfStatement
@@ -24,7 +26,6 @@ import { parseWhileStatement } from './while-statement';
  * Statement :
  *   VariableStatement
  *   EmptyStatement
- *   ContinueStatement
  *   BreakStatement
  *   ReturnStatement
  *   WithStatement
@@ -39,6 +40,7 @@ import { parseWhileStatement } from './while-statement';
 export const parseStatement: Parser<Statement> = (data, i) => {
   return (
     parseBlockStatement(data, i) ??
+    parseContinueStatement(data, i) ??
     parseDoWhileStatement(data, i) ??
     parseIfStatement(data, i) ??
     parseVariableDeclaration(data, i) ??

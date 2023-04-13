@@ -215,6 +215,16 @@ export const ConditionalExpression = (
   });
 };
 
+export type ContinueStatement = {
+  type: NodeType.ContinueStatement;
+  start: number;
+  end: number;
+};
+
+export const ContinueStatement = (start: number, end: number) => {
+  return createNode(start, end, NodeType.ContinueStatement, {});
+};
+
 export type DoWhileStatement = {
   type: NodeType.DoWhileStatement;
   start: number;
@@ -343,6 +353,7 @@ export type NodeMap = {
   [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
   [NodeType.ConditionalExpression]: ConditionalExpression;
+  [NodeType.ContinueStatement]: ContinueStatement;
   [NodeType.DoWhileStatement]: DoWhileStatement;
   [NodeType.ExpressionStatement]: ExpressionStatement;
   [NodeType.Identifier]: Identifier;
@@ -396,6 +407,7 @@ export type ShiftOperator = '<<' | '>>' | '>>>';
 
 export type Statement =
   | BlockStatement
+  | ContinueStatement
   | DoWhileStatement
   | ExpressionStatement
   | IfStatement

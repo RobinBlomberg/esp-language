@@ -9,6 +9,10 @@ suite('Statement', () => {
     ok('{}');
   });
 
+  test('"ContinueStatement"', () => {
+    ok('continue;');
+  });
+
   test('"DoWhileStatement"', () => {
     ok('do Statement; while ( Expression ) ;');
   });
