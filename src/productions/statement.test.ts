@@ -9,6 +9,10 @@ suite('Statement', () => {
     ok('{}');
   });
 
+  test('"BreakStatement"', () => {
+    ok('break;');
+  });
+
   test('"ContinueStatement"', () => {
     ok('continue;');
   });

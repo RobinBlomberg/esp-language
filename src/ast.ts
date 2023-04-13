@@ -152,6 +152,16 @@ export const BlockStatement = (
   return createNode(start, end, NodeType.BlockStatement, { body });
 };
 
+export type BreakStatement = {
+  type: NodeType.BreakStatement;
+  start: number;
+  end: number;
+};
+
+export const BreakStatement = (start: number, end: number) => {
+  return createNode(start, end, NodeType.BreakStatement, {});
+};
+
 export type CallExpression = {
   type: NodeType.CallExpression;
   start: number;
@@ -350,6 +360,7 @@ export type NodeMap = {
   [NodeType.AssignmentExpression]: AssignmentExpression;
   [NodeType.BinaryExpression]: BinaryExpression;
   [NodeType.BlockStatement]: BlockStatement;
+  [NodeType.BreakStatement]: BreakStatement;
   [NodeType.CallExpression]: CallExpression;
   [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
   [NodeType.ConditionalExpression]: ConditionalExpression;
@@ -407,6 +418,7 @@ export type ShiftOperator = '<<' | '>>' | '>>>';
 
 export type Statement =
   | BlockStatement
+  | BreakStatement
   | ContinueStatement
   | DoWhileStatement
   | ExpressionStatement

@@ -1,6 +1,7 @@
 import { Statement } from '../ast';
 import { Parser } from '../token-utils';
 import { parseBlockStatement } from './block-statement';
+import { parseBreakStatement } from './break-statement';
 import { parseContinueStatement } from './continue-statement';
 import { parseDoWhileStatement } from './do-while-statement';
 import { parseExpressionStatement } from './expression-statement';
@@ -40,6 +41,7 @@ import { parseWhileStatement } from './while-statement';
 export const parseStatement: Parser<Statement> = (data, i) => {
   return (
     parseBlockStatement(data, i) ??
+    parseBreakStatement(data, i) ??
     parseContinueStatement(data, i) ??
     parseDoWhileStatement(data, i) ??
     parseIfStatement(data, i) ??
