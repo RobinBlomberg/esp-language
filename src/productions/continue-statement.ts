@@ -13,6 +13,8 @@ import { Parser, consume } from '../token-utils';
  * ```ecmarkup
  *   continue LabelIdentifier ;
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ContinueStatement
  */
 export const parseContinueStatement: Parser<ContinueStatement> = (data, i) => {
   const continueKeyword = consume(data, i, TokenType.Name, 'continue');

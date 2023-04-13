@@ -11,6 +11,8 @@ import { parseStatement } from './statement';
  *   if ( Expression ) Statement
  *   if ( Expression ) Statement else Statement
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-IfStatement
  */
 export const parseIfStatement: Parser<IfStatement> = (data, i) => {
   const ifKeyword = consume(data, i, TokenType.Name, 'if');

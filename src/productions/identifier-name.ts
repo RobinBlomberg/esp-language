@@ -10,6 +10,8 @@ import { Parser, match } from '../token-utils';
  *   IdentifierStart
  *   IdentifierName IdentifierPart
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-IdentifierName
  */
 export const parseIdentifierName: Parser<Identifier> = (data, i) => {
   const node = lex(data, i);

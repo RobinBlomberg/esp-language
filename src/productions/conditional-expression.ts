@@ -11,6 +11,8 @@ import { parseLogicalORExpression } from './logical-or-expression';
  *   LogicalORExpression
  *   LogicalORExpression ? Expression : Expression
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ConditionalExpression
  */
 export const parseConditionalExpression: Parser<Expression> = (data, i) => {
   const test = parseLogicalORExpression(data, i);

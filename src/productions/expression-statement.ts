@@ -9,6 +9,8 @@ import { parseExpression } from './expression';
  * ExpressionStatement :
  *   Expression ;
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ExpressionStatement
  */
 export const parseExpressionStatement: Parser<ExpressionStatement> = (
   data,

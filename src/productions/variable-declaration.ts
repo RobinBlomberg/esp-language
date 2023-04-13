@@ -9,6 +9,8 @@ import { parseExpression } from './expression';
  * VariableDeclaration :
  *   let Identifier = Expression ;
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-VariableDeclaration
  */
 export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   data,

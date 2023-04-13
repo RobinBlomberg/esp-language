@@ -23,6 +23,8 @@ import { parseConditionalExpression } from './conditional-expression';
  *   ArrowFunction
  *   AsyncArrowFunction
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-Expression
  */
 export const parseExpression: Parser<Expression> = (data, i) => {
   const left = parseConditionalExpression(data, i);
