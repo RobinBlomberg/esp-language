@@ -7,6 +7,8 @@ const { ok } = createParseAssert(parseStatement);
 suite('Statement', () => {
   test('"BlockStatement"', () => {
     ok('{}');
+    ok('{ Statement; }');
+    ok('{ Statement; Statement; }');
   });
 
   test('"BreakStatement"', () => {
@@ -18,16 +20,24 @@ suite('Statement', () => {
   });
 
   test('"DoWhileStatement"', () => {
-    ok('do Statement; while ( Expression ) ;');
+    ok('do Statement; while (Expression);');
   });
 
   test('"ExpressionStatement"', () => {
-    ok('ExpressionStatement;');
+    ok('Expression;');
   });
 
   test('"IfStatement"', () => {
+    ok('if (Expression) Statement;');
     ok('if (Expression) Statement; else Statement;');
     ok('if (a) b; else if (c) d; else e;');
+  });
+
+  test('"MatchStatement"', () => {
+    ok('match (Expression) { Case Block; }');
+    ok('match (Expression) { Case Block; Case Block; }');
+    ok('match (Expression) { Case Block; else Statement; }');
+    ok('match (Expression) { Case Block; Case Block; else Statement; }');
   });
 
   test('"ReturnStatement"', () => {
@@ -43,6 +53,6 @@ suite('Statement', () => {
   });
 
   test('"WhileStatement"', () => {
-    ok('while ( Expression ) Statement;');
+    ok('while (Expression) Statement;');
   });
 });

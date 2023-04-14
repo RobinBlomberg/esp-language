@@ -6,6 +6,7 @@ import { parseContinueStatement } from './continue-statement';
 import { parseDoWhileStatement } from './do-while-statement';
 import { parseExpressionStatement } from './expression-statement';
 import { parseIfStatement } from './if-statement';
+import { parseMatchStatement } from './match-statement';
 import { parseReturnStatement } from './return-statement';
 import { parseThrowStatement } from './throw-statement';
 import { parseVariableDeclaration } from './variable-declaration';
@@ -21,6 +22,7 @@ import { parseWhileStatement } from './while-statement';
  *   DoWhileStatement
  *   ExpressionStatement
  *   IfStatement
+ *   MatchStatement
  *   ReturnStatement
  *   ThrowStatement
  *   VariableDeclaration
@@ -47,6 +49,7 @@ export const parseStatement: Parser<Statement> = (data, i) => {
     parseContinueStatement(data, i) ??
     parseDoWhileStatement(data, i) ??
     parseIfStatement(data, i) ??
+    parseMatchStatement(data, i) ??
     parseReturnStatement(data, i) ??
     parseThrowStatement(data, i) ??
     parseVariableDeclaration(data, i) ??

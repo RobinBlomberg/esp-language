@@ -19,16 +19,16 @@ export const parseIfStatement: Parser<IfStatement> = (data, i) => {
   if (ifKeyword) i = ifKeyword.end;
   else return null;
 
-  const openParen = consume(data, i, TokenType.Punctuator, '(');
-  if (openParen) i = openParen.end;
+  const open = consume(data, i, TokenType.Punctuator, '(');
+  if (open) i = open.end;
   else return null;
 
   const test = parseExpression(data, i);
   if (test) i = test.end;
   else return null;
 
-  const closeParen = consume(data, i, TokenType.Punctuator, ')');
-  if (closeParen) i = closeParen.end;
+  const close = consume(data, i, TokenType.Punctuator, ')');
+  if (close) i = close.end;
   else return null;
 
   const consequent = parseStatement(data, i);

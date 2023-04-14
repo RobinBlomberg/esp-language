@@ -13,6 +13,8 @@ export const enum NodeType {
   Identifier = 'Identifier',
   IfStatement = 'IfStatement',
   Literal = 'Literal',
+  MatchCase = 'MatchCase',
+  MatchStatement = 'MatchStatement',
   NewExpression = 'NewExpression',
   ObjectLiteral = 'ObjectLiteral',
   Property = 'Property',

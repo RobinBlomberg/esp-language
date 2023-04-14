@@ -331,6 +331,46 @@ export const Literal = (start: number, end: number, value: LiteralValue) => {
 
 export type LiteralValue = boolean | null | number | string | undefined;
 
+export type MatchCase = {
+  type: NodeType.MatchCase;
+  start: number;
+  end: number;
+  test: Expression;
+  consequent: Statement;
+};
+
+export const MatchCase = (
+  start: number,
+  end: number,
+  test: Expression,
+  consequent: Statement,
+) => {
+  return createNode(start, end, NodeType.MatchCase, { test, consequent });
+};
+
+export type MatchStatement = {
+  type: NodeType.MatchStatement;
+  start: number;
+  end: number;
+  discriminant: Expression;
+  cases: MatchCase[];
+  alternate: Statement | null;
+};
+
+export const MatchStatement = (
+  start: number,
+  end: number,
+  discriminant: Expression,
+  cases: MatchCase[],
+  alternate: Statement | null,
+) => {
+  return createNode(start, end, NodeType.MatchStatement, {
+    discriminant,
+    cases,
+    alternate,
+  });
+};
+
 export type MultiplicativeOperator = '*' | '/' | '%';
 
 export type NewExpression = {
@@ -370,6 +410,8 @@ export type NodeMap = {
   [NodeType.Identifier]: Identifier;
   [NodeType.IfStatement]: IfStatement;
   [NodeType.Literal]: Literal;
+  [NodeType.MatchCase]: MatchCase;
+  [NodeType.MatchStatement]: MatchStatement;
   [NodeType.NewExpression]: NewExpression;
   [NodeType.ObjectLiteral]: ObjectLiteral;
   [NodeType.Property]: Property;
@@ -440,6 +482,7 @@ export type Statement =
   | DoWhileStatement
   | ExpressionStatement
   | IfStatement
+  | MatchStatement
   | ReturnStatement
   | ThrowStatement
   | VariableDeclaration
