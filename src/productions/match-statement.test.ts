@@ -10,6 +10,7 @@ suite('MatchStatement', () => {
     ok('match (Expression) { Case Block; Case Block; }');
     ok('match (Expression) { Case Block; else Statement; }');
     ok('match (Expression) { Case Block; Case Block; else Statement; }');
+    ok('match (Expression) { {Union, Clause} Block; }');
     fail('match');
     fail('match (');
     fail('match (Expression');
@@ -24,5 +25,13 @@ suite('MatchStatement', () => {
     fail('match (Expression) { Case Block; Case Block;');
     fail('match (Expression) { Case Block; else Statement');
     fail('match (Expression) { Case Block; else Statement;');
+    fail('match (Expression) { {Union');
+    fail('match (Expression) { {Union}');
+    fail('match (Expression) { {Union, }');
+    fail('match (Expression) { {Union, Clause');
+    fail('match (Expression) { {Union, Clause}');
+    fail('match (Expression) { {Union, Clause} }');
+    fail('match (Expression) { {Union, Clause} Block;');
+    fail('match (Expression) { {Union, Clause} Block }');
   });
 });

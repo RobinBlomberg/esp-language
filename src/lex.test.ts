@@ -75,6 +75,6 @@ suite('lex', () => {
   });
 
   it('should throw on invalid characters', () => {
-    is.error('#');
+    is.error('¤');
   });
 });

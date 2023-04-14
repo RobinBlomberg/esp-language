@@ -265,6 +265,7 @@ export type Expression =
   | Literal
   | NewExpression
   | ObjectLiteral
+  | SetLiteral
   | StaticMemberExpression
   | UnaryExpression
   | UpdateExpression;
@@ -335,14 +336,14 @@ export type MatchCase = {
   type: NodeType.MatchCase;
   start: number;
   end: number;
-  test: Expression;
+  test: Expression | UnionClause;
   consequent: Statement;
 };
 
 export const MatchCase = (
   start: number,
   end: number,
-  test: Expression,
+  test: Expression | UnionClause,
   consequent: Statement,
 ) => {
   return createNode(start, end, NodeType.MatchCase, { test, consequent });
@@ -393,7 +394,7 @@ export const NewExpression = (
   });
 };
 
-export type Node = Expression | Statement;
+export type Node = Expression | Statement | UnionClause;
 
 export type NodeMap = {
   [NodeType.ArrayLiteral]: ArrayLiteral;
@@ -416,9 +417,11 @@ export type NodeMap = {
   [NodeType.ObjectLiteral]: ObjectLiteral;
   [NodeType.Property]: Property;
   [NodeType.ReturnStatement]: ReturnStatement;
+  [NodeType.SetLiteral]: SetLiteral;
   [NodeType.StaticMemberExpression]: StaticMemberExpression;
   [NodeType.ThrowStatement]: ThrowStatement;
   [NodeType.UnaryExpression]: UnaryExpression;
+  [NodeType.UnionClause]: UnionClause;
   [NodeType.UpdateExpression]: UpdateExpression;
   [NodeType.VariableDeclaration]: VariableDeclaration;
   [NodeType.WhileStatement]: WhileStatement;
@@ -471,6 +474,21 @@ export const ReturnStatement = (
   argument: Expression,
 ) => {
   return createNode(start, end, NodeType.ReturnStatement, { argument });
+};
+
+export type SetLiteral = {
+  type: NodeType.SetLiteral;
+  start: number;
+  end: number;
+  values: Expression[];
+};
+
+export const SetLiteral = (
+  start: number,
+  end: number,
+  values: Expression[],
+) => {
+  return createNode(start, end, NodeType.SetLiteral, { values });
 };
 
 export type ShiftOperator = '<<' | '>>' | '>>>';
@@ -555,6 +573,21 @@ export type UnaryOperator =
 export const UnaryOperatorTokenMatcher: TokenMatcher<UnaryOperator> = {
   [TokenType.Name]: ['delete', 'void', 'typeof'],
   [TokenType.Punctuator]: ['+', '-', '~', '!'],
+};
+
+export type UnionClause = {
+  type: NodeType.UnionClause;
+  start: number;
+  end: number;
+  values: Expression[];
+};
+
+export const UnionClause = (
+  start: number,
+  end: number,
+  values: Expression[],
+) => {
+  return createNode(start, end, NodeType.UnionClause, { values });
 };
 
 export type UpdateExpression = {

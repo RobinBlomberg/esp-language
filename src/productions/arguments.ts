@@ -1,7 +1,6 @@
-import { Expression } from '../ast';
 import { TokenType } from '../token-type';
 import { consume } from '../token-utils';
-import { parseExpression } from './expression';
+import { parseValueList } from './value-list';
 
 /**
  * Returns:
@@ -9,12 +8,11 @@ import { parseExpression } from './expression';
  *  - `null` if it parses with an error
  *  - `undefined` if the production is unused
  *
- * Supported from ECMA-262:
+ * Modified from ECMA-262:
  * ```ecmarkup
  * Arguments :
  *   ( )
- *   ( ArgumentList )
- *   ( ArgumentList , )
+ *   ( ValueList )
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-Arguments
@@ -24,24 +22,12 @@ export const parseArguments = (data: string, i: number) => {
   if (open) i = open.end;
   else return undefined;
 
-  const arguments_: Expression[] = [];
+  const arguments_ = parseValueList(data, i);
+  if (arguments_) i = arguments_.end;
+  else return null;
 
-  while (true) {
-    const close = consume(data, i, TokenType.Punctuator, ')');
-    if (close) {
-      return { arguments: arguments_, end: close.end };
-    }
+  const close = consume(data, i, TokenType.Punctuator, ')');
+  if (!close) return null;
 
-    if (arguments_.length >= 1) {
-      const comma = consume(data, i, TokenType.Punctuator, ',');
-      if (comma) i = comma.end;
-      else return null;
-    }
-
-    const element = parseExpression(data, i);
-    if (element) i = element.end;
-    else return null;
-
-    arguments_.push(element);
-  }
+  return { end: close.end, arguments: arguments_.values };
 };

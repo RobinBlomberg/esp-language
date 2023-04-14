@@ -1,13 +1,13 @@
-import { ArrayLiteral, Expression } from '../ast';
+import { ArrayLiteral } from '../ast';
 import { TokenType } from '../token-type';
 import { Parser, consume } from '../token-utils';
-import { parsePrimaryExpression } from './primary-expression';
+import { parseValueList } from './value-list';
 
 /**
- * Supported from ECMA-262:
+ * Adapted from ECMA-262:
  * ```ecmarkup
  * ArrayLiteral :
- *   [ ElementList ]
+ *   [ ValueList ]
  * ```
  *
  * Not supported from ECMA-262:
@@ -24,24 +24,12 @@ export const parseArrayLiteral: Parser<ArrayLiteral> = (data, i) => {
   if (open) i = open.end;
   else return null;
 
-  const elements: Expression[] = [];
+  const elements = parseValueList(data, i);
+  if (elements) i = elements.end;
+  else return null;
 
-  while (true) {
-    const close = consume(data, i, TokenType.Punctuator, ']');
-    if (close) {
-      return ArrayLiteral(open.start, close.end, elements);
-    }
+  const close = consume(data, i, TokenType.Punctuator, ']');
+  if (!close) return null;
 
-    if (elements.length >= 1) {
-      const comma = consume(data, i, TokenType.Punctuator, ',');
-      if (comma) i = comma.end;
-      else return null;
-    }
-
-    const element = parsePrimaryExpression(data, i);
-    if (element) i = element.end;
-    else return null;
-
-    elements.push(element);
-  }
+  return ArrayLiteral(open.start, close.end, elements.values);
 };

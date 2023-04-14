@@ -3,6 +3,7 @@ import { TokenType } from '../token-type';
 import { Parser, consume } from '../token-utils';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
+import { parseUnionClause } from './union-clause';
 
 /**
  * Grammar definition inspired by ECMA-262:
@@ -20,6 +21,7 @@ import { parseStatement } from './statement';
  *
  * CaseClause :
  *   Expression Statement
+ *   UnionClause Statement
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-SwitchStatement
@@ -58,7 +60,7 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
       else return null;
     }
 
-    const test = parseExpression(data, i);
+    const test = parseExpression(data, i) ?? parseUnionClause(data, i);
     if (test) i = test.end;
     else break;
 

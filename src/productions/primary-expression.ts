@@ -4,15 +4,17 @@ import { parseArrayLiteral } from './array-literal';
 import { parseIdentifier } from './identifier';
 import { parseLiteral } from './literal';
 import { parseObjectLiteral } from './object-literal';
+import { parseSetLiteral } from './set-literal';
 
 /**
- * Supported from ECMA-262:
+ * Modified from ECMA-262:
  * ```ecmarkup
  * PrimaryExpression :
- *   IdentifierReference
+ *   Identifier
  *   Literal
  *   ArrayLiteral
  *   ObjectLiteral
+ *   SetLiteral
  * ```
  *
  * Not supported from ECMA-262:
@@ -36,6 +38,7 @@ export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
     parseLiteral(data, i) ??
     parseIdentifier(data, i) ??
     parseArrayLiteral(data, i) ??
-    parseObjectLiteral(data, i)
+    parseObjectLiteral(data, i) ??
+    parseSetLiteral(data, i)
   );
 };
