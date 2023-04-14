@@ -16,11 +16,11 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   data,
   i,
 ) => {
-  const letKeyword = consume(data, i, TokenType.Name, 'let');
+  const letKeyword = consume(data, i, TokenType.Keyword, 'let');
   if (letKeyword) i = letKeyword.end;
   else return null;
 
-  const id = consume(data, i, TokenType.Name);
+  const id = consume(data, i, TokenType.Identifier);
   if (id) i = id.end;
   else return null;
 

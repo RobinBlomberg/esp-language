@@ -13,7 +13,7 @@ import { parseExpression } from './expression';
  * @see https://tc39.es/ecma262/#prod-ThrowStatement
  */
 export const parseThrowStatement: Parser<ThrowStatement> = (data, i) => {
-  const throwKeyword = consume(data, i, TokenType.Name, 'throw');
+  const throwKeyword = consume(data, i, TokenType.Keyword, 'throw');
   if (throwKeyword) i = throwKeyword.end;
   else return null;
 

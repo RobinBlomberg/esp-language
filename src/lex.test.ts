@@ -1,4 +1,5 @@
 import { expect, it, suite, test } from 'vitest';
+import { keywords } from './keywords';
 import { lex } from './lex';
 import { punctuators } from './punctuators';
 import { TokenType } from './token-type';
@@ -12,8 +13,8 @@ const createAssert = (type: TokenType) => (data: string, expected?: string) => {
 
 const is = {
   error: (data: string) => expect(() => lex(data, 0)).toThrow(SyntaxError),
-  keyword: createAssert(TokenType.Name),
-  name: createAssert(TokenType.Name),
+  identifier: createAssert(TokenType.Identifier),
+  keyword: createAssert(TokenType.Keyword),
   null: (data: string) => expect(lex(data, 0)).toBeNull(),
   number: createAssert(TokenType.Number),
   punctuator: createAssert(TokenType.Punctuator),
@@ -31,16 +32,22 @@ suite('lex', () => {
     }
   });
 
-  test('name', () => {
-    is.name('a');
-    is.name('aa');
-    is.name('zz');
-    is.name('AA');
-    is.name('ZZ');
-    is.name('$$');
-    is.name('__');
-    is.name('a0');
-    is.name('a#', 'a');
+  test('keyword', () => {
+    for (const keyword of keywords) {
+      is.keyword(keyword);
+    }
+  });
+
+  test('identifier', () => {
+    is.identifier('a');
+    is.identifier('aa');
+    is.identifier('zz');
+    is.identifier('AA');
+    is.identifier('ZZ');
+    is.identifier('$$');
+    is.identifier('__');
+    is.identifier('a0');
+    is.identifier('a#', 'a');
   });
 
   suite('number', () => {

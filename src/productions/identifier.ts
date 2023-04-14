@@ -1,20 +1,20 @@
 import { Identifier } from '../ast';
-import { reservedWords } from '../reserved-words';
-import { Parser } from '../token-utils';
-import { parseIdentifierName } from './identifier-name';
+import { lex } from '../lex';
+import { TokenType } from '../token-type';
+import { Parser, match } from '../token-utils';
 
 /**
- * Supported from ECMA-262:
+ * Modified from ECMA-262:
  * ```ecmarkup
  * Identifier :
- *   IdentifierName but not ReservedWord
+ *   IdentifierName but not Keyword
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-Identifier
  */
 export const parseIdentifier: Parser<Identifier> = (data, i) => {
-  const node = parseIdentifierName(data, i);
-  return node && !reservedWords.has(node.name)
-    ? Identifier(node.start, node.end, node.name)
+  const node = lex(data, i);
+  return match(node, TokenType.Identifier)
+    ? Identifier(node.start, node.end, node.value)
     : null;
 };

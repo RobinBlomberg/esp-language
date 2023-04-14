@@ -1,5 +1,6 @@
 export const enum TokenType {
-  Name = 'Name',
+  Identifier = 'Identifier',
+  Keyword = 'Keyword',
   Number = 'Number',
   Punctuator = 'Punctuator',
   String = 'String',

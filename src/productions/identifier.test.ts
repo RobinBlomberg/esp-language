@@ -6,7 +6,7 @@ const { fail, ok } = createParseAssert(parseIdentifier);
 
 suite('Identifier', () => {
   test('"IdentifierName but not ReservedWord"', () => {
-    ok('IdentifierName');
-    fail('debugger');
+    ok('elsa');
+    fail('else');
   });
 });

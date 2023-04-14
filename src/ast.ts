@@ -126,8 +126,6 @@ export type BinaryOperator =
   | '>'
   | '<='
   | '>='
-  | 'instanceof'
-  | 'in'
   | '=='
   | '!='
   | '&'
@@ -459,7 +457,7 @@ export const Property = (
   return createNode(start, end, NodeType.Property, { key, value });
 };
 
-export type RelationalOperator = '<' | '>' | '<=' | '>=' | 'instanceof' | 'in';
+export type RelationalOperator = '<' | '>' | '<=' | '>=';
 
 export type ReturnStatement = {
   type: NodeType.ReturnStatement;
@@ -561,18 +559,10 @@ export const UnaryExpression = (
   });
 };
 
-export type UnaryOperator =
-  | 'delete'
-  | 'void'
-  | 'typeof'
-  | '+'
-  | '-'
-  | '~'
-  | '!';
+export type UnaryOperator = '-' | '!';
 
 export const UnaryOperatorTokenMatcher: TokenMatcher<UnaryOperator> = {
-  [TokenType.Name]: ['delete', 'void', 'typeof'],
-  [TokenType.Punctuator]: ['+', '-', '~', '!'],
+  [TokenType.Punctuator]: ['-', '!'],
 };
 
 export type UnionClause = {

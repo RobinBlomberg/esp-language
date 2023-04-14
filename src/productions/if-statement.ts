@@ -15,7 +15,7 @@ import { parseStatement } from './statement';
  * @see https://tc39.es/ecma262/#prod-IfStatement
  */
 export const parseIfStatement: Parser<IfStatement> = (data, i) => {
-  const ifKeyword = consume(data, i, TokenType.Name, 'if');
+  const ifKeyword = consume(data, i, TokenType.Keyword, 'if');
   if (ifKeyword) i = ifKeyword.end;
   else return null;
 
@@ -35,7 +35,7 @@ export const parseIfStatement: Parser<IfStatement> = (data, i) => {
   if (consequent) i = consequent.end;
   else return null;
 
-  const elseKeyword = consume(data, i, TokenType.Name, 'else');
+  const elseKeyword = consume(data, i, TokenType.Keyword, 'else');
   let alternate: Statement | null = null;
 
   if (elseKeyword) {

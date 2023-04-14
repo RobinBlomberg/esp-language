@@ -25,12 +25,13 @@ export const consumeToken = <T extends TokenMatcher>(
 
 export const match = <T extends TokenType, V extends string = string>(
   token: Token | null,
-  type: T,
+  type: T | T[],
   value?: V,
 ): token is Token<T, V> => {
   return (
     token !== null &&
-    token.type === type &&
+    (token.type === type ||
+      (Array.isArray(type) && type.includes(token.type as T))) &&
     (value === undefined || token.value === value)
   );
 };
@@ -39,7 +40,7 @@ export const matchToken = <T extends TokenMatcher>(
   actual: Token | null,
   expected: T,
 ): actual is T extends TokenMatcher<infer V> ? Token<TokenType, V> : never => {
-  return actual === null
-    ? false
-    : !!expected[actual.type]?.includes(actual.value);
+  return (
+    actual !== null && Boolean(expected[actual.type]?.includes(actual.value))
+  );
 };

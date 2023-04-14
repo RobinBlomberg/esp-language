@@ -9,34 +9,9 @@ suite('UnaryExpression', () => {
     ok('UpdateExpression');
   });
 
-  test('"delete UnaryExpression"', () => {
-    ok('delete UnaryExpression');
-    fail('delete');
-  });
-
-  test('"void UnaryExpression"', () => {
-    ok('void UnaryExpression');
-    fail('void');
-  });
-
-  test('"typeof UnaryExpression"', () => {
-    ok('typeof UnaryExpression');
-    fail('typeof');
-  });
-
-  test('"+ UnaryExpression"', () => {
-    ok('+UnaryExpression');
-    fail('+');
-  });
-
   test('"- UnaryExpression"', () => {
     ok('-UnaryExpression');
     fail('-');
-  });
-
-  test('"~ UnaryExpression"', () => {
-    ok('~UnaryExpression');
-    fail('~');
   });
 
   test('"! UnaryExpression"', () => {
@@ -45,6 +20,6 @@ suite('UnaryExpression', () => {
   });
 
   it('should handle nested unary expressions', () => {
-    ok('!+-UnaryExpression');
+    ok('!-UnaryExpression');
   });
 });

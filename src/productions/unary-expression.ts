@@ -7,18 +7,18 @@ import { parseUpdateExpression } from './update-expression';
  * ```ecmarkup
  * UnaryExpression :
  *   UpdateExpression
- *   delete UnaryExpression
- *   void UnaryExpression
- *   typeof UnaryExpression
  *   + UnaryExpression
  *   - UnaryExpression
- *   ~ UnaryExpression
  *   ! UnaryExpression
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
  * UnaryExpression :
+ *   delete UnaryExpression
+ *   void UnaryExpression
+ *   typeof UnaryExpression
+ *   ~ UnaryExpression
  *   AwaitExpression
  * ```
  *

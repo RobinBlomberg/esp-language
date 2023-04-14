@@ -29,17 +29,7 @@ suite('RelationalExpression', () => {
     fail('RelationalExpression >=');
   });
 
-  test('"RelationalExpression instanceof ShiftExpression"', () => {
-    ok('RelationalExpression instanceof ShiftExpression');
-    fail('RelationalExpression instanceof');
-  });
-
-  test('"RelationalExpression in ShiftExpression"', () => {
-    ok('RelationalExpression in ShiftExpression');
-    fail('RelationalExpression in');
-  });
-
   it('should respect operator precedence', () => {
-    ok('a < b << c in d >> e');
+    ok('a < b << c >= d >> e');
   });
 });

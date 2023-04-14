@@ -27,7 +27,7 @@ import { parseUnionClause } from './union-clause';
  * @see https://tc39.es/ecma262/#prod-SwitchStatement
  */
 export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
-  const matchKeyword = consume(data, i, TokenType.Name, 'match');
+  const matchKeyword = consume(data, i, TokenType.Keyword, 'match');
   if (matchKeyword) i = matchKeyword.end;
   else return null;
 
@@ -51,7 +51,7 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
   let alternate: Statement | null = null;
 
   while (true) {
-    const elseKeyword = consume(data, i, TokenType.Name, 'else');
+    const elseKeyword = consume(data, i, TokenType.Keyword, 'else');
     if (elseKeyword) {
       i = elseKeyword.end;
 

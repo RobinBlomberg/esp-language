@@ -14,7 +14,7 @@ import { parseStatement } from './statement';
  * @see https://tc39.es/ecma262/#prod-WhileStatement
  */
 export const parseWhileStatement: Parser<WhileStatement> = (data, i) => {
-  const whileKeyword = consume(data, i, TokenType.Name, 'while');
+  const whileKeyword = consume(data, i, TokenType.Keyword, 'while');
   if (whileKeyword) i = whileKeyword.end;
   else return null;
 

@@ -11,5 +11,6 @@ suite('VariableDeclaration', () => {
     fail('let Identifier');
     fail('let Identifier =');
     fail('let Identifier = Expression');
+    fail('let continue = Expression');
   });
 });

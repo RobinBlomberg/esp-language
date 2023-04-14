@@ -19,7 +19,7 @@ import { parseExpression } from './expression';
  * @see https://tc39.es/ecma262/#prod-ReturnStatement
  */
 export const parseReturnStatement: Parser<ReturnStatement> = (data, i) => {
-  const returnKeyword = consume(data, i, TokenType.Name, 'return');
+  const returnKeyword = consume(data, i, TokenType.Keyword, 'return');
   if (returnKeyword) i = returnKeyword.end;
   else return null;
 

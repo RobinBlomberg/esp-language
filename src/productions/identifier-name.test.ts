@@ -7,7 +7,9 @@ const { ok } = createParseAssert(parseIdentifierName);
 suite('IdentifierName', () => {
   test('"IdentifierStart"', () => {
     ok('a');
-    ok('IdentifierStart');
-    ok('debugger');
+  });
+
+  test('"IdentifierName IdentifierPart"', () => {
+    ok('else');
   });
 });

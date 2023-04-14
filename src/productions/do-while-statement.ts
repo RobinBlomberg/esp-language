@@ -14,7 +14,7 @@ import { parseStatement } from './statement';
  * @see https://tc39.es/ecma262/#prod-DoWhileStatement
  */
 export const parseDoWhileStatement: Parser<DoWhileStatement> = (data, i) => {
-  const doKeyword = consume(data, i, TokenType.Name, 'do');
+  const doKeyword = consume(data, i, TokenType.Keyword, 'do');
   if (doKeyword) i = doKeyword.end;
   else return null;
 
@@ -22,7 +22,7 @@ export const parseDoWhileStatement: Parser<DoWhileStatement> = (data, i) => {
   if (body) i = body.end;
   else return null;
 
-  const whileKeyword = consume(data, i, TokenType.Name, 'while');
+  const whileKeyword = consume(data, i, TokenType.Keyword, 'while');
   if (whileKeyword) i = whileKeyword.end;
   else return null;
 

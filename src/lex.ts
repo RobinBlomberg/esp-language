@@ -1,3 +1,4 @@
+import { keywords } from './keywords';
 import { punctuators } from './punctuators';
 import { Token } from './token';
 import { TokenType } from './token-type';
@@ -115,7 +116,12 @@ export const lex: Parser<Token> = (data, i) => {
       c = data[++i];
     }
 
-    return { end: i, start, type: TokenType.Name, value: name };
+    return {
+      end: i,
+      start,
+      type: keywords.has(name) ? TokenType.Keyword : TokenType.Identifier,
+      value: name,
+    };
   }
 
   throw createError(c, i);

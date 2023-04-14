@@ -11,13 +11,13 @@ import { parseShiftExpression } from './shift-expression';
  *   RelationalExpression > ShiftExpression
  *   RelationalExpression <= ShiftExpression
  *   RelationalExpression >= ShiftExpression
- *   RelationalExpression instanceof ShiftExpression
- *   RelationalExpression in ShiftExpression
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
  * RelationalExpression :
+ *   RelationalExpression instanceof ShiftExpression
+ *   RelationalExpression in ShiftExpression
  *   PrivateIdentifier in ShiftExpression
  * ```
  *
@@ -25,6 +25,5 @@ import { parseShiftExpression } from './shift-expression';
  */
 export const parseRelationalExpression =
   createLeftAssociativeBinaryExpressionParser(parseShiftExpression, {
-    [TokenType.Name]: ['instanceof', 'in'],
     [TokenType.Punctuator]: ['<', '>', '<=', '>='],
   });

@@ -15,7 +15,7 @@ import { Parser, match } from '../token-utils';
  */
 export const parseIdentifierName: Parser<Identifier> = (data, i) => {
   const node = lex(data, i);
-  return match(node, TokenType.Name)
+  return match(node, [TokenType.Identifier, TokenType.Keyword])
     ? Identifier(node.start, node.end, node.value)
     : null;
 };

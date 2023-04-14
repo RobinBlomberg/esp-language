@@ -26,7 +26,7 @@ export const parseLiteral: Parser<Literal> = (data, i) => {
   if (!token) return null;
 
   switch (token.type) {
-    case TokenType.Name:
+    case TokenType.Keyword:
       switch (token.value) {
         case 'false':
           return Literal(token.start, token.end, false);

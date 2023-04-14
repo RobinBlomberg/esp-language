@@ -12,7 +12,7 @@ import { Parser, consume } from '../token-utils';
  * @see https://tc39.es/ecma262/#prod-BreakStatement
  */
 export const parseBreakStatement: Parser<BreakStatement> = (data, i) => {
-  const breakKeyword = consume(data, i, TokenType.Name, 'break');
+  const breakKeyword = consume(data, i, TokenType.Keyword, 'break');
   if (breakKeyword) i = breakKeyword.end;
   else return null;
 
