@@ -1,12 +1,45 @@
 import { NodeType } from './node-type';
 
-const createNode = <T extends NodeType>(
+export type Node = Expression | Statement | UnionClause;
+
+export const Node = <T extends NodeType>(
   start: number,
   end: number,
   type: T,
   properties: Omit<NodeMap[T], 'start' | 'end' | 'type'>,
 ) => {
   return { start, end, type, ...properties } as NodeMap[T];
+};
+
+export type NodeMap = {
+  [NodeType.ArrayLiteral]: ArrayLiteral;
+  [NodeType.AssignmentExpression]: AssignmentExpression;
+  [NodeType.BinaryExpression]: BinaryExpression;
+  [NodeType.BlockStatement]: BlockStatement;
+  [NodeType.BreakStatement]: BreakStatement;
+  [NodeType.CallExpression]: CallExpression;
+  [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
+  [NodeType.ConditionalExpression]: ConditionalExpression;
+  [NodeType.ContinueStatement]: ContinueStatement;
+  [NodeType.DoWhileStatement]: DoWhileStatement;
+  [NodeType.ExpressionStatement]: ExpressionStatement;
+  [NodeType.Identifier]: Identifier;
+  [NodeType.IfStatement]: IfStatement;
+  [NodeType.Literal]: Literal;
+  [NodeType.MatchCase]: MatchCase;
+  [NodeType.MatchStatement]: MatchStatement;
+  [NodeType.NewExpression]: NewExpression;
+  [NodeType.ObjectLiteral]: ObjectLiteral;
+  [NodeType.Property]: Property;
+  [NodeType.ReturnStatement]: ReturnStatement;
+  [NodeType.SetLiteral]: SetLiteral;
+  [NodeType.StaticMemberExpression]: StaticMemberExpression;
+  [NodeType.ThrowStatement]: ThrowStatement;
+  [NodeType.UnaryExpression]: UnaryExpression;
+  [NodeType.UnionClause]: UnionClause;
+  [NodeType.UpdateExpression]: UpdateExpression;
+  [NodeType.VariableDeclaration]: VariableDeclaration;
+  [NodeType.WhileStatement]: WhileStatement;
 };
 
 export type AdditiveOperator = '+' | '-';
@@ -23,7 +56,7 @@ export const ArrayLiteral = (
   end: number,
   elements: Expression[],
 ) => {
-  return createNode(start, end, NodeType.ArrayLiteral, { elements });
+  return Node(start, end, NodeType.ArrayLiteral, { elements });
 };
 
 export type AssignmentExpression = {
@@ -42,7 +75,7 @@ export const AssignmentExpression = (
   left: Expression,
   right: Expression,
 ) => {
-  return createNode(start, end, NodeType.AssignmentExpression, {
+  return Node(start, end, NodeType.AssignmentExpression, {
     operator,
     left,
     right,
@@ -82,7 +115,7 @@ export const BinaryExpression = (
   left: Expression,
   right: Expression,
 ) => {
-  return createNode(start, end, NodeType.BinaryExpression, {
+  return Node(start, end, NodeType.BinaryExpression, {
     operator,
     left,
     right,
@@ -124,7 +157,7 @@ export const BlockStatement = (
   end: number,
   body: Statement[],
 ) => {
-  return createNode(start, end, NodeType.BlockStatement, { body });
+  return Node(start, end, NodeType.BlockStatement, { body });
 };
 
 export type BreakStatement = {
@@ -134,7 +167,7 @@ export type BreakStatement = {
 };
 
 export const BreakStatement = (start: number, end: number) => {
-  return createNode(start, end, NodeType.BreakStatement, {});
+  return Node(start, end, NodeType.BreakStatement, {});
 };
 
 export type CallExpression = {
@@ -151,7 +184,7 @@ export const CallExpression = (
   callee: Expression,
   arguments_: Expression[],
 ) => {
-  return createNode(start, end, NodeType.CallExpression, {
+  return Node(start, end, NodeType.CallExpression, {
     callee,
     arguments: arguments_,
   });
@@ -171,7 +204,7 @@ export const ComputedMemberExpression = (
   object: Expression,
   property: Expression,
 ) => {
-  return createNode(start, end, NodeType.ComputedMemberExpression, {
+  return Node(start, end, NodeType.ComputedMemberExpression, {
     object,
     property,
   });
@@ -193,7 +226,7 @@ export const ConditionalExpression = (
   alternate: Expression,
   consequent: Expression,
 ) => {
-  return createNode(start, end, NodeType.ConditionalExpression, {
+  return Node(start, end, NodeType.ConditionalExpression, {
     test,
     alternate,
     consequent,
@@ -207,7 +240,7 @@ export type ContinueStatement = {
 };
 
 export const ContinueStatement = (start: number, end: number) => {
-  return createNode(start, end, NodeType.ContinueStatement, {});
+  return Node(start, end, NodeType.ContinueStatement, {});
 };
 
 export type DoWhileStatement = {
@@ -224,7 +257,7 @@ export const DoWhileStatement = (
   body: Statement,
   test: Expression,
 ) => {
-  return createNode(start, end, NodeType.DoWhileStatement, { test, body });
+  return Node(start, end, NodeType.DoWhileStatement, { test, body });
 };
 
 export type EqualityOperator = '==' | '!=';
@@ -257,7 +290,7 @@ export const ExpressionStatement = (
   end: number,
   expression: Expression,
 ) => {
-  return createNode(start, end, NodeType.ExpressionStatement, { expression });
+  return Node(start, end, NodeType.ExpressionStatement, { expression });
 };
 
 export type Identifier = {
@@ -268,7 +301,7 @@ export type Identifier = {
 };
 
 export const Identifier = (start: number, end: number, name: string) => {
-  return createNode(start, end, NodeType.Identifier, { name });
+  return Node(start, end, NodeType.Identifier, { name });
 };
 
 export type IfStatement = {
@@ -287,7 +320,7 @@ export const IfStatement = (
   consequent: Statement,
   alternate: Statement | null,
 ) => {
-  return createNode(start, end, NodeType.IfStatement, {
+  return Node(start, end, NodeType.IfStatement, {
     test,
     consequent,
     alternate,
@@ -302,7 +335,7 @@ export type Literal = {
 };
 
 export const Literal = (start: number, end: number, value: LiteralValue) => {
-  return createNode(start, end, NodeType.Literal, { value });
+  return Node(start, end, NodeType.Literal, { value });
 };
 
 export type LiteralValue = boolean | null | number | string | undefined;
@@ -321,7 +354,7 @@ export const MatchCase = (
   test: Expression | UnionClause,
   consequent: Statement,
 ) => {
-  return createNode(start, end, NodeType.MatchCase, { test, consequent });
+  return Node(start, end, NodeType.MatchCase, { test, consequent });
 };
 
 export type MatchStatement = {
@@ -340,7 +373,7 @@ export const MatchStatement = (
   cases: MatchCase[],
   alternate: Statement | null,
 ) => {
-  return createNode(start, end, NodeType.MatchStatement, {
+  return Node(start, end, NodeType.MatchStatement, {
     discriminant,
     cases,
     alternate,
@@ -363,43 +396,10 @@ export const NewExpression = (
   callee: Expression,
   arguments_: Expression[],
 ) => {
-  return createNode(start, end, NodeType.NewExpression, {
+  return Node(start, end, NodeType.NewExpression, {
     callee,
     arguments: arguments_,
   });
-};
-
-export type Node = Expression | Statement | UnionClause;
-
-export type NodeMap = {
-  [NodeType.ArrayLiteral]: ArrayLiteral;
-  [NodeType.AssignmentExpression]: AssignmentExpression;
-  [NodeType.BinaryExpression]: BinaryExpression;
-  [NodeType.BlockStatement]: BlockStatement;
-  [NodeType.BreakStatement]: BreakStatement;
-  [NodeType.CallExpression]: CallExpression;
-  [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
-  [NodeType.ConditionalExpression]: ConditionalExpression;
-  [NodeType.ContinueStatement]: ContinueStatement;
-  [NodeType.DoWhileStatement]: DoWhileStatement;
-  [NodeType.ExpressionStatement]: ExpressionStatement;
-  [NodeType.Identifier]: Identifier;
-  [NodeType.IfStatement]: IfStatement;
-  [NodeType.Literal]: Literal;
-  [NodeType.MatchCase]: MatchCase;
-  [NodeType.MatchStatement]: MatchStatement;
-  [NodeType.NewExpression]: NewExpression;
-  [NodeType.ObjectLiteral]: ObjectLiteral;
-  [NodeType.Property]: Property;
-  [NodeType.ReturnStatement]: ReturnStatement;
-  [NodeType.SetLiteral]: SetLiteral;
-  [NodeType.StaticMemberExpression]: StaticMemberExpression;
-  [NodeType.ThrowStatement]: ThrowStatement;
-  [NodeType.UnaryExpression]: UnaryExpression;
-  [NodeType.UnionClause]: UnionClause;
-  [NodeType.UpdateExpression]: UpdateExpression;
-  [NodeType.VariableDeclaration]: VariableDeclaration;
-  [NodeType.WhileStatement]: WhileStatement;
 };
 
 export type ObjectLiteral = {
@@ -414,7 +414,7 @@ export const ObjectLiteral = (
   end: number,
   properties: Property[],
 ) => {
-  return createNode(start, end, NodeType.ObjectLiteral, { properties });
+  return Node(start, end, NodeType.ObjectLiteral, { properties });
 };
 
 export type Property = {
@@ -431,7 +431,7 @@ export const Property = (
   key: Identifier,
   value: Expression,
 ) => {
-  return createNode(start, end, NodeType.Property, { key, value });
+  return Node(start, end, NodeType.Property, { key, value });
 };
 
 export type RelationalOperator = '<' | '>' | '<=' | '>=';
@@ -448,7 +448,7 @@ export const ReturnStatement = (
   end: number,
   argument: Expression,
 ) => {
-  return createNode(start, end, NodeType.ReturnStatement, { argument });
+  return Node(start, end, NodeType.ReturnStatement, { argument });
 };
 
 export type SetLiteral = {
@@ -463,7 +463,7 @@ export const SetLiteral = (
   end: number,
   values: Expression[],
 ) => {
-  return createNode(start, end, NodeType.SetLiteral, { values });
+  return Node(start, end, NodeType.SetLiteral, { values });
 };
 
 export type ShiftOperator = '<<' | '>>' | '>>>';
@@ -495,7 +495,7 @@ export const StaticMemberExpression = (
   object: Expression,
   property: Identifier,
 ) => {
-  return createNode(start, end, NodeType.StaticMemberExpression, {
+  return Node(start, end, NodeType.StaticMemberExpression, {
     object,
     property,
   });
@@ -513,7 +513,7 @@ export const ThrowStatement = (
   end: number,
   argument: Expression,
 ) => {
-  return createNode(start, end, NodeType.ThrowStatement, { argument });
+  return Node(start, end, NodeType.ThrowStatement, { argument });
 };
 
 export type UnaryExpression = {
@@ -530,7 +530,7 @@ export const UnaryExpression = (
   operator: UnaryOperator,
   argument: Expression,
 ) => {
-  return createNode(start, end, NodeType.UnaryExpression, {
+  return Node(start, end, NodeType.UnaryExpression, {
     operator,
     argument,
   });
@@ -550,7 +550,7 @@ export const UnionClause = (
   end: number,
   values: Expression[],
 ) => {
-  return createNode(start, end, NodeType.UnionClause, { values });
+  return Node(start, end, NodeType.UnionClause, { values });
 };
 
 export type UpdateExpression = {
@@ -569,7 +569,7 @@ export const UpdateExpression = (
   argument: Expression,
   prefix: boolean,
 ) => {
-  return createNode(start, end, NodeType.UpdateExpression, {
+  return Node(start, end, NodeType.UpdateExpression, {
     operator,
     argument,
     prefix,
@@ -594,7 +594,7 @@ export const VariableDeclaration = (
   id: string,
   init: Expression,
 ) => {
-  return createNode(start, end, NodeType.VariableDeclaration, { id, init });
+  return Node(start, end, NodeType.VariableDeclaration, { id, init });
 };
 
 export type WhileStatement = {
@@ -611,5 +611,5 @@ export const WhileStatement = (
   test: Expression,
   body: Statement,
 ) => {
-  return createNode(start, end, NodeType.WhileStatement, { test, body });
+  return Node(start, end, NodeType.WhileStatement, { test, body });
 };
