@@ -1,7 +1,7 @@
 import { Parser, consumeToken } from '../../lexer';
 import { AssignmentExpression, Expression } from '../ast';
 import { errors } from '../errors';
-import { isNodeSimple } from '../parser-utils';
+import { isSimpleNode } from '../parser-utils';
 import { AssignmentOperatorTokenMatcher } from '../token-matchers';
 import { parseConditionalExpression } from './conditional-expression';
 
@@ -32,7 +32,7 @@ export const parseExpression: Parser<Expression> = (data, i) => {
   if (operator) i = operator.end;
   else return left;
 
-  if (!isNodeSimple(left)) {
+  if (!isSimpleNode(left)) {
     throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
   }
 

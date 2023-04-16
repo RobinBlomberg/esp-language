@@ -1,6 +1,5 @@
 import { Parser, TokenType, consume } from '../../lexer';
-import { BinaryExpression, Expression } from '../ast';
-import { NodeType } from '../node-type';
+import { BinaryExpression, Expression, NodeType } from '../ast';
 import { parseUnaryExpression } from './unary-expression';
 
 /**

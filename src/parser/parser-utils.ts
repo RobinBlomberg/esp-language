@@ -1,6 +1,12 @@
 import { Parser, TokenMatcher, consumeToken } from '../lexer';
-import { BinaryExpression, BinaryOperator, Expression, Node } from './ast';
-import { NodeType } from './node-type';
+import {
+  BinaryExpression,
+  BinaryOperator,
+  Expression,
+  Node,
+  NodeType,
+  SimpleNode,
+} from './ast';
 
 export const createLeftAssociativeBinaryExpressionParser = (
   parse: Parser<Expression>,
@@ -31,7 +37,10 @@ export const createLeftAssociativeBinaryExpressionParser = (
   };
 };
 
-export const isNodeSimple = (node: Node): boolean => {
+/**
+ * @see https://tc39.es/ecma262/#sec-static-semantics-assignmenttargettype
+ */
+export const isSimpleNode = (node: Node): node is SimpleNode => {
   return (
     node.type === NodeType.Identifier ||
     node.type === NodeType.StaticMemberExpression ||

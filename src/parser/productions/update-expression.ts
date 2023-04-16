@@ -1,7 +1,7 @@
 import { Parser, consumeToken } from '../../lexer';
 import { Expression, UpdateExpression } from '../ast';
 import { errors } from '../errors';
-import { isNodeSimple } from '../parser-utils';
+import { isSimpleNode } from '../parser-utils';
 import { UpdateOperatorTokenMatcher } from '../token-matchers';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
 import { parseUnaryExpression } from './unary-expression';
@@ -27,7 +27,7 @@ export const parseUpdateExpression: Parser<Expression> = (data, i) => {
     const argument = parseUnaryExpression(data, i);
     if (!argument) return null;
 
-    if (!isNodeSimple(argument)) {
+    if (!isSimpleNode(argument)) {
       throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
     }
 
@@ -46,7 +46,7 @@ export const parseUpdateExpression: Parser<Expression> = (data, i) => {
 
     const postfixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
     if (postfixOperator) {
-      if (!isNodeSimple(argument)) {
+      if (!isSimpleNode(argument)) {
         throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
       }
 

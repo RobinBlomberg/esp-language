@@ -1,4 +1,41 @@
-import { NodeType } from './node-type';
+import { MemberExpression } from '../estree/ast';
+
+export const enum NodeType {
+  ArrayLiteral = 'ArrayLiteral',
+  AssignmentExpression = 'AssignmentExpression',
+  BinaryExpression = 'BinaryExpression',
+  BlockStatement = 'BlockStatement',
+  BreakStatement = 'BreakStatement',
+  CallExpression = 'CallExpression',
+  ComputedMemberExpression = 'ComputedMemberExpression',
+  ConditionalExpression = 'ConditionalExpression',
+  ContinueStatement = 'ContinueStatement',
+  DoWhileStatement = 'DoWhileStatement',
+  ExpressionStatement = 'ExpressionStatement',
+  Identifier = 'Identifier',
+  IfStatement = 'IfStatement',
+  Literal = 'Literal',
+  MatchCase = 'MatchCase',
+  MatchStatement = 'MatchStatement',
+  NewExpression = 'NewExpression',
+  ObjectLiteral = 'ObjectLiteral',
+  Property = 'Property',
+  ReturnStatement = 'ReturnStatement',
+  SetLiteral = 'SetLiteral',
+  StaticMemberExpression = 'StaticMemberExpression',
+  ThrowStatement = 'ThrowStatement',
+  UnaryExpression = 'UnaryExpression',
+  UnionClause = 'UnionClause',
+  UpdateExpression = 'UpdateExpression',
+  VariableDeclaration = 'VariableDeclaration',
+  WhileStatement = 'WhileStatement',
+}
+
+export type LeftHandSideExpression =
+  | CallExpression
+  | MemberExpression
+  | NewExpression
+  | PrimaryExpression;
 
 export type Node = Expression | Statement | UnionClause;
 
@@ -42,6 +79,17 @@ export type NodeMap = {
   [NodeType.WhileStatement]: WhileStatement;
 };
 
+export type PrimaryExpression =
+  | Identifier
+  | Literal
+  | ArrayLiteral
+  | ObjectLiteral;
+
+export type SimpleNode =
+  | Identifier
+  | StaticMemberExpression
+  | ComputedMemberExpression;
+
 export type AdditiveOperator = '+' | '-';
 
 export type ArrayLiteral = {
@@ -64,7 +112,7 @@ export type AssignmentExpression = {
   start: number;
   end: number;
   operator: AssignmentOperator;
-  left: Expression;
+  left: SimpleNode;
   right: Expression;
 };
 
@@ -72,7 +120,7 @@ export const AssignmentExpression = (
   start: number,
   end: number,
   operator: AssignmentOperator,
-  left: Expression,
+  left: SimpleNode,
   right: Expression,
 ) => {
   return Node(start, end, NodeType.AssignmentExpression, {

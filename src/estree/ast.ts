@@ -972,14 +972,18 @@ export const SequenceExpression = (expressions: Expression[]) =>
 
 /**
  * @see https://github.com/estree/estree/blob/master/es5.md#patterns
+ * @see https://github.com/estree/estree/blob/master/es2015.md#patterns
  */
 export type Pattern =
   | Identifier
+  | MemberExpression
+  /*
+   * ES2015
+   */
   | ObjectPattern
   | ArrayPattern
   | RestElement
-  | AssignmentPattern
-  | MemberExpression;
+  | AssignmentPattern;
 
 /*
  * ES2015
