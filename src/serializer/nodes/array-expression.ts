@@ -14,16 +14,20 @@ import { Writer } from '../write';
 export const writeArrayExpression: Writer<ArrayExpression> = (node, write) => {
   write('[');
 
-  for (let i = 0; i < node.elements.length; i++) {
+  for (let i = 0, isAfterElision = false; i < node.elements.length; i++) {
     const element = node.elements[i];
 
-    if (i >= 1 || !element) {
+    if (i >= 1 && !isAfterElision) {
       write(',');
     }
 
     if (element) {
       write(element);
+    } else {
+      write(',');
     }
+
+    isAfterElision = !element;
   }
 
   write(']');
