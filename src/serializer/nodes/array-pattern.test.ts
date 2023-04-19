@@ -3,8 +3,8 @@ import { ArrayPattern, Identifier, RestElement } from '../../estree';
 import { serialize } from '../write';
 
 suite('ArrayPattern', () => {
-  test('[ Elision(opt) AssignmentRestElement[?Yield, ?Await](opt) ]', () => {
-    suite('Elision(opt)', () => {
+  test('[ Elision<opt> AssignmentRestElement[?Yield, ?Await]<opt> ]', () => {
+    suite('Elision<opt>', () => {
       test(',', () => {
         expect(serialize(ArrayPattern([RestElement(Identifier('a'))]))).toBe(
           '[...a]',
@@ -30,8 +30,8 @@ suite('ArrayPattern', () => {
   });
 
   test(
-    '[ AssignmentElementList[?Yield, ?Await] , Elision(opt) ' +
-      'AssignmentRestElement[?Yield, ?Await](opt) ]',
+    '[ AssignmentElementList[?Yield, ?Await] , Elision<opt> ' +
+      'AssignmentRestElement[?Yield, ?Await]<opt> ]',
     () => {
       expect(
         serialize(

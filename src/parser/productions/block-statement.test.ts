@@ -5,7 +5,7 @@ import { parseBlockStatement } from './block-statement';
 const { fail, ok } = createParseAssert(parseBlockStatement);
 
 suite('BlockStatement', () => {
-  test('"{ StatementList(opt) }"', () => {
+  test('"{ StatementList<opt> }"', () => {
     ok('{}');
     ok('{ Statement; }');
     ok('{ Statement; Statement; }');

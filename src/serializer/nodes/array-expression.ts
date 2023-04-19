@@ -4,15 +4,15 @@ import { Writer } from '../write';
 /**
  * ```ecmarkup
  * ArrayLiteral[Yield, Await] :
- *   [ Elision(opt) ]
+ *   [ Elision<opt> ]
  *   [ ElementList[?Yield, ?Await] ]
- *   [ ElementList[?Yield, ?Await] , Elision(opt) ]
+ *   [ ElementList[?Yield, ?Await] , Elision<opt> ]
  *
  * ElementList[Yield, Await] :
- *   Elision(opt) AssignmentExpression[+In, ?Yield, ?Await]
- *   Elision(opt) SpreadElement[?Yield, ?Await]
- *   ElementList[?Yield, ?Await] , Elision(opt) AssignmentExpression[+In, ?Yield, ?Await]
- *   ElementList[?Yield, ?Await] , Elision(opt) SpreadElement[?Yield, ?Await]
+ *   Elision<opt> AssignmentExpression[+In, ?Yield, ?Await]
+ *   Elision<opt> SpreadElement[?Yield, ?Await]
+ *   ElementList[?Yield, ?Await] , Elision<opt> AssignmentExpression[+In, ?Yield, ?Await]
+ *   ElementList[?Yield, ?Await] , Elision<opt> SpreadElement[?Yield, ?Await]
  *
  * Elision :
  *   ,

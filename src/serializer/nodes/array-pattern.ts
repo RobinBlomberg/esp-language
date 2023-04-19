@@ -4,10 +4,10 @@ import { Writer } from '../write';
 /**
  * ```ecmarkup
  * ArrayAssignmentPattern[Yield, Await] :
- *   [ Elision(opt) AssignmentRestElement[?Yield, ?Await](opt) ]
+ *   [ Elision<opt> AssignmentRestElement[?Yield, ?Await]<opt> ]
  *   [ AssignmentElementList[?Yield, ?Await] ]
- *   [ AssignmentElementList[?Yield, ?Await] , Elision(opt)
- *     AssignmentRestElement[?Yield, ?Await](opt) ]
+ *   [ AssignmentElementList[?Yield, ?Await] , Elision<opt>
+ *     AssignmentRestElement[?Yield, ?Await]<opt> ]
  *
  * Elision :
  *   ,

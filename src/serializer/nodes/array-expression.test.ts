@@ -3,8 +3,8 @@ import { ArrayExpression, Identifier, SpreadElement } from '../../estree';
 import { serialize } from '../write';
 
 suite('ArrayExpression', () => {
-  suite('[ Elision(opt) ]', () => {
-    suite('Elision(opt)', () => {
+  suite('[ Elision<opt> ]', () => {
+    suite('Elision<opt>', () => {
       test(',', () => {
         expect(serialize(ArrayExpression([]))).toBe('[]');
         expect(serialize(ArrayExpression([null]))).toBe('[,]');
@@ -19,15 +19,15 @@ suite('ArrayExpression', () => {
 
   suite('[ ElementList[?Yield, ?Await] ]', () => {
     suite('ElementList[?Yield, ?Await]', () => {
-      test('Elision(opt) AssignmentExpression[+In, ?Yield, ?Await]', () => {
+      test('Elision<opt> AssignmentExpression[+In, ?Yield, ?Await]', () => {
         expect(serialize(ArrayExpression([Identifier('a')]))).toBe('[a]');
         expect(serialize(ArrayExpression([null, Identifier('a')]))).toBe(
           '[,a]',
         );
       });
 
-      suite('Elision(opt) SpreadElement[?Yield, ?Await]', () => {
-        suite('Elision(opt)', () => {
+      suite('Elision<opt> SpreadElement[?Yield, ?Await]', () => {
+        suite('Elision<opt>', () => {
           test(',', () => {
             expect(
               serialize(ArrayExpression([SpreadElement(Identifier('a'))])),
@@ -50,7 +50,7 @@ suite('ArrayExpression', () => {
       });
 
       test(
-        'ElementList[?Yield, ?Await] , Elision(opt) ' +
+        'ElementList[?Yield, ?Await] , Elision<opt> ' +
           'AssignmentExpression[+In, ?Yield, ?Await]',
         () => {
           expect(
@@ -61,7 +61,7 @@ suite('ArrayExpression', () => {
         },
       );
 
-      test('ElementList[?Yield, ?Await] , Elision(opt) SpreadElement[?Yield, ?Await]', () => {
+      test('ElementList[?Yield, ?Await] , Elision<opt> SpreadElement[?Yield, ?Await]', () => {
         expect(
           serialize(
             ArrayExpression([
@@ -75,7 +75,7 @@ suite('ArrayExpression', () => {
     });
   });
 
-  test('[ ElementList[?Yield, ?Await] , Elision(opt) ]', () => {
+  test('[ ElementList[?Yield, ?Await] , Elision<opt> ]', () => {
     expect(serialize(ArrayExpression([Identifier('a'), null]))).toBe('[a,,]');
   });
 });

@@ -6,7 +6,7 @@ import { parseStatement } from './statement';
  * Modified from ECMA-262:
  * ```ecmarkup
  * BlockStatement :
- *   { StatementList(opt) }
+ *   { StatementList<opt> }
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-BlockStatement

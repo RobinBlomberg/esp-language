@@ -12,8 +12,8 @@ import { parseValueList } from './value-list';
  * Not supported from ECMA-262:
  * ```ecmarkup
  * ArrayLiteral
- *   [ Elision(opt) ]
- *   [ ElementList , Elision(opt) ]
+ *   [ Elision<opt> ]
+ *   [ ElementList , Elision<opt> ]
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-ArrayLiteral
