@@ -20,7 +20,7 @@ suite('ArrayFunctionExpression', () => {
               [Identifier('a')],
               ObjectExpression([]),
               false,
-              true,
+              false,
             ),
           ),
         ).toBe('(a)=>{}');
@@ -34,7 +34,7 @@ suite('ArrayFunctionExpression', () => {
               [],
               ObjectExpression([]),
               false,
-              true,
+              false,
             ),
           ),
         ).toBe('()=>{}');
@@ -48,7 +48,7 @@ suite('ArrayFunctionExpression', () => {
               [RestElement(Identifier('a'))],
               ObjectExpression([]),
               false,
-              true,
+              false,
             ),
           ),
         ).toBe('(...a)=>{}');
@@ -62,7 +62,7 @@ suite('ArrayFunctionExpression', () => {
               [RestElement(ArrayPattern([]))],
               ObjectExpression([]),
               false,
-              true,
+              false,
             ),
           ),
         ).toBe('(...[])=>{}');
@@ -76,7 +76,7 @@ suite('ArrayFunctionExpression', () => {
               [Identifier('a'), RestElement(Identifier('b'))],
               ObjectExpression([]),
               false,
-              true,
+              false,
             ),
           ),
         ).toBe('(a,...b)=>{}');
@@ -90,7 +90,7 @@ suite('ArrayFunctionExpression', () => {
               [Identifier('a'), RestElement(ArrayPattern([]))],
               ObjectExpression([]),
               false,
-              true,
+              false,
             ),
           ),
         ).toBe('(a,...[])=>{}');
@@ -107,10 +107,18 @@ suite('ArrayFunctionExpression', () => {
             [Identifier('a')],
             Identifier('b'),
             false,
-            true,
+            false,
           ),
         ),
       ).toBe('(a)=>b');
     });
+  });
+
+  test('AsyncArrowFunction[In, Yield, Await]', () => {
+    expect(
+      serialize(
+        ArrowFunctionExpression(null, [], ObjectExpression([]), true, false),
+      ),
+    ).toBe('async()=>{}');
   });
 });
