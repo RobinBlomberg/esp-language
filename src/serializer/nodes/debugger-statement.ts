@@ -4,4 +4,7 @@ import { Writer } from '../write';
 export const writeDebuggerStatement: Writer<DebuggerStatement> = (
   node,
   write,
-) => {};
+) => {
+  write('debugger');
+  write(';');
+};
