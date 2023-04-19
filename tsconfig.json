@@ -4,8 +4,10 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "lib": ["DOM", "ESNext"],
+    "moduleResolution": "node",
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
-    "strict": true
+    "strict": true,
+    "target": "ESNext"
   }
 }
