@@ -1092,7 +1092,7 @@ export type ArrowFunctionExpression = {
 export const ArrowFunctionExpression = (
   id: Identifier | null,
   params: Pattern[],
-  body: FunctionBody,
+  body: FunctionBody | Expression,
   async: boolean,
   expression: boolean,
 ) =>

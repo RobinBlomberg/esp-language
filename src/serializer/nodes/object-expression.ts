@@ -4,4 +4,7 @@ import { Writer } from '../write';
 export const writeObjectExpression: Writer<ObjectExpression> = (
   node,
   write,
-) => {};
+) => {
+  write('{');
+  write('}');
+};

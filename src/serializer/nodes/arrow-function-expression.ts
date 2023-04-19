@@ -1,6 +1,31 @@
 import { ArrowFunctionExpression } from '../../estree';
 import { Writer } from '../write';
 
+/**
+ * ```ecmarkup
+ * ArrowFunction[In, Yield, Await] :
+ *   ArrowParameters[?Yield, ?Await] [no LineTerminator here] => ConciseBody[?In]
+ *
+ * ArrowParameters[Yield, Await] :
+ *   BindingIdentifier[?Yield, ?Await]
+ *   CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
+ *
+ * CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] :
+ *   ( Expression[+In, ?Yield, ?Await] )
+ *   ( Expression[+In, ?Yield, ?Await] , )
+ *   ( )
+ *   ( ... BindingIdentifier[?Yield, ?Await] )
+ *   ( ... BindingPattern[?Yield, ?Await] )
+ *   ( Expression[+In, ?Yield, ?Await] , ... BindingIdentifier[?Yield, ?Await] )
+ *   ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
+ *
+ * ConciseBody[In] :
+ *   [lookahead ≠ {] ExpressionBody[?In, ~Await]
+ *   { FunctionBody[~Yield, ~Await] }
+ * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ArrowFunction
+ */
 export const writeArrowFunctionExpression: Writer<ArrowFunctionExpression> = (
   node,
   write,

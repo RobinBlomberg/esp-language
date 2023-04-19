@@ -6,8 +6,18 @@ import { Writer } from '../write';
  * ArrayAssignmentPattern[Yield, Await] :
  *   [ Elision(opt) AssignmentRestElement[?Yield, ?Await](opt) ]
  *   [ AssignmentElementList[?Yield, ?Await] ]
- *   [ AssignmentElementList[?Yield, ?Await] , Elision(opt) AssignmentRestElement[?Yield, ?Await](opt) ]
+ *   [ AssignmentElementList[?Yield, ?Await] , Elision(opt)
+ *     AssignmentRestElement[?Yield, ?Await](opt) ]
+ *
+ * Elision :
+ *   ,
+ *   Elision ,
+ *
+ * AssignmentRestElement[Yield, Await] :
+ *   ... DestructuringAssignmentTarget[?Yield, ?Await]
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-ArrayAssignmentPattern
  */
 export const writeArrayPattern: Writer<ArrayPattern> = (node, write) => {
   write('[');

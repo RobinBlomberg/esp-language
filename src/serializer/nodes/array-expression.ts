@@ -7,6 +7,16 @@ import { Writer } from '../write';
  *   [ Elision(opt) ]
  *   [ ElementList[?Yield, ?Await] ]
  *   [ ElementList[?Yield, ?Await] , Elision(opt) ]
+ *
+ * ElementList[Yield, Await] :
+ *   Elision(opt) AssignmentExpression[+In, ?Yield, ?Await]
+ *   Elision(opt) SpreadElement[?Yield, ?Await]
+ *   ElementList[?Yield, ?Await] , Elision(opt) AssignmentExpression[+In, ?Yield, ?Await]
+ *   ElementList[?Yield, ?Await] , Elision(opt) SpreadElement[?Yield, ?Await]
+ *
+ * Elision :
+ *   ,
+ *   Elision ,
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-ArrayLiteral
