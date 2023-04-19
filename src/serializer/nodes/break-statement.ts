@@ -7,6 +7,8 @@ import { Writer } from '../write';
  *   break ;
  *   break [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
  * ```
+ *
+ * @see https://tc39.es/ecma262/#prod-BreakStatement
  */
 export const writeBreakStatement: Writer<BreakStatement> = (node, write) => {
   write('break');
