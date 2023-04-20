@@ -5,26 +5,28 @@ import { parseMatchStatement } from './match-statement';
 const { fail, ok } = createParseAssert(parseMatchStatement);
 
 suite('MatchStatement', () => {
-  test('"match ( Expression ) CaseBlock"', () => {
-    ok('match (Expression) { Case Block; }');
-    ok('match (Expression) { Case Block; Case Block; }');
-    ok('match (Expression) { Case Block; else Statement; }');
-    ok('match (Expression) { Case Block; Case Block; else Statement; }');
+  test('"match ( Expression ) ExpressionBlock"', () => {
+    ok('match (Expression) { Expression Statement; }');
+    ok('match (Expression) { Expression Statement; Expression Statement; }');
+    ok('match (Expression) { Expression Statement; else Statement; }');
+    ok(
+      'match (Expression) { Expression Statement; Expression Statement; else Statement; }',
+    );
     ok('match (Expression) { {Union, Clause} Block; }');
     fail('match');
     fail('match (');
     fail('match (Expression');
     fail('match (Expression)');
     fail('match (Expression) {');
-    fail('match (Expression) { Case');
-    fail('match (Expression) { Case Block');
-    fail('match (Expression) { Case Block;');
-    fail('match (Expression) { Case Block; Case');
-    fail('match (Expression) { Case Block; else');
-    fail('match (Expression) { Case Block; Case Block');
-    fail('match (Expression) { Case Block; Case Block;');
-    fail('match (Expression) { Case Block; else Statement');
-    fail('match (Expression) { Case Block; else Statement;');
+    fail('match (Expression) { Expression');
+    fail('match (Expression) { Expression Statement');
+    fail('match (Expression) { Expression Statement;');
+    fail('match (Expression) { Expression Statement; Expression');
+    fail('match (Expression) { Expression Statement; else');
+    fail('match (Expression) { Expression Statement; Expression Statement');
+    fail('match (Expression) { Expression Statement; Expression Statement;');
+    fail('match (Expression) { Expression Statement; else Statement');
+    fail('match (Expression) { Expression Statement; else Statement;');
     fail('match (Expression) { {Union');
     fail('match (Expression) { {Union}');
     fail('match (Expression) { {Union, }');

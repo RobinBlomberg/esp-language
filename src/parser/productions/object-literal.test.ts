@@ -11,20 +11,20 @@ suite('ObjectLiteral', () => {
   });
 
   test('"{ PropertyDefinitionList }"', () => {
-    ok('{a: 1}');
-    ok('{a: 1, b: 2}');
-    fail('{,');
-    fail('{,}');
-    fail('{a');
-    fail('{a}');
-    fail('{a:');
-    fail('{a: }');
-    fail('{a: 1');
-    fail('{a: 1,');
-    fail('{a: 1,}');
-    fail('{a: 1, b');
-    fail('{a: 1, b:');
-    fail('{a: 1, b: 2');
-    fail('{a: 1, b: 2,');
+    ok('{ a: 1}');
+    ok('{ a: 1, b: 2 }');
+    fail('{ ,');
+    fail('{ ,}');
+    fail('{ a');
+    fail('{ a}');
+    fail('{ a:');
+    fail('{ a: }');
+    fail('{ a: 1');
+    fail('{ a: 1,');
+    fail('{ a: 1,}');
+    fail('{ a: 1, b');
+    fail('{ a: 1, b:');
+    fail('{ a: 1, b: 2');
+    fail('{ a: 1, b: 2,');
   });
 });

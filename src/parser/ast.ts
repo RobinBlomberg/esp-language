@@ -22,6 +22,7 @@ export const enum NodeType {
   Property = 'Property',
   ReturnStatement = 'ReturnStatement',
   SetLiteral = 'SetLiteral',
+  Script = 'Script',
   StaticMemberExpression = 'StaticMemberExpression',
   ThrowStatement = 'ThrowStatement',
   UnaryExpression = 'UnaryExpression',
@@ -69,6 +70,7 @@ export type NodeMap = {
   [NodeType.ObjectLiteral]: ObjectLiteral;
   [NodeType.Property]: Property;
   [NodeType.ReturnStatement]: ReturnStatement;
+  [NodeType.Script]: Script;
   [NodeType.SetLiteral]: SetLiteral;
   [NodeType.StaticMemberExpression]: StaticMemberExpression;
   [NodeType.ThrowStatement]: ThrowStatement;
@@ -497,6 +499,17 @@ export const ReturnStatement = (
   argument: Expression,
 ) => {
   return Node(start, end, NodeType.ReturnStatement, { argument });
+};
+
+export type Script = {
+  type: NodeType.Script;
+  start: number;
+  end: number;
+  body: Statement[];
+};
+
+export const Script = (start: number, end: number, body: Statement[]) => {
+  return Node(start, end, NodeType.Script, { body });
 };
 
 export type SetLiteral = {
