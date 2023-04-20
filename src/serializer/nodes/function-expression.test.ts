@@ -55,7 +55,7 @@ suite('FunctionExpression', () => {
 
   suite('GeneratorExpression', () => {
     test(
-      'function * BindingIdentifier[+Yield, ~Await]opt ( FormalParameters[+Yield, ~Await] ) { ' +
+      'function * BindingIdentifier[+Yield, ~Await]<opt> ( FormalParameters[+Yield, ~Await] ) { ' +
         'GeneratorBody }',
       () => {
         expect(

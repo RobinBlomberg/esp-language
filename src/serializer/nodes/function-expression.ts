@@ -12,7 +12,7 @@ import { Writer } from '../write';
  *     FormalParameters[~Yield, +Await] ) { AsyncFunctionBody }
  *
  * GeneratorExpression :
- *   function * BindingIdentifier[+Yield, ~Await]opt ( FormalParameters[+Yield, ~Await] ) {
+ *   function * BindingIdentifier[+Yield, ~Await]<opt> ( FormalParameters[+Yield, ~Await] ) {
  *     GeneratorBody }
  *
  * AsyncGeneratorExpression :
