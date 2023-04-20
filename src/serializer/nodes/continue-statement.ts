@@ -3,9 +3,9 @@ import { Writer } from '../write';
 
 /**
  * ```ecmarkup
- * BreakStatement[Yield, Await] :
- *   break ;
- *   break [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
+ * ContinueStatement[Yield, Await] :
+ *   continue ;
+ *   continue [no LineTerminator here] LabelIdentifier[?Yield, ?Await] ;
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-ContinueStatement
