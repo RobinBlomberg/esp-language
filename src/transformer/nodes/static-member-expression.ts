@@ -9,7 +9,7 @@ export const transformStaticMemberExpression = (
   return ES.MemberExpression(
     transformExpression(node.object),
     transformIdentifier(node.property),
-    true,
+    false,
     false,
   );
 };
