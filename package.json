@@ -1,13 +1,16 @@
 {
-  "type": "module",
   "scripts": {
     "check": "tsc",
     "lint": "eslint src",
+    "repl": "ts-node-dev --quiet --respawn --watch ./src,./.repl ./bin/esp.ts ./.repl",
     "test": "vitest"
   },
   "devDependencies": {
     "@robinblomberg/eslint-config-prettier": "^0.1.4",
     "@robinblomberg/eslint-config-robinblomberg": "^0.14.0",
+    "@types/node": "^18.15.12",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "vitest": "^0.29.8"
   },
   "eslintConfig": {
