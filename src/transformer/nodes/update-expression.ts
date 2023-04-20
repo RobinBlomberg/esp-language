@@ -6,6 +6,6 @@ export const transformUpdateExpression = (node: ESP.UpdateExpression) => {
   return ES.UpdateExpression(
     node.operator,
     transformExpression(node.argument),
-    true,
+    node.prefix,
   );
 };
