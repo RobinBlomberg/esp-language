@@ -10,7 +10,9 @@ export const transformMatchCase = (node: ESP.MatchCase) => {
     return node.test.values.map((value, index) => {
       return ES.SwitchCase(
         transformExpression(value),
-        index === length - 1 ? [transformStatement(node.consequent)] : [],
+        index === length - 1
+          ? [transformStatement(node.consequent), ES.BreakStatement(null)]
+          : [],
       );
     });
   }
@@ -18,6 +20,7 @@ export const transformMatchCase = (node: ESP.MatchCase) => {
   return [
     ES.SwitchCase(transformExpression(node.test), [
       transformStatement(node.consequent),
+      ES.BreakStatement(null),
     ]),
   ];
 };
