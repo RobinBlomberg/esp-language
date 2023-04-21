@@ -1,8 +1,8 @@
 import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
-import { parseReturnStatement } from './return-statement';
+import { parseScript } from './script';
 
-const { ok } = createParseAssert(parseReturnStatement);
+const { ok } = createParseAssert(parseScript);
 
 suite('Script', () => {
   test('StatementList<opt>', () => {
