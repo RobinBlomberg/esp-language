@@ -38,7 +38,7 @@ export type LeftHandSideExpression =
   | NewExpression
   | PrimaryExpression;
 
-export type Node = Expression | Statement | UnionClause;
+export type Node = Expression | Script | Statement | UnionClause;
 
 export const Node = <T extends NodeType>(
   start: number,
