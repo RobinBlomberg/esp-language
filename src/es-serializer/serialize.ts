@@ -70,7 +70,10 @@ import { writeVariableDeclarator } from './nodes/variable-declarator';
 import { writeWhileStatement } from './nodes/while-statement';
 import { writeWithStatement } from './nodes/with-statement';
 import { writeYieldExpression } from './nodes/yield-expression';
-import { isIdentifierStart, isReservedWordPartChar } from './writer-utils';
+import {
+  isIdentifierPartChar as isIdentifierEnd,
+  isIdentifierStart,
+} from './writer-utils';
 
 const writers: { [K in NodeType]: Writer<NodeMap[K]> } = {
   [NodeType.ArrayExpression]: writeArrayExpression,
@@ -155,8 +158,11 @@ export const serialize = (node: Node) => {
 
   const write: Write = (input) => {
     if (typeof input === 'string') {
+      const lastChar = data[data.length - 1];
+
       if (
-        isReservedWordPartChar(data[data.length - 1]!) &&
+        lastChar &&
+        isIdentifierEnd(lastChar) &&
         isIdentifierStart(input[0]!)
       ) {
         data += ' ';
