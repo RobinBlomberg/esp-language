@@ -933,19 +933,21 @@ export const MemberExpression = (
 ) => Node(NodeType.MemberExpression, { object, property, computed, optional });
 
 /**
+ * NOTE: To avoid confusion, the properties `consequent` and `alternate` have been reordered.
+ *
  * @see https://github.com/estree/estree/blob/master/es5.md#conditionalexpression
  */
 export type ConditionalExpression = {
   type: NodeType.ConditionalExpression;
   test: Expression;
-  alternate: Expression;
   consequent: Expression;
+  alternate: Expression;
 };
 
 export const ConditionalExpression = (
   test: Expression,
-  alternate: Expression,
   consequent: Expression,
+  alternate: Expression,
 ) => Node(NodeType.ConditionalExpression, { test, alternate, consequent });
 
 /**
