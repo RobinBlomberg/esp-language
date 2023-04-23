@@ -146,15 +146,14 @@ const writers: { [K in NodeType]: Writer<NodeMap[K]> } = {
   [NodeType.YieldExpression]: writeYieldExpression,
 };
 
-export type Writer<T extends Node> = (
-  node: T,
-  write: (input: Node | string) => void,
-) => void;
+export type Write = (input: Node | string) => void;
+
+export type Writer<T extends Node> = (node: T, write: Write) => void;
 
 export const serialize = (node: Node) => {
   let data = '';
 
-  const write = (input: Node | string) => {
+  const write: Write = (input) => {
     if (typeof input === 'string') {
       if (
         isReservedWordPartChar(data[data.length - 1]!) &&

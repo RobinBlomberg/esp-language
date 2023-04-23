@@ -1,5 +1,6 @@
 import { NodeType, Property } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeParenthesizedList } from './internal/parenthesized-list';
 
 /**
  * ```ecmarkup
@@ -60,17 +61,7 @@ export const writeProperty: Writer<Property> = (node, write) => {
       write(node.value.id);
     }
 
-    write('(');
-
-    for (let i = 0; i < node.value.params.length; i++) {
-      if (i >= 1) {
-        write(',');
-      }
-
-      write(node.value.params[i]!);
-    }
-
-    write(')');
+    writeParenthesizedList(node.value.params, write);
     write(node.value.body);
   } else {
     if (node.computed) {

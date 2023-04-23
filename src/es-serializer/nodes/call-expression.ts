@@ -1,5 +1,6 @@
 import { CallExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeParenthesizedList } from './internal/parenthesized-list';
 
 /**
  * ```ecmarkup
@@ -7,17 +8,6 @@ import { Writer } from '../serialize';
  *   ...
  *   CallExpression[?Yield, ?Await] Arguments[?Yield, ?Await]
  *   ...
- *
- * Arguments[Yield, Await] :
- *   ( )
- *   ( ArgumentList[?Yield, ?Await] )
- *   ( ArgumentList[?Yield, ?Await] , )
- *
- * ArgumentList[Yield, Await] :
- *   AssignmentExpression[+In, ?Yield, ?Await]
- *   ... AssignmentExpression[+In, ?Yield, ?Await]
- *   ArgumentList[?Yield, ?Await] , AssignmentExpression[+In, ?Yield, ?Await]
- *   ArgumentList[?Yield, ?Await] , ... AssignmentExpression[+In, ?Yield, ?Await]
  *
  * OptionalExpression[Yield, Await] :
  *   ...
@@ -39,15 +29,5 @@ export const writeCallExpression: Writer<CallExpression> = (node, write) => {
     write('?.');
   }
 
-  write('(');
-
-  for (let i = 0; i < node.arguments.length; i++) {
-    if (i >= 1) {
-      write(',');
-    }
-
-    write(node.arguments[i]!);
-  }
-
-  write(')');
+  writeParenthesizedList(node.arguments, write);
 };

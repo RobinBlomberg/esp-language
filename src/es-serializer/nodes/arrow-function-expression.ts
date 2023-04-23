@@ -1,5 +1,6 @@
 import { ArrowFunctionExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeParenthesizedList } from './internal/parenthesized-list';
 
 /**
  * ```ecmarkup
@@ -9,15 +10,6 @@ import { Writer } from '../serialize';
  * ArrowParameters[Yield, Await] :
  *   BindingIdentifier[?Yield, ?Await]
  *   CoverParenthesizedExpressionAndArrowParameterList[?Yield, ?Await]
- *
- * CoverParenthesizedExpressionAndArrowParameterList[Yield, Await] :
- *   ( Expression[+In, ?Yield, ?Await] )
- *   ( Expression[+In, ?Yield, ?Await] , )
- *   ( )
- *   ( ... BindingIdentifier[?Yield, ?Await] )
- *   ( ... BindingPattern[?Yield, ?Await] )
- *   ( Expression[+In, ?Yield, ?Await] , ... BindingIdentifier[?Yield, ?Await] )
- *   ( Expression[+In, ?Yield, ?Await] , ... BindingPattern[?Yield, ?Await] )
  *
  * ConciseBody[In] :
  *   [lookahead ≠ {] ExpressionBody[?In, ~Await]
@@ -40,17 +32,7 @@ export const writeArrowFunctionExpression: Writer<ArrowFunctionExpression> = (
     write('async');
   }
 
-  write('(');
-
-  for (let i = 0; i < node.params.length; i++) {
-    if (i >= 1) {
-      write(',');
-    }
-
-    write(node.params[i]!);
-  }
-
-  write(')');
+  writeParenthesizedList(node.params, write);
   write('=>');
   write(node.body);
 };

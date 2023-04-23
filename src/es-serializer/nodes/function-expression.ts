@@ -1,5 +1,6 @@
 import { FunctionExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeFunction } from './internal/function';
 
 /**
  * ```ecmarkup
@@ -29,30 +30,14 @@ export const writeFunctionExpression: Writer<FunctionExpression> = (
   node,
   write,
 ) => {
-  if (node.async) {
-    write('async');
-  }
-
-  write('function');
-
-  if (node.generator) {
-    write('*');
-  }
-
-  if (node.id) {
-    write(node.id);
-  }
-
-  write('(');
-
-  for (let i = 0; i < node.params.length; i++) {
-    if (i >= 1) {
-      write(',');
-    }
-
-    write(node.params[i]!);
-  }
-
-  write(')');
-  write(node.body);
+  writeFunction(
+    node.async,
+    true,
+    node.generator,
+    node.id,
+    false,
+    node.params,
+    node.body,
+    write,
+  );
 };
