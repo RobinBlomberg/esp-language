@@ -1,5 +1,9 @@
-import { ClassDeclaration } from '../../es-ast';
+import {
+  AnonymousDefaultExportedClassDeclaration,
+  ClassDeclaration,
+} from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeClass } from './internal/class';
 
 /**
  * ```ecmarkup
@@ -16,22 +20,6 @@ import { Writer } from '../serialize';
  *
  * @see https://tc39.es/ecma262/#prod-ClassDeclaration
  */
-export const writeClassDeclaration: Writer<ClassDeclaration> = (
-  node,
-  write,
-) => {
-  write('class');
-
-  if (node.id) {
-    write(node.id);
-  }
-
-  if (node.superClass) {
-    write('extends');
-    write(node.superClass);
-  }
-
-  write('{');
-  write(node.body);
-  write('}');
-};
+export const writeClassDeclaration: Writer<
+  AnonymousDefaultExportedClassDeclaration | ClassDeclaration
+> = writeClass;

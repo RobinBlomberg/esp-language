@@ -1,4 +1,7 @@
-import { FunctionDeclaration } from '../../es-ast';
+import {
+  AnonymousDefaultExportedFunctionDeclaration,
+  FunctionDeclaration,
+} from '../../es-ast';
 import { Writer } from '../serialize';
 import { writeFunction } from './internal/function';
 
@@ -7,15 +10,14 @@ import { writeFunction } from './internal/function';
  * FunctionDeclaration[Yield, Await, Default] :
  *   function BindingIdentifier[?Yield, ?Await] ( FormalParameters[~Yield, ~Await] )
  *     { FunctionBody[~Yield, ~Await] }
- *   ...
+ *   [+Default] function ( FormalParameters[~Yield, ~Await] ) { FunctionBody[~Yield, ~Await] }
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-FunctionDeclaration
  */
-export const writeFunctionDeclaration: Writer<FunctionDeclaration> = (
-  node,
-  write,
-) => {
+export const writeFunctionDeclaration: Writer<
+  AnonymousDefaultExportedFunctionDeclaration | FunctionDeclaration
+> = (node, write) => {
   writeFunction(
     node.async,
     true,

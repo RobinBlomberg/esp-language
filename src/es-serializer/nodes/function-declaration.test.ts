@@ -1,5 +1,10 @@
 import { expect, suite, test } from 'vitest';
-import { BlockStatement, FunctionDeclaration, Identifier } from '../../es-ast';
+import {
+  AnonymousDefaultExportedFunctionDeclaration,
+  BlockStatement,
+  FunctionDeclaration,
+  Identifier,
+} from '../../es-ast';
 import { serialize } from '../serialize';
 
 suite('FunctionDeclaration', () => {
@@ -18,6 +23,23 @@ suite('FunctionDeclaration', () => {
           ),
         ),
       ).toBe('function a(){}');
+    },
+  );
+
+  test(
+    '[+Default] function ( FormalParameters[~Yield, ~Await] ) ' +
+      '{ FunctionBody[~Yield, ~Await] }',
+    () => {
+      expect(
+        serialize(
+          AnonymousDefaultExportedFunctionDeclaration(
+            [],
+            BlockStatement([]),
+            false,
+            false,
+          ),
+        ),
+      ).toBe('function(){}');
     },
   );
 });

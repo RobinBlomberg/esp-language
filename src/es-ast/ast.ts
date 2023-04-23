@@ -179,9 +179,13 @@ export const Program = (
 /**
  * @see https://github.com/estree/estree/blob/master/es5.md#functions
  * @see https://github.com/estree/estree/blob/master/es2015.md#functions
+ * @see https://github.com/estree/estree/blob/master/es2015.md#exportdefaultdeclaration
  * @see https://github.com/estree/estree/blob/master/es2017.md#function
  */
-export type Function = FunctionDeclaration | FunctionExpression;
+export type Function =
+  | FunctionDeclaration
+  | FunctionExpression
+  | AnonymousDefaultExportedFunctionDeclaration;
 
 /**
  * @see https://github.com/estree/estree/blob/master/es5.md#statements
@@ -1309,20 +1313,17 @@ export const MethodDefinition = (
   });
 
 /**
- * NOTE: The ESTree spec does not specify `null` as a valid `id` value, but it is necessary in order
- * to support the `export default class {}` syntax.
- *
  * @see https://github.com/estree/estree/blob/master/es2015.md#classdeclaration
  */
 export type ClassDeclaration = {
   type: NodeType.ClassDeclaration;
-  id: Identifier | null;
+  id: Identifier;
   superClass: Expression | null;
   body: ClassBody;
 };
 
 export const ClassDeclaration = (
-  id: Identifier | null,
+  id: Identifier,
   superClass: Expression | null,
   body: ClassBody,
 ) => Node(NodeType.ClassDeclaration, { id, superClass, body });
