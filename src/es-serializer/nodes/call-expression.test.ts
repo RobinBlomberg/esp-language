@@ -1,5 +1,10 @@
-import { expect, suite, test } from 'vitest';
-import { CallExpression, Identifier, SpreadElement } from '../../es-ast';
+import { expect, it, suite, test } from 'vitest';
+import {
+  CallExpression,
+  Identifier,
+  SpreadElement,
+  UnaryExpression,
+} from '../../es-ast';
 import { serialize } from '../serialize';
 
 suite('CallExpression', () => {
@@ -73,5 +78,13 @@ suite('CallExpression', () => {
         );
       });
     });
+  });
+
+  it('should parenthesize when needed', () => {
+    expect(
+      serialize(
+        CallExpression(UnaryExpression('!', true, Identifier('a')), [], false),
+      ),
+    ).toBe('(!a)()');
   });
 });

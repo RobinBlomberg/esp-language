@@ -1,5 +1,6 @@
 import { ArrayExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeExpression } from './internal/expression';
 
 /**
  * ```ecmarkup
@@ -32,7 +33,7 @@ export const writeArrayExpression: Writer<ArrayExpression> = (node, write) => {
     }
 
     if (element) {
-      write(element);
+      writeExpression(node, element, write);
     } else {
       write(',');
     }

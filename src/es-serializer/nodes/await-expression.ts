@@ -1,5 +1,6 @@
 import { AwaitExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeExpression } from './internal/expression';
 
 /**
  * ```ecmarkup
@@ -11,5 +12,5 @@ import { Writer } from '../serialize';
  */
 export const writeAwaitExpression: Writer<AwaitExpression> = (node, write) => {
   write('await');
-  write(node.argument);
+  writeExpression(node, node.argument, write);
 };

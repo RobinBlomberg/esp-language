@@ -1,5 +1,6 @@
 import { ConditionalExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeExpression } from './internal/expression';
 
 /**
  * ```ecmarkup
@@ -15,9 +16,9 @@ export const writeConditionalExpression: Writer<ConditionalExpression> = (
   node,
   write,
 ) => {
-  write(node.test);
+  writeExpression(node, node.test, write);
   write('?');
-  write(node.consequent);
+  writeExpression(node, node.consequent, write);
   write(':');
-  write(node.alternate);
+  writeExpression(node, node.alternate, write);
 };

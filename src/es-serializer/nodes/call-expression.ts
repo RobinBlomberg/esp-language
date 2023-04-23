@@ -1,5 +1,6 @@
 import { CallExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeExpression } from './internal/expression';
 import { writeParenthesizedList } from './internal/parenthesized-list';
 
 /**
@@ -23,7 +24,7 @@ import { writeParenthesizedList } from './internal/parenthesized-list';
  * @see https://tc39.es/ecma262/#prod-OptionalExpression
  */
 export const writeCallExpression: Writer<CallExpression> = (node, write) => {
-  write(node.callee);
+  writeExpression(node, node.callee, write);
 
   if (node.optional) {
     write('?.');

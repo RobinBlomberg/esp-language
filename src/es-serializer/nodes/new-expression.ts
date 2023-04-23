@@ -1,5 +1,6 @@
 import { NewExpression } from '../../es-ast';
 import { Writer } from '../serialize';
+import { writeExpression } from './internal/expression';
 import { writeParenthesizedList } from './internal/parenthesized-list';
 
 /**
@@ -10,6 +11,6 @@ import { writeParenthesizedList } from './internal/parenthesized-list';
  */
 export const writeNewExpression: Writer<NewExpression> = (node, write) => {
   write('new');
-  write(node.callee);
+  writeExpression(node, node.callee, write);
   writeParenthesizedList(node.arguments, write);
 };

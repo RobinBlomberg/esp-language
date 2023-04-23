@@ -1,4 +1,4 @@
-import { expect, suite, test } from 'vitest';
+import { expect, it, suite, test } from 'vitest';
 import {
   ConditionalExpression,
   Identifier,
@@ -28,4 +28,20 @@ suite('ConditionalExpression', () => {
       ).toBe('a||b?c:d');
     },
   );
+
+  it('should parenthesize when needed', () => {
+    expect(
+      serialize(
+        ConditionalExpression(
+          ConditionalExpression(
+            Identifier('a'),
+            Identifier('b'),
+            Identifier('c'),
+          ),
+          Identifier('d'),
+          Identifier('e'),
+        ),
+      ),
+    ).toBe('(a?b:c)?d:e');
+  });
 });

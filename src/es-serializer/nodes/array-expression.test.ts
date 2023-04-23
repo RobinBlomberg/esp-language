@@ -1,5 +1,10 @@
-import { expect, suite, test } from 'vitest';
-import { ArrayExpression, Identifier, SpreadElement } from '../../es-ast';
+import { expect, it, suite, test } from 'vitest';
+import {
+  ArrayExpression,
+  Identifier,
+  SequenceExpression,
+  SpreadElement,
+} from '../../es-ast';
 import { serialize } from '../serialize';
 
 suite('ArrayExpression', () => {
@@ -77,5 +82,15 @@ suite('ArrayExpression', () => {
 
   test('[ ElementList[?Yield, ?Await] , Elision<opt> ]', () => {
     expect(serialize(ArrayExpression([Identifier('a'), null]))).toBe('[a,,]');
+  });
+
+  it('should parenthesize when needed', () => {
+    expect(
+      serialize(
+        ArrayExpression([
+          SequenceExpression([Identifier('a'), Identifier('b')]),
+        ]),
+      ),
+    ).toBe('[(a,b)]');
   });
 });
