@@ -3,17 +3,20 @@ import { ClassBody, ClassDeclaration, Identifier } from '../../es-ast';
 import { serialize } from '../serialize';
 
 suite('ClassDeclaration', () => {
-  test('ClassDeclaration[?Yield, ?Await]', () => {
+  test('class BindingIdentifier[?Yield, ?Await] ClassTail[?Yield, ?Await]', () => {
     expect(
       serialize(ClassDeclaration(Identifier('A'), null, ClassBody([]))),
     ).toBe('class A{}');
   });
 
-  test('ClassDeclaration[?Yield, ?Await] with extends', () => {
-    expect(
-      serialize(
-        ClassDeclaration(Identifier('A'), Identifier('B'), ClassBody([])),
-      ),
-    ).toBe('class A extends B{}');
+  suite('[+Default] class ClassTail[?Yield, ?Await]', () => {
+    test('ClassHeritage[?Yield, ?Await]<opt> { ClassBody[?Yield, ?Await]<opt> }', () => {
+      expect(serialize(ClassDeclaration(null, null, ClassBody([])))).toBe(
+        'class{}',
+      );
+      expect(
+        serialize(ClassDeclaration(null, Identifier('A'), ClassBody([]))),
+      ).toBe('class extends A{}');
+    });
   });
 });

@@ -1309,17 +1309,20 @@ export const MethodDefinition = (
   });
 
 /**
+ * NOTE: The ESTree spec does not specify `null` as a valid `id` value, but it is necessary in order
+ * to support the `export default class {}` syntax.
+ *
  * @see https://github.com/estree/estree/blob/master/es2015.md#classdeclaration
  */
 export type ClassDeclaration = {
   type: NodeType.ClassDeclaration;
-  id: Identifier;
+  id: Identifier | null;
   superClass: Expression | null;
   body: ClassBody;
 };
 
 export const ClassDeclaration = (
-  id: Identifier,
+  id: Identifier | null,
   superClass: Expression | null,
   body: ClassBody,
 ) => Node(NodeType.ClassDeclaration, { id, superClass, body });
