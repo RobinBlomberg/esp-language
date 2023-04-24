@@ -948,7 +948,7 @@ export const ConditionalExpression = (
   test: Expression,
   consequent: Expression,
   alternate: Expression,
-) => Node(NodeType.ConditionalExpression, { test, alternate, consequent });
+) => Node(NodeType.ConditionalExpression, { test, consequent, alternate });
 
 /**
  * @see https://github.com/estree/estree/blob/master/es5.md#callexpression
@@ -1551,13 +1551,14 @@ export const ExportDefaultDeclaration = (
 ) => Node(NodeType.ExportDefaultDeclaration, { declaration });
 
 /**
+ * NOTE: To avoid confusion, the properties `source` and `exported` have been reordered.
+ *
  * @see https://github.com/estree/estree/blob/master/es2015.md#exportalldeclaration
  * @see https://github.com/estree/estree/blob/master/es2020.md#exportalldeclaration
  * @see https://github.com/estree/estree/blob/master/es2022.md#exportalldeclaration
  */
 export type ExportAllDeclaration = {
   type: NodeType.ExportAllDeclaration;
-  source: Literal;
   /*
    * ES2020
    */
@@ -1568,12 +1569,13 @@ export type ExportAllDeclaration = {
      * ES2022
      */
     | Literal;
+  source: Literal;
 };
 
 export const ExportAllDeclaration = (
-  source: Literal,
   exported: Identifier | null | Literal,
-) => Node(NodeType.ExportAllDeclaration, { source, exported });
+  source: Literal,
+) => Node(NodeType.ExportAllDeclaration, { exported, source });
 
 /*
  * ES2017
