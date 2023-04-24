@@ -1399,24 +1399,26 @@ export const ImportDeclaration = (
 ) => Node(NodeType.ImportDeclaration, { specifiers, source });
 
 /**
+ * NOTE: To avoid confusion, the properties `local` and `imported` have been reordered.
+ *
  * @see https://github.com/estree/estree/blob/master/es2015.md#importspecifier
  * @see https://github.com/estree/estree/blob/master/es2022.md#importspecifier
  */
 export type ImportSpecifier = {
   type: NodeType.ImportSpecifier;
-  local: Identifier;
   imported:
     | Identifier
     /*
      * ES2022
      */
     | Literal;
+  local: Identifier;
 };
 
 export const ImportSpecifier = (
-  local: Identifier,
   imported: Identifier | Literal,
-) => Node(NodeType.ImportSpecifier, { local, imported });
+  local: Identifier,
+) => Node(NodeType.ImportSpecifier, { imported, local });
 
 /**
  * @see https://github.com/estree/estree/blob/master/es2015.md#importdefaultspecifier
