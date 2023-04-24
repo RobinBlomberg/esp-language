@@ -8,7 +8,7 @@ import { writeClass } from './internal/class';
  *   class BindingIdentifier[?Yield, ?Await]<opt> ClassTail[?Yield, ?Await]
  *
  * ClassTail[Yield, Await] :
- *   ClassHeritage[?Yield, ?Await]opt { ClassBody[?Yield, ?Await]opt }
+ *   ClassHeritage[?Yield, ?Await]<opt> { ClassBody[?Yield, ?Await]<opt> }
  *
  * ClassHeritage[Yield, Await] :
  *   extends LeftHandSideExpression[?Yield, ?Await]
