@@ -10,7 +10,7 @@ suite('TemplateElement', () => {
       () => {
         test('Expression[+In, ?Yield, ?Await]', () => {
           expect(
-            serialize(TemplateElement(false, { raw: 'a\\bc', cooked: 'abc' })),
+            serialize(TemplateElement(false, { cooked: 'abc', raw: 'a\\bc' })),
           ).toBe('a\\bc');
         });
       },

@@ -8,8 +8,8 @@ suite('TemplateLiteral', () => {
       serialize(
         TemplateLiteral(
           [
-            TemplateElement(false, { raw: 'a', cooked: 'a' }),
-            TemplateElement(true, { raw: '\\c', cooked: 'c' }),
+            TemplateElement(false, { cooked: 'a', raw: 'a' }),
+            TemplateElement(true, { cooked: 'c', raw: '\\c' }),
           ],
           [Identifier('b')],
         ),
