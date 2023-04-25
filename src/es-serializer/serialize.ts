@@ -149,19 +149,20 @@ const writers: { [K in NodeType]: Writer<NodeMap[K]> } = {
   [NodeType.YieldExpression]: writeYieldExpression,
 };
 
-export type Write = (input: Node | string) => void;
+export type Write = (input: Node | string, isLexical?: boolean) => void;
 
 export type Writer<T extends Node> = (node: T, write: Write) => void;
 
 export const serialize = (node: Node) => {
   let data = '';
 
-  const write: Write = (input) => {
+  const write: Write = (input, isLexical) => {
     if (typeof input === 'string') {
       const lastChar = data[data.length - 1];
 
       if (
         lastChar &&
+        !isLexical &&
         isIdentifierEnd(lastChar) &&
         isIdentifierStart(input[0]!)
       ) {

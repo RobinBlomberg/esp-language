@@ -21,6 +21,7 @@
     "rules": {
       "@typescript-eslint/no-magic-numbers": 0,
       "curly": 0,
+      "no-template-curly-in-string": 0,
       "sort-keys/sort-keys-fix": 0
     }
   }
