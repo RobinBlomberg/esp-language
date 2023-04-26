@@ -2,7 +2,8 @@
   "scripts": {
     "check": "tsc",
     "lint": "eslint src",
-    "repl": "ts-node-dev --quiet --respawn --watch ./src,./.repl ./bin/esp.ts ./.repl",
+    "start": "ts-node-dev --quiet --watch ./src,./.repl ./bin/esp.ts ./.repl",
+    "start:watch": "ts-node-dev --quiet --respawn --watch ./src,./.repl ./bin/esp.ts ./.repl",
     "test": "vitest"
   },
   "devDependencies": {
