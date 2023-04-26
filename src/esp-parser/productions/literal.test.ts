@@ -1,4 +1,4 @@
-import { suite, test } from 'vitest';
+import { describe, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseLiteral } from './literal';
 
@@ -26,8 +26,15 @@ suite('Literal', () => {
   });
 
   test('"StringLiteral"', () => {
-    ok('""');
-    ok('"ab\\"cd"');
+    describe('double-quoted strings', () => {
+      ok('""');
+      ok('"ab\\"cd"');
+    });
+
+    describe('single-quoted strings', () => {
+      ok("''");
+      ok("'ab\\'cd'");
+    });
   });
 
   test('"undefined"', () => {

@@ -1,4 +1,4 @@
-import { expect, it, suite, test } from 'vitest';
+import { describe, expect, it, suite, test } from 'vitest';
 import { keywords, punctuators } from '../esp-grammar';
 import { lex } from './lex';
 import { TokenType } from './token-type';
@@ -67,16 +67,32 @@ suite('lex', () => {
   });
 
   suite('string', () => {
-    it('should handle basic strings', () => {
-      is.error('"');
-      is.string('""');
-      is.string('"abc"');
+    describe('double-quoted strings', () => {
+      it('should handle basic strings', () => {
+        is.error('"');
+        is.string('""');
+        is.string('"abc"');
+      });
+
+      it('should handle escape characters', () => {
+        is.error('"\\');
+        is.string('"\\""');
+        is.string('"ab\\"cd"');
+      });
     });
 
-    it('should handle escape characters', () => {
-      is.error('"\\');
-      is.string('"\\""');
-      is.string('"ab\\"cd"');
+    describe('single-quoted strings', () => {
+      it('should handle basic strings', () => {
+        is.error("'");
+        is.string("''");
+        is.string("'abc'");
+      });
+
+      it('should handle escape characters', () => {
+        is.error("'\\");
+        is.string("'\\''");
+        is.string("'ab\\'cd'");
+      });
     });
   });
 

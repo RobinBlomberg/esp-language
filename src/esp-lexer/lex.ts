@@ -41,11 +41,12 @@ export const lex: Parser<Token> = (data, i) => {
     return { end: i, start, type: TokenType.Punctuator, value };
   }
 
-  if (c === '"') {
-    let value = '"';
+  if (c === "'" || c === '"') {
+    const quoteChar = c;
+    let value = c;
     c = data[++i];
 
-    while (c !== undefined && c !== '"') {
+    while (c !== undefined && c !== quoteChar) {
       if (c === '\\') {
         value += '\\';
         c = data[++i];
@@ -59,11 +60,11 @@ export const lex: Parser<Token> = (data, i) => {
       c = data[++i];
     }
 
-    if (c !== '"') {
+    if (c !== quoteChar) {
       throw createError(c, i);
     }
 
-    value += '"';
+    value += quoteChar;
     c = data[++i];
     return { end: i, start, type: TokenType.String, value };
   }
