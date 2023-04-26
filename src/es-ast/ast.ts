@@ -24,6 +24,7 @@ export type Node =
   | Super
   | SpreadElement
   | TemplateElement
+  | AssignmentProperty
   | Class
   | ClassBody
   | MethodDefinition

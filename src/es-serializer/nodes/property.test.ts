@@ -11,16 +11,9 @@ suite('Property', () => {
   test('IdentifierReference[?Yield, ?Await]', () => {
     expect(
       serialize(
-        Property(
-          Identifier('abc'),
-          Identifier('abc'),
-          'init',
-          false,
-          true,
-          false,
-        ),
+        Property(Identifier('a'), Identifier('a'), 'init', false, true, false),
       ),
-    ).toBe('abc');
+    ).toBe('a');
   });
 
   suite(
@@ -31,30 +24,30 @@ suite('Property', () => {
           expect(
             serialize(
               Property(
-                Identifier('abc'),
-                Identifier('abc'),
+                Identifier('a'),
+                Identifier('b'),
                 'init',
                 false,
                 false,
                 false,
               ),
             ),
-          ).toBe('abc:abc');
+          ).toBe('a:b');
         });
 
         test('LiteralPropertyName', () => {
           expect(
             serialize(
               Property(
-                Identifier('abc'),
-                Identifier('abc'),
+                Identifier('a'),
+                Identifier('b'),
                 'init',
                 false,
                 false,
                 true,
               ),
             ),
-          ).toBe('[abc]:abc');
+          ).toBe('[a]:b');
         });
       });
     },
