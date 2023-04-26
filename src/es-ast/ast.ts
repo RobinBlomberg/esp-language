@@ -480,13 +480,13 @@ export const ForStatement = (
  */
 export type ForInStatement = {
   type: NodeType.ForInStatement;
-  left: VariableDeclaration | Pattern;
+  left: ForDeclaration | Pattern;
   right: Expression;
   body: Statement;
 };
 
 export const ForInStatement = (
-  left: VariableDeclaration | Pattern,
+  left: ForDeclaration | Pattern,
   right: Expression,
   body: Statement,
 ) => Node(NodeType.ForInStatement, { left, right, body });
@@ -1041,7 +1041,7 @@ export type Pattern =
  */
 export type ForOfStatement = {
   type: NodeType.ForOfStatement;
-  left: VariableDeclaration | Pattern;
+  left: ForDeclaration | Pattern;
   right: Expression;
   body: Statement;
   /*
@@ -1051,7 +1051,7 @@ export type ForOfStatement = {
 };
 
 export const ForOfStatement = (
-  left: VariableDeclaration | Pattern,
+  left: ForDeclaration | Pattern,
   right: Expression,
   body: Statement,
   await_: boolean,
@@ -1061,6 +1061,34 @@ export const ForOfStatement = (
   right,
   body,
   await: await_,
+});
+
+/**
+ * A subset of `VariableDeclaration` added for type safety.
+ *
+ * @see https://tc39.es/ecma262/#prod-ForDeclaration
+ * @see https://tc39.es/ecma262/#prod-ForInOfStatement
+ */
+export type ForDeclaration = {
+  type: NodeType.VariableDeclaration;
+  declarations: [
+    {
+      type: NodeType.VariableDeclarator;
+      id: Pattern;
+      init: Expression | null;
+    },
+  ];
+  kind: 'var' | 'let' | 'const';
+};
+
+export const ForDeclaration = (
+  kind: 'var' | 'let' | 'const',
+  id: Pattern,
+  init: Expression | null,
+): ForDeclaration => ({
+  type: NodeType.VariableDeclaration,
+  declarations: [{ type: NodeType.VariableDeclarator, id, init }],
+  kind,
 });
 
 /**
