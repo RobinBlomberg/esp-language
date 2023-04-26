@@ -19,9 +19,9 @@ export const transformStatement = <T extends ESP.Statement>(
     case ESP.NodeType.BlockStatement:
       return transformBlockStatement(node) as ToESNode<T>;
     case ESP.NodeType.BreakStatement:
-      return transformBreakStatement(node) as ToESNode<T>;
+      return transformBreakStatement() as ToESNode<T>;
     case ESP.NodeType.ContinueStatement:
-      return transformContinueStatement(node) as ToESNode<T>;
+      return transformContinueStatement() as ToESNode<T>;
     case ESP.NodeType.DoWhileStatement:
       return transformDoWhileStatement(node) as ToESNode<T>;
     case ESP.NodeType.ExpressionStatement:

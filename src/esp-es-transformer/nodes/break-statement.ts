@@ -1,6 +1,5 @@
 import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
 
-export const transformBreakStatement = (node: ESP.BreakStatement) => {
+export const transformBreakStatement = () => {
   return ES.BreakStatement(null);
 };
