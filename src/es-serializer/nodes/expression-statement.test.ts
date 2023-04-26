@@ -1,5 +1,9 @@
-import { expect, suite, test } from 'vitest';
-import { ExpressionStatement, Identifier } from '../../es-ast';
+import { expect, it, suite, test } from 'vitest';
+import {
+  ExpressionStatement,
+  Identifier,
+  ObjectExpression,
+} from '../../es-ast';
 import { serialize } from '../serialize';
 
 suite('ExpressionStatement', () => {
@@ -10,4 +14,8 @@ suite('ExpressionStatement', () => {
       expect(serialize(ExpressionStatement(Identifier('a')))).toBe('a;');
     },
   );
+
+  it('should wrap object expression statements in parentheses', () => {
+    expect(serialize(ExpressionStatement(ObjectExpression([])))).toBe('({});');
+  });
 });

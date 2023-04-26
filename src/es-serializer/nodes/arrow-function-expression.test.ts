@@ -1,7 +1,8 @@
-import { expect, suite, test } from 'vitest';
+import { expect, it, suite, test } from 'vitest';
 import {
   ArrayPattern,
   ArrowFunctionExpression,
+  BlockStatement,
   Identifier,
   ObjectExpression,
   RestElement,
@@ -18,7 +19,7 @@ suite('ArrayFunctionExpression', () => {
             ArrowFunctionExpression(
               null,
               [Identifier('a')],
-              ObjectExpression([]),
+              BlockStatement([]),
               false,
               false,
             ),
@@ -29,13 +30,7 @@ suite('ArrayFunctionExpression', () => {
       test('( )', () => {
         expect(
           serialize(
-            ArrowFunctionExpression(
-              null,
-              [],
-              ObjectExpression([]),
-              false,
-              false,
-            ),
+            ArrowFunctionExpression(null, [], BlockStatement([]), false, false),
           ),
         ).toBe('()=>{}');
       });
@@ -46,7 +41,7 @@ suite('ArrayFunctionExpression', () => {
             ArrowFunctionExpression(
               null,
               [RestElement(Identifier('a'))],
-              ObjectExpression([]),
+              BlockStatement([]),
               false,
               false,
             ),
@@ -60,7 +55,7 @@ suite('ArrayFunctionExpression', () => {
             ArrowFunctionExpression(
               null,
               [RestElement(ArrayPattern([]))],
-              ObjectExpression([]),
+              BlockStatement([]),
               false,
               false,
             ),
@@ -74,7 +69,7 @@ suite('ArrayFunctionExpression', () => {
             ArrowFunctionExpression(
               null,
               [Identifier('a'), RestElement(Identifier('b'))],
-              ObjectExpression([]),
+              BlockStatement([]),
               false,
               false,
             ),
@@ -88,7 +83,7 @@ suite('ArrayFunctionExpression', () => {
             ArrowFunctionExpression(
               null,
               [Identifier('a'), RestElement(ArrayPattern([]))],
-              ObjectExpression([]),
+              BlockStatement([]),
               false,
               false,
             ),
@@ -117,8 +112,22 @@ suite('ArrayFunctionExpression', () => {
   test('AsyncArrowFunction[In, Yield, Await]', () => {
     expect(
       serialize(
-        ArrowFunctionExpression(null, [], ObjectExpression([]), true, false),
+        ArrowFunctionExpression(null, [], BlockStatement([]), true, false),
       ),
     ).toBe('async()=>{}');
+  });
+
+  it('should wrap object expressions in parentheses', () => {
+    expect(
+      serialize(
+        ArrowFunctionExpression(
+          null,
+          [Identifier('a')],
+          ObjectExpression([]),
+          false,
+          false,
+        ),
+      ),
+    ).toBe('(a)=>({})');
   });
 });

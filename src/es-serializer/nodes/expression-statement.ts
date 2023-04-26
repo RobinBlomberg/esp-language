@@ -1,4 +1,4 @@
-import { ExpressionStatement } from '../../es-ast';
+import { ExpressionStatement, NodeType } from '../../es-ast';
 import { Writer } from '../serialize';
 
 /**
@@ -14,6 +14,15 @@ export const writeExpressionStatement: Writer<ExpressionStatement> = (
   node,
   write,
 ) => {
+  if (node.expression.type === NodeType.ObjectExpression) {
+    write('(');
+  }
+
   write(node.expression);
+
+  if (node.expression.type === NodeType.ObjectExpression) {
+    write(')');
+  }
+
   write(';');
 };

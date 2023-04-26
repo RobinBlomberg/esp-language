@@ -1,4 +1,4 @@
-import { ArrowFunctionExpression } from '../../es-ast';
+import { ArrowFunctionExpression, NodeType } from '../../es-ast';
 import { Writer } from '../serialize';
 import { writeParenthesizedList } from './internal/parenthesized-list';
 
@@ -34,5 +34,14 @@ export const writeArrowFunctionExpression: Writer<ArrowFunctionExpression> = (
 
   writeParenthesizedList(node.params, write);
   write('=>');
+
+  if (node.body.type === NodeType.ObjectExpression) {
+    write('(');
+  }
+
   write(node.body);
+
+  if (node.body.type === NodeType.ObjectExpression) {
+    write(')');
+  }
 };
