@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { ReturnStatement } from '../ast';
 import { parseExpression } from './expression';
 
@@ -18,16 +19,16 @@ import { parseExpression } from './expression';
  * @see https://tc39.es/ecma262/#prod-ReturnStatement
  */
 export const parseReturnStatement: Parser<ReturnStatement> = (data, i) => {
-  const returnKeyword = consume(data, i, TokenType.Keyword, 'return');
-  if (returnKeyword) i = returnKeyword.end;
-  else return null;
+  const return_ = consume(data, i, TokenType.Keyword, 'return');
+  if (abrupt(return_)) return return_;
+  i = return_.end;
 
   const argument = parseExpression(data, i);
-  if (argument) i = argument.end;
-  else return null;
+  if (abrupt(argument)) return error(argument);
+  i = argument.end;
 
   const terminator = consume(data, i, TokenType.Punctuator, ';');
-  if (!terminator) return null;
+  if (abrupt(terminator)) return error(terminator);
 
-  return ReturnStatement(returnKeyword.start, terminator.end, argument);
+  return ReturnStatement(return_.start, terminator.end, argument);
 };

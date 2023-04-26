@@ -2,13 +2,14 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseThrowStatement } from './throw-statement';
 
-const { fail, ok } = createParseAssert(parseThrowStatement);
+const { error, ok, unused } = createParseAssert(parseThrowStatement);
 
 suite('ThrowStatement', () => {
   test('"throw Expression ;"', () => {
+    unused();
     ok('throw Expression;');
-    fail('throw');
-    fail('throw;');
-    fail('throw Expression');
+    error('throw');
+    error('throw;');
+    error('throw Expression');
   });
 });

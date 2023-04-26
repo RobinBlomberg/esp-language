@@ -1,28 +1,20 @@
 import { keywords, punctuators } from '../esp-grammar';
+import { Error, Unused } from './abrupt';
 import { Token } from './token';
 import { TokenType } from './token-type';
-import { Parser } from './token-utils';
 
-const createError = (c: string | undefined, i: number) => {
-  return new SyntaxError(
-    `Unexpected ${
-      c ? `character ${JSON.stringify(c)}` : 'end of input'
-    } at index ${i}`,
-  );
-};
-
-export const lex: Parser<Token> = (data, i) => {
+export const lex = (data: string, i: number): Token | Error | Unused => {
   let c = data[i];
 
   while (c === ' ' || c === '\t' || c === '\n' || c === '\r') {
     c = data[++i];
   }
 
-  if (c === undefined) {
-    return null;
-  }
-
   const start = i;
+
+  if (c === undefined) {
+    return { type: 'Unused', start };
+  }
 
   if (punctuators.has(c)) {
     let value = c;
@@ -38,7 +30,7 @@ export const lex: Parser<Token> = (data, i) => {
       c = data[++i];
     }
 
-    return { end: i, start, type: TokenType.Punctuator, value };
+    return { type: TokenType.Punctuator, start, end: i, value };
   }
 
   if (c === "'" || c === '"') {
@@ -52,7 +44,7 @@ export const lex: Parser<Token> = (data, i) => {
         c = data[++i];
 
         if (c === undefined) {
-          throw createError(c, i);
+          return { type: 'Error', start };
         }
       }
 
@@ -61,12 +53,12 @@ export const lex: Parser<Token> = (data, i) => {
     }
 
     if (c !== quoteChar) {
-      throw createError(c, i);
+      return { type: 'Error', start };
     }
 
     value += quoteChar;
     c = data[++i];
-    return { end: i, start, type: TokenType.String, value };
+    return { type: TokenType.String, start, end: i, value };
   }
 
   if (c >= '0' && c <= '9') {
@@ -90,11 +82,11 @@ export const lex: Parser<Token> = (data, i) => {
           c = data[++i];
         }
       } else {
-        throw createError(c, i);
+        return { type: 'Error', start };
       }
     }
 
-    return { end: i, start, type: TokenType.Number, value };
+    return { type: TokenType.Number, start, end: i, value };
   }
 
   if (
@@ -117,12 +109,12 @@ export const lex: Parser<Token> = (data, i) => {
     }
 
     return {
-      end: i,
-      start,
       type: keywords.has(name) ? TokenType.Keyword : TokenType.Identifier,
+      start,
+      end: i,
       value: name,
     };
   }
 
-  throw createError(c, i);
+  return { type: 'Error', start };
 };

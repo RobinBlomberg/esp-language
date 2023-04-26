@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { ContinueStatement } from '../ast';
 
 /**
@@ -16,13 +17,13 @@ import { ContinueStatement } from '../ast';
  * @see https://tc39.es/ecma262/#prod-ContinueStatement
  */
 export const parseContinueStatement: Parser<ContinueStatement> = (data, i) => {
-  const continueKeyword = consume(data, i, TokenType.Keyword, 'continue');
-  if (continueKeyword) i = continueKeyword.end;
-  else return null;
+  const continue_ = consume(data, i, TokenType.Keyword, 'continue');
+  if (abrupt(continue_)) return continue_;
+  i = continue_.end;
 
   const terminator = consume(data, i, TokenType.Punctuator, ';');
-  if (terminator) i = terminator.end;
-  else return null;
+  if (abrupt(terminator)) return error(terminator);
+  i = terminator.end;
 
-  return ContinueStatement(continueKeyword.start, terminator.end);
+  return ContinueStatement(continue_.start, terminator.end);
 };

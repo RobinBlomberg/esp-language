@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { BreakStatement } from '../ast';
 
 /**
@@ -11,13 +12,13 @@ import { BreakStatement } from '../ast';
  * @see https://tc39.es/ecma262/#prod-BreakStatement
  */
 export const parseBreakStatement: Parser<BreakStatement> = (data, i) => {
-  const breakKeyword = consume(data, i, TokenType.Keyword, 'break');
-  if (breakKeyword) i = breakKeyword.end;
-  else return null;
+  const break_ = consume(data, i, TokenType.Keyword, 'break');
+  if (abrupt(break_)) return break_;
+  i = break_.end;
 
   const terminator = consume(data, i, TokenType.Punctuator, ';');
-  if (terminator) i = terminator.end;
-  else return null;
+  if (abrupt(terminator)) return error(terminator);
+  i = terminator.end;
 
-  return BreakStatement(breakKeyword.start, terminator.end);
+  return BreakStatement(break_.start, terminator.end);
 };

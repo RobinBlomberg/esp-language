@@ -2,10 +2,11 @@ import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseMultiplicativeExpression } from './multiplicative-expression';
 
-const { fail, ok } = createParseAssert(parseMultiplicativeExpression);
+const { error, ok, unused } = createParseAssert(parseMultiplicativeExpression);
 
 suite('MultiplicativeExpression', () => {
   test('"ExponentiationExpression"', () => {
+    unused();
     ok('ExponentiationExpression');
   });
 
@@ -13,9 +14,9 @@ suite('MultiplicativeExpression', () => {
     ok('MultiplicativeExpression * ExponentiationExpression');
     ok('MultiplicativeExpression / ExponentiationExpression');
     ok('MultiplicativeExpression % ExponentiationExpression');
-    fail('MultiplicativeExpression *');
-    fail('MultiplicativeExpression /');
-    fail('MultiplicativeExpression %');
+    error('MultiplicativeExpression *');
+    error('MultiplicativeExpression /');
+    error('MultiplicativeExpression %');
   });
 
   it('should respect operator precedence', () => {

@@ -2,16 +2,17 @@ import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseLogicalORExpression } from './logical-or-expression';
 
-const { fail, ok } = createParseAssert(parseLogicalORExpression);
+const { error, ok, unused } = createParseAssert(parseLogicalORExpression);
 
 suite('LogicalORExpression', () => {
   test('"LogicalANDExpression"', () => {
+    unused();
     ok('LogicalANDExpression');
   });
 
   test('"LogicalORExpression || LogicalANDExpression"', () => {
     ok('LogicalORExpression || LogicalANDExpression');
-    fail('LogicalORExpression ||');
+    error('LogicalORExpression ||');
   });
 
   it('should respect operator precedence', () => {

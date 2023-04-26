@@ -1,4 +1,5 @@
-import { Parser, consumeToken } from '../../esp-lexer';
+import { Parser, abrupt, consumeToken } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { Expression, UpdateExpression } from '../ast';
 import { errors } from '../errors';
 import { isSimpleNode } from '../parser-utils';
@@ -21,14 +22,13 @@ import { parseUnaryExpression } from './unary-expression';
  */
 export const parseUpdateExpression: Parser<Expression> = (data, i) => {
   const prefixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
-  if (prefixOperator) {
+  if (!abrupt(prefixOperator)) {
     i = prefixOperator.end;
 
     const argument = parseUnaryExpression(data, i);
-    if (!argument) return null;
-
+    if (abrupt(argument)) return error(argument);
     if (!isSimpleNode(argument)) {
-      throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
+      throw new ReferenceError(errors.invalidLeftHandSideInAssigment());
     }
 
     return UpdateExpression(
@@ -41,26 +41,20 @@ export const parseUpdateExpression: Parser<Expression> = (data, i) => {
   }
 
   const argument = parseLeftHandSideExpression(data, i);
-  if (argument) {
-    i = argument.end;
+  if (abrupt(argument)) return argument;
+  i = argument.end;
 
-    const postfixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
-    if (postfixOperator) {
-      if (!isSimpleNode(argument)) {
-        throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
-      }
-
-      return UpdateExpression(
-        argument.start,
-        postfixOperator.end,
-        postfixOperator.value,
-        argument,
-        false,
-      );
-    }
-
-    return argument;
+  const postfixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
+  if (abrupt(postfixOperator)) return argument;
+  if (!isSimpleNode(argument)) {
+    throw new ReferenceError(errors.invalidLeftHandSideInAssigment());
   }
 
-  return null;
+  return UpdateExpression(
+    argument.start,
+    postfixOperator.end,
+    postfixOperator.value,
+    argument,
+    false,
+  );
 };

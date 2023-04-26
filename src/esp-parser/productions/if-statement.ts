@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { IfStatement, Statement } from '../ast';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
@@ -14,38 +15,39 @@ import { parseStatement } from './statement';
  * @see https://tc39.es/ecma262/#prod-IfStatement
  */
 export const parseIfStatement: Parser<IfStatement> = (data, i) => {
-  const ifKeyword = consume(data, i, TokenType.Keyword, 'if');
-  if (ifKeyword) i = ifKeyword.end;
-  else return null;
+  const if_ = consume(data, i, TokenType.Keyword, 'if');
+  if (abrupt(if_)) return if_;
+  i = if_.end;
 
   const open = consume(data, i, TokenType.Punctuator, '(');
-  if (open) i = open.end;
-  else return null;
+  if (abrupt(open)) return error(open);
+  i = open.end;
 
   const test = parseExpression(data, i);
-  if (test) i = test.end;
-  else return null;
+  if (abrupt(test)) return error(test);
+  i = test.end;
 
   const close = consume(data, i, TokenType.Punctuator, ')');
-  if (close) i = close.end;
-  else return null;
+  if (abrupt(close)) return error(close);
+  i = close.end;
 
   const consequent = parseStatement(data, i);
-  if (consequent) i = consequent.end;
-  else return null;
+  if (abrupt(consequent)) return error(consequent);
+  i = consequent.end;
 
-  const elseKeyword = consume(data, i, TokenType.Keyword, 'else');
+  const else_ = consume(data, i, TokenType.Keyword, 'else');
   let alternate: Statement | null = null;
 
-  if (elseKeyword) {
-    i = elseKeyword.end;
+  if (!abrupt(else_)) {
+    i = else_.end;
 
-    alternate = parseStatement(data, i);
-    if (!alternate) return null;
+    const alternateResult = parseStatement(data, i);
+    if (abrupt(alternateResult)) return error(alternateResult);
+    alternate = alternateResult;
   }
 
   return IfStatement(
-    ifKeyword.start,
+    if_.start,
     (alternate ?? consequent).end,
     test,
     consequent,

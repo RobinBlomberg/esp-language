@@ -2,21 +2,22 @@ import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseEqualityExpression } from './equality-expression';
 
-const { fail, ok } = createParseAssert(parseEqualityExpression);
+const { error, ok, unused } = createParseAssert(parseEqualityExpression);
 
 suite('EqualityExpression', () => {
   test('"RelationalExpression"', () => {
+    unused();
     ok('RelationalExpression');
   });
 
   test('"EqualityExpression == RelationalExpression"', () => {
     ok('EqualityExpression == RelationalExpression');
-    fail('EqualityExpression ==');
+    error('EqualityExpression ==');
   });
 
   test('"EqualityExpression != RelationalExpression"', () => {
     ok('EqualityExpression != RelationalExpression');
-    fail('EqualityExpression !=');
+    error('EqualityExpression !=');
   });
 
   it('should respect operator precedence', () => {

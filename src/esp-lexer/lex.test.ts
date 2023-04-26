@@ -1,28 +1,33 @@
 import { describe, expect, it, suite, test } from 'vitest';
 import { keywords, punctuators } from '../esp-grammar';
 import { lex } from './lex';
+import { Token } from './token';
 import { TokenType } from './token-type';
+
+const createAbruptAssert = (type: 'Error' | 'Unused') => (data: string) => {
+  const token = lex(data, 0);
+  expect(token.type).toBe(type);
+};
 
 const createAssert = (type: TokenType) => (data: string, expected?: string) => {
   const token = lex(data, 0);
-  expect(token).not.toBeNull();
-  expect(token!.type).toBe(type);
-  expect(token!.value).toBe(expected ?? data);
+  expect(token.type).toBe(type);
+  expect((token as Token).value).toBe(expected ?? data);
 };
 
 const is = {
-  error: (data: string) => expect(() => lex(data, 0)).toThrow(SyntaxError),
+  error: createAbruptAssert('Error'),
   identifier: createAssert(TokenType.Identifier),
   keyword: createAssert(TokenType.Keyword),
-  null: (data: string) => expect(lex(data, 0)).toBeNull(),
   number: createAssert(TokenType.Number),
   punctuator: createAssert(TokenType.Punctuator),
   string: createAssert(TokenType.String),
+  unused: createAbruptAssert('Unused'),
 };
 
 suite('lex', () => {
   test('whitespace', () => {
-    is.null(' \t\n\r');
+    is.unused(' \t\n\r');
   });
 
   test('punctuators', () => {

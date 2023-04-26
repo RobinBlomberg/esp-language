@@ -2,21 +2,22 @@ import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseAdditiveExpression } from './additive-expression';
 
-const { fail, ok } = createParseAssert(parseAdditiveExpression);
+const { error, ok, unused } = createParseAssert(parseAdditiveExpression);
 
 suite('AdditiveExpression', () => {
   test('"MultiplicativeExpression"', () => {
+    unused();
     ok('MultiplicativeExpression');
   });
 
   test('"AdditiveExpression + MultiplicativeExpression"', () => {
     ok('a + b');
-    fail('a +');
+    error('a +');
   });
 
   test('"AdditiveExpression - MultiplicativeExpression"', () => {
     ok('a - b');
-    fail('a -');
+    error('a -');
   });
 
   it('should respect operator precedence', () => {

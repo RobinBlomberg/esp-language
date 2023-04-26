@@ -1,4 +1,5 @@
-import { Parser, consumeToken } from '../../esp-lexer';
+import { Parser, abrupt, consumeToken } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { AssignmentExpression, Expression } from '../ast';
 import { errors } from '../errors';
 import { isSimpleNode } from '../parser-utils';
@@ -25,19 +26,19 @@ import { parseConditionalExpression } from './conditional-expression';
  */
 export const parseExpression: Parser<Expression> = (data, i) => {
   const left = parseConditionalExpression(data, i);
-  if (left) i = left.end;
-  else return null;
+  if (abrupt(left)) return left;
+  i = left.end;
 
   const operator = consumeToken(data, i, AssignmentOperatorTokenMatcher);
-  if (operator) i = operator.end;
-  else return left;
+  if (abrupt(operator)) return left;
+  i = operator.end;
 
   if (!isSimpleNode(left)) {
-    throw new SyntaxError(errors.invalidLeftHandSideInAssigment());
+    throw new ReferenceError(errors.invalidLeftHandSideInAssigment());
   }
 
   const right = parseExpression(data, operator.end);
-  if (!right) return null;
+  if (abrupt(right)) return error(right);
 
   return AssignmentExpression(
     left.start,

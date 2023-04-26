@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import {
   ComputedMemberExpression,
   Expression,
@@ -33,32 +34,32 @@ import { parsePrimaryExpression } from './primary-expression';
  * @see https://tc39.es/ecma262/#prod-MemberExpression
  */
 export const parseMemberExpression: Parser<Expression> = (data, i) => {
-  const newKeyword = consume(data, i, TokenType.Keyword, 'new');
-  if (newKeyword) {
-    i = newKeyword.end;
+  const new_ = consume(data, i, TokenType.Keyword, 'new');
+  if (!abrupt(new_)) {
+    i = new_.end;
 
     const callee = parseMemberExpression(data, i);
-    if (callee) i = callee.end;
-    else return null;
+    if (abrupt(callee)) return error(callee);
+    i = callee.end;
 
     const args = parseArguments(data, i);
-    if (!args) return null;
+    if (abrupt(args)) return error(args);
 
-    return NewExpression(newKeyword.start, args.end, callee, args.arguments);
+    return NewExpression(new_.start, args.end, callee, args.arguments);
   }
 
   let object = parsePrimaryExpression(data, i);
-  if (object) i = object.end;
-  else return null;
+  if (abrupt(object)) return object;
+  i = object.end;
 
   while (true) {
     const dot = consume(data, i, TokenType.Punctuator, '.');
-    if (dot) {
+    if (!abrupt(dot)) {
       i = dot.end;
 
       const property = parseIdentifierName(data, i);
-      if (property) i = property.end;
-      else return null;
+      if (abrupt(property)) return error(property);
+      i = property.end;
 
       object = StaticMemberExpression(
         object.start,
@@ -70,22 +71,19 @@ export const parseMemberExpression: Parser<Expression> = (data, i) => {
     }
 
     const open = consume(data, i, TokenType.Punctuator, '[');
-    if (open) {
-      i = open.end;
+    if (abrupt(open)) break;
+    i = open.end;
 
-      const property = parseExpression(data, i);
-      if (property) i = property.end;
-      else return null;
+    const property = parseExpression(data, i);
+    if (abrupt(property)) return error(property);
+    i = property.end;
 
-      const close = consume(data, i, TokenType.Punctuator, ']');
-      if (close) i = close.end;
-      else return null;
+    const close = consume(data, i, TokenType.Punctuator, ']');
+    if (abrupt(close)) return error(close);
+    i = close.end;
 
-      object = ComputedMemberExpression(object.start, i, object, property);
-      continue;
-    }
-
-    break;
+    object = ComputedMemberExpression(object.start, i, object, property);
+    continue;
   }
 
   return object;

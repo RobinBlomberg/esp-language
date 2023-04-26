@@ -2,11 +2,12 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseContinueStatement } from './continue-statement';
 
-const { fail, ok } = createParseAssert(parseContinueStatement);
+const { error, ok, unused } = createParseAssert(parseContinueStatement);
 
 suite('ContinueStatement', () => {
   test('"continue ;"', () => {
+    unused();
     ok('continue;');
-    fail('continue');
+    error('continue');
   });
 });

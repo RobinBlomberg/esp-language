@@ -2,11 +2,12 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseIdentifier } from './identifier';
 
-const { fail, ok } = createParseAssert(parseIdentifier);
+const { error, ok, unused } = createParseAssert(parseIdentifier);
 
 suite('Identifier', () => {
   test('"IdentifierName but not ReservedWord"', () => {
+    unused();
     ok('elsa');
-    fail('else');
+    error('else');
   });
 });

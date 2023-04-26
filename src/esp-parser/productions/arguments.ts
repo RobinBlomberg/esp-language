@@ -1,12 +1,8 @@
-import { TokenType, consume } from '../../esp-lexer';
+import { TokenType, abrupt, consume } from '../../esp-lexer';
+import { error, unused } from '../../esp-lexer/abrupt';
 import { parseValueList } from './value-list';
 
 /**
- * Returns:
- *  - `{ arguments, end }` if it parses without error
- *  - `null` if it parses with an error
- *  - `undefined` if the production is unused
- *
  * Modified from ECMA-262:
  * ```ecmarkup
  * Arguments :
@@ -18,15 +14,15 @@ import { parseValueList } from './value-list';
  */
 export const parseArguments = (data: string, i: number) => {
   const open = consume(data, i, TokenType.Punctuator, '(');
-  if (open) i = open.end;
-  else return undefined;
+  if (abrupt(open)) return unused(open);
+  i = open.end;
 
   const arguments_ = parseValueList(data, i);
-  if (arguments_) i = arguments_.end;
-  else return null;
+  if (abrupt(arguments_)) return error(arguments_);
+  i = arguments_.end;
 
   const close = consume(data, i, TokenType.Punctuator, ')');
-  if (!close) return null;
+  if (abrupt(close)) return error(close);
 
   return { end: close.end, arguments: arguments_.values };
 };

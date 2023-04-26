@@ -2,10 +2,11 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parsePrimaryExpression } from './primary-expression';
 
-const { fail, ok } = createParseAssert(parsePrimaryExpression);
+const { error, ok, unused } = createParseAssert(parsePrimaryExpression);
 
 suite('PrimaryExpression', () => {
   test('"Identifier"', () => {
+    unused();
     ok('Identifier');
   });
 
@@ -28,14 +29,14 @@ suite('PrimaryExpression', () => {
     ok('[]');
     ok('[1]');
     ok('[1, 2]');
-    fail('[');
+    error('[');
   });
 
   test('"ObjectLiteral"', () => {
     ok('{}');
     ok('{a: 1}');
     ok('{a: 1, b: 2}');
-    fail('{');
+    error('{');
   });
 
   test('"SetLiteral"', () => {

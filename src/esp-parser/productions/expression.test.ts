@@ -2,10 +2,11 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseExpression } from './expression';
 
-const { fail, ok, throws } = createParseAssert(parseExpression);
+const { error, ok, throws, unused } = createParseAssert(parseExpression);
 
 suite('Expression', () => {
   test('"ConditionalExpression"', () => {
+    unused();
     ok('ConditionalExpression');
   });
 
@@ -26,21 +27,21 @@ suite('Expression', () => {
     ok('LeftHandSideExpression **= Expression');
     ok('LeftHandSideExpression &&= Expression');
     ok('LeftHandSideExpression ||= Expression');
-    fail('LeftHandSideExpression =');
-    fail('LeftHandSideExpression *=');
-    fail('LeftHandSideExpression /=');
-    fail('LeftHandSideExpression %=');
-    fail('LeftHandSideExpression +=');
-    fail('LeftHandSideExpression -=');
-    fail('LeftHandSideExpression <<=');
-    fail('LeftHandSideExpression >>=');
-    fail('LeftHandSideExpression >>>=');
-    fail('LeftHandSideExpression &=');
-    fail('LeftHandSideExpression ^=');
-    fail('LeftHandSideExpression |=');
-    fail('LeftHandSideExpression **=');
-    fail('LeftHandSideExpression &&=');
-    fail('LeftHandSideExpression ||=');
+    error('LeftHandSideExpression =');
+    error('LeftHandSideExpression *=');
+    error('LeftHandSideExpression /=');
+    error('LeftHandSideExpression %=');
+    error('LeftHandSideExpression +=');
+    error('LeftHandSideExpression -=');
+    error('LeftHandSideExpression <<=');
+    error('LeftHandSideExpression >>=');
+    error('LeftHandSideExpression >>>=');
+    error('LeftHandSideExpression &=');
+    error('LeftHandSideExpression ^=');
+    error('LeftHandSideExpression |=');
+    error('LeftHandSideExpression **=');
+    error('LeftHandSideExpression &&=');
+    error('LeftHandSideExpression ||=');
     throws('LeftHandSideExpression() = Expression');
   });
 });

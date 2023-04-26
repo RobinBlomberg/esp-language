@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { BinaryExpression, Expression, NodeType } from '../ast';
 import { parseUnaryExpression } from './unary-expression';
 
@@ -14,18 +15,17 @@ import { parseUnaryExpression } from './unary-expression';
  */
 export const parseExponentiationExpression: Parser<Expression> = (data, i) => {
   const left = parseUnaryExpression(data, i);
-  if (left) i = left.end;
-  else return null;
+  if (abrupt(left)) return left;
+  i = left.end;
 
   const operator = consume(data, i, TokenType.Punctuator, '**');
-  if (operator) {
-    // TODO: Allow unary expressions here (e.g. `+a ** 2`).
-    if (left.type === NodeType.UnaryExpression) return null;
-    i = operator.end;
-  } else return left;
+  if (abrupt(operator)) return left;
+  // TODO: Allow unary expressions here (e.g. `+a ** 2`).
+  if (left.type === NodeType.UnaryExpression) return error(left);
+  i = operator.end;
 
   const right = parseExponentiationExpression(data, operator.end);
-  if (!right) return null;
+  if (abrupt(right)) return error(right);
 
   return BinaryExpression(left.start, right.end, '**', left, right);
 };

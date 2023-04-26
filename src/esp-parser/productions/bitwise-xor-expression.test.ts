@@ -2,16 +2,17 @@ import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseBitwiseXORExpression } from './bitwise-xor-expression';
 
-const { fail, ok } = createParseAssert(parseBitwiseXORExpression);
+const { error, ok, unused } = createParseAssert(parseBitwiseXORExpression);
 
 suite('BitwiseXORExpression', () => {
   test('"BitwiseANDExpression"', () => {
+    unused();
     ok('BitwiseANDExpression');
   });
 
   test('"BitwiseXORExpression ^ BitwiseANDExpression"', () => {
     ok('BitwiseXORExpression ^ BitwiseANDExpression');
-    fail('BitwiseXORExpression ^');
+    error('BitwiseXORExpression ^');
   });
 
   it('should respect operator precedence', () => {

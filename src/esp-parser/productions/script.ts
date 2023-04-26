@@ -1,4 +1,4 @@
-import { Parser, lex } from '../../esp-lexer';
+import { Parser, abrupt } from '../../esp-lexer';
 import { Script, Statement } from '../ast';
 import { parseStatement } from './statement';
 
@@ -15,12 +15,12 @@ export const parseScript: Parser<Script> = (data, i) => {
   const body: Statement[] = [];
 
   while (true) {
-    if (!lex(data, i)) {
-      return Script(body[0]?.start ?? 0, body[body.length - 1]?.end ?? 0, body);
-    }
-
     const statement = parseStatement(data, i);
-    if (!statement) return null;
+    if (abrupt(statement)) {
+      return statement.type === 'Error'
+        ? statement
+        : Script(body[0]?.start ?? 0, body[body.length - 1]?.end ?? 0, body);
+    }
 
     body.push(statement);
     i = statement.end;

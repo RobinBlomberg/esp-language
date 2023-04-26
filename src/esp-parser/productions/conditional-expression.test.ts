@@ -2,26 +2,27 @@ import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseConditionalExpression } from './conditional-expression';
 
-const { fail, ok } = createParseAssert(parseConditionalExpression);
+const { error, ok, unused } = createParseAssert(parseConditionalExpression);
 
 suite('ConditionalExpression', () => {
   test('"LogicalORExpression"', () => {
+    unused();
     ok('LogicalORExpression');
   });
 
   test('"LogicalORExpression ? Expression : Expression"', () => {
     ok('LogicalORExpression ? Expression : Expression');
-    fail('LogicalORExpression ?');
-    fail('LogicalORExpression ? Expression');
-    fail('LogicalORExpression ? Expression :');
+    error('LogicalORExpression ?');
+    error('LogicalORExpression ? Expression');
+    error('LogicalORExpression ? Expression :');
   });
 
   it('should respect operator precedence', () => {
     ok('a ? b ? c : d : e');
-    fail('a ? b ?');
-    fail('a ? b ? c');
-    fail('a ? b ? c :');
-    fail('a ? b ? c : d');
-    fail('a ? b ? c : d :');
+    error('a ? b ?');
+    error('a ? b ? c');
+    error('a ? b ? c :');
+    error('a ? b ? c : d');
+    error('a ? b ? c : d :');
   });
 });

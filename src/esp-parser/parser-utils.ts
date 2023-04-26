@@ -1,4 +1,5 @@
-import { Parser, TokenMatcher, consumeToken } from '../esp-lexer';
+import { Parser, TokenMatcher, abrupt, consumeToken } from '../esp-lexer';
+import { error } from '../esp-lexer/abrupt';
 import {
   BinaryExpression,
   BinaryOperator,
@@ -14,17 +15,17 @@ export const createLeftAssociativeBinaryExpressionParser = (
 ): Parser<Expression> => {
   return (data, i) => {
     let expression = parse(data, i);
-    if (expression) i = expression.end;
-    else return null;
+    if (abrupt(expression)) return expression;
+    i = expression.end;
 
     while (true) {
       const operator = consumeToken(data, i, operatorToken);
-      if (operator) i = operator.end;
-      else return expression;
+      if (abrupt(operator)) return expression;
+      i = operator.end;
 
       const right = parse(data, operator.end);
-      if (right) i = right.end;
-      else return null;
+      if (abrupt(right)) return error(right);
+      i = right.end;
 
       expression = BinaryExpression(
         expression.start,

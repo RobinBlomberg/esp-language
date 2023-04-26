@@ -2,10 +2,11 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
 
-const { fail, ok } = createParseAssert(parseLeftHandSideExpression);
+const { error, ok, unused } = createParseAssert(parseLeftHandSideExpression);
 
 suite('LeftHandSideExpression', () => {
   test('"NewExpression"', () => {
+    unused();
     ok('NewExpression');
     ok('Member.Expression');
     ok('Member[Expression]');
@@ -16,9 +17,9 @@ suite('LeftHandSideExpression', () => {
     ok('CallExpression(a)');
     ok('CallExpression(a, b)');
     ok('CallExpression()()');
-    fail('CallExpression(');
-    fail('CallExpression(a,');
-    fail('CallExpression(a, b');
-    fail('CallExpression()(');
+    error('CallExpression(');
+    error('CallExpression(a,');
+    error('CallExpression(a, b');
+    error('CallExpression()(');
   });
 });

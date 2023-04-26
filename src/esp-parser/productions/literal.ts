@@ -1,4 +1,5 @@
-import { Parser, TokenType, lex } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, lex } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { Literal } from '../ast';
 
 /**
@@ -21,7 +22,7 @@ import { Literal } from '../ast';
  */
 export const parseLiteral: Parser<Literal> = (data, i) => {
   const token = lex(data, i);
-  if (!token) return null;
+  if (abrupt(token)) return token;
 
   switch (token.type) {
     case TokenType.Keyword:
@@ -39,7 +40,7 @@ export const parseLiteral: Parser<Literal> = (data, i) => {
         case 'undefined':
           return Literal(token.start, token.end, undefined);
         default:
-          return null;
+          return error(token);
       }
     case TokenType.Number:
       return Literal(token.start, token.end, Number(token.value));
@@ -57,6 +58,6 @@ export const parseLiteral: Parser<Literal> = (data, i) => {
       return Literal(token.start, token.end, value);
     }
     default:
-      return null;
+      return error(token);
   }
 };

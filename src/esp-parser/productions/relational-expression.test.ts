@@ -2,31 +2,32 @@ import { it, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseRelationalExpression } from './relational-expression';
 
-const { fail, ok } = createParseAssert(parseRelationalExpression);
+const { error, ok, unused } = createParseAssert(parseRelationalExpression);
 
 suite('RelationalExpression', () => {
   test('"ShiftExpression"', () => {
+    unused();
     ok('ShiftExpression');
   });
 
   test('"RelationalExpression < ShiftExpression"', () => {
     ok('RelationalExpression < ShiftExpression');
-    fail('RelationalExpression <');
+    error('RelationalExpression <');
   });
 
   test('"RelationalExpression > ShiftExpression"', () => {
     ok('RelationalExpression > ShiftExpression');
-    fail('RelationalExpression >');
+    error('RelationalExpression >');
   });
 
   test('"RelationalExpression <= ShiftExpression"', () => {
     ok('RelationalExpression <= ShiftExpression');
-    fail('RelationalExpression <=');
+    error('RelationalExpression <=');
   });
 
   test('"RelationalExpression >= ShiftExpression"', () => {
     ok('RelationalExpression >= ShiftExpression');
-    fail('RelationalExpression >=');
+    error('RelationalExpression >=');
   });
 
   it('should respect operator precedence', () => {

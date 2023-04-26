@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { BlockStatement, Statement } from '../ast';
 import { parseStatement } from './statement';
 
@@ -13,19 +14,19 @@ import { parseStatement } from './statement';
  */
 export const parseBlockStatement: Parser<BlockStatement> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '{');
-  if (open) i = open.end;
-  else return null;
+  if (abrupt(open)) return open;
+  i = open.end;
 
   const body: Statement[] = [];
 
   while (true) {
     const close = consume(data, i, TokenType.Punctuator, '}');
-    if (close) {
+    if (!abrupt(close)) {
       return BlockStatement(open.start, close.end, body);
     }
 
     const statement = parseStatement(data, i);
-    if (!statement) return null;
+    if (abrupt(statement)) return error(statement);
 
     body.push(statement);
     i = statement.end;

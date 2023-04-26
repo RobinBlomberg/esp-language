@@ -2,18 +2,18 @@ import { describe, suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseLiteral } from './literal';
 
-const { fail, ok } = createParseAssert(parseLiteral);
+const { error, ok, unused } = createParseAssert(parseLiteral);
 
 suite('Literal', () => {
   test('"NullLiteral"', () => {
+    unused();
     ok('null');
-    fail(' ');
   });
 
   test('"BooleanLiteral"', () => {
     ok('false');
     ok('true');
-    fail('falsey');
+    error('falsey');
   });
 
   test('"NumericLiteral"', () => {

@@ -1,4 +1,4 @@
-import { Parser } from '../../esp-lexer';
+import { Parser, abrupt, lex } from '../../esp-lexer';
 import { Expression } from '../ast';
 import { parseArrayLiteral } from './array-literal';
 import { parseIdentifier } from './identifier';
@@ -34,11 +34,21 @@ import { parseSetLiteral } from './set-literal';
  * @see https://tc39.es/ecma262/#prod-PrimaryExpression
  */
 export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
-  return (
-    parseLiteral(data, i) ??
-    parseIdentifier(data, i) ??
-    parseArrayLiteral(data, i) ??
-    parseObjectLiteral(data, i) ??
-    parseSetLiteral(data, i)
-  );
+  const token = lex(data, i);
+  if (abrupt(token)) return token;
+
+  switch (token.value) {
+    case '[':
+      return parseArrayLiteral(data, i);
+    case '{':
+      return parseObjectLiteral(data, i);
+    case '#':
+      return parseSetLiteral(data, i);
+    default: {
+      const literal = parseLiteral(data, i);
+      if (!abrupt(literal)) return literal;
+
+      return parseIdentifier(data, i);
+    }
+  }
 };

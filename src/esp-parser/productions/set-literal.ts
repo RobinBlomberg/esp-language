@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { SetLiteral } from '../ast';
 import { parseValueList } from './value-list';
 
@@ -10,19 +11,19 @@ import { parseValueList } from './value-list';
  */
 export const parseSetLiteral: Parser<SetLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '#');
-  if (open) i = open.end;
-  else return null;
+  if (abrupt(open)) return open;
+  i = open.end;
 
   const openParen = consume(data, i, TokenType.Punctuator, '{');
-  if (openParen) i = openParen.end;
-  else return null;
+  if (abrupt(openParen)) return error(openParen);
+  i = openParen.end;
 
   const values = parseValueList(data, i);
-  if (values) i = values.end;
-  else return null;
+  if (abrupt(values)) return error(values);
+  i = values.end;
 
   const closeParen = consume(data, i, TokenType.Punctuator, '}');
-  if (!closeParen) return null;
+  if (abrupt(closeParen)) return error(closeParen);
 
   return SetLiteral(open.start, closeParen.end, values.values);
 };

@@ -1,4 +1,4 @@
-import { Parser } from '../../esp-lexer';
+import { Parser, abrupt } from '../../esp-lexer';
 import { CallExpression, Expression } from '../ast';
 import { parseArguments } from './arguments';
 import { parseMemberExpression } from './member-expression';
@@ -21,12 +21,11 @@ import { parseMemberExpression } from './member-expression';
  */
 export const parseLeftHandSideExpression: Parser<Expression> = (data, i) => {
   let callee = parseMemberExpression(data, i);
-  if (!callee) return null;
+  if (abrupt(callee)) return callee;
 
   while (true) {
     const args = parseArguments(data, callee.end);
-    if (args === undefined) return callee;
-    else if (args === null) return null;
+    if (abrupt(args)) return args.type === 'Unused' ? callee : args;
 
     callee = CallExpression(callee.start, args.end, callee, args.arguments);
     continue;

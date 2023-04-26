@@ -2,11 +2,12 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseBreakStatement } from './break-statement';
 
-const { fail, ok } = createParseAssert(parseBreakStatement);
+const { error, ok, unused } = createParseAssert(parseBreakStatement);
 
 suite('BreakStatement', () => {
   test('"break ;"', () => {
+    unused();
     ok('break;');
-    fail('break');
+    error('break');
   });
 });

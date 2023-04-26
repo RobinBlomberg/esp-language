@@ -2,10 +2,11 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseUpdateExpression } from './update-expression';
 
-const { fail, ok, throws } = createParseAssert(parseUpdateExpression);
+const { error, ok, throws, unused } = createParseAssert(parseUpdateExpression);
 
 suite('UpdateExpression', () => {
   test('"LeftHandSideExpression"', () => {
+    unused();
     ok('LeftHandSideExpression');
     ok('Member.Expression');
   });
@@ -23,12 +24,12 @@ suite('UpdateExpression', () => {
   test('"++ UnaryExpression"', () => {
     ok('++UnaryExpression');
     ok('++Member.Expression');
-    fail('++');
+    error('++');
     throws('++CallExpression()');
   });
 
   test('"-- UnaryExpression"', () => {
     ok('--UnaryExpression');
-    fail('--');
+    error('--');
   });
 });

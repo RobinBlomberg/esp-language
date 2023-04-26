@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error, unused } from '../../esp-lexer/abrupt';
 import { ArrayLiteral } from '../ast';
 import { parseValueList } from './value-list';
 
@@ -20,15 +21,15 @@ import { parseValueList } from './value-list';
  */
 export const parseArrayLiteral: Parser<ArrayLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '[');
-  if (open) i = open.end;
-  else return null;
+  if (abrupt(open)) return unused(open);
+  i = open.end;
 
   const elements = parseValueList(data, i);
-  if (elements) i = elements.end;
-  else return null;
+  if (abrupt(elements)) return error(elements);
+  i = elements.end;
 
   const close = consume(data, i, TokenType.Punctuator, ']');
-  if (!close) return null;
+  if (abrupt(close)) return error(close);
 
   return ArrayLiteral(open.start, close.end, elements.values);
 };

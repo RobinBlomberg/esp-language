@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { ObjectLiteral, Property } from '../ast';
 import { parseIdentifierName } from './identifier-name';
 import { parsePrimaryExpression } from './primary-expression';
@@ -21,34 +22,34 @@ import { parsePrimaryExpression } from './primary-expression';
  */
 export const parseObjectLiteral: Parser<ObjectLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '{');
-  if (open) i = open.end;
-  else return null;
+  if (abrupt(open)) return open;
+  i = open.end;
 
   const properties: Property[] = [];
 
   while (true) {
     const close = consume(data, i, TokenType.Punctuator, '}');
-    if (close) {
+    if (!abrupt(close)) {
       return ObjectLiteral(open.start, close.end, properties);
     }
 
     if (properties.length >= 1) {
       const comma = consume(data, i, TokenType.Punctuator, ',');
-      if (comma) i = comma.end;
-      else return null;
+      if (abrupt(comma)) return error(comma);
+      i = comma.end;
     }
 
     const key = parseIdentifierName(data, i);
-    if (key) i = key.end;
-    else return null;
+    if (abrupt(key)) return error(key);
+    i = key.end;
 
     const colon = consume(data, i, TokenType.Punctuator, ':');
-    if (colon) i = colon.end;
-    else return null;
+    if (abrupt(colon)) return error(colon);
+    i = colon.end;
 
     const value = parsePrimaryExpression(data, i);
-    if (value) i = value.end;
-    else return null;
+    if (abrupt(value)) return error(value);
+    i = value.end;
 
     properties.push(Property(key.start, value.end, key, value));
   }

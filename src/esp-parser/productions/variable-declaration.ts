@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { VariableDeclaration } from '../ast';
 import { parseExpression } from './expression';
 
@@ -15,24 +16,24 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   data,
   i,
 ) => {
-  const letKeyword = consume(data, i, TokenType.Keyword, 'let');
-  if (letKeyword) i = letKeyword.end;
-  else return null;
+  const let_ = consume(data, i, TokenType.Keyword, 'let');
+  if (abrupt(let_)) return let_;
+  i = let_.end;
 
   const id = consume(data, i, TokenType.Identifier);
-  if (id) i = id.end;
-  else return null;
+  if (abrupt(id)) return error(id);
+  i = id.end;
 
   const operator = consume(data, i, TokenType.Punctuator, '=');
-  if (operator) i = operator.end;
-  else return null;
+  if (abrupt(operator)) return error(operator);
+  i = operator.end;
 
   const init = parseExpression(data, i);
-  if (init) i = init.end;
-  else return null;
+  if (abrupt(init)) return error(init);
+  i = init.end;
 
   const terminator = consume(data, i, TokenType.Punctuator, ';');
-  if (!terminator) return null;
+  if (abrupt(terminator)) return error(terminator);
 
-  return VariableDeclaration(letKeyword.start, terminator.end, id.value, init);
+  return VariableDeclaration(let_.start, terminator.end, id.value, init);
 };

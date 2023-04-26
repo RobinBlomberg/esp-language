@@ -2,10 +2,11 @@ import { suite, test } from 'vitest';
 import { createParseAssert } from '../test-utils';
 import { parseStatement } from './statement';
 
-const { ok } = createParseAssert(parseStatement);
+const { ok, unused } = createParseAssert(parseStatement);
 
 suite('Statement', () => {
   test('"BlockStatement"', () => {
+    unused();
     ok('{}');
     ok('{ Statement; }');
     ok('{ Statement; Statement; }');

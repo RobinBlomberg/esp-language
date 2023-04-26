@@ -1,35 +1,44 @@
+import { Abrupt, Error } from './abrupt';
 import { lex } from './lex';
 import { Token, TokenMatcher } from './token';
 import { TokenType } from './token-type';
 
-export type Parser<T> = (data: string, i: number) => T | null;
+export type Parser<T = { type: string }> = (
+  data: string,
+  i: number,
+) => T | Abrupt;
+
+export const abrupt = (token: {} | { type: string }): token is Abrupt => {
+  return (token as any)?.type === 'Error' || (token as any)?.type === 'Unused';
+};
 
 export const consume = <T extends TokenType, V extends string = string>(
   data: string,
   i: number,
   type: T,
   value?: V,
-): Token<T, V> | null => {
+): Token<T, V> | Abrupt => {
   const token = lex(data, i);
-  return match(token, type, value) ? token : null;
+  if (abrupt(token)) return token;
+  return match(token, type, value) ? token : Error(token.start);
 };
 
 export const consumeToken = <T extends TokenMatcher>(
   data: string,
   i: number,
   expected: T,
-): (T extends TokenMatcher<infer V> ? Token<TokenType, V> : never) | null => {
+): (T extends TokenMatcher<infer V> ? Token<TokenType, V> : never) | Abrupt => {
   const token = lex(data, i);
-  return matchToken(token, expected) ? token : null;
+  if (abrupt(token)) return token;
+  return matchToken(token, expected) ? token : Error(token.start);
 };
 
 export const match = <T extends TokenType, V extends string = string>(
-  token: Token | null,
+  token: Token,
   type: T | T[],
   value?: V,
 ): token is Token<T, V> => {
   return (
-    token !== null &&
     (token.type === type ||
       (Array.isArray(type) && type.includes(token.type as T))) &&
     (value === undefined || token.value === value)
@@ -37,10 +46,8 @@ export const match = <T extends TokenType, V extends string = string>(
 };
 
 export const matchToken = <T extends TokenMatcher>(
-  actual: Token | null,
+  actual: Token,
   expected: T,
 ): actual is T extends TokenMatcher<infer V> ? Token<TokenType, V> : never => {
-  return (
-    actual !== null && Boolean(expected[actual.type]?.includes(actual.value))
-  );
+  return Boolean(expected[actual.type]?.includes(actual.value));
 };

@@ -1,4 +1,5 @@
-import { Parser, TokenType, consume } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { ThrowStatement } from '../ast';
 import { parseExpression } from './expression';
 
@@ -12,16 +13,16 @@ import { parseExpression } from './expression';
  * @see https://tc39.es/ecma262/#prod-ThrowStatement
  */
 export const parseThrowStatement: Parser<ThrowStatement> = (data, i) => {
-  const throwKeyword = consume(data, i, TokenType.Keyword, 'throw');
-  if (throwKeyword) i = throwKeyword.end;
-  else return null;
+  const throw_ = consume(data, i, TokenType.Keyword, 'throw');
+  if (abrupt(throw_)) return throw_;
+  i = throw_.end;
 
   const argument = parseExpression(data, i);
-  if (argument) i = argument.end;
-  else return null;
+  if (abrupt(argument)) return error(argument);
+  i = argument.end;
 
   const terminator = consume(data, i, TokenType.Punctuator, ';');
-  if (!terminator) return null;
+  if (abrupt(terminator)) return error(terminator);
 
-  return ThrowStatement(throwKeyword.start, terminator.end, argument);
+  return ThrowStatement(throw_.start, terminator.end, argument);
 };
