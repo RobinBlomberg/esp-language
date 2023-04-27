@@ -1,2 +1,2 @@
-export { keywords } from './keywords';
-export { punctuators } from './punctuators';
+export * from './keywords';
+export * from './punctuators';

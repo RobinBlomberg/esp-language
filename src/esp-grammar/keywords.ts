@@ -1,19 +1,26 @@
-export const keywords = new Set([
+export const constantKeywords = [
+  'false',
+  'Infinity',
+  'NaN',
+  'null',
+  'true',
+  'undefined',
+];
+
+export const controlKeywords = [
   'break',
   'continue',
   'do',
   'else',
-  'false',
   'if',
-  'Infinity',
   'let',
   'match',
-  'NaN',
   'new',
-  'null',
   'return',
   'throw',
-  'true',
-  'undefined',
   'while',
-]);
+];
+
+export const keywords = [...constantKeywords, ...controlKeywords];
+
+export const keywordsSet = new Set(keywords);

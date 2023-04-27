@@ -1,20 +1,10 @@
-export const punctuators = new Set([
+export const operators = [
   '--',
   '-',
   '-=',
-  ',',
-  ';',
-  ':',
   '!',
   '!=',
   '?',
-  '.',
-  '(',
-  ')',
-  '[',
-  ']',
-  '{',
-  '}',
   '*',
   '**',
   '**=',
@@ -25,7 +15,6 @@ export const punctuators = new Set([
   '&&',
   '&&=',
   '&=',
-  '#',
   '%',
   '%=',
   '^',
@@ -50,4 +39,22 @@ export const punctuators = new Set([
   '||',
   '||=',
   '~',
-]);
+];
+
+export const punctuations = [
+  ',',
+  ';',
+  ':',
+  '.',
+  '(',
+  ')',
+  '[',
+  ']',
+  '{',
+  '}',
+  '#',
+];
+
+export const punctuators = [...operators, ...punctuations];
+
+export const punctuatorsSet = new Set(punctuators);

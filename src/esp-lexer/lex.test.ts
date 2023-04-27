@@ -1,5 +1,5 @@
 import { describe, expect, it, suite, test } from 'vitest';
-import { keywords, punctuators } from '../esp-grammar';
+import { keywords, punctuatorsSet } from '../esp-grammar';
 import { lex } from './lex';
 import { Token } from './token';
 import { TokenType } from './token-type';
@@ -31,7 +31,7 @@ suite('lex', () => {
   });
 
   test('punctuators', () => {
-    for (const punctuator of punctuators) {
+    for (const punctuator of punctuatorsSet) {
       is.punctuator(punctuator);
     }
   });

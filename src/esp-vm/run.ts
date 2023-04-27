@@ -1,4 +1,5 @@
 import { runInNewContext } from 'node:vm';
+import { clear, red } from '../ansi-escape-codes';
 import { serialize } from '../es-serializer';
 import { transformScript } from '../esp-es-transformer';
 import { abrupt } from '../esp-lexer';
@@ -33,7 +34,7 @@ const logSyntaxError = (script: string, errorIndex: number) => {
   console.error(script.slice(lineStart, lineEnd));
   console.error(`${' '.repeat(errorIndex - lineStart)}^`);
   console.error();
-  console.error(`\x1b[31m(${line}:${column}) Unexpected ${character}\x1b[0m`);
+  console.error(`${red}(${line}:${column}) Unexpected ${character}${clear}`);
   console.error();
 };
 

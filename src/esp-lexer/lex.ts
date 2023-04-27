@@ -1,4 +1,4 @@
-import { keywords, punctuators } from '../esp-grammar';
+import { keywordsSet, punctuatorsSet } from '../esp-grammar';
 import { Error, Unused } from './abrupt';
 import { Token } from './token';
 import { TokenType } from './token-type';
@@ -16,11 +16,11 @@ export const lex = (data: string, i: number): Token | Error | Unused => {
     return { type: 'Unused', start };
   }
 
-  if (punctuators.has(c)) {
+  if (punctuatorsSet.has(c)) {
     let value = c;
     c = data[++i];
 
-    while (c !== undefined && punctuators.has(value + c)) {
+    while (c !== undefined && punctuatorsSet.has(value + c)) {
       value += c;
       c = data[++i];
     }
@@ -109,7 +109,7 @@ export const lex = (data: string, i: number): Token | Error | Unused => {
     }
 
     return {
-      type: keywords.has(name) ? TokenType.Keyword : TokenType.Identifier,
+      type: keywordsSet.has(name) ? TokenType.Keyword : TokenType.Identifier,
       start,
       end: i,
       value: name,
