@@ -1,66 +1,78 @@
-import { constantKeywords, controlKeywords } from '../esp-grammar';
-import { include, stringLiteral } from './pattern-factory';
+import {
+  constant,
+  identifier,
+  include,
+  stringLiteral,
+} from './pattern-factory';
 import { Language } from './types';
 
 export const language: Language = {
   name: 'ESP',
   scopeName: 'source.esp',
-  patterns: [include('Expression')],
+  patterns: [
+    include('Comment'),
+    include('Constant'),
+    include('CallIdentifier'),
+    include('Identifier'),
+    include('Literal'),
+  ],
   repository: {
-    ConstantLiteral: {
-      patterns: [
-        {
-          name: 'constant.language.esp',
-          match: `\\b(${constantKeywords.join('|')})\\b`,
-        },
-      ],
-    },
-    Expression: {
-      patterns: [
-        include('Literal'),
-        include('Keyword'),
-        include('FunctionName'),
-        include('Identifier'),
-      ],
-    },
-    FunctionName: {
+    CallIdentifier: {
       patterns: [
         {
           name: 'entity.name.function.esp',
-          match: /\b[a-zA-Z$_][a-zA-Z0-9$_]*(?=\s*\()/.source,
+          match: `${identifier()}(?=\\s*\\()`,
         },
       ],
+    },
+    Comment: {
+      patterns: [
+        {
+          name: 'comment.block.esp',
+          begin: '/\\*',
+          beginCaptures: {
+            0: { name: 'punctuation.definition.comment.esp' },
+          },
+          end: '\\*/',
+          endCaptures: {
+            0: { name: 'punctuation.definition.comment.esp' },
+          },
+        },
+        {
+          begin: '//',
+          beginCaptures: {
+            0: { name: 'comment.line.double-slash.esp' },
+          },
+          end: '(?=$)',
+          contentName: 'comment.line.double-slash.esp',
+        },
+      ],
+    },
+    Constant: {
+      patterns: [constant()],
     },
     Identifier: {
       patterns: [
         {
           name: 'variable.other.readwrite.esp',
-          match: /\b[a-zA-Z$_][a-zA-Z0-9$_]*\b/.source,
-        },
-      ],
-    },
-    Keyword: {
-      patterns: [
-        {
-          name: 'keyword.control.esp',
-          match: `\\b(${controlKeywords.join('|')})\\b`,
+          match: identifier(),
         },
       ],
     },
     Literal: {
-      patterns: [
-        include('ConstantLiteral'),
-        include('NumericLiteral'),
-        include('StringLiteral'),
-      ],
+      patterns: [include('NumericLiteral'), include('StringLiteral')],
     },
     NumericLiteral: {
       patterns: [
         {
           name: 'constant.numeric.decimal.esp',
-          match: /0|[1-9][0-9]*/.source,
+          match: '\\b(?:0|[1-9][0-9]*)(?:\\.[0-9]*)?\\b',
         },
       ],
+    },
+    StringEscape: {
+      name: 'constant.character.escape.esp',
+      match: '\\\\',
     },
     StringLiteral: {
       patterns: [stringLiteral('single', "'"), stringLiteral('double', '"')],
