@@ -1,7 +1,7 @@
-import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
-import { transformExpression } from './expression';
-import { transformStatement } from './statement';
+import { ES } from '../../../es-ast';
+import { ESP } from '../../../esp-parser';
+import { transformExpression } from '../expression';
+import { transformStatement } from '../statement';
 
 export const transformMatchCase = (node: ESP.MatchCase) => {
   if (node.test.type === ESP.NodeType.UnionClause) {

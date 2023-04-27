@@ -4,7 +4,7 @@ import { ESP } from '../esp-parser';
 export type ToESNode<T extends ESP.Node> = {
   [ESP.NodeType.ArrayLiteral]: ES.ArrayExpression;
   [ESP.NodeType.AssignmentExpression]: ES.AssignmentExpression;
-  [ESP.NodeType.BinaryExpression]: ES.BinaryExpression;
+  [ESP.NodeType.BinaryExpression]: ES.BinaryExpression | ES.LogicalExpression;
   [ESP.NodeType.BlockStatement]: ES.BlockStatement;
   [ESP.NodeType.BreakStatement]: ES.BreakStatement;
   [ESP.NodeType.CallExpression]: ES.CallExpression;
@@ -15,7 +15,7 @@ export type ToESNode<T extends ESP.Node> = {
   [ESP.NodeType.ExpressionStatement]: ES.ExpressionStatement;
   [ESP.NodeType.Identifier]: ES.Identifier;
   [ESP.NodeType.IfStatement]: ES.IfStatement;
-  [ESP.NodeType.Literal]: ES.Literal;
+  [ESP.NodeType.Literal]: ES.Identifier | ES.Literal;
   [ESP.NodeType.MatchCase]: ES.IfStatement;
   [ESP.NodeType.MatchStatement]: ES.SwitchStatement;
   [ESP.NodeType.NewExpression]: ES.NewExpression;
@@ -32,3 +32,5 @@ export type ToESNode<T extends ESP.Node> = {
   [ESP.NodeType.VariableDeclaration]: ES.VariableDeclaration;
   [ESP.NodeType.WhileStatement]: ES.WhileStatement;
 }[T['type']];
+
+export type Transformer<T extends ESP.Node> = (node: T) => ToESNode<T>;

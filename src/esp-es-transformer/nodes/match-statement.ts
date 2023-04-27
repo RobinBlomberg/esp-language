@@ -1,10 +1,13 @@
 import { ES, SwitchCase } from '../../es-ast';
 import { ESP } from '../../esp-parser';
+import { Transformer } from '../transformer-utils';
 import { transformExpression } from './expression';
-import { transformMatchCase } from './match-case';
+import { transformMatchCase } from './internal/match-case';
 import { transformStatement } from './statement';
 
-export const transformMatchStatement = (node: ESP.MatchStatement) => {
+export const transformMatchStatement: Transformer<ESP.MatchStatement> = (
+  node,
+) => {
   const cases: SwitchCase[] = [];
 
   for (const matchCase of node.cases) {
