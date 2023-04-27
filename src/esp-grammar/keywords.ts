@@ -14,6 +14,8 @@ export const constantKeywords = [
 ] as const;
 
 export const controlKeywords = [
+  'async',
+  'await',
   'break',
   'const',
   'continue',
@@ -21,6 +23,7 @@ export const controlKeywords = [
   'else',
   'export',
   'for',
+  'function',
   'if',
   'import',
   'let',

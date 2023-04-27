@@ -16,6 +16,8 @@ export const constantKeywordNames: Record<ConstantKeyword, Name> = {
 };
 
 export const controlKeywordNames: Record<ControlKeyword, Name> = {
+  async: 'storage.modifier.async.esp',
+  await: 'keyword.control.flow.esp',
   break: 'keyword.control.loop.esp',
   const: 'storage.type.esp',
   continue: 'keyword.control.loop.esp',
@@ -23,6 +25,7 @@ export const controlKeywordNames: Record<ControlKeyword, Name> = {
   else: 'keyword.control.conditional.esp',
   export: 'keyword.control.export.esp',
   for: 'keyword.control.loop.esp',
+  function: 'storage.type.function.esp',
   if: 'keyword.control.conditional.esp',
   import: 'keyword.control.import.esp',
   let: 'storage.type.esp',

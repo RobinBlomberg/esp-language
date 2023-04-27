@@ -46,7 +46,7 @@ export const constant = (): Pattern => {
 };
 
 export const identifier = () => {
-  return '\\b[a-zA-Z$_][a-zA-Z0-9$_]*\\b';
+  return '(?<![a-zA-Z0-9$_])[a-zA-Z$_][a-zA-Z0-9$_]*(?![a-zA-Z0-9$_])';
 };
 
 export const include = (id: string) => {
