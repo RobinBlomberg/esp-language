@@ -1,14 +1,11 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformCallExpression: Transformer<ESP.CallExpression> = (
-  node,
-) => {
+export const transformCallExpression = (node: ESP.CallExpression) => {
   return ES.CallExpression(
-    transformExpression(node.callee),
-    node.arguments.map(transformExpression),
+    transform(node.callee),
+    node.arguments.map(transform),
     false,
   );
 };

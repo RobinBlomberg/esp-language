@@ -1,14 +1,7 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
-import { transformStatement } from './statement';
+import { transform } from '../transform';
 
-export const transformDoWhileStatement: Transformer<ESP.DoWhileStatement> = (
-  node,
-) => {
-  return ES.DoWhileStatement(
-    transformStatement(node.body),
-    transformExpression(node.test),
-  );
+export const transformDoWhileStatement = (node: ESP.DoWhileStatement) => {
+  return ES.DoWhileStatement(transform(node.body), transform(node.test));
 };

@@ -1,14 +1,13 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformConditionalExpression: Transformer<
-  ESP.ConditionalExpression
-> = (node) => {
+export const transformConditionalExpression = (
+  node: ESP.ConditionalExpression,
+) => {
   return ES.ConditionalExpression(
-    transformExpression(node.test),
-    transformExpression(node.alternate),
-    transformExpression(node.consequent),
+    transform(node.test),
+    transform(node.alternate),
+    transform(node.consequent),
   );
 };

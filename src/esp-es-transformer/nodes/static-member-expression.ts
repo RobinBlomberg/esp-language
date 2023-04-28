@@ -1,15 +1,13 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
-import { transformIdentifier } from './identifier';
+import { transform } from '../transform';
 
-export const transformStaticMemberExpression: Transformer<
-  ESP.StaticMemberExpression
-> = (node) => {
+export const transformStaticMemberExpression = (
+  node: ESP.StaticMemberExpression,
+) => {
   return ES.MemberExpression(
-    transformExpression(node.object),
-    transformIdentifier(node.property),
+    transform(node.object),
+    transform(node.property),
     false,
     false,
   );

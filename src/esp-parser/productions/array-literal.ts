@@ -1,7 +1,7 @@
 import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error, unused } from '../../esp-lexer/abrupt';
 import { ArrayLiteral } from '../ast';
-import { parseValueList } from './value-list';
+import { parseValueList } from './internal/value-list';
 
 /**
  * Adapted from ECMA-262:

@@ -1,14 +1,7 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
-import { transformStatement } from './statement';
+import { transform } from '../transform';
 
-export const transformWhileStatement: Transformer<ESP.WhileStatement> = (
-  node,
-) => {
-  return ES.WhileStatement(
-    transformExpression(node.test),
-    transformStatement(node.body),
-  );
+export const transformWhileStatement = (node: ESP.WhileStatement) => {
+  return ES.WhileStatement(transform(node.test), transform(node.body));
 };

@@ -1,13 +1,11 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
-import { transformStatement } from './statement';
+import { transform } from '../transform';
 
-export const transformIfStatement: Transformer<ESP.IfStatement> = (node) => {
+export const transformIfStatement = (node: ESP.IfStatement) => {
   return ES.IfStatement(
-    transformExpression(node.test),
-    transformStatement(node.consequent),
-    node.alternate ? transformStatement(node.alternate) : null,
+    transform(node.test),
+    transform(node.consequent),
+    node.alternate ? transform(node.alternate) : null,
   );
 };

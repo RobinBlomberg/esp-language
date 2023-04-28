@@ -12,6 +12,7 @@ export const enum NodeType {
   ContinueStatement = 'ContinueStatement',
   DoWhileStatement = 'DoWhileStatement',
   ExpressionStatement = 'ExpressionStatement',
+  Function = 'Function',
   Identifier = 'Identifier',
   IfStatement = 'IfStatement',
   Literal = 'Literal',
@@ -38,7 +39,7 @@ export type LeftHandSideExpression =
   | NewExpression
   | PrimaryExpression;
 
-export type Node = Expression | Script | Statement | UnionClause;
+export type Node = Expression | Script | Statement;
 
 export const Node = <T extends NodeType>(
   start: number,
@@ -61,6 +62,7 @@ export type NodeMap = {
   [NodeType.ContinueStatement]: ContinueStatement;
   [NodeType.DoWhileStatement]: DoWhileStatement;
   [NodeType.ExpressionStatement]: ExpressionStatement;
+  [NodeType.Function]: Function;
   [NodeType.Identifier]: Identifier;
   [NodeType.IfStatement]: IfStatement;
   [NodeType.Literal]: Literal;
@@ -319,6 +321,7 @@ export type Expression =
   | CallExpression
   | ComputedMemberExpression
   | ConditionalExpression
+  | Function
   | Identifier
   | Literal
   | NewExpression
@@ -341,6 +344,23 @@ export const ExpressionStatement = (
   expression: Expression,
 ) => {
   return Node(start, end, NodeType.ExpressionStatement, { expression });
+};
+
+export type Function = {
+  type: NodeType.Function;
+  start: number;
+  end: number;
+  params: Identifier[];
+  body: BlockStatement | Expression;
+};
+
+export const Function = (
+  start: number,
+  end: number,
+  params: Identifier[],
+  body: BlockStatement | Expression,
+) => {
+  return Node(start, end, NodeType.Function, { params, body });
 };
 
 export type Identifier = {

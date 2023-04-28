@@ -1,11 +1,8 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformBinaryExpression: Transformer<ESP.BinaryExpression> = (
-  node,
-) => {
+export const transformBinaryExpression = (node: ESP.BinaryExpression) => {
   if (
     node.operator === '&&' ||
     node.operator === '||' ||
@@ -13,14 +10,14 @@ export const transformBinaryExpression: Transformer<ESP.BinaryExpression> = (
   ) {
     return ES.LogicalExpression(
       node.operator,
-      transformExpression(node.left),
-      transformExpression(node.right),
+      transform(node.left),
+      transform(node.right),
     );
   }
 
   return ES.BinaryExpression(
     node.operator,
-    transformExpression(node.left),
-    transformExpression(node.right),
+    transform(node.left),
+    transform(node.right),
   );
 };

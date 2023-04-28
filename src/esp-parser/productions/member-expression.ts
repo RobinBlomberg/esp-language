@@ -6,9 +6,9 @@ import {
   NewExpression,
   StaticMemberExpression,
 } from '../ast';
-import { parseArguments } from './arguments';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
+import { parseArguments } from './internal/arguments';
 import { parsePrimaryExpression } from './primary-expression';
 
 /**

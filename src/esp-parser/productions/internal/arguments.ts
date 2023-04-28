@@ -1,5 +1,5 @@
-import { TokenType, abrupt, consume } from '../../esp-lexer';
-import { error, unused } from '../../esp-lexer/abrupt';
+import { TokenType, abrupt, consume } from '../../../esp-lexer';
+import { error, unused } from '../../../esp-lexer/abrupt';
 import { parseValueList } from './value-list';
 
 /**

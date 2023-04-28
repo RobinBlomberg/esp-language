@@ -1,4 +1,11 @@
-import { Parser, TokenMatcher, abrupt, consumeToken } from '../esp-lexer';
+import {
+  Parser,
+  Token,
+  TokenMatcher,
+  abrupt,
+  consumeToken,
+  lex,
+} from '../esp-lexer';
 import { error } from '../esp-lexer/abrupt';
 import {
   BinaryExpression,
@@ -47,4 +54,8 @@ export const isSimpleNode = (node: Node): node is SimpleNode => {
     node.type === NodeType.StaticMemberExpression ||
     node.type === NodeType.ComputedMemberExpression
   );
+};
+
+export const lookahead = (data: string, i: number) => {
+  return (lex(data, i) as Token).value;
 };

@@ -12,20 +12,21 @@ suite('ObjectLiteral', () => {
   });
 
   test('"{ PropertyDefinitionList }"', () => {
-    ok('{ a: 1}');
-    ok('{ a: 1, b: 2 }');
-    error('{ ,');
-    error('{ ,}');
-    error('{ a');
-    error('{ a}');
-    error('{ a:');
-    error('{ a: }');
-    error('{ a: 1');
-    error('{ a: 1,');
-    error('{ a: 1,}');
-    error('{ a: 1, b');
-    error('{ a: 1, b:');
-    error('{ a: 1, b: 2');
-    error('{ a: 1, b: 2,');
+    ok('{a:1}');
+    ok('{a:1,b:2 }');
+    ok('{a::(){}}');
+    error('{,');
+    error('{,}');
+    error('{a');
+    error('{a}');
+    error('{a:');
+    error('{a:}');
+    error('{a:1');
+    error('{a:1,');
+    error('{a:1,}');
+    error('{a:1,b');
+    error('{a:1,b:');
+    error('{a:1,b:2');
+    error('{a:1,b:2,');
   });
 });

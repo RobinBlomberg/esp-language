@@ -1,7 +1,6 @@
 import { ES } from '../../../es-ast';
 import { ESP } from '../../../esp-parser';
-import { transformExpression } from '../expression';
-import { transformStatement } from '../statement';
+import { transform } from '../../transform';
 
 export const transformMatchCase = (node: ESP.MatchCase) => {
   if (node.test.type === ESP.NodeType.UnionClause) {
@@ -9,17 +8,17 @@ export const transformMatchCase = (node: ESP.MatchCase) => {
 
     return node.test.values.map((value, index) => {
       return ES.SwitchCase(
-        transformExpression(value),
+        transform(value),
         index === length - 1
-          ? [transformStatement(node.consequent), ES.BreakStatement(null)]
+          ? [transform(node.consequent), ES.BreakStatement(null)]
           : [],
       );
     });
   }
 
   return [
-    ES.SwitchCase(transformExpression(node.test), [
-      transformStatement(node.consequent),
+    ES.SwitchCase(transform(node.test), [
+      transform(node.consequent),
       ES.BreakStatement(null),
     ]),
   ];

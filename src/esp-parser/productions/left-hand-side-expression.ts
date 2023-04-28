@@ -1,6 +1,6 @@
 import { Parser, abrupt } from '../../esp-lexer';
 import { CallExpression, Expression } from '../ast';
-import { parseArguments } from './arguments';
+import { parseArguments } from './internal/arguments';
 import { parseMemberExpression } from './member-expression';
 
 /**

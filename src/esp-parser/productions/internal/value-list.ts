@@ -1,8 +1,8 @@
-import { TokenType, abrupt, consume } from '../../esp-lexer';
-import { Error, Unused } from '../../esp-lexer/abrupt';
-import { PunctuatorToken } from '../../esp-lexer/token';
-import { Expression } from '../ast';
-import { parseExpression } from './expression';
+import { TokenType, abrupt, consume } from '../../../esp-lexer';
+import { Error, Unused, error } from '../../../esp-lexer/abrupt';
+import { PunctuatorToken } from '../../../esp-lexer/token';
+import { Expression } from '../../ast';
+import { parseExpression } from '../expression';
 
 /**
  * ```ecmarkup
@@ -12,7 +12,6 @@ import { parseExpression } from './expression';
  * ```
  */
 export const parseValueList = (data: string, i: number) => {
-  const start = i;
   const values: Expression[] = [];
 
   while (true) {
@@ -27,7 +26,7 @@ export const parseValueList = (data: string, i: number) => {
     const value = parseExpression(data, i);
     if (!abrupt(value)) i = value.end;
     else if (abrupt(comma)) break;
-    else return Error(start);
+    else return error(value);
 
     values.push(value);
   }

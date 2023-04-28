@@ -1,8 +1,8 @@
 import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { ObjectLiteral, Property } from '../ast';
+import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
-import { parsePrimaryExpression } from './primary-expression';
 
 /**
  * Supported from ECMA-262:
@@ -10,12 +10,29 @@ import { parsePrimaryExpression } from './primary-expression';
  * ObjectLiteral :
  *   { }
  *   { PropertyDefinitionList }
+ *
+ * PropertyDefinitionList[Yield, Await] :
+ *   PropertyDefinition[?Yield, ?Await]
+ *   PropertyDefinitionList[?Yield, ?Await] , PropertyDefinition[?Yield, ?Await]
+ *
+ * PropertyDefinition[Yield, Await] :
+ *   PropertyName[?Yield, ?Await] : AssignmentExpression[+In, ?Yield, ?Await]
  * ```
  *
  * Not supported from ECMA-262:
  * ```ecmarkup
  * ObjectLiteral :
  *   { PropertyDefinitionList , }
+ *
+ * PropertyDefinitionList[Yield, Await] :
+ *   PropertyDefinition[?Yield, ?Await]
+ *   PropertyDefinitionList[?Yield, ?Await] , PropertyDefinition[?Yield, ?Await]
+ *
+ * PropertyDefinition[Yield, Await] :
+ *   IdentifierReference[?Yield, ?Await]
+ *   CoverInitializedName[?Yield, ?Await]
+ *   MethodDefinition[?Yield, ?Await]
+ *   ... AssignmentExpression[+In, ?Yield, ?Await]
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-ObjectLiteral
@@ -47,7 +64,7 @@ export const parseObjectLiteral: Parser<ObjectLiteral> = (data, i) => {
     if (abrupt(colon)) return error(colon);
     i = colon.end;
 
-    const value = parsePrimaryExpression(data, i);
+    const value = parseExpression(data, i);
     if (abrupt(value)) return error(value);
     i = value.end;
 

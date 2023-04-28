@@ -1,14 +1,13 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformComputedMemberExpression: Transformer<
-  ESP.ComputedMemberExpression
-> = (node) => {
+export const transformComputedMemberExpression = (
+  node: ESP.ComputedMemberExpression,
+) => {
   return ES.MemberExpression(
-    transformExpression(node.object),
-    transformExpression(node.property),
+    transform(node.object),
+    transform(node.property),
     true,
     false,
   );

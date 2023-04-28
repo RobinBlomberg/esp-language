@@ -1,12 +1,11 @@
 import { ES } from '../../../es-ast';
 import { ESP } from '../../../esp-parser';
-import { transformExpression } from '../expression';
-import { transformIdentifier } from '../identifier';
+import { transform } from '../../transform';
 
 export const transformProperty = (node: ESP.Property) => {
   return ES.Property(
-    transformIdentifier(node.key),
-    transformExpression(node.value),
+    transform(node.key),
+    transform(node.value),
     'init',
     false,
     false,

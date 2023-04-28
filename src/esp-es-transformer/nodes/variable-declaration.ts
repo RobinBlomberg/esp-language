@@ -1,18 +1,10 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformVariableDeclaration: Transformer<
-  ESP.VariableDeclaration
-> = (node) => {
+export const transformVariableDeclaration = (node: ESP.VariableDeclaration) => {
   return ES.VariableDeclaration(
-    [
-      ES.VariableDeclarator(
-        ES.Identifier(node.id),
-        transformExpression(node.init),
-      ),
-    ],
+    [ES.VariableDeclarator(ES.Identifier(node.id), transform(node.init))],
     'let',
   );
 };

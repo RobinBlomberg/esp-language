@@ -10,6 +10,33 @@ suite('Expression', () => {
     ok('ConditionalExpression');
   });
 
+  test('"Function"', () => {
+    ok(':(){}');
+    ok(':(a){}');
+    ok(':(a,b){}');
+    ok(':()c;');
+    ok(':(a)c;');
+    ok(':(a,b)c;');
+    error(':');
+    error(':(');
+    error(':()');
+    error(':(){');
+    error(':(,');
+    error(':(a');
+    error(':(a,');
+    error(':(a)');
+    error(':(a){');
+    error(':(a b){}');
+    error(':(a,');
+    error(':(a,){}');
+    error(':(a,b');
+    error(':(a,b)');
+    error(':(a,b){');
+    error(':(a,b,){}');
+    error(':(a,)c;');
+    error(':(a,b,)c;');
+  });
+
   test('"LeftHandSideExpression AssignmentOperator Expression"', () => {
     ok('LeftHandSideExpression = Expression');
     ok('LeftHandSideExpression = Expression');

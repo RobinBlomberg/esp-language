@@ -1,10 +1,7 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformThrowStatement: Transformer<ESP.ThrowStatement> = (
-  node,
-) => {
-  return ES.ThrowStatement(transformExpression(node.argument));
+export const transformThrowStatement = (node: ESP.ThrowStatement) => {
+  return ES.ThrowStatement(transform(node.argument));
 };

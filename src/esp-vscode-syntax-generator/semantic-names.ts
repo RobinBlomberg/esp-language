@@ -25,7 +25,6 @@ export const controlKeywordNames: Record<ControlKeyword, Name> = {
   else: 'keyword.control.conditional.esp',
   export: 'keyword.control.export.esp',
   for: 'keyword.control.loop.esp',
-  function: 'storage.type.function.esp',
   if: 'keyword.control.conditional.esp',
   import: 'keyword.control.import.esp',
   let: 'storage.type.esp',

@@ -2,15 +2,17 @@ import { Parser, abrupt, consumeToken } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { AssignmentExpression, Expression } from '../ast';
 import { errors } from '../errors';
-import { isSimpleNode } from '../parser-utils';
+import { isSimpleNode, lookahead } from '../parser-utils';
 import { AssignmentOperatorTokenMatcher } from '../token-matchers';
 import { parseConditionalExpression } from './conditional-expression';
+import { parseFunction } from './function';
 
 /**
  * Modified from ECMA-262:
  * ```ecmarkup
  * Expression :
  *   ConditionalExpression
+ *   Function
  *   LeftHandSideExpression AssignmentOperator Expression
  * ```
  *
@@ -18,14 +20,16 @@ import { parseConditionalExpression } from './conditional-expression';
  * ```ecmarkup
  * AssignmentExpression :
  *   YieldExpression
- *   ArrowFunction
  *   AsyncArrowFunction
  * ```
  *
- * @see https://tc39.es/ecma262/#prod-Expression
+ * @see https://tc39.es/ecma262/#prod-AssignmentExpression
  */
 export const parseExpression: Parser<Expression> = (data, i) => {
-  const left = parseConditionalExpression(data, i);
+  const left =
+    lookahead(data, i) === ':'
+      ? parseFunction(data, i)
+      : parseConditionalExpression(data, i);
   if (abrupt(left)) return left;
   i = left.end;
 

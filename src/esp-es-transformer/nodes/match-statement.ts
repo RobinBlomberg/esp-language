@@ -1,13 +1,9 @@
 import { ES, SwitchCase } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 import { transformMatchCase } from './internal/match-case';
-import { transformStatement } from './statement';
 
-export const transformMatchStatement: Transformer<ESP.MatchStatement> = (
-  node,
-) => {
+export const transformMatchStatement = (node: ESP.MatchStatement) => {
   const cases: SwitchCase[] = [];
 
   for (const matchCase of node.cases) {
@@ -16,12 +12,9 @@ export const transformMatchStatement: Transformer<ESP.MatchStatement> = (
 
   if (node.alternate) {
     cases.push(
-      ES.SwitchCase(null, [
-        transformStatement(node.alternate),
-        ES.BreakStatement(null),
-      ]),
+      ES.SwitchCase(null, [transform(node.alternate), ES.BreakStatement(null)]),
     );
   }
 
-  return ES.SwitchStatement(transformExpression(node.discriminant), cases);
+  return ES.SwitchStatement(transform(node.discriminant), cases);
 };

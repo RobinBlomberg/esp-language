@@ -1,6 +1,7 @@
-import { Parser, TokenType, abrupt, consume, lex } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { MatchCase, MatchStatement, Statement } from '../ast';
+import { lookahead } from '../parser-utils';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 import { parseUnionClause } from './union-clause';
@@ -61,10 +62,8 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
       i = alternate.end;
     }
 
-    const token = lex(data, i);
-    if (abrupt(token)) break;
     const test =
-      token.value === '{'
+      lookahead(data, i) === '{'
         ? parseUnionClause(data, i)
         : parseExpression(data, i);
     if (abrupt(test)) break;

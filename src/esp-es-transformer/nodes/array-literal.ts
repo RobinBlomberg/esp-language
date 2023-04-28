@@ -1,8 +1,7 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformArrayLiteral: Transformer<ESP.ArrayLiteral> = (node) => {
-  return ES.ArrayExpression(node.elements.map(transformExpression));
+export const transformArrayLiteral = (node: ESP.ArrayLiteral) => {
+  return ES.ArrayExpression(node.elements.map(transform));
 };

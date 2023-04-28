@@ -1,7 +1,7 @@
 import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { SetLiteral } from '../ast';
-import { parseValueList } from './value-list';
+import { parseValueList } from './internal/value-list';
 
 /**
  * ```ecmarkup

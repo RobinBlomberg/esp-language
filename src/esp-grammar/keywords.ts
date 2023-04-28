@@ -23,7 +23,6 @@ export const controlKeywords = [
   'else',
   'export',
   'for',
-  'function',
   'if',
   'import',
   'let',

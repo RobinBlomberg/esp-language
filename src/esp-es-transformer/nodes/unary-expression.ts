@@ -1,14 +1,7 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { Transformer } from '../transformer-utils';
-import { transformExpression } from './expression';
+import { transform } from '../transform';
 
-export const transformUnaryExpression: Transformer<ESP.UnaryExpression> = (
-  node,
-) => {
-  return ES.UnaryExpression(
-    node.operator,
-    true,
-    transformExpression(node.argument),
-  );
+export const transformUnaryExpression = (node: ESP.UnaryExpression) => {
+  return ES.UnaryExpression(node.operator, true, transform(node.argument));
 };
