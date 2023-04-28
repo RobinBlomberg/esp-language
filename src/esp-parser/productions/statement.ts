@@ -57,6 +57,7 @@ export const parseStatement: Parser<Statement> = (data, i) => {
       return parseDoWhileStatement(data, i);
     case 'if':
       return parseIfStatement(data, i);
+    case 'const':
     case 'let':
       return parseVariableDeclaration(data, i);
     case 'match':

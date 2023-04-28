@@ -1,5 +1,10 @@
 import { TokenMatcher, TokenType } from '../esp-lexer';
-import { AssignmentOperator, UnaryOperator, UpdateOperator } from './ast';
+import {
+  AssignmentOperator,
+  UnaryOperator,
+  UpdateOperator,
+  VariableKind,
+} from './ast';
 
 export const AssignmentOperatorTokenMatcher: TokenMatcher<AssignmentOperator> =
   {
@@ -28,4 +33,8 @@ export const UnaryOperatorTokenMatcher: TokenMatcher<UnaryOperator> = {
 
 export const UpdateOperatorTokenMatcher: TokenMatcher<UpdateOperator> = {
   [TokenType.Punctuator]: UpdateOperator,
+};
+
+export const VariableKindTokenMatcher: TokenMatcher<VariableKind> = {
+  [TokenType.Keyword]: VariableKind,
 };

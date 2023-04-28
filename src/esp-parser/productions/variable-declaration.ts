@@ -1,13 +1,24 @@
-import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import {
+  Parser,
+  TokenType,
+  abrupt,
+  consume,
+  consumeToken,
+} from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { VariableDeclaration } from '../ast';
+import { VariableKindTokenMatcher } from '../token-matchers';
 import { parseExpression } from './expression';
 
 /**
  * Modified from ECMA-262:
  * ```ecmarkup
  * VariableDeclaration :
- *   let Identifier = Expression ;
+ *   LetOrConst Identifier = Expression ;
+ *
+ * LetOrConst :
+ *   let
+ *   const
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-VariableDeclaration
@@ -16,9 +27,9 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   data,
   i,
 ) => {
-  const let_ = consume(data, i, TokenType.Keyword, 'let');
-  if (abrupt(let_)) return let_;
-  i = let_.end;
+  const kind = consumeToken(data, i, VariableKindTokenMatcher);
+  if (abrupt(kind)) return kind;
+  i = kind.end;
 
   const id = consume(data, i, TokenType.Identifier);
   if (abrupt(id)) return error(id);
@@ -35,5 +46,11 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   const terminator = consume(data, i, TokenType.Punctuator, ';');
   if (abrupt(terminator)) return error(terminator);
 
-  return VariableDeclaration(let_.start, terminator.end, id.value, init);
+  return VariableDeclaration(
+    kind.start,
+    terminator.end,
+    kind.value,
+    id.value,
+    init,
+  );
 };

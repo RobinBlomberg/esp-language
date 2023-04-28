@@ -5,13 +5,14 @@ import { parseVariableDeclaration } from './variable-declaration';
 const { error, ok, unused } = createParseAssert(parseVariableDeclaration);
 
 suite('VariableDeclaration', () => {
-  test('"let Identifier = Expression ;"', () => {
+  test('"LetOrConst Identifier = Expression ;"', () => {
     unused();
-    ok('let Identifier = Expression;');
+    ok('let a=b;');
+    ok('const a=b;');
     error('let');
-    error('let Identifier');
-    error('let Identifier =');
-    error('let Identifier = Expression');
-    error('let continue = Expression');
+    error('let a');
+    error('let a=');
+    error('let a=b');
+    error('let continue=b');
   });
 });

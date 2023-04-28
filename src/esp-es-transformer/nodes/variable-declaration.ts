@@ -5,6 +5,6 @@ import { transform } from '../transform';
 export const transformVariableDeclaration = (node: ESP.VariableDeclaration) => {
   return ES.VariableDeclaration(
     [ES.VariableDeclarator(ES.Identifier(node.id), transform(node.init))],
-    'let',
+    node.kind,
   );
 };

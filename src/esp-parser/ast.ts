@@ -665,6 +665,7 @@ export type VariableDeclaration = {
   type: NodeType.VariableDeclaration;
   start: number;
   end: number;
+  kind: VariableKind;
   id: string;
   init: Expression;
 };
@@ -672,11 +673,16 @@ export type VariableDeclaration = {
 export const VariableDeclaration = (
   start: number,
   end: number,
+  kind: VariableKind,
   id: string,
   init: Expression,
 ) => {
-  return Node(start, end, NodeType.VariableDeclaration, { id, init });
+  return Node(start, end, NodeType.VariableDeclaration, { kind, id, init });
 };
+
+export type VariableKind = 'const' | 'let';
+
+export const VariableKind: VariableKind[] = ['const', 'let'];
 
 export type WhileStatement = {
   type: NodeType.WhileStatement;
