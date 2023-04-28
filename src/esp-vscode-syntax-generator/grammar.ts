@@ -21,7 +21,7 @@ export const language: Language = {
       patterns: [
         {
           name: 'entity.name.function.esp',
-          match: `${identifier()}(?=\\s*(?:\\(|=\\s*:))`,
+          match: identifier() + /(?=\s*(?:\(|(?:=\s*)?\(*:))/.source,
         },
       ],
     },

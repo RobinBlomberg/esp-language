@@ -1,6 +1,8 @@
-import { Parser, abrupt, lex } from '../../esp-lexer';
+import { Parser, TokenType, abrupt, consume, lex } from '../../esp-lexer';
+import { error } from '../../esp-lexer/abrupt';
 import { Expression } from '../ast';
 import { parseArrayLiteral } from './array-literal';
+import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';
 import { parseLiteral } from './literal';
 import { parseObjectLiteral } from './object-literal';
@@ -15,6 +17,7 @@ import { parseSetLiteral } from './set-literal';
  *   ArrayLiteral
  *   ObjectLiteral
  *   SetLiteral
+ *   CoverParenthesizedExpression
  * ```
  *
  * Not supported from ECMA-262:
@@ -28,7 +31,6 @@ import { parseSetLiteral } from './set-literal';
  *   AsyncGeneratorExpression
  *   RegularExpressionLiteral
  *   TemplateLiteral
- *   CoverParenthesizedExpressionAndArrowParameterList
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-PrimaryExpression
@@ -44,6 +46,22 @@ export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
       return parseObjectLiteral(data, i);
     case '#':
       return parseSetLiteral(data, i);
+    case '(': {
+      const open = consume(data, i, TokenType.Punctuator, '(');
+      if (abrupt(open)) return open;
+      i = open.end;
+
+      const expression = parseExpression(data, i);
+      if (abrupt(expression)) return error(expression);
+      i = expression.end;
+
+      const close = consume(data, i, TokenType.Punctuator, ')');
+      if (abrupt(close)) return error(close);
+
+      expression.start = open.start;
+      expression.end = close.end;
+      return expression;
+    }
     default: {
       const literal = parseLiteral(data, i);
       if (!abrupt(literal)) return literal;

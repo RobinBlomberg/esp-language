@@ -8,6 +8,7 @@ suite('Expression', () => {
   test('"ConditionalExpression"', () => {
     unused();
     ok('ConditionalExpression');
+    ok('(1+2)');
   });
 
   test('"Function"', () => {

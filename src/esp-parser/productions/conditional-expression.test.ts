@@ -8,6 +8,7 @@ suite('ConditionalExpression', () => {
   test('"LogicalORExpression"', () => {
     unused();
     ok('LogicalORExpression');
+    ok('(1+2)');
   });
 
   test('"LogicalORExpression ? Expression : Expression"', () => {

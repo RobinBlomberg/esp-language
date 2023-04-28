@@ -8,6 +8,7 @@ suite('MemberExpression', () => {
   test('"PrimaryExpression"', () => {
     unused();
     ok('PrimaryExpression');
+    ok('(1+2)');
   });
 
   test('"MemberExpression [ Expression ]"', () => {

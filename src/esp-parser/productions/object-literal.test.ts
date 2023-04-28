@@ -13,7 +13,8 @@ suite('ObjectLiteral', () => {
 
   test('"{ PropertyDefinitionList }"', () => {
     ok('{a:1}');
-    ok('{a:1,b:2 }');
+    ok('{a:2,b:3}');
+    ok('{a:(4+5)}');
     ok('{a::(){}}');
     error('{,');
     error('{,}');

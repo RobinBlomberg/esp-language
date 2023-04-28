@@ -10,6 +10,7 @@ suite('LeftHandSideExpression', () => {
     ok('NewExpression');
     ok('Member.Expression');
     ok('Member[Expression]');
+    ok('(1+2)');
   });
 
   test('"CallExpression"', () => {

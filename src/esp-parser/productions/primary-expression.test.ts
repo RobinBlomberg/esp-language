@@ -44,4 +44,12 @@ suite('PrimaryExpression', () => {
     ok('#{1}');
     ok('#{1, 2}');
   });
+
+  test('"CoverParenthesizedExpression"', () => {
+    ok('(a)');
+    ok('(1+2)');
+    error('(');
+    error('()');
+    error('(a');
+  });
 });
