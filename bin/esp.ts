@@ -16,7 +16,7 @@ const logHelpAndExit = () => {
   process.exit(1);
 };
 
-void (async function () {
+(async () => {
   const args = process.argv.slice(2);
 
   switch (args[0]) {
@@ -31,7 +31,7 @@ void (async function () {
       break;
     }
     default: {
-      const unresolvedPath = args[1];
+      const unresolvedPath = args[0];
       if (!unresolvedPath) {
         return logHelpAndExit();
       }
