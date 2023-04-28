@@ -1,4 +1,4 @@
-import { Abrupt, Error } from './abrupt';
+import { Abrupt, error } from './abrupt';
 import { lex } from './lex';
 import { Token, TokenMatcher } from './token';
 import { TokenType } from './token-type';
@@ -20,7 +20,7 @@ export const consume = <T extends TokenType, V extends string = string>(
 ): Token<T, V> | Abrupt => {
   const token = lex(data, i);
   if (abrupt(token)) return token;
-  return match(token, type, value) ? token : Error(token.start);
+  return match(token, type, value) ? token : error(token);
 };
 
 export const consumeToken = <T extends TokenMatcher>(
@@ -30,7 +30,7 @@ export const consumeToken = <T extends TokenMatcher>(
 ): (T extends TokenMatcher<infer V> ? Token<TokenType, V> : never) | Abrupt => {
   const token = lex(data, i);
   if (abrupt(token)) return token;
-  return matchToken(token, expected) ? token : Error(token.start);
+  return matchToken(token, expected) ? token : error(token);
 };
 
 export const match = <T extends TokenType, V extends string = string>(

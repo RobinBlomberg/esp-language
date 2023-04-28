@@ -13,7 +13,7 @@ export const lex = (data: string, i: number): Token | Error | Unused => {
   const start = i;
 
   if (c === undefined) {
-    return { type: 'Unused', start };
+    return { type: 'Unused', start, end: i };
   }
 
   if (punctuatorsSet.has(c)) {
@@ -44,7 +44,7 @@ export const lex = (data: string, i: number): Token | Error | Unused => {
         c = data[++i];
 
         if (c === undefined) {
-          return { type: 'Error', start };
+          return { type: 'Error', start, end: i };
         }
       }
 
@@ -53,7 +53,7 @@ export const lex = (data: string, i: number): Token | Error | Unused => {
     }
 
     if (c !== quoteChar) {
-      return { type: 'Error', start };
+      return { type: 'Error', start, end: i };
     }
 
     value += quoteChar;
@@ -82,7 +82,7 @@ export const lex = (data: string, i: number): Token | Error | Unused => {
           c = data[++i];
         }
       } else {
-        return { type: 'Error', start };
+        return { type: 'Error', start, end: i };
       }
     }
 
@@ -116,5 +116,5 @@ export const lex = (data: string, i: number): Token | Error | Unused => {
     };
   }
 
-  return { type: 'Error', start };
+  return { type: 'Error', start, end: i };
 };

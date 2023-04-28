@@ -5,7 +5,7 @@ import { transformScript } from '../esp-es-transformer';
 import { abrupt } from '../esp-lexer';
 import { parseScript } from '../esp-parser';
 
-const logSyntaxError = (script: string, errorIndex: number) => {
+const logSyntaxError = (script: string, start: number, end: number) => {
   let line = 1;
   let column = 1;
   let lineStart = 0;
@@ -13,7 +13,7 @@ const logSyntaxError = (script: string, errorIndex: number) => {
 
   for (let i = 0; i < script.length; i++) {
     if (script[i] === '\n' || (script[i] === '\r' && script[i + 1] !== '\n')) {
-      if (i > errorIndex) {
+      if (i > start) {
         lineEnd = i;
         break;
       }
@@ -21,18 +21,18 @@ const logSyntaxError = (script: string, errorIndex: number) => {
       line++;
       column = 1;
       lineStart = i + 1;
-    } else if (i < errorIndex) {
+    } else if (i < start) {
       column++;
     }
   }
 
   const character =
-    errorIndex < script.length
-      ? `character ${JSON.stringify(script[errorIndex])}`
+    start < script.length
+      ? `token ${JSON.stringify(script.slice(start, end))}`
       : 'end of file';
 
   console.error(script.slice(lineStart, lineEnd));
-  console.error(`${' '.repeat(errorIndex - lineStart)}^`);
+  console.error(`${' '.repeat(start - lineStart)}^`);
   console.error();
   console.error(`${red}(${line}:${column}) Unexpected ${character}${clear}`);
   console.error();
@@ -44,7 +44,7 @@ export const run = (script: string) => {
   const parseResult = parseScript(script, 0);
 
   if (abrupt(parseResult)) {
-    logSyntaxError(script, parseResult.start);
+    logSyntaxError(script, parseResult.start, parseResult.end);
     process.exit(1);
   }
 
