@@ -1,4 +1,4 @@
-import { escapeRegExpString } from '../escape-regexp-string';
+import { escapeRegExpString } from './escape-regexp-string';
 import { Name } from './names';
 import {
   constantKeywordNames,
