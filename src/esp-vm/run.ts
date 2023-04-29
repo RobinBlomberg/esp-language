@@ -1,54 +1,34 @@
-import { runInNewContext } from 'node:vm';
-import { clear, red } from '../ansi-escape-codes';
-import { serialize } from '../es-serializer';
+import { runInNewContext } from 'vm';
+import { serializeWithSourceMap } from '../es-serializer/serialize';
 import { transformScript } from '../esp-es-transformer';
 import { abrupt } from '../esp-lexer';
 import { parseScript } from '../esp-parser';
+import { createRuntimeError, createSyntaxError } from './errors';
+import { logError } from './log-error';
 
-const logSyntaxError = (script: string, start: number, end: number) => {
-  let line = 1;
-  let column = 1;
-  let lineStart = 0;
-  let lineEnd = script.length;
-
-  for (let i = 0; i < script.length; i++) {
-    if (script[i] === '\n' || (script[i] === '\r' && script[i + 1] !== '\n')) {
-      if (i > start) {
-        lineEnd = i;
-        break;
-      }
-
-      line++;
-      column = 1;
-      lineStart = i + 1;
-    } else if (i < start) {
-      column++;
-    }
-  }
-
-  const character =
-    start < script.length
-      ? `token ${JSON.stringify(script.slice(start, end))}`
-      : 'end of file';
-
-  console.error(script.slice(lineStart, lineEnd));
-  console.error(`${' '.repeat(start - lineStart)}^`);
-  console.error();
-  console.error(`${red}(${line}:${column}) Unexpected ${character}${clear}`);
-  console.error();
-};
-
-export const run = (script: string) => {
+export const run = (source: string, sourcePath?: string) => {
   console.clear();
 
-  const parseResult = parseScript(script, 0);
+  const parseResult = parseScript(source, 0);
 
   if (abrupt(parseResult)) {
-    logSyntaxError(script, parseResult.start, parseResult.end);
+    const error = createSyntaxError(source, parseResult.start, parseResult.end);
+    logError(error, source, sourcePath);
     process.exit(1);
   }
 
   const esAst = transformScript(parseResult);
-  const esScript = serialize(esAst);
-  runInNewContext(esScript, { console });
+  const { output, sourceMap } = serializeWithSourceMap(esAst);
+
+  try {
+    runInNewContext(output, { console });
+  } catch (error) {
+    const espError = createRuntimeError(error, sourcePath, sourceMap, output);
+
+    if (espError) {
+      logError(espError, source, sourcePath);
+    } else {
+      throw error;
+    }
+  }
 };

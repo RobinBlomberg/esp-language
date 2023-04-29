@@ -1,5 +1,7 @@
 import { ES } from '../../es-ast';
+import { ESP } from '../../esp-parser';
+import { withSourceRange } from '../with-source-range';
 
-export const transformBreakStatement = () => {
-  return ES.BreakStatement(null);
+export const transformBreakStatement = (node: ESP.BreakStatement) => {
+  return withSourceRange(node, ES.BreakStatement(null));
 };

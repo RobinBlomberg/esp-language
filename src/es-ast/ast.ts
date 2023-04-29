@@ -1,5 +1,7 @@
 import { NodeType } from './node-type';
 
+export type SourceRange = [number, number];
+
 /*
  * ES5
  * -------------------------------------------------------------------------------------------------
@@ -125,6 +127,7 @@ export type NodeMap = {
  * @see https://github.com/estree/estree/blob/master/es5.md#identifier
  */
 export type Identifier = {
+  sourceRange?: SourceRange;
   type: NodeType.Identifier;
   name: string;
 };
@@ -136,6 +139,7 @@ export const Identifier = (name: string) => Node(NodeType.Identifier, { name });
  * @see https://github.com/estree/estree/blob/master/es2020.md#literal
  */
 export type Literal = {
+  sourceRange?: SourceRange;
   type: NodeType.Literal;
   value:
     | string
@@ -158,6 +162,7 @@ export const Literal = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#programs
  */
 export type Program = {
+  sourceRange?: SourceRange;
   type: NodeType.Program;
   body: (
     | Statement
@@ -223,6 +228,7 @@ export type Statement =
  * @see https://github.com/estree/estree/blob/master/es5.md#expressionstatement
  */
 export type ExpressionStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.ExpressionStatement;
   expression: Expression;
 };
@@ -234,6 +240,7 @@ export const ExpressionStatement = (expression: Expression) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#directive
  */
 export type Directive = {
+  sourceRange?: SourceRange;
   type: NodeType.ExpressionStatement;
   expression: Literal;
   directive: string;
@@ -252,6 +259,7 @@ export const Directive = (
  * @see https://github.com/estree/estree/blob/master/es5.md#blockstatement
  */
 export type BlockStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.BlockStatement;
   body: Statement[];
 };
@@ -277,6 +285,7 @@ export const FunctionBody = (
  * @see https://github.com/estree/estree/blob/master/es5.md#emptystatement
  */
 export type EmptyStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.EmptyStatement;
 };
 
@@ -286,6 +295,7 @@ export const EmptyStatement = () => Node(NodeType.EmptyStatement, {});
  * @see https://github.com/estree/estree/blob/master/es5.md#debuggerstatement
  */
 export type DebuggerStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.DebuggerStatement;
 };
 
@@ -295,6 +305,7 @@ export const DebuggerStatement = () => Node(NodeType.DebuggerStatement, {});
  * @see https://github.com/estree/estree/blob/master/es5.md#withstatement
  */
 export type WithStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.WithStatement;
   object: Expression;
   body: Statement;
@@ -307,6 +318,7 @@ export const WithStatement = (object: Expression, body: Statement) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#returnstatement
  */
 export type ReturnStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.ReturnStatement;
   argument: Expression | null;
 };
@@ -318,6 +330,7 @@ export const ReturnStatement = (argument: Expression | null) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#labeledstatement
  */
 export type LabeledStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.LabeledStatement;
   label: Identifier;
   body: Statement;
@@ -330,6 +343,7 @@ export const LabeledStatement = (label: Identifier, body: Statement) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#breakstatement
  */
 export type BreakStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.BreakStatement;
   label: Identifier | null;
 };
@@ -341,6 +355,7 @@ export const BreakStatement = (label: Identifier | null) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#continuestatement
  */
 export type ContinueStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.ContinueStatement;
   label: Identifier | null;
 };
@@ -352,6 +367,7 @@ export const ContinueStatement = (label: Identifier | null) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#ifstatement
  */
 export type IfStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.IfStatement;
   test: Expression;
   consequent: Statement;
@@ -368,6 +384,7 @@ export const IfStatement = (
  * @see https://github.com/estree/estree/blob/master/es5.md#switchstatement
  */
 export type SwitchStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.SwitchStatement;
   discriminant: Expression;
   cases: SwitchCase[];
@@ -382,6 +399,7 @@ export const SwitchStatement = (
  * @see https://github.com/estree/estree/blob/master/es5.md#switchcase
  */
 export type SwitchCase = {
+  sourceRange?: SourceRange;
   type: NodeType.SwitchCase;
   test: Expression | null;
   consequent: Statement[];
@@ -394,6 +412,7 @@ export const SwitchCase = (test: Expression | null, consequent: Statement[]) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#throwstatement
  */
 export type ThrowStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.ThrowStatement;
   argument: Expression;
 };
@@ -405,6 +424,7 @@ export const ThrowStatement = (argument: Expression) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#trystatement
  */
 export type TryStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.TryStatement;
   block: BlockStatement;
   handler: CatchClause | null;
@@ -422,6 +442,7 @@ export const TryStatement = (
  * @see https://github.com/estree/estree/blob/master/es2019.md#catchclause
  */
 export type CatchClause = {
+  sourceRange?: SourceRange;
   type: NodeType.CatchClause;
   /*
    * ES2019: Adds `null` node type.
@@ -437,6 +458,7 @@ export const CatchClause = (param: Pattern | null, body: BlockStatement) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#whilestatement
  */
 export type WhileStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.WhileStatement;
   test: Expression;
   body: Statement;
@@ -449,6 +471,7 @@ export const WhileStatement = (test: Expression, body: Statement) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#dowhilestatement
  */
 export type DoWhileStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.DoWhileStatement;
   body: Statement;
   test: Expression;
@@ -461,6 +484,7 @@ export const DoWhileStatement = (body: Statement, test: Expression) =>
  * @see https://github.com/estree/estree/blob/master/es5.md#forstatement
  */
 export type ForStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.ForStatement;
   init: VariableDeclaration | Expression | null;
   test: Expression | null;
@@ -479,6 +503,7 @@ export const ForStatement = (
  * @see https://github.com/estree/estree/blob/master/es5.md#forinstatement
  */
 export type ForInStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.ForInStatement;
   left: ForDeclaration | Pattern;
   right: Expression;
@@ -508,6 +533,7 @@ export type Declaration =
  * @see https://github.com/estree/estree/blob/master/es2017.md#function
  */
 export type FunctionDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.FunctionDeclaration;
   id: Identifier;
   params: Pattern[];
@@ -542,6 +568,7 @@ export const FunctionDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#variabledeclaration
  */
 export type VariableDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.VariableDeclaration;
   declarations: VariableDeclarator[];
   kind:
@@ -562,6 +589,7 @@ export const VariableDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es5.md#variabledeclarator
  */
 export type VariableDeclarator = {
+  sourceRange?: SourceRange;
   type: NodeType.VariableDeclarator;
   id: Pattern;
   init: Expression | null;
@@ -613,6 +641,7 @@ export type Expression =
  * @see https://github.com/estree/estree/blob/master/es5.md#thisexpression
  */
 export type ThisExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ThisExpression;
 };
 
@@ -623,6 +652,7 @@ export const ThisExpression = () => Node(NodeType.ThisExpression, {});
  * @see https://github.com/estree/estree/blob/master/es2015.md#expressions
  */
 export type ArrayExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ArrayExpression;
   elements: (
     | Expression
@@ -643,6 +673,7 @@ export const ArrayExpression = (
  * @see https://github.com/estree/estree/blob/master/es2018.md#expressions
  */
 export type ObjectExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ObjectExpression;
   properties: (
     | Property
@@ -661,6 +692,7 @@ export const ObjectExpression = (properties: (Property | SpreadElement)[]) =>
  * @see https://github.com/estree/estree/blob/master/es2015.md#expressions
  */
 export type Property = {
+  sourceRange?: SourceRange;
   type: NodeType.Property;
   key: Literal | Identifier;
   value: Expression;
@@ -688,6 +720,7 @@ export const Property = (
  * @see https://github.com/estree/estree/blob/master/es2017.md#function
  */
 export type FunctionExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.FunctionExpression;
   id: Identifier | null;
   params: Pattern[];
@@ -721,6 +754,7 @@ export const FunctionExpression = (
  * @see https://github.com/estree/estree/blob/master/es5.md#unaryexpression
  */
 export type UnaryExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.UnaryExpression;
   operator: UnaryOperator;
   prefix: boolean;
@@ -749,6 +783,7 @@ export type UnaryOperator =
  * @see https://github.com/estree/estree/blob/master/es5.md#updateexpression
  */
 export type UpdateExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.UpdateExpression;
   operator: UpdateOperator;
   argument: Expression;
@@ -771,6 +806,7 @@ export type UpdateOperator = '++' | '--';
  * @see https://github.com/estree/estree/blob/master/es2022.md#binaryexpression
  */
 export type BinaryExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.BinaryExpression;
   operator: BinaryOperator;
   left:
@@ -827,6 +863,7 @@ export type BinaryOperator =
  * @see https://github.com/estree/estree/blob/master/es2015.md#expressions
  */
 export type AssignmentExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.AssignmentExpression;
   operator: AssignmentOperator;
   /*
@@ -875,6 +912,7 @@ export type AssignmentOperator =
  * @see https://github.com/estree/estree/blob/master/es5.md#logicalexpression
  */
 export type LogicalExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.LogicalExpression;
   operator: LogicalOperator;
   left: Expression;
@@ -906,6 +944,7 @@ export type LogicalOperator =
  * @see https://github.com/estree/estree/blob/master/es2022.md#privateidentifier
  */
 export type MemberExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.MemberExpression;
   object:
     | Expression
@@ -939,6 +978,7 @@ export const MemberExpression = (
  * @see https://github.com/estree/estree/blob/master/es5.md#conditionalexpression
  */
 export type ConditionalExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ConditionalExpression;
   test: Expression;
   consequent: Expression;
@@ -957,6 +997,7 @@ export const ConditionalExpression = (
  * @see https://github.com/estree/estree/blob/master/es2020.md#chainexpression
  */
 export type CallExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.CallExpression;
   callee:
     | Expression
@@ -988,6 +1029,7 @@ export const CallExpression = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#expressions
  */
 export type NewExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.NewExpression;
   callee: Expression;
   arguments: (
@@ -1008,6 +1050,7 @@ export const NewExpression = (
  * @see https://github.com/estree/estree/blob/master/es5.md#sequenceexpression
  */
 export type SequenceExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.SequenceExpression;
   expressions: Expression[];
 };
@@ -1040,6 +1083,7 @@ export type Pattern =
  * @see https://github.com/estree/estree/blob/master/es2018.md#statements
  */
 export type ForOfStatement = {
+  sourceRange?: SourceRange;
   type: NodeType.ForOfStatement;
   left: ForDeclaration | Pattern;
   right: Expression;
@@ -1070,6 +1114,7 @@ export const ForOfStatement = (
  * @see https://tc39.es/ecma262/#prod-ForInOfStatement
  */
 export type ForDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.VariableDeclaration;
   declarations: [
     {
@@ -1095,6 +1140,7 @@ export const ForDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#expressions
  */
 export type Super = {
+  sourceRange?: SourceRange;
   type: NodeType.Super;
 };
 
@@ -1104,6 +1150,7 @@ export const Super = () => Node(NodeType.Super, {});
  * @see https://github.com/estree/estree/blob/master/es2015.md#expressions
  */
 export type SpreadElement = {
+  sourceRange?: SourceRange;
   type: NodeType.SpreadElement;
   argument: Expression;
 };
@@ -1115,6 +1162,7 @@ export const SpreadElement = (argument: Expression) =>
  * @see https://github.com/estree/estree/blob/master/es2015.md#expressions
  */
 export type ArrowFunctionExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ArrowFunctionExpression;
   id: Identifier | null;
   params: Pattern[];
@@ -1144,6 +1192,7 @@ export const ArrowFunctionExpression = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#yieldexpression
  */
 export type YieldExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.YieldExpression;
   argument: Expression | null;
   delegate: boolean;
@@ -1158,6 +1207,7 @@ export const YieldExpression = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#templateliteral
  */
 export type TemplateLiteral = {
+  sourceRange?: SourceRange;
   type: NodeType.TemplateLiteral;
   quasis: TemplateElement[];
   expressions: Expression[];
@@ -1172,6 +1222,7 @@ export const TemplateLiteral = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#taggedtemplateexpression
  */
 export type TaggedTemplateExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.TaggedTemplateExpression;
   tag: Expression;
   quasi: TemplateLiteral;
@@ -1187,6 +1238,7 @@ export const TaggedTemplateExpression = (
  * @see https://github.com/estree/estree/blob/master/es2018.md#template-literals
  */
 export type TemplateElement = {
+  sourceRange?: SourceRange;
   type: NodeType.TemplateElement;
   tail: boolean;
   value: {
@@ -1234,6 +1286,7 @@ export const AssignmentProperty = (
  * @see https://github.com/estree/estree/blob/master/es2018.md#patterns
  */
 export type ObjectPattern = {
+  sourceRange?: SourceRange;
   type: NodeType.ObjectPattern;
   properties: (
     | AssignmentProperty
@@ -1252,6 +1305,7 @@ export const ObjectPattern = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#arraypattern
  */
 export type ArrayPattern = {
+  sourceRange?: SourceRange;
   type: NodeType.ArrayPattern;
   elements: (Pattern | null)[];
 };
@@ -1263,6 +1317,7 @@ export const ArrayPattern = (elements: (Pattern | null)[]) =>
  * @see https://github.com/estree/estree/blob/master/es2015.md#restelement
  */
 export type RestElement = {
+  sourceRange?: SourceRange;
   type: NodeType.RestElement;
   argument: Pattern;
 };
@@ -1274,6 +1329,7 @@ export const RestElement = (argument: Pattern) =>
  * @see https://github.com/estree/estree/blob/master/es2015.md#assignmentpattern
  */
 export type AssignmentPattern = {
+  sourceRange?: SourceRange;
   type: NodeType.AssignmentPattern;
   left: Pattern;
   right: Expression;
@@ -1295,6 +1351,7 @@ export type Class =
  * @see https://github.com/estree/estree/blob/master/es2022.md#classbody
  */
 export type ClassBody = {
+  sourceRange?: SourceRange;
   type: NodeType.ClassBody;
   body: (
     | MethodDefinition
@@ -1315,6 +1372,7 @@ export const ClassBody = (
  * @see https://github.com/estree/estree/blob/master/es2022.md#methoddefinition
  */
 export type MethodDefinition = {
+  sourceRange?: SourceRange;
   type: NodeType.MethodDefinition;
   key:
     | Expression
@@ -1347,6 +1405,7 @@ export const MethodDefinition = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#classdeclaration
  */
 export type ClassDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.ClassDeclaration;
   id: Identifier;
   superClass: Expression | null;
@@ -1363,6 +1422,7 @@ export const ClassDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#classexpression
  */
 export type ClassExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ClassExpression;
   id: Identifier | null;
   superClass: Expression | null;
@@ -1379,6 +1439,7 @@ export const ClassExpression = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#metaproperty
  */
 export type MetaProperty = {
+  sourceRange?: SourceRange;
   type: NodeType.MetaProperty;
   meta: Identifier;
   property: Identifier;
@@ -1409,6 +1470,7 @@ export type ModuleSpecifier =
  * @see https://github.com/estree/estree/blob/master/es2015.md#importdeclaration
  */
 export type ImportDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.ImportDeclaration;
   specifiers: (
     | ImportSpecifier
@@ -1434,6 +1496,7 @@ export const ImportDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2022.md#importspecifier
  */
 export type ImportSpecifier = {
+  sourceRange?: SourceRange;
   type: NodeType.ImportSpecifier;
   imported:
     | Identifier
@@ -1453,6 +1516,7 @@ export const ImportSpecifier = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#importdefaultspecifier
  */
 export type ImportDefaultSpecifier = {
+  sourceRange?: SourceRange;
   type: NodeType.ImportDefaultSpecifier;
   local: Identifier;
 };
@@ -1464,6 +1528,7 @@ export const ImportDefaultSpecifier = (local: Identifier) =>
  * @see https://github.com/estree/estree/blob/master/es2015.md#importnamespacespecifier
  */
 export type ImportNamespaceSpecifier = {
+  sourceRange?: SourceRange;
   type: NodeType.ImportNamespaceSpecifier;
   local: Identifier;
 };
@@ -1475,6 +1540,7 @@ export const ImportNamespaceSpecifier = (local: Identifier) =>
  * @see https://github.com/estree/estree/blob/master/es2015.md#exportnameddeclaration
  */
 export type ExportNamedDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.ExportNamedDeclaration;
   declaration: Declaration | null;
   specifiers: ExportSpecifier[];
@@ -1492,6 +1558,7 @@ export const ExportNamedDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2022.md#exportspecifier
  */
 export type ExportSpecifier = {
+  sourceRange?: SourceRange;
   type: NodeType.ExportSpecifier;
   /*
    * ES2022: Adds "Literal" node type.
@@ -1512,6 +1579,7 @@ export const ExportSpecifier = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#exportdefaultdeclaration
  */
 export type AnonymousDefaultExportedFunctionDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.FunctionDeclaration;
   id: null;
   params: Pattern[];
@@ -1541,6 +1609,7 @@ export const AnonymousDefaultExportedFunctionDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#exportdefaultdeclaration
  */
 export type AnonymousDefaultExportedClassDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.ClassDeclaration;
   id: null;
   superClass: Expression | null;
@@ -1561,6 +1630,7 @@ export const AnonymousDefaultExportedClassDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2015.md#exportdefaultdeclaration
  */
 export type ExportDefaultDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.ExportDefaultDeclaration;
   declaration:
     | AnonymousDefaultExportedFunctionDeclaration
@@ -1587,6 +1657,7 @@ export const ExportDefaultDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2022.md#exportalldeclaration
  */
 export type ExportAllDeclaration = {
+  sourceRange?: SourceRange;
   type: NodeType.ExportAllDeclaration;
   /*
    * ES2020
@@ -1615,6 +1686,7 @@ export const ExportAllDeclaration = (
  * @see https://github.com/estree/estree/blob/master/es2017.md#awaitexpression
  */
 export type AwaitExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.AwaitExpression;
   argument: Expression;
 };
@@ -1631,6 +1703,7 @@ export const AwaitExpression = (argument: Expression) =>
  * @see https://github.com/estree/estree/blob/master/es2020.md#chainexpression
  */
 export type ChainExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ChainExpression;
   expression: ChainElement;
 };
@@ -1647,6 +1720,7 @@ export type ChainElement = CallExpression | MemberExpression;
  * @see https://github.com/estree/estree/blob/master/es2020.md#chainexpression
  */
 export type ImportExpression = {
+  sourceRange?: SourceRange;
   type: NodeType.ImportExpression;
   source: Expression;
 };
@@ -1663,6 +1737,7 @@ export const ImportExpression = (source: Expression) =>
  * @see https://github.com/estree/estree/blob/master/es2022.md#propertydefinition
  */
 export type PropertyDefinition = {
+  sourceRange?: SourceRange;
   type: NodeType.PropertyDefinition;
   key: Expression | PrivateIdentifier;
   value: Expression | null;
@@ -1682,6 +1757,7 @@ export const PropertyDefinition = (
  * @see https://github.com/estree/estree/blob/master/es2022.md#privateidentifier
  */
 export type PrivateIdentifier = {
+  sourceRange?: SourceRange;
   type: NodeType.PrivateIdentifier;
   name: string;
 };
@@ -1693,6 +1769,7 @@ export const PrivateIdentifier = (name: string) =>
  * @see https://github.com/estree/estree/blob/master/es2022.md#staticblock
  */
 export type StaticBlock = {
+  sourceRange?: SourceRange;
   type: NodeType.StaticBlock;
   body: Statement[];
 };
