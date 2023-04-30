@@ -10,8 +10,8 @@ export const transformConditionalExpression = (
     node,
     ES.ConditionalExpression(
       transform(node.test),
-      transform(node.alternate),
       transform(node.consequent),
+      transform(node.alternate),
     ),
   );
 };

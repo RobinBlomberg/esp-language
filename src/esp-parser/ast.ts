@@ -267,21 +267,21 @@ export type ConditionalExpression = {
   start: number;
   end: number;
   test: Expression;
-  alternate: Expression;
   consequent: Expression;
+  alternate: Expression;
 };
 
 export const ConditionalExpression = (
   start: number,
   end: number,
   test: Expression,
-  alternate: Expression,
   consequent: Expression,
+  alternate: Expression,
 ) => {
   return Node(start, end, NodeType.ConditionalExpression, {
     test,
-    alternate,
     consequent,
+    alternate,
   });
 };
 

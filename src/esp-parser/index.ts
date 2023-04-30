@@ -1,2 +1,3 @@
+export * from './ast';
 export * as ESP from './ast';
-export { parseScript } from './productions/script';
+export { parse } from './parse';
