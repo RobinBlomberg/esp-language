@@ -1,3 +1,4 @@
+import console from 'console';
 import { black, clear, red } from '../ansi-escape-codes';
 import { stylize } from '../esp-lexer';
 import { Error } from './errors';
@@ -18,13 +19,14 @@ export const logError = (
   let lineNumber = 1;
   let lineStart = 0;
 
-  for (let i = 0; i < source.length; i++) {
-    if (source[i] === '\n' || (source[i] === '\r' && source[i + 1] !== '\n')) {
-      lineLocations.push({
-        lineNumber,
-        start: lineStart,
-        end: i,
-      });
+  for (let i = 0; i <= source.length; i++) {
+    const isEndOfLine =
+      source[i] === '\n' ||
+      (source[i] === '\r' && source[i + 1] !== '\n') ||
+      i === source.length;
+
+    if (isEndOfLine) {
+      lineLocations.push({ lineNumber, start: lineStart, end: i });
 
       if (i > error.start) {
         break;
@@ -39,12 +41,14 @@ export const logError = (
     console.error(`${black}${sourceFileName}${clear}`);
   }
 
-  const marginWidth = String(lineNumber).length;
+  const maxLineNumberWidth = String(lineNumber).length;
+  const marginEnd = ` │${clear} `;
+  const marginWidth = maxLineNumberWidth + 3;
 
   for (const line of lineLocations.slice(-3)) {
     const lineNumberWidth = String(line.lineNumber).length;
-    const padding = ' '.repeat(marginWidth - lineNumberWidth);
-    const margin = `${padding}${black}${line.lineNumber} │${clear} `;
+    const padding = ' '.repeat(maxLineNumberWidth - lineNumberWidth);
+    const margin = `${padding}${black}${line.lineNumber}${marginEnd}`;
 
     const sourceLine = source.slice(line.start, line.end);
     const content = stylize(sourceLine);
@@ -53,7 +57,9 @@ export const logError = (
     console.error(stylizedSourceLine);
   }
 
-  console.error(`${' '.repeat(error.start - lineStart)}^`);
+  const lineErrorIndex = error.start - lineStart;
+
+  console.error(`${' '.repeat(marginWidth + lineErrorIndex)}^`);
   console.error();
   console.error(`${red}${error.name}: ${error.message}${clear}`);
 
