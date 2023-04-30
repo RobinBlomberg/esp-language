@@ -1,6 +1,6 @@
 import { ES } from '../es-ast';
 
-export const withSourceRange = <T extends ES.Node>(
+export const injectSourceRange = <T extends ES.Node>(
   sourceNode: { start: number; end: number },
   targetNode: T,
 ): T => {

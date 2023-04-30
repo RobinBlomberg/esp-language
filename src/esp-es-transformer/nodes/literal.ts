@@ -1,9 +1,9 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { withSourceRange } from '../with-source-range';
+import { injectSourceRange } from '../inject-source-range';
 
 export const transformLiteral = (node: ESP.Literal) => {
-  return withSourceRange(
+  return injectSourceRange(
     node,
     node.value === undefined
       ? ES.Identifier('undefined')

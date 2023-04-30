@@ -1,14 +1,14 @@
 import { ES } from '../../../es-ast';
 import { ESP } from '../../../esp-parser';
+import { injectSourceRange } from '../../inject-source-range';
 import { transform } from '../../transform';
-import { withSourceRange } from '../../with-source-range';
 
 export const transformMatchCase = (node: ESP.MatchCase) => {
   if (node.test.type === ESP.NodeType.UnionClause) {
     const length = node.test.values.length;
 
     return node.test.values.map((value, index) => {
-      return withSourceRange(
+      return injectSourceRange(
         value,
         ES.SwitchCase(
           transform(value),
@@ -21,7 +21,7 @@ export const transformMatchCase = (node: ESP.MatchCase) => {
   }
 
   return [
-    withSourceRange(
+    injectSourceRange(
       node,
       ES.SwitchCase(transform(node.test), [
         transform(node.consequent),

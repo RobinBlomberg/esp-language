@@ -1,7 +1,7 @@
 import { ES, SwitchCase } from '../../es-ast';
 import { ESP } from '../../esp-parser';
+import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
-import { withSourceRange } from '../with-source-range';
 import { transformMatchCase } from './internal/match-case';
 
 export const transformMatchStatement = (node: ESP.MatchStatement) => {
@@ -13,7 +13,7 @@ export const transformMatchStatement = (node: ESP.MatchStatement) => {
 
   if (node.alternate) {
     cases.push(
-      withSourceRange(
+      injectSourceRange(
         node.alternate,
         ES.SwitchCase(null, [
           transform(node.alternate),
@@ -23,7 +23,7 @@ export const transformMatchStatement = (node: ESP.MatchStatement) => {
     );
   }
 
-  return withSourceRange(
+  return injectSourceRange(
     node,
     ES.SwitchStatement(transform(node.discriminant), cases),
   );

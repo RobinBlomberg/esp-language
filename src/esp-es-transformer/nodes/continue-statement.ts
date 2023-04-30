@@ -1,7 +1,7 @@
 import { ES } from '../../es-ast';
 import { ESP } from '../../esp-parser';
-import { withSourceRange } from '../with-source-range';
+import { injectSourceRange } from '../inject-source-range';
 
 export const transformContinueStatement = (node: ESP.ContinueStatement) => {
-  return withSourceRange(node, ES.ContinueStatement(null));
+  return injectSourceRange(node, ES.ContinueStatement(null));
 };
