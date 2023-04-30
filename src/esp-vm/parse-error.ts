@@ -2,7 +2,7 @@ import { parseErrorStack } from './parse-error-stack';
 
 export const parseError = (
   error: unknown,
-  sourcePath: string | undefined,
+  sourceFileName: string | undefined,
   sourceMap: [number, number, number][],
   output: string,
 ) => {
@@ -20,7 +20,7 @@ export const parseError = (
 
   const stack =
     'stack' in error && typeof error.stack === 'string'
-      ? parseErrorStack(error.stack, sourcePath, sourceMap, output)
+      ? parseErrorStack(error.stack, sourceFileName, sourceMap, output)
       : [];
 
   return { message, name, stack };

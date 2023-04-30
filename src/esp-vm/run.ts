@@ -6,14 +6,19 @@ import { parseScript } from '../esp-parser';
 import { createRuntimeError, createSyntaxError } from './errors';
 import { logError } from './log-error';
 
-export const run = (source: string, sourcePath?: string) => {
+export const run = (source: string, sourceFileName?: string) => {
   console.clear();
 
   const parseResult = parseScript(source, 0);
 
   if (abrupt(parseResult)) {
-    const error = createSyntaxError(source, parseResult.start, parseResult.end);
-    logError(error, source, sourcePath);
+    const error = createSyntaxError(
+      source,
+      sourceFileName,
+      parseResult.start,
+      parseResult.end,
+    );
+    logError(error, source, sourceFileName);
     process.exit(1);
   }
 
@@ -23,10 +28,15 @@ export const run = (source: string, sourcePath?: string) => {
   try {
     runInNewContext(output, { console });
   } catch (error) {
-    const espError = createRuntimeError(error, sourcePath, sourceMap, output);
+    const espError = createRuntimeError(
+      error,
+      sourceFileName,
+      sourceMap,
+      output,
+    );
 
     if (espError) {
-      logError(espError, source, sourcePath);
+      logError(espError, source, sourceFileName);
     } else {
       throw error;
     }

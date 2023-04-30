@@ -1,57 +1,76 @@
 import { black, clear, red } from '../ansi-escape-codes';
+import { stylize } from '../esp-lexer';
 import { Error } from './errors';
 import { indexToPosition } from './index-position-converter';
+
+type LineLocation = {
+  lineNumber: number;
+  start: number;
+  end: number;
+};
 
 export const logError = (
   error: Error,
   source: string,
-  sourcePath: string | undefined,
+  sourceFileName?: string,
 ) => {
-  let line = 1;
-  let column = 1;
+  const lineLocations: LineLocation[] = [];
+  let lineNumber = 1;
   let lineStart = 0;
-  let lineEnd = source.length;
 
   for (let i = 0; i < source.length; i++) {
     if (source[i] === '\n' || (source[i] === '\r' && source[i + 1] !== '\n')) {
+      lineLocations.push({
+        lineNumber,
+        start: lineStart,
+        end: i,
+      });
+
       if (i > error.start) {
-        lineEnd = i;
         break;
       }
 
-      line++;
-      column = 1;
+      lineNumber++;
       lineStart = i + 1;
-    } else if (i < error.start) {
-      column++;
     }
   }
 
-  if (sourcePath) {
-    console.error(`${sourcePath}:${line}:${column}`);
+  if (sourceFileName) {
+    console.error(`${black}${sourceFileName}${clear}`);
   }
 
-  console.error(source.slice(lineStart, lineEnd));
+  const marginWidth = String(lineNumber).length;
+
+  for (const line of lineLocations.slice(-3)) {
+    const lineNumberWidth = String(line.lineNumber).length;
+    const padding = ' '.repeat(marginWidth - lineNumberWidth);
+    const margin = `${padding}${black}${line.lineNumber} │${clear} `;
+
+    const sourceLine = source.slice(line.start, line.end);
+    const content = stylize(sourceLine);
+    const stylizedSourceLine = `${margin}${content}`;
+
+    console.error(stylizedSourceLine);
+  }
+
   console.error(`${' '.repeat(error.start - lineStart)}^`);
   console.error();
   console.error(`${red}${error.name}: ${error.message}${clear}`);
 
   for (const { fileName, functionName, index } of error.stack) {
-    const position = indexToPosition(source, index);
+    const pos = indexToPosition(source, index);
 
-    if (!position) {
+    if (!pos) {
       continue;
     }
 
-    const { lineNumber, columnNumber } = position;
-    const location = `${fileName}:${lineNumber}:${columnNumber}`;
+    const location = `${fileName}:${pos.lineNumber}:${pos.columnNumber}`;
 
     console.error(
       `${black}    at ${
         functionName ? `${functionName} (${location})` : location
       }${clear}`,
     );
+    console.error();
   }
-
-  console.error();
 };

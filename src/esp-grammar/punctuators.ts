@@ -49,6 +49,8 @@ export const operators = [
   '~',
 ] as const;
 
+export const operatorsSet = new Set<string>(operators);
+
 export const punctuations = [
   ',',
   ';',

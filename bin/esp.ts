@@ -36,9 +36,9 @@ const logHelpAndExit = () => {
         return logHelpAndExit();
       }
 
-      const sourcePath = resolve(process.cwd(), unresolvedPath);
-      const source = readFileSync(sourcePath, 'utf8');
-      run(source, sourcePath);
+      const sourceFileName = resolve(process.cwd(), unresolvedPath);
+      const source = readFileSync(sourceFileName, 'utf8');
+      run(source, sourceFileName);
     }
   }
 })();

@@ -11,11 +11,11 @@ export type Error = {
 
 export const createRuntimeError = (
   error: unknown,
-  sourcePath: string | undefined,
+  sourceFileName: string | undefined,
   sourceMap: [number, number, number][],
   output: string,
 ): Error | null => {
-  const parsedError = parseError(error, sourcePath, sourceMap, output);
+  const parsedError = parseError(error, sourceFileName, sourceMap, output);
   const stackFrame = parsedError?.stack[0];
 
   if (!stackFrame) {
@@ -33,6 +33,7 @@ export const createRuntimeError = (
 
 export const createSyntaxError = (
   source: string,
+  sourceFileName: string | undefined,
   errorStart: number,
   errorEnd: number,
 ): Error => {
@@ -46,7 +47,9 @@ export const createSyntaxError = (
   return {
     message: errorMessage,
     name: 'SyntaxError',
-    stack: [],
+    stack: sourceFileName
+      ? [{ fileName: sourceFileName, functionName: null, index: errorStart }]
+      : [],
     start: errorStart,
     end: errorEnd,
   };

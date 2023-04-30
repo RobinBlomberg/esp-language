@@ -29,7 +29,7 @@ export type { StackFrame };
  */
 export const parseErrorStack = (
   stack: string,
-  sourcePath: string | undefined,
+  sourceFileName: string | undefined,
   sourceMap: [number, number, number][],
   output: string,
 ) => {
@@ -74,7 +74,7 @@ export const parseErrorStack = (
           fileName === 'eval' ||
           fileName === '<anonymous>' ||
           fileName === 'evalmachine.<anonymous>'
-            ? sourcePath ?? null
+            ? sourceFileName ?? null
             : fileName ?? null,
         index: sourceLocation.start,
       });
