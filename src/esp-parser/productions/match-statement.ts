@@ -3,8 +3,8 @@ import { error } from '../../esp-lexer/abrupt';
 import { MatchCase, MatchStatement, Statement } from '../ast';
 import { lookahead } from '../parser-utils';
 import { parseExpression } from './expression';
+import { parseUnionClause } from './internal/union-clause';
 import { parseStatement } from './statement';
-import { parseUnionClause } from './union-clause';
 
 /**
  * Grammar definition inspired by ECMA-262:

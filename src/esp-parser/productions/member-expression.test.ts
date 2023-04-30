@@ -7,39 +7,39 @@ const { error, ok, unused } = createParseAssert(parseMemberExpression);
 suite('MemberExpression', () => {
   test('"PrimaryExpression"', () => {
     unused();
-    ok('PrimaryExpression');
+    ok('a');
     ok('(1+2)');
   });
 
   test('"MemberExpression [ Expression ]"', () => {
-    ok('MemberExpression[Expression]');
+    ok('a[b]');
     ok('a[b][c]');
-    error('MemberExpression[');
-    error('MemberExpression[Expression');
+    error('a[');
+    error('a[b');
     error('a[b][');
     error('a[b][c');
   });
 
   test('"MemberExpression . IdentifierName"', () => {
-    ok('MemberExpression.IdentifierName');
+    ok('a.b');
     ok('a.b.c');
-    error('MemberExpression.');
+    error('a.');
     error('a.b.');
   });
 
   test('"new MemberExpression Arguments"', () => {
-    ok('new MemberExpression()');
+    ok('new a()');
     error('new');
-    error('new MemberExpression');
-    error('new MemberExpression(');
+    error('new a');
+    error('new a(');
   });
 
   it('should be nestable', () => {
-    ok('new new MemberExpression()()');
+    ok('new new a()()');
     error('new new');
-    error('new new MemberExpression');
-    error('new new MemberExpression(');
-    error('new new MemberExpression()');
-    error('new new MemberExpression()(');
+    error('new new a');
+    error('new new a(');
+    error('new new a()');
+    error('new new a()(');
   });
 });

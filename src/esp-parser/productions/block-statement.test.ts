@@ -8,15 +8,15 @@ suite('BlockStatement', () => {
   test('"{ StatementList<opt> }"', () => {
     unused();
     ok('{}');
-    ok('{ Statement; }');
-    ok('{ Statement; Statement; }');
+    ok('{a;}');
+    ok('{a;b;}');
     error('{');
     error('{;');
-    error('{ Statement');
-    error('{ Statement;');
-    error('{ Statement}');
-    error('{ Statement; Statement');
-    error('{ Statement; Statement;');
-    error('{ Statement; Statement }');
+    error('{a');
+    error('{a;');
+    error('{a}');
+    error('{a;b');
+    error('{a;b;');
+    error('{a;b}');
   });
 });

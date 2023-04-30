@@ -7,25 +7,25 @@ const { error, ok, unused } = createParseAssert(parseShiftExpression);
 suite('ShiftExpression', () => {
   test('"AdditiveExpression"', () => {
     unused();
-    ok('AdditiveExpression');
+    ok('a');
   });
 
   test('"ShiftExpression << AdditiveExpression"', () => {
-    ok('ShiftExpression << AdditiveExpression');
-    error('ShiftExpression <<');
+    ok('a<<b');
+    error('a<<');
   });
 
   test('"ShiftExpression >> AdditiveExpression"', () => {
-    ok('ShiftExpression >> AdditiveExpression');
-    error('ShiftExpression >>');
+    ok('a>>b');
+    error('a>>');
   });
 
   test('"ShiftExpression >>> AdditiveExpression"', () => {
-    ok('ShiftExpression >>> AdditiveExpression');
-    error('ShiftExpression >>>');
+    ok('a>>>b');
+    error('a>>>');
   });
 
   it('should respect operator precedence', () => {
-    ok('a << b + c >> d - e');
+    ok('a<<b+c>>d-e');
   });
 });

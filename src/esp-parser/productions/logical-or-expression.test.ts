@@ -7,15 +7,15 @@ const { error, ok, unused } = createParseAssert(parseLogicalORExpression);
 suite('LogicalORExpression', () => {
   test('"LogicalANDExpression"', () => {
     unused();
-    ok('LogicalANDExpression');
+    ok('a');
   });
 
   test('"LogicalORExpression || LogicalANDExpression"', () => {
-    ok('LogicalORExpression || LogicalANDExpression');
-    error('LogicalORExpression ||');
+    ok('a||b');
+    error('a||');
   });
 
   it('should respect operator precedence', () => {
-    ok('a || b && c || d && e');
+    ok('a||b&&c||d&&e');
   });
 });

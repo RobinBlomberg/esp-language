@@ -7,30 +7,30 @@ const { error, ok, unused } = createParseAssert(parseRelationalExpression);
 suite('RelationalExpression', () => {
   test('"ShiftExpression"', () => {
     unused();
-    ok('ShiftExpression');
+    ok('a');
   });
 
   test('"RelationalExpression < ShiftExpression"', () => {
-    ok('RelationalExpression < ShiftExpression');
-    error('RelationalExpression <');
+    ok('a<b');
+    error('a<');
   });
 
   test('"RelationalExpression > ShiftExpression"', () => {
-    ok('RelationalExpression > ShiftExpression');
-    error('RelationalExpression >');
+    ok('a>b');
+    error('a>');
   });
 
   test('"RelationalExpression <= ShiftExpression"', () => {
-    ok('RelationalExpression <= ShiftExpression');
-    error('RelationalExpression <=');
+    ok('a<=b');
+    error('a<=');
   });
 
   test('"RelationalExpression >= ShiftExpression"', () => {
-    ok('RelationalExpression >= ShiftExpression');
-    error('RelationalExpression >=');
+    ok('a>=b');
+    error('a>=');
   });
 
   it('should respect operator precedence', () => {
-    ok('a < b << c >= d >> e');
+    ok('a<b<<c>=d>>e');
   });
 });

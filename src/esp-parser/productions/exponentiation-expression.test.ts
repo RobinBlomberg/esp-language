@@ -7,16 +7,16 @@ const { error, ok, unused } = createParseAssert(parseExponentiationExpression);
 suite('ExponentiationExpression', () => {
   test('"UnaryExpression"', () => {
     unused();
-    ok('UnaryExpression');
+    ok('a');
   });
 
   test('"UpdateExpression ** ExponentiationExpression"', () => {
-    ok('UpdateExpression ** ExponentiationExpression');
-    ok('++UpdateExpression ** ExponentiationExpression');
-    error('UpdateExpression **');
+    ok('a**b');
+    ok('++a**b');
+    error('a**');
   });
 
   it('should respect operator precedence', () => {
-    ok('a ** --b ** c');
+    ok('a**--b**c');
   });
 });

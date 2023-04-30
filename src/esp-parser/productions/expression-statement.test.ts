@@ -7,8 +7,8 @@ const { error, ok, unused } = createParseAssert(parseExpressionStatement);
 suite('ExpressionStatement', () => {
   test('"Expression ;"', () => {
     unused();
-    ok('Expression;');
+    ok('a;');
     error(';');
-    error('Expression');
+    error('a');
   });
 });

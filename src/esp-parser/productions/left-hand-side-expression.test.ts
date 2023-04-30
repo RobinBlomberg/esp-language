@@ -7,20 +7,20 @@ const { error, ok, unused } = createParseAssert(parseLeftHandSideExpression);
 suite('LeftHandSideExpression', () => {
   test('"NewExpression"', () => {
     unused();
-    ok('NewExpression');
-    ok('Member.Expression');
-    ok('Member[Expression]');
+    ok('a');
+    ok('a.b');
+    ok('a[b]');
     ok('(1+2)');
   });
 
   test('"CallExpression"', () => {
-    ok('CallExpression()');
-    ok('CallExpression(a)');
-    ok('CallExpression(a, b)');
-    ok('CallExpression()()');
-    error('CallExpression(');
-    error('CallExpression(a,');
-    error('CallExpression(a, b');
-    error('CallExpression()(');
+    ok('a()');
+    ok('a(b)');
+    ok('a(b,c)');
+    ok('a()()');
+    error('a(');
+    error('a(b,');
+    error('a(b,c');
+    error('a()(');
   });
 });

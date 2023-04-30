@@ -7,20 +7,20 @@ const { error, ok, unused } = createParseAssert(parseAdditiveExpression);
 suite('AdditiveExpression', () => {
   test('"MultiplicativeExpression"', () => {
     unused();
-    ok('MultiplicativeExpression');
+    ok('a');
   });
 
   test('"AdditiveExpression + MultiplicativeExpression"', () => {
-    ok('a + b');
-    error('a +');
+    ok('a+b');
+    error('a+');
   });
 
   test('"AdditiveExpression - MultiplicativeExpression"', () => {
-    ok('a - b');
-    error('a -');
+    ok('a-b');
+    error('a-');
   });
 
   it('should respect operator precedence', () => {
-    ok('a + b * c - d / e');
+    ok('a+b*c-d/e');
   });
 });

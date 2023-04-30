@@ -7,9 +7,13 @@ const { error, ok, unused } = createParseAssert(parseReturnStatement);
 suite('ReturnStatement', () => {
   test('"return Expression ;"', () => {
     unused();
-    ok('return Expression;');
+    ok('return a;');
+    ok('return(a);');
     error('return');
     error('return;');
-    error('return Expression');
+    error('return a');
+    error('return(');
+    error('return(a');
+    error('return(a)');
   });
 });

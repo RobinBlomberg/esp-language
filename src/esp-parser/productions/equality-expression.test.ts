@@ -7,20 +7,20 @@ const { error, ok, unused } = createParseAssert(parseEqualityExpression);
 suite('EqualityExpression', () => {
   test('"RelationalExpression"', () => {
     unused();
-    ok('RelationalExpression');
+    ok('a');
   });
 
   test('"EqualityExpression == RelationalExpression"', () => {
-    ok('EqualityExpression == RelationalExpression');
-    error('EqualityExpression ==');
+    ok('a==b');
+    error('a==');
   });
 
   test('"EqualityExpression != RelationalExpression"', () => {
-    ok('EqualityExpression != RelationalExpression');
-    error('EqualityExpression !=');
+    ok('a!=b');
+    error('a!=');
   });
 
   it('should respect operator precedence', () => {
-    ok('a == b < c != d in e');
+    ok('a==b<c!=d in e');
   });
 });

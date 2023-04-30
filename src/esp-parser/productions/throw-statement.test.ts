@@ -7,9 +7,13 @@ const { error, ok, unused } = createParseAssert(parseThrowStatement);
 suite('ThrowStatement', () => {
   test('"throw Expression ;"', () => {
     unused();
-    ok('throw Expression;');
+    ok('throw a;');
+    ok('throw(a);');
     error('throw');
     error('throw;');
-    error('throw Expression');
+    error('throw a');
+    error('throw(');
+    error('throw(a');
+    error('throw(a)');
   });
 });

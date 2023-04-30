@@ -7,15 +7,15 @@ const { error, ok, unused } = createParseAssert(parseBitwiseANDExpression);
 suite('BitwiseANDExpression', () => {
   test('"EqualityExpression"', () => {
     unused();
-    ok('EqualityExpression');
+    ok('a');
   });
 
   test('"BitwiseANDExpression & EqualityExpression"', () => {
-    ok('BitwiseANDExpression & EqualityExpression');
-    error('BitwiseANDExpression &');
+    ok('a&b');
+    error('a&');
   });
 
   it('should respect operator precedence', () => {
-    ok('a & b == c & d != e');
+    ok('a&b==c&d!=e');
   });
 });

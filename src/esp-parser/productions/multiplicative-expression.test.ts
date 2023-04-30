@@ -7,19 +7,19 @@ const { error, ok, unused } = createParseAssert(parseMultiplicativeExpression);
 suite('MultiplicativeExpression', () => {
   test('"ExponentiationExpression"', () => {
     unused();
-    ok('ExponentiationExpression');
+    ok('a');
   });
 
   test('"MultiplicativeExpression MultiplicativeOperator ExponentiationExpression"', () => {
-    ok('MultiplicativeExpression * ExponentiationExpression');
-    ok('MultiplicativeExpression / ExponentiationExpression');
-    ok('MultiplicativeExpression % ExponentiationExpression');
-    error('MultiplicativeExpression *');
-    error('MultiplicativeExpression /');
-    error('MultiplicativeExpression %');
+    ok('a*b');
+    ok('a/b');
+    ok('a%b');
+    error('a*');
+    error('a/');
+    error('a%');
   });
 
   it('should respect operator precedence', () => {
-    ok('a / -b % c');
+    ok('a/-b%c');
   });
 });

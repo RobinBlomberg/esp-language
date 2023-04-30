@@ -7,7 +7,7 @@ const { error, ok, unused } = createParseAssert(parsePrimaryExpression);
 suite('PrimaryExpression', () => {
   test('"Identifier"', () => {
     unused();
-    ok('Identifier');
+    ok('a');
   });
 
   test('"Literal"', () => {

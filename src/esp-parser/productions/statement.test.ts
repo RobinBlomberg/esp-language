@@ -8,8 +8,8 @@ suite('Statement', () => {
   test('"BlockStatement"', () => {
     unused();
     ok('{}');
-    ok('{ Statement; }');
-    ok('{ Statement; Statement; }');
+    ok('{a;}');
+    ok('{a;b;}');
   });
 
   test('"BreakStatement"', () => {
@@ -21,39 +21,39 @@ suite('Statement', () => {
   });
 
   test('"DoWhileStatement"', () => {
-    ok('do Statement; while (Expression);');
+    ok('do a;while(b);');
   });
 
   test('"ExpressionStatement"', () => {
-    ok('Expression;');
+    ok('a;');
   });
 
   test('"IfStatement"', () => {
-    ok('if (Expression) Statement;');
-    ok('if (Expression) Statement; else Statement;');
-    ok('if (a) b; else if (c) d; else e;');
+    ok('if(a)b;');
+    ok('if(a)b;else c;');
+    ok('if(a)b;else if(c)d;else e;');
   });
 
   test('"MatchStatement"', () => {
-    ok('match (Expression) { Case Block; }');
-    ok('match (Expression) { Case Block; Case Block; }');
-    ok('match (Expression) { Case Block; else Statement; }');
-    ok('match (Expression) { Case Block; Case Block; else Statement; }');
+    ok('match(a){b c;}');
+    ok('match(a){b c;d e;}');
+    ok('match(a){b c;else d;}');
+    ok('match(a){b c;d e;else f;}');
   });
 
   test('"ReturnStatement"', () => {
-    ok('return Expression;');
+    ok('return a;');
   });
 
   test('"ThrowStatement"', () => {
-    ok('throw Expression;');
+    ok('throw a;');
   });
 
   test('"VariableDeclaration"', () => {
-    ok('let Identifier = Expression;');
+    ok('let a=b;');
   });
 
   test('"WhileStatement"', () => {
-    ok('while (Expression) Statement;');
+    ok('while(a)b;');
   });
 });

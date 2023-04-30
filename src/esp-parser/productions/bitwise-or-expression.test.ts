@@ -7,15 +7,15 @@ const { error, ok, unused } = createParseAssert(parseBitwiseORExpression);
 suite('BitwiseORExpression', () => {
   test('"BitwiseXORExpression"', () => {
     unused();
-    ok('BitwiseXORExpression');
+    ok('a');
   });
 
   test('"BitwiseORExpression | BitwiseXORExpression"', () => {
-    ok('BitwiseORExpression | BitwiseXORExpression');
-    error('BitwiseORExpression |');
+    ok('a|b');
+    error('a|');
   });
 
   it('should respect operator precedence', () => {
-    ok('a | b ^ c | d ^ e');
+    ok('a|b^c|d^e');
   });
 });

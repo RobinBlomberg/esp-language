@@ -7,20 +7,20 @@ const { error, ok, unused } = createParseAssert(parseUnaryExpression);
 suite('UnaryExpression', () => {
   test('"UpdateExpression"', () => {
     unused();
-    ok('UpdateExpression');
+    ok('a');
   });
 
   test('"- UnaryExpression"', () => {
-    ok('-UnaryExpression');
+    ok('-a');
     error('-');
   });
 
   test('"! UnaryExpression"', () => {
-    ok('!UnaryExpression');
+    ok('!a');
     error('!');
   });
 
   it('should handle nested unary expressions', () => {
-    ok('!-UnaryExpression');
+    ok('!-a');
   });
 });

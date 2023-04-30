@@ -7,13 +7,13 @@ const { error, ok, unused } = createParseAssert(parseDoWhileStatement);
 suite('DoWhileStatement', () => {
   test('"do Statement while ( Expression ) ;"', () => {
     unused();
-    ok('do Statement; while (Expression);');
+    ok('do a;while(b);');
     error('do');
-    error('do Statement');
-    error('do Statement;');
-    error('do Statement; while');
-    error('do Statement; while (');
-    error('do Statement; while (Expression');
-    error('do Statement; while (Expression)');
+    error('do a');
+    error('do a;');
+    error('do a;while');
+    error('do a;while(');
+    error('do a;while(b');
+    error('do a;while(b)');
   });
 });

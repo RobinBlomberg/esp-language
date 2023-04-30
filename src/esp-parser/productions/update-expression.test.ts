@@ -7,29 +7,29 @@ const { error, ok, throws, unused } = createParseAssert(parseUpdateExpression);
 suite('UpdateExpression', () => {
   test('"LeftHandSideExpression"', () => {
     unused();
-    ok('LeftHandSideExpression');
-    ok('Member.Expression');
+    ok('a');
+    ok('a.b');
   });
 
   test('"LeftHandSideExpression ++"', () => {
-    ok('LeftHandSideExpression++');
-    ok('Member.Expression++');
-    throws('CallExpression()++');
+    ok('a++');
+    ok('a.b++');
+    throws('a()++');
   });
 
   test('"LeftHandSideExpression --"', () => {
-    ok('LeftHandSideExpression--');
+    ok('a--');
   });
 
   test('"++ UnaryExpression"', () => {
-    ok('++UnaryExpression');
-    ok('++Member.Expression');
+    ok('++a');
+    ok('++a.b');
     error('++');
-    throws('++CallExpression()');
+    throws('++a()');
   });
 
   test('"-- UnaryExpression"', () => {
-    ok('--UnaryExpression');
+    ok('--a');
     error('--');
   });
 });
