@@ -16,14 +16,17 @@ export const logError = (
   sourceFileName?: string,
 ) => {
   const lineLocations: LineLocation[] = [];
+  let isLastLine = false;
   let lineNumber = 1;
   let lineStart = 0;
 
   for (let i = 0; i <= source.length; i++) {
+    isLastLine = i === source.length;
+
     const isEndOfLine =
+      isLastLine ||
       source[i] === '\n' ||
-      (source[i] === '\r' && source[i + 1] !== '\n') ||
-      i === source.length;
+      (source[i] === '\r' && source[i + 1] !== '\n');
 
     if (isEndOfLine) {
       lineLocations.push({ lineNumber, start: lineStart, end: i });
@@ -42,13 +45,11 @@ export const logError = (
   }
 
   const maxLineNumberWidth = String(lineNumber).length;
-  const marginEnd = ` │${clear} `;
-  const marginWidth = maxLineNumberWidth + 3;
 
   for (const line of lineLocations.slice(-3)) {
     const lineNumberWidth = String(line.lineNumber).length;
     const padding = ' '.repeat(maxLineNumberWidth - lineNumberWidth);
-    const margin = `${padding}${black}${line.lineNumber}${marginEnd}`;
+    const margin = `${padding}${black}${line.lineNumber} │${clear} `;
 
     const sourceLine = source.slice(line.start, line.end);
     const content = stylize(sourceLine);
@@ -57,9 +58,10 @@ export const logError = (
     console.error(stylizedSourceLine);
   }
 
+  const margin = isLastLine ? '   ' : `${black}${lineNumber + 1} │${clear}`;
   const lineErrorIndex = error.start - lineStart;
 
-  console.error(`${' '.repeat(marginWidth + lineErrorIndex)}^`);
+  console.error(`${margin} ${' '.repeat(lineErrorIndex)}^`);
   console.error();
   console.error(`${red}${error.name}: ${error.message}${clear}`);
 
