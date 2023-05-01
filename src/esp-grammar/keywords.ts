@@ -14,17 +14,13 @@ export const constantKeywords = [
 ] as const;
 
 export const controlKeywords = [
-  'async',
-  'await',
   'break',
   'const',
   'continue',
   'do',
   'else',
-  'export',
   'for',
   'if',
-  'import',
   'let',
   'match',
   'new',
