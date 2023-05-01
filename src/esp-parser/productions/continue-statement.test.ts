@@ -5,7 +5,7 @@ import { parseContinueStatement } from './continue-statement';
 const { error, ok, unused } = createParseAssert(parseContinueStatement);
 
 suite('ContinueStatement', () => {
-  test('"continue ;"', () => {
+  test(/* s */ `'continue' ';'`, () => {
     unused();
     ok('continue;');
     error('continue');

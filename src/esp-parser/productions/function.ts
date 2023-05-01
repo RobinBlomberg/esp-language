@@ -6,13 +6,6 @@ import { parseBlockStatement } from './block-statement';
 import { parseExpression } from './expression';
 import { parseParameterList } from './internal/parameter-list';
 
-/**
- * ```ecmarkup
- * Function :
- *   : ( ParameterList<opt> ) BlockStatement
- *   : ( ParameterList<opt> ) Expression
- * ```
- */
 export const parseFunction: Parser<Function> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, ':');
   if (abrupt(open)) return open;

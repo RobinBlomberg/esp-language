@@ -2,24 +2,6 @@ import { Parser, TokenType, abrupt, lex } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { Literal } from '../ast';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * Literal :
- *   NullLiteral
- *   BooleanLiteral
- *   NumericLiteral
- *   StringLiteral
- * ```
- *
- * Added productions:
- * ```ecmarkup
- * Literal :
- *   undefined
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-Literal
- */
 export const parseLiteral: Parser<Literal> = (data, i) => {
   const token = lex(data, i);
   if (abrupt(token)) return token;

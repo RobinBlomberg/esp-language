@@ -2,16 +2,6 @@ import { TokenType, abrupt, consume } from '../../../esp-lexer';
 import { error, unused } from '../../../esp-lexer/abrupt';
 import { parseExpressionList } from './expression-list';
 
-/**
- * Modified from ECMA-262:
- * ```ecmarkup
- * Arguments :
- *   ( )
- *   ( ValueList )
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-Arguments
- */
 export const parseArguments = (data: string, i: number) => {
   const open = consume(data, i, TokenType.Punctuator, '(');
   if (abrupt(open)) return unused(open);

@@ -5,7 +5,7 @@ import { parseVariableDeclaration } from './variable-declaration';
 const { error, ok, unused } = createParseAssert(parseVariableDeclaration);
 
 suite('VariableDeclaration', () => {
-  test('"LetOrConst Identifier = Expression ;"', () => {
+  test(/* s */ `LetOrConst Identifier '=' Expression ';'`, () => {
     unused();
     ok('let a=b;');
     ok('const a=b;');

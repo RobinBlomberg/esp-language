@@ -2,15 +2,6 @@ import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { BreakStatement } from '../ast';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * BreakStatement :
- *   break ;
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-BreakStatement
- */
 export const parseBreakStatement: Parser<BreakStatement> = (data, i) => {
   const break_ = consume(data, i, TokenType.Keyword, 'break');
   if (abrupt(break_)) return break_;

@@ -7,24 +7,6 @@ import { AssignmentOperatorTokenMatcher } from '../token-matchers';
 import { parseConditionalExpression } from './conditional-expression';
 import { parseFunction } from './function';
 
-/**
- * Modified from ECMA-262:
- * ```ecmarkup
- * Expression :
- *   ConditionalExpression
- *   Function
- *   LeftHandSideExpression AssignmentOperator Expression
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * AssignmentExpression :
- *   YieldExpression
- *   AsyncArrowFunction
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-AssignmentExpression
- */
 export const parseExpression: Parser<Expression> = (data, i) => {
   const left =
     lookahead(data, i) === ':'

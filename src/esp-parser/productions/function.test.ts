@@ -5,7 +5,7 @@ import { parseFunction } from './function';
 const { error, ok, unused } = createParseAssert(parseFunction);
 
 suite('Function', () => {
-  test('": ( ParameterList<opt> ) BlockStatement"', () => {
+  test(/* s */ `':' '(' ParameterList? ')' BlockStatement`, () => {
     unused();
     ok(':(){}');
     ok(':(a){}');
@@ -28,7 +28,7 @@ suite('Function', () => {
     error(':(a,b,){}');
   });
 
-  test('": ( ParameterList<opt> ) Expression"', () => {
+  test(/* s */ `':' '(' ParameterList? ')' Expression`, () => {
     ok(':()c;');
     ok(':(a)c;');
     ok(':(a,b)c;');

@@ -5,13 +5,13 @@ import { parseConditionalExpression } from './conditional-expression';
 const { error, ok, unused } = createParseAssert(parseConditionalExpression);
 
 suite('ConditionalExpression', () => {
-  test('"LogicalORExpression"', () => {
+  test(/* s */ `LogicalORExpression`, () => {
     unused();
     ok('a');
     ok('(1+2)');
   });
 
-  test('"LogicalORExpression ? Expression : Expression"', () => {
+  test(/* s */ `LogicalORExpression '?' Expression ':' Expression`, () => {
     ok('a?b:c');
     error('a?');
     error('a?b');

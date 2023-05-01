@@ -5,7 +5,7 @@ import { parseMatchStatement } from './match-statement';
 const { error, ok, unused } = createParseAssert(parseMatchStatement);
 
 suite('MatchStatement', () => {
-  test('"match ( Expression ) CaseBlock"', () => {
+  test(/* s */ `'match' '(' Expression ')' CaseBlock`, () => {
     unused();
     ok('match(a){}');
     ok('match(a){b c;}');

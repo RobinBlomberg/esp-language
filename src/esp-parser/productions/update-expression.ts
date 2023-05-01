@@ -7,19 +7,6 @@ import { UpdateOperatorTokenMatcher } from '../token-matchers';
 import { parseLeftHandSideExpression } from './left-hand-side-expression';
 import { parseUnaryExpression } from './unary-expression';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * UpdateExpression :
- *   LeftHandSideExpression
- *   LeftHandSideExpression ++
- *   LeftHandSideExpression --
- *   ++ UnaryExpression
- *   -- UnaryExpression
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-UpdateExpression
- */
 export const parseUpdateExpression: Parser<Expression> = (data, i) => {
   const prefixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
   if (!abrupt(prefixOperator)) {

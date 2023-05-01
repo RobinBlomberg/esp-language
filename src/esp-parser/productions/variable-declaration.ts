@@ -10,19 +10,6 @@ import { VariableDeclaration } from '../ast';
 import { VariableKindTokenMatcher } from '../token-matchers';
 import { parseExpression } from './expression';
 
-/**
- * Modified from ECMA-262:
- * ```ecmarkup
- * VariableDeclaration :
- *   LetOrConst Identifier = Expression ;
- *
- * LetOrConst :
- *   let
- *   const
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-VariableDeclaration
- */
 export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   data,
   i,

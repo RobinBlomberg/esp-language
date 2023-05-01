@@ -2,15 +2,6 @@ import { Parser, abrupt } from '../../esp-lexer';
 import { Script, Statement } from '../ast';
 import { parseStatement } from './statement';
 
-/**
- * Modified from ECMA-262:
- * ```ecmarkup
- * BlockStatement :
- *   { StatementList<opt> }
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-Script
- */
 export const parseScript: Parser<Script> = (data, i) => {
   const body: Statement[] = [];
 

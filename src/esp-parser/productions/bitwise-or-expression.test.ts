@@ -5,12 +5,12 @@ import { parseBitwiseORExpression } from './bitwise-or-expression';
 const { error, ok, unused } = createParseAssert(parseBitwiseORExpression);
 
 suite('BitwiseORExpression', () => {
-  test('"BitwiseXORExpression"', () => {
+  test(/* s */ `BitwiseXORExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"BitwiseORExpression | BitwiseXORExpression"', () => {
+  test(/* s */ `BitwiseORExpression '|' BitwiseXORExpression`, () => {
     ok('a|b');
     error('a|');
   });

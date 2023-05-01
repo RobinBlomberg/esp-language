@@ -4,15 +4,6 @@ import { WhileStatement } from '../ast';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * WhileStatement :
- *   while ( Expression ) Statement
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-WhileStatement
- */
 export const parseWhileStatement: Parser<WhileStatement> = (data, i) => {
   const while_ = consume(data, i, TokenType.Keyword, 'while');
   if (abrupt(while_)) return while_;

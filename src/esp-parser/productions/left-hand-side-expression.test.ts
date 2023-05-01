@@ -5,7 +5,7 @@ import { parseLeftHandSideExpression } from './left-hand-side-expression';
 const { error, ok, unused } = createParseAssert(parseLeftHandSideExpression);
 
 suite('LeftHandSideExpression', () => {
-  test('"NewExpression"', () => {
+  test(/* s */ `NewExpression`, () => {
     unused();
     ok('a');
     ok('a.b');
@@ -13,7 +13,7 @@ suite('LeftHandSideExpression', () => {
     ok('(1+2)');
   });
 
-  test('"CallExpression"', () => {
+  test(/* s */ `CallExpression`, () => {
     ok('a()');
     ok('a(b)');
     ok('a(b,c)');

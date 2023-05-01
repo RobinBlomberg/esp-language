@@ -5,7 +5,7 @@ import { parseExpressionStatement } from './expression-statement';
 const { error, ok, unused } = createParseAssert(parseExpressionStatement);
 
 suite('ExpressionStatement', () => {
-  test('"Expression ;"', () => {
+  test(/* s */ `Expression ';'`, () => {
     unused();
     ok('a;');
     error(';');

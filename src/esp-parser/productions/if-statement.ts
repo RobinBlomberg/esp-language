@@ -4,16 +4,6 @@ import { IfStatement, Statement } from '../ast';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * IfStatement :
- *   if ( Expression ) Statement
- *   if ( Expression ) Statement else Statement
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-IfStatement
- */
 export const parseIfStatement: Parser<IfStatement> = (data, i) => {
   const if_ = consume(data, i, TokenType.Keyword, 'if');
   if (abrupt(if_)) return if_;

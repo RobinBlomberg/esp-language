@@ -5,13 +5,13 @@ import { parseObjectLiteral } from './object-literal';
 const { error, ok, unused } = createParseAssert(parseObjectLiteral);
 
 suite('ObjectLiteral', () => {
-  test('"{ }"', () => {
+  test(/* s */ `'{' '}'`, () => {
     unused();
     ok('{}');
     error('{');
   });
 
-  test('"{ PropertyDefinitionList }"', () => {
+  test(/* s */ `'{' PropertyDefinitionList '}'`, () => {
     ok('{a:1}');
     ok('{a:2,b:3}');
     ok('{a:(4+5)}');

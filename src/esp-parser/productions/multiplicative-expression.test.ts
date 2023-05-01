@@ -5,12 +5,12 @@ import { parseMultiplicativeExpression } from './multiplicative-expression';
 const { error, ok, unused } = createParseAssert(parseMultiplicativeExpression);
 
 suite('MultiplicativeExpression', () => {
-  test('"ExponentiationExpression"', () => {
+  test(/* s */ `ExponentiationExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"MultiplicativeExpression MultiplicativeOperator ExponentiationExpression"', () => {
+  test(/* s */ `MultiplicativeExpression MultiplicativeOperator ExponentiationExpression`, () => {
     ok('a*b');
     ok('a/b');
     ok('a%b');

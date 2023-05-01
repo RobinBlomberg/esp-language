@@ -3,16 +3,6 @@ import { error } from '../../esp-lexer/abrupt';
 import { BinaryExpression, Expression, NodeType } from '../ast';
 import { parseUnaryExpression } from './unary-expression';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * ExponentiationExpression :
- *   UnaryExpression
- *   UpdateExpression ** ExponentiationExpression
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-ExponentiationExpression
- */
 export const parseExponentiationExpression: Parser<Expression> = (data, i) => {
   const left = parseUnaryExpression(data, i);
   if (abrupt(left)) return left;

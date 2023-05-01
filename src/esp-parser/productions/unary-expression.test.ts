@@ -5,17 +5,17 @@ import { parseUnaryExpression } from './unary-expression';
 const { error, ok, unused } = createParseAssert(parseUnaryExpression);
 
 suite('UnaryExpression', () => {
-  test('"UpdateExpression"', () => {
+  test(/* s */ `UpdateExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"- UnaryExpression"', () => {
+  test(/* s */ `'-' UnaryExpression`, () => {
     ok('-a');
     error('-');
   });
 
-  test('"! UnaryExpression"', () => {
+  test(/* s */ `'!' UnaryExpression`, () => {
     ok('!a');
     error('!');
   });

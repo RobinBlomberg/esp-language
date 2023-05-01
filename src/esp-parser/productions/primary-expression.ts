@@ -8,33 +8,6 @@ import { parseLiteral } from './literal';
 import { parseObjectLiteral } from './object-literal';
 import { parseSetLiteral } from './set-literal';
 
-/**
- * Modified from ECMA-262:
- * ```ecmarkup
- * PrimaryExpression :
- *   Identifier
- *   Literal
- *   ArrayLiteral
- *   ObjectLiteral
- *   SetLiteral
- *   CoverParenthesizedExpression
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * PrimaryExpression :
- *   this
- *   FunctionExpression
- *   ClassExpression
- *   GeneratorExpression
- *   AsyncFunctionExpression
- *   AsyncGeneratorExpression
- *   RegularExpressionLiteral
- *   TemplateLiteral
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-PrimaryExpression
- */
 export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
   const token = lex(data, i);
   if (abrupt(token)) return token;

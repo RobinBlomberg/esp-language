@@ -5,27 +5,27 @@ import { parseRelationalExpression } from './relational-expression';
 const { error, ok, unused } = createParseAssert(parseRelationalExpression);
 
 suite('RelationalExpression', () => {
-  test('"ShiftExpression"', () => {
+  test(/* s */ `ShiftExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"RelationalExpression < ShiftExpression"', () => {
+  test(/* s */ `RelationalExpression '<' ShiftExpression`, () => {
     ok('a<b');
     error('a<');
   });
 
-  test('"RelationalExpression > ShiftExpression"', () => {
+  test(/* s */ `RelationalExpression '>' ShiftExpression`, () => {
     ok('a>b');
     error('a>');
   });
 
-  test('"RelationalExpression <= ShiftExpression"', () => {
+  test(/* s */ `RelationalExpression '<=' ShiftExpression`, () => {
     ok('a<=b');
     error('a<=');
   });
 
-  test('"RelationalExpression >= ShiftExpression"', () => {
+  test(/* s */ `RelationalExpression '>=' ShiftExpression`, () => {
     ok('a>=b');
     error('a>=');
   });

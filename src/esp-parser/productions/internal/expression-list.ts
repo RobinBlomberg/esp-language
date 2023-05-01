@@ -4,13 +4,6 @@ import { PunctuatorToken } from '../../../esp-lexer/token';
 import { Expression } from '../../ast';
 import { parseExpression } from '../expression';
 
-/**
- * ```ecmarkup
- * ExpressionList :
- *   Expression
- *   ExpressionList , Expression
- * ```
- */
 export const parseExpressionList = (data: string, i: number) => {
   const values: Expression[] = [];
 

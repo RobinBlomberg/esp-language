@@ -5,7 +5,7 @@ import { parseSetLiteral } from './set-literal';
 const { error, ok, unused } = createParseAssert(parseSetLiteral);
 
 suite('SetLiteral', () => {
-  test('"#{ ValueList }"', () => {
+  test(/* s */ `'#' '{' ValueList '}'`, () => {
     unused();
     ok('#{}');
     ok('#{1}');

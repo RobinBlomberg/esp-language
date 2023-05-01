@@ -3,22 +3,6 @@ import { error, unused } from '../../esp-lexer/abrupt';
 import { ArrayLiteral } from '../ast';
 import { parseExpressionList } from './internal/expression-list';
 
-/**
- * Adapted from ECMA-262:
- * ```ecmarkup
- * ArrayLiteral :
- *   [ ValueList ]
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * ArrayLiteral
- *   [ Elision<opt> ]
- *   [ ElementList , Elision<opt> ]
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-ArrayLiteral
- */
 export const parseArrayLiteral: Parser<ArrayLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '[');
   if (abrupt(open)) return unused(open);

@@ -1,0 +1,312 @@
+AdditiveExpression ::=
+  | MultiplicativeExpression
+  | AdditiveExpression '+' MultiplicativeExpression
+  | AdditiveExpression '-' MultiplicativeExpression
+
+ArgumentList ::=
+  | Identifier
+  | ArgumentList ',' Identifier
+
+Arguments ::=
+  | '(' ArgumentList? ')'
+
+ArrayLiteral ::=
+  | '[' ExpressionList ']'
+
+AssignmentOperator ::=
+  | '='
+  | '*='
+  | '/='
+  | '%='
+  | '+='
+  | '-='
+  | '<<='
+  | '>>='
+  | '>>>='
+  | '&='
+  | '^='
+  | '|='
+  | '**='
+  | '&&='
+  | '||='
+
+BitwiseANDExpression ::=
+  | EqualityExpression
+  | BitwiseANDExpression '&' EqualityExpression
+
+BitwiseORExpression ::=
+  | BitwiseXORExpression
+  | BitwiseORExpression '|' BitwiseXORExpression
+
+BitwiseXORExpression ::=
+  | BitwiseANDExpression
+  | BitwiseXORExpression '^' BitwiseANDExpression
+
+BlockStatement ::=
+  | '{' StatementList? '}'
+
+BooleanLiteral ::=
+  | 'true'
+  | 'false'
+
+BreakStatement ::=
+  | 'break' ';'
+
+CaseBlock ::=
+  | '{' CaseClauses '}'
+  | '{' CaseClauses 'else' Statement '}'
+
+CaseClause ::=
+  | ExpressionList Statement
+
+CaseClauses ::=
+  | CaseClause
+  | CaseClauses CaseClause
+
+ConditionalExpression ::=
+  | LogicalORExpression
+  | LogicalORExpression '?' Expression ':' Expression
+
+ConstantKeyword ::=
+  | 'false'
+  | 'Infinity'
+  | 'NaN'
+  | 'null'
+  | 'true'
+  | 'undefined'
+
+ContinueStatement ::=
+  | 'continue' ';'
+
+ControlKeyword ::=
+  | 'async'
+  | 'await'
+  | 'break'
+  | 'const'
+  | 'continue'
+  | 'do'
+  | 'else'
+  | 'export'
+  | 'for'
+  | 'if'
+  | 'import'
+  | 'let'
+  | 'match'
+  | 'new'
+  | 'return'
+  | 'throw'
+  | 'while'
+
+CoverParenthesizedExpression ::=
+  | '(' Expression ')'
+
+DecimalDigit ::=
+  | [0-9]
+
+DecimalDigits ::=
+  | DecimalDigit
+  | DecimalDigits DecimalDigit
+
+DecimalIntegerLiteral ::=
+  | '0'
+  | NonZeroDigit DecimalDigits?
+
+DoubleStringCharacter ::=
+  | [^"\]
+  | '\\' [.]
+
+DoubleStringCharacters ::=
+  | DoubleStringCharacter DoubleStringCharacters?
+
+DoWhileStatement ::=
+  | 'do' Statement 'while' '(' Expression ')' ';'
+
+EqualityExpression ::=
+  | RelationalExpression
+  | EqualityExpression '==' RelationalExpression
+  | EqualityExpression '!=' RelationalExpression
+
+ExponentiationExpression ::=
+  | UnaryExpression
+  | UpdateExpression '**' ExponentiationExpression
+
+Expression ::=
+  | ConditionalExpression
+  | Function
+  | LeftHandSideExpression AssignmentOperator Expression
+
+ExpressionList ::=
+  | Expression
+  | ExpressionList ',' Expression
+
+ExpressionStatement ::=
+  | Expression ';'
+
+Function ::=
+  | ':' '(' ParameterList? ')' BlockStatement
+  | ':' '(' ParameterList? ')' Expression
+
+IdentifierName ::=
+  | IdentifierStartChar
+  | IdentifierName IdentifierPartChar
+
+IdentifierPartChar ::=
+  | [a-zA-Z0-9$_]
+
+IdentifierStartChar ::=
+  | [a-zA-Z$_]
+
+Identifier ::=
+  | IdentifierName - Keyword
+
+IfStatement ::=
+  | 'if' '(' Expression ')' Statement
+  | 'if' '(' Expression ')' Statement 'else' Statement
+
+Keyword ::=
+  | ConstantKeyword
+  | ControlKeyword
+
+LeftHandSideExpression ::=
+  | MemberExpression Arguments?
+
+LetOrConst ::=
+  | 'let'
+  | 'const'
+
+Literal ::=
+  | BooleanLiteral
+  | NumericLiteral
+  | StringLiteral
+  | 'null'
+  | 'undefined'
+
+LogicalANDExpression ::=
+  | BitwiseORExpression
+  | LogicalANDExpression '&&' BitwiseORExpression
+
+LogicalORExpression ::=
+  | LogicalANDExpression
+  | LogicalORExpression '||' LogicalANDExpression
+
+MatchStatement ::=
+  | 'match' '(' Expression ')' CaseBlock
+
+MemberExpression ::=
+  | PrimaryExpression
+  | MemberExpression '[' Expression ']'
+  | MemberExpression '.' IdentifierName
+  | 'new' MemberExpression Arguments
+
+MultiplicativeExpression ::=
+  | ExponentiationExpression
+  | MultiplicativeExpression MultiplicativeOperator ExponentiationExpression
+
+MultiplicativeOperator ::=
+  | '*'
+  | '/'
+  | '%'
+
+NonZeroDigit ::=
+  | [1-9]
+
+NumericLiteral ::=
+  | DecimalIntegerLiteral
+  | DecimalIntegerLiteral '.' DecimalDigits
+
+ObjectLiteral ::=
+  | '{' '}'
+  | '{' PropertyDefinitionList '}'
+
+Parameter ::=
+  | Identifier
+
+ParameterList ::=
+  | Parameter
+  | ParameterList , Parameter
+
+PropertyDefinition ::=
+  | PropertyName ':' Expression
+
+PropertyDefinitionList ::=
+  | PropertyDefinition
+  | PropertyDefinitionList ',' PropertyDefinition
+
+PropertyName ::=
+  | Identifier
+
+PrimaryExpression ::=
+  | Identifier
+  | Literal
+  | ArrayLiteral
+  | ObjectLiteral
+  | SetLiteral
+  | CoverParenthesizedExpression
+
+RelationalExpression ::=
+  | ShiftExpression
+  | RelationalExpression '<' ShiftExpression
+  | RelationalExpression '>' ShiftExpression
+  | RelationalExpression '<=' ShiftExpression
+  | RelationalExpression '>=' ShiftExpression
+
+ReturnStatement ::=
+  | 'return' Expression ';'
+
+SetLiteral ::=
+  | '#' '{' ExpressionList '}'
+
+ShiftExpression ::=
+  | AdditiveExpression
+  | ShiftExpression '<<' AdditiveExpression
+  | ShiftExpression '>>' AdditiveExpression
+  | ShiftExpression '>>>' AdditiveExpression
+
+SingleStringCharacter ::=
+  | [^'\]
+  | '\\' [.]
+
+SingleStringCharacters ::=
+  | SingleStringCharacter SingleStringCharacters?
+
+Statement ::=
+  | BlockStatement
+  | BreakStatement
+  | ContinueStatement
+  | DoWhileStatement
+  | ExpressionStatement
+  | IfStatement
+  | MatchStatement
+  | ReturnStatement
+  | ThrowStatement
+  | VariableDeclaration
+  | WhileStatement
+
+StatementList ::=
+  | Statement
+  | StatementList Statement
+
+StringLiteral ::=
+  | '"' DoubleStringCharacters? '"'
+  | "'" SingleStringCharacters? "'"
+
+ThrowStatement ::=
+  | 'throw' Expression ';'
+
+UnaryExpression ::=
+  | UpdateExpression
+  | '-' UnaryExpression
+  | '!' UnaryExpression
+
+UpdateExpression ::=
+  | LeftHandSideExpression
+  | LeftHandSideExpression '++'
+  | LeftHandSideExpression '--'
+  | '++' UnaryExpression
+  | '--' UnaryExpression
+
+VariableDeclaration ::=
+  | LetOrConst Identifier '=' Expression ';'
+
+WhileStatement ::=
+  | 'while' '(' Expression ')' Statement

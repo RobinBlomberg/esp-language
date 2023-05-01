@@ -5,7 +5,7 @@ import { parseReturnStatement } from './return-statement';
 const { error, ok, unused } = createParseAssert(parseReturnStatement);
 
 suite('ReturnStatement', () => {
-  test('"return Expression ;"', () => {
+  test(/* s */ `'return' Expression ';'`, () => {
     unused();
     ok('return a;');
     ok('return(a);');

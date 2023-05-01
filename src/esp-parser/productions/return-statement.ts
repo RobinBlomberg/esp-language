@@ -3,21 +3,6 @@ import { error } from '../../esp-lexer/abrupt';
 import { ReturnStatement } from '../ast';
 import { parseExpression } from './expression';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * ReturnStatement :
- *   return Expression ;
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * ReturnStatement :
- *   return ;
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-ReturnStatement
- */
 export const parseReturnStatement: Parser<ReturnStatement> = (data, i) => {
   const return_ = consume(data, i, TokenType.Keyword, 'return');
   if (abrupt(return_)) return return_;

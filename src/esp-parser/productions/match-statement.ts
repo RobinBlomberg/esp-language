@@ -5,30 +5,6 @@ import { parseExpression } from './expression';
 import { parseExpressionList } from './internal/expression-list';
 import { parseStatement } from './statement';
 
-/**
- * Grammar definition inspired by ECMA-262:
- * ```ecmarkup
- * MatchStatement :
- *   match ( Expression ) CaseBlock
- *
- * CaseBlock :
- *   { CaseClauses }
- *   { CaseClauses else Statement }
- *
- * CaseClauses :
- *   CaseClause
- *   CaseClauses CaseClause
- *
- * CaseClause :
- *   ExpressionList Statement
- *
- * ExpressionList :
- *   Expression
- *   ExpressionList , Expression
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-SwitchStatement
- */
 export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
   const match_ = consume(data, i, TokenType.Keyword, 'match');
   if (abrupt(match_)) return match_;

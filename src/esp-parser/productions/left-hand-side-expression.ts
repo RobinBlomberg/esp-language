@@ -3,22 +3,6 @@ import { CallExpression, Expression } from '../ast';
 import { parseArguments } from './internal/arguments';
 import { parseMemberExpression } from './member-expression';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * LeftHandSideExpression :
- *   NewExpression
- *   CallExpression
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * LeftHandSideExpression :
- *   OptionalExpression
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-LeftHandSideExpression
- */
 export const parseLeftHandSideExpression: Parser<Expression> = (data, i) => {
   let callee = parseMemberExpression(data, i);
   if (abrupt(callee)) return callee;

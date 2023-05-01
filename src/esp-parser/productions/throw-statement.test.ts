@@ -5,7 +5,7 @@ import { parseThrowStatement } from './throw-statement';
 const { error, ok, unused } = createParseAssert(parseThrowStatement);
 
 suite('ThrowStatement', () => {
-  test('"throw Expression ;"', () => {
+  test(/* s */ `'throw' Expression ';'`, () => {
     unused();
     ok('throw a;');
     ok('throw(a);');

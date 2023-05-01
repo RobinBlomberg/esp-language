@@ -5,17 +5,17 @@ import { parseEqualityExpression } from './equality-expression';
 const { error, ok, unused } = createParseAssert(parseEqualityExpression);
 
 suite('EqualityExpression', () => {
-  test('"RelationalExpression"', () => {
+  test(/* s */ `RelationalExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"EqualityExpression == RelationalExpression"', () => {
+  test(/* s */ `EqualityExpression '==' RelationalExpression`, () => {
     ok('a==b');
     error('a==');
   });
 
-  test('"EqualityExpression != RelationalExpression"', () => {
+  test(/* s */ `EqualityExpression '!=' RelationalExpression`, () => {
     ok('a!=b');
     error('a!=');
   });

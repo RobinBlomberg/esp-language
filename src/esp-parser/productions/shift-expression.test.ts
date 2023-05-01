@@ -5,22 +5,22 @@ import { parseShiftExpression } from './shift-expression';
 const { error, ok, unused } = createParseAssert(parseShiftExpression);
 
 suite('ShiftExpression', () => {
-  test('"AdditiveExpression"', () => {
+  test(/* s */ `AdditiveExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"ShiftExpression << AdditiveExpression"', () => {
+  test(/* s */ `ShiftExpression '<<' AdditiveExpression`, () => {
     ok('a<<b');
     error('a<<');
   });
 
-  test('"ShiftExpression >> AdditiveExpression"', () => {
+  test(/* s */ `ShiftExpression '>>' AdditiveExpression`, () => {
     ok('a>>b');
     error('a>>');
   });
 
-  test('"ShiftExpression >>> AdditiveExpression"', () => {
+  test(/* s */ `ShiftExpression '>>>' AdditiveExpression`, () => {
     ok('a>>>b');
     error('a>>>');
   });

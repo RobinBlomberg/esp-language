@@ -5,7 +5,7 @@ import { parseArrayLiteral } from './array-literal';
 const { error, ok, unused } = createParseAssert(parseArrayLiteral);
 
 suite('ArrayLiteral', () => {
-  test('"[ ValueList ]"', () => {
+  test(/* s */ `'[' ValueList ']'`, () => {
     unused();
     ok('[]');
     ok('[1]');

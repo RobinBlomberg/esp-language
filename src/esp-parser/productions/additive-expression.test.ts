@@ -5,17 +5,17 @@ import { parseAdditiveExpression } from './additive-expression';
 const { error, ok, unused } = createParseAssert(parseAdditiveExpression);
 
 suite('AdditiveExpression', () => {
-  test('"MultiplicativeExpression"', () => {
+  test(/* s */ `MultiplicativeExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"AdditiveExpression + MultiplicativeExpression"', () => {
+  test(/* s */ `AdditiveExpression '+' MultiplicativeExpression`, () => {
     ok('a+b');
     error('a+');
   });
 
-  test('"AdditiveExpression - MultiplicativeExpression"', () => {
+  test(/* s */ `AdditiveExpression '-' MultiplicativeExpression`, () => {
     ok('a-b');
     error('a-');
   });

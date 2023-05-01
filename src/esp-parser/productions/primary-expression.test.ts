@@ -5,12 +5,12 @@ import { parsePrimaryExpression } from './primary-expression';
 const { error, ok, unused } = createParseAssert(parsePrimaryExpression);
 
 suite('PrimaryExpression', () => {
-  test('"Identifier"', () => {
+  test(/* s */ `Identifier`, () => {
     unused();
     ok('a');
   });
 
-  test('"Literal"', () => {
+  test(/* s */ `Literal`, () => {
     ok('null');
     ok('false');
     ok('true');
@@ -20,32 +20,32 @@ suite('PrimaryExpression', () => {
     ok('987.6543210');
     ok('Infinity');
     ok('NaN');
-    ok('""');
+    ok(/* s */ ``);
     ok('"ab\\"cd"');
     ok('undefined');
   });
 
-  test('"ArrayLiteral"', () => {
+  test(/* s */ `ArrayLiteral`, () => {
     ok('[]');
     ok('[1]');
     ok('[1, 2]');
     error('[');
   });
 
-  test('"ObjectLiteral"', () => {
+  test(/* s */ `ObjectLiteral`, () => {
     ok('{}');
     ok('{a: 1}');
     ok('{a: 1, b: 2}');
     error('{');
   });
 
-  test('"SetLiteral"', () => {
+  test(/* s */ `SetLiteral`, () => {
     ok('#{}');
     ok('#{1}');
     ok('#{1, 2}');
   });
 
-  test('"CoverParenthesizedExpression"', () => {
+  test(/* s */ `CoverParenthesizedExpression`, () => {
     ok('(a)');
     ok('(1+2)');
     error('(');

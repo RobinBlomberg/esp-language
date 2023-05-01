@@ -5,12 +5,12 @@ import { parseBitwiseANDExpression } from './bitwise-and-expression';
 const { error, ok, unused } = createParseAssert(parseBitwiseANDExpression);
 
 suite('BitwiseANDExpression', () => {
-  test('"EqualityExpression"', () => {
+  test(/* s */ `EqualityExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"BitwiseANDExpression & EqualityExpression"', () => {
+  test(/* s */ `BitwiseANDExpression '&' EqualityExpression`, () => {
     ok('a&b');
     error('a&');
   });

@@ -12,36 +12,6 @@ import { parseThrowStatement } from './throw-statement';
 import { parseVariableDeclaration } from './variable-declaration';
 import { parseWhileStatement } from './while-statement';
 
-/**
- * Modified from ECMA-262:
- * ```ecmarkup
- * Statement :
- *   BlockStatement
- *   BreakStatement
- *   ContinueStatement
- *   DoWhileStatement
- *   ExpressionStatement
- *   IfStatement
- *   MatchStatement
- *   ReturnStatement
- *   ThrowStatement
- *   VariableDeclaration
- *   WhileStatement
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * Statement :
- *   VariableStatement
- *   EmptyStatement
- *   WithStatement
- *   LabelledStatement
- *   TryStatement
- *   DebuggerStatement
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-Statement
- */
 export const parseStatement: Parser<Statement> = (data, i) => {
   const token = lex(data, i);
   if (abrupt(token)) return token;

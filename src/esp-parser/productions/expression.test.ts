@@ -5,13 +5,13 @@ import { parseExpression } from './expression';
 const { error, ok, throws, unused } = createParseAssert(parseExpression);
 
 suite('Expression', () => {
-  test('"ConditionalExpression"', () => {
+  test(/* s */ `ConditionalExpression`, () => {
     unused();
     ok('a');
     ok('(1+2)');
   });
 
-  test('"Function"', () => {
+  test(/* s */ `Function`, () => {
     ok(':(){}');
     ok(':(a){}');
     ok(':(a,b){}');
@@ -38,7 +38,7 @@ suite('Expression', () => {
     error(':(a,b,)c;');
   });
 
-  test('"LeftHandSideExpression AssignmentOperator Expression"', () => {
+  test(/* s */ `LeftHandSideExpression AssignmentOperator Expression`, () => {
     ok('a=b');
     ok('a=b');
     ok('a*=b');

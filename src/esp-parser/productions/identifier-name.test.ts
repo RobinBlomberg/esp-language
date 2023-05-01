@@ -5,12 +5,12 @@ import { parseIdentifierName } from './identifier-name';
 const { ok, unused } = createParseAssert(parseIdentifierName);
 
 suite('IdentifierName', () => {
-  test('"IdentifierStart"', () => {
+  test(/* s */ `IdentifierStart`, () => {
     unused();
     ok('a');
   });
 
-  test('"IdentifierName IdentifierPart"', () => {
+  test(/* s */ `IdentifierName IdentifierPart`, () => {
     ok('else');
   });
 });

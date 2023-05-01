@@ -11,28 +11,6 @@ import { parseIdentifierName } from './identifier-name';
 import { parseArguments } from './internal/arguments';
 import { parsePrimaryExpression } from './primary-expression';
 
-/**
- * Supported from ECMA-262:
- *
- * ```ecmarkup
- * MemberExpression :
- *   PrimaryExpression
- *   MemberExpression [ Expression ]
- *   MemberExpression . IdentifierName
- *   new MemberExpression Arguments
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * MemberExpression :
- *   MemberExpression TemplateLiteral
- *   SuperProperty
- *   MetaProperty
- *   MemberExpression . PrivateIdentifier
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-MemberExpression
- */
 export const parseMemberExpression: Parser<Expression> = (data, i) => {
   const new_ = consume(data, i, TokenType.Keyword, 'new');
   if (!abrupt(new_)) {

@@ -3,12 +3,6 @@ import { error } from '../../esp-lexer/abrupt';
 import { SetLiteral } from '../ast';
 import { parseExpressionList } from './internal/expression-list';
 
-/**
- * ```ecmarkup
- * SetLiteral :
- *   # { ValueList }
- * ```
- */
 export const parseSetLiteral: Parser<SetLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '#');
   if (abrupt(open)) return open;

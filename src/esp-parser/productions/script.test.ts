@@ -5,7 +5,7 @@ import { parseScript } from './script';
 const { ok } = createParseAssert(parseScript);
 
 suite('Script', () => {
-  test('StatementList<opt>', () => {
+  test(/* s */ `StatementList?`, () => {
     ok('');
     ok(' ');
     ok('a;');

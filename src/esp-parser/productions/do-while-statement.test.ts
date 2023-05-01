@@ -5,7 +5,7 @@ import { parseDoWhileStatement } from './do-while-statement';
 const { error, ok, unused } = createParseAssert(parseDoWhileStatement);
 
 suite('DoWhileStatement', () => {
-  test('"do Statement while ( Expression ) ;"', () => {
+  test(/* s */ `'do' Statement 'while' '(' Expression ')' ';'`, () => {
     unused();
     ok('do a;while(b);');
     error('do');

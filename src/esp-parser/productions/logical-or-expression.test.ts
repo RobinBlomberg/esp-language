@@ -5,12 +5,12 @@ import { parseLogicalORExpression } from './logical-or-expression';
 const { error, ok, unused } = createParseAssert(parseLogicalORExpression);
 
 suite('LogicalORExpression', () => {
-  test('"LogicalANDExpression"', () => {
+  test(/* s */ `LogicalANDExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"LogicalORExpression || LogicalANDExpression"', () => {
+  test(/* s */ `LogicalORExpression '||' LogicalANDExpression`, () => {
     ok('a||b');
     error('a||');
   });

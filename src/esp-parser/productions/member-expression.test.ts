@@ -5,13 +5,13 @@ import { parseMemberExpression } from './member-expression';
 const { error, ok, unused } = createParseAssert(parseMemberExpression);
 
 suite('MemberExpression', () => {
-  test('"PrimaryExpression"', () => {
+  test(/* s */ `PrimaryExpression`, () => {
     unused();
     ok('a');
     ok('(1+2)');
   });
 
-  test('"MemberExpression [ Expression ]"', () => {
+  test(/* s */ `MemberExpression '[' Expression ']'`, () => {
     ok('a[b]');
     ok('a[b][c]');
     error('a[');
@@ -20,14 +20,14 @@ suite('MemberExpression', () => {
     error('a[b][c');
   });
 
-  test('"MemberExpression . IdentifierName"', () => {
+  test(/* s */ `MemberExpression '.' IdentifierName`, () => {
     ok('a.b');
     ok('a.b.c');
     error('a.');
     error('a.b.');
   });
 
-  test('"new MemberExpression Arguments"', () => {
+  test(/* s */ `'new' MemberExpression Arguments`, () => {
     ok('new a()');
     error('new');
     error('new a');

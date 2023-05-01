@@ -4,15 +4,6 @@ import { DoWhileStatement } from '../ast';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * DoWhileStatement :
- *   do Statement while ( Expression ) ;
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-DoWhileStatement
- */
 export const parseDoWhileStatement: Parser<DoWhileStatement> = (data, i) => {
   const do_ = consume(data, i, TokenType.Keyword, 'do');
   if (abrupt(do_)) return do_;

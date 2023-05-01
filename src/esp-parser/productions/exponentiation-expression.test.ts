@@ -5,12 +5,12 @@ import { parseExponentiationExpression } from './exponentiation-expression';
 const { error, ok, unused } = createParseAssert(parseExponentiationExpression);
 
 suite('ExponentiationExpression', () => {
-  test('"UnaryExpression"', () => {
+  test(/* s */ `UnaryExpression`, () => {
     unused();
     ok('a');
   });
 
-  test('"UpdateExpression ** ExponentiationExpression"', () => {
+  test(/* s */ `UpdateExpression '**' ExponentiationExpression`, () => {
     ok('a**b');
     ok('++a**b');
     error('a**');

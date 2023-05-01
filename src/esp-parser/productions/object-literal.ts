@@ -4,39 +4,6 @@ import { ObjectLiteral, Property } from '../ast';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
 
-/**
- * Supported from ECMA-262:
- * ```ecmarkup
- * ObjectLiteral :
- *   { }
- *   { PropertyDefinitionList }
- *
- * PropertyDefinitionList[Yield, Await] :
- *   PropertyDefinition[?Yield, ?Await]
- *   PropertyDefinitionList[?Yield, ?Await] , PropertyDefinition[?Yield, ?Await]
- *
- * PropertyDefinition[Yield, Await] :
- *   PropertyName[?Yield, ?Await] : AssignmentExpression[+In, ?Yield, ?Await]
- * ```
- *
- * Not supported from ECMA-262:
- * ```ecmarkup
- * ObjectLiteral :
- *   { PropertyDefinitionList , }
- *
- * PropertyDefinitionList[Yield, Await] :
- *   PropertyDefinition[?Yield, ?Await]
- *   PropertyDefinitionList[?Yield, ?Await] , PropertyDefinition[?Yield, ?Await]
- *
- * PropertyDefinition[Yield, Await] :
- *   IdentifierReference[?Yield, ?Await]
- *   CoverInitializedName[?Yield, ?Await]
- *   MethodDefinition[?Yield, ?Await]
- *   ... AssignmentExpression[+In, ?Yield, ?Await]
- * ```
- *
- * @see https://tc39.es/ecma262/#prod-ObjectLiteral
- */
 export const parseObjectLiteral: Parser<ObjectLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '{');
   if (abrupt(open)) return open;

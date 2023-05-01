@@ -5,7 +5,7 @@ import { parseIfStatement } from './if-statement';
 const { error, ok, unused } = createParseAssert(parseIfStatement);
 
 suite('IfStatement', () => {
-  test('"if ( Expression ) Statement"', () => {
+  test(/* s */ `'if' '(' Expression ')' Statement`, () => {
     unused();
     ok('if(a)b;');
     error('if');
@@ -16,7 +16,7 @@ suite('IfStatement', () => {
     error('if(a)b');
   });
 
-  test('"if ( Expression ) Statement else Statement"', () => {
+  test(/* s */ `'if' '(' Expression ')' Statement 'else' Statement`, () => {
     ok('if(a)b;else c;');
     error('if(a)b;else');
     error('if(a)b;else;');

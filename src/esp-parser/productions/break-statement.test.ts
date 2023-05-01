@@ -5,7 +5,7 @@ import { parseBreakStatement } from './break-statement';
 const { error, ok, unused } = createParseAssert(parseBreakStatement);
 
 suite('BreakStatement', () => {
-  test('"break ;"', () => {
+  test(/* s */ `'break' ';'`, () => {
     unused();
     ok('break;');
     error('break');

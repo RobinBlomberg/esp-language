@@ -5,30 +5,30 @@ import { parseUpdateExpression } from './update-expression';
 const { error, ok, throws, unused } = createParseAssert(parseUpdateExpression);
 
 suite('UpdateExpression', () => {
-  test('"LeftHandSideExpression"', () => {
+  test(/* s */ `LeftHandSideExpression`, () => {
     unused();
     ok('a');
     ok('a.b');
   });
 
-  test('"LeftHandSideExpression ++"', () => {
+  test(/* s */ `LeftHandSideExpression '++'`, () => {
     ok('a++');
     ok('a.b++');
     throws('a()++');
   });
 
-  test('"LeftHandSideExpression --"', () => {
+  test(/* s */ `LeftHandSideExpression '--'`, () => {
     ok('a--');
   });
 
-  test('"++ UnaryExpression"', () => {
+  test(/* s */ `'++' UnaryExpression`, () => {
     ok('++a');
     ok('++a.b');
     error('++');
     throws('++a()');
   });
 
-  test('"-- UnaryExpression"', () => {
+  test(/* s */ `'--' UnaryExpression`, () => {
     ok('--a');
     error('--');
   });

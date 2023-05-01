@@ -5,18 +5,18 @@ import { parseLiteral } from './literal';
 const { error, ok, unused } = createParseAssert(parseLiteral);
 
 suite('Literal', () => {
-  test('"NullLiteral"', () => {
+  test(/* s */ `NullLiteral`, () => {
     unused();
     ok('null');
   });
 
-  test('"BooleanLiteral"', () => {
+  test(/* s */ `BooleanLiteral`, () => {
     ok('false');
     ok('true');
     error('falsey');
   });
 
-  test('"NumericLiteral"', () => {
+  test(/* s */ `NumericLiteral`, () => {
     ok('0');
     ok('0.123');
     ok('456');
@@ -25,9 +25,9 @@ suite('Literal', () => {
     ok('NaN');
   });
 
-  test('"StringLiteral"', () => {
+  test(/* s */ `StringLiteral`, () => {
     describe('double-quoted strings', () => {
-      ok('""');
+      ok(/* s */ ``);
       ok('"ab\\"cd"');
     });
 
@@ -37,7 +37,7 @@ suite('Literal', () => {
     });
   });
 
-  test('"undefined"', () => {
+  test(/* s */ `undefined`, () => {
     ok('undefined');
   });
 });
