@@ -1,4 +1,5 @@
-import { Abrupt, error } from './abrupt';
+import { Keyword, Punctuator } from '../esp-grammar';
+import { Abrupt, Error, Unused, error } from './abrupt';
 import { lex } from './lex';
 import { Token, TokenMatcher } from './token';
 import { TokenType } from './token-type';
@@ -8,18 +9,29 @@ export type Parser<T = { type: string }> = (
   i: number,
 ) => T | Abrupt;
 
-export const abrupt = (token: {} | { type: string }): token is Abrupt => {
-  return (token as any)?.type === 'Error' || (token as any)?.type === 'Unused';
-};
+export type TokenValue<T extends TokenType> = T extends TokenType.Identifier
+  ? string
+  : T extends TokenType.Keyword
+  ? Keyword
+  : T extends TokenType.Number
+  ? string
+  : T extends TokenType.Punctuator
+  ? Punctuator
+  : T extends TokenType.String
+  ? string
+  : never;
 
-export const consume = <T extends TokenType, V extends string = string>(
+export const consume = <
+  T extends TokenType,
+  V extends TokenValue<T> = TokenValue<T>,
+>(
   data: string,
   i: number,
   type: T,
   value?: V,
 ): Token<T, V> | Abrupt => {
   const token = lex(data, i);
-  if (abrupt(token)) return token;
+  if (isAbrupt(token)) return token;
   return match(token, type, value) ? token : error(token);
 };
 
@@ -29,8 +41,20 @@ export const consumeToken = <T extends TokenMatcher>(
   expected: T,
 ): (T extends TokenMatcher<infer V> ? Token<TokenType, V> : never) | Abrupt => {
   const token = lex(data, i);
-  if (abrupt(token)) return token;
+  if (isAbrupt(token)) return token;
   return matchToken(token, expected) ? token : error(token);
+};
+
+export const isAbrupt = (token: {} | { type: string }): token is Abrupt => {
+  return isError(token) || isUnused(token);
+};
+
+export const isError = (token: {} | { type: string }): token is Error => {
+  return (token as any)?.type === 'Error';
+};
+
+export const isUnused = (token: {} | { type: string }): token is Unused => {
+  return (token as any)?.type === 'Unused';
 };
 
 export const match = <T extends TokenType, V extends string = string>(
@@ -49,5 +73,6 @@ export const matchToken = <T extends TokenMatcher>(
   actual: Token,
   expected: T,
 ): actual is T extends TokenMatcher<infer V> ? Token<TokenType, V> : never => {
-  return Boolean(expected[actual.type]?.includes(actual.value));
+  const expectedValue: string[] | undefined = expected[actual.type];
+  return Boolean(expectedValue?.includes(actual.value));
 };

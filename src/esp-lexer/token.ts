@@ -1,4 +1,5 @@
 import { TokenType } from './token-type';
+import { TokenValue } from './token-utils';
 
 export type Token<
   T extends TokenType = TokenType,
@@ -70,5 +71,5 @@ export const StringToken = <V extends string = string>(
 ): StringToken<V> => Token(TokenType.String, start, end, value);
 
 export type TokenMatcher<V extends string = string> = {
-  [K in TokenType]?: V[];
+  [T in TokenType]?: (TokenValue<T> & V)[];
 };

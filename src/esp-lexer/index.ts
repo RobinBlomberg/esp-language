@@ -4,9 +4,9 @@ export { stylize } from './stylize';
 export type { Token, TokenMatcher } from './token';
 export { TokenType } from './token-type';
 export {
-  abrupt,
   consume,
   consumeToken,
+  isAbrupt,
   match,
   matchToken,
 } from './token-utils';

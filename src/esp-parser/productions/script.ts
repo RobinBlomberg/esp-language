@@ -1,4 +1,4 @@
-import { Parser, abrupt } from '../../esp-lexer';
+import { Parser, isAbrupt } from '../../esp-lexer';
 import { Script, Statement } from '../ast';
 import { parseStatement } from './statement';
 
@@ -7,7 +7,7 @@ export const parseScript: Parser<Script> = (data, i) => {
 
   while (true) {
     const statement = parseStatement(data, i);
-    if (abrupt(statement)) {
+    if (isAbrupt(statement)) {
       return statement.type === 'Error'
         ? statement
         : Script(body[0]?.start ?? 0, body[body.length - 1]?.end ?? 0, body);

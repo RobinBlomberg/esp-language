@@ -1,7 +1,7 @@
 import { runInNewContext } from 'vm';
 import { serializeWithSourceMap } from '../es-serializer/serialize';
 import { transformScript } from '../esp-es-transformer';
-import { abrupt } from '../esp-lexer';
+import { isAbrupt } from '../esp-lexer';
 import { parse } from '../esp-parser';
 import { createRuntimeError, createSyntaxError } from './errors';
 import { logError } from './log-error';
@@ -11,7 +11,7 @@ export const run = (source: string, sourceFileName?: string) => {
 
   const parseResult = parse(source);
 
-  if (abrupt(parseResult)) {
+  if (isAbrupt(parseResult)) {
     const error = createSyntaxError(
       source,
       sourceFileName,

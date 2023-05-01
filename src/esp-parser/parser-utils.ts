@@ -2,8 +2,8 @@ import {
   Parser,
   Token,
   TokenMatcher,
-  abrupt,
   consumeToken,
+  isAbrupt,
   lex,
 } from '../esp-lexer';
 import { error } from '../esp-lexer/abrupt';
@@ -22,16 +22,16 @@ export const createLeftAssociativeBinaryExpressionParser = (
 ): Parser<Expression> => {
   return (data, i) => {
     let expression = parse(data, i);
-    if (abrupt(expression)) return expression;
+    if (isAbrupt(expression)) return expression;
     i = expression.end;
 
     while (true) {
       const operator = consumeToken(data, i, operatorToken);
-      if (abrupt(operator)) return expression;
+      if (isAbrupt(operator)) return expression;
       i = operator.end;
 
       const right = parse(data, operator.end);
-      if (abrupt(right)) return error(right);
+      if (isAbrupt(right)) return error(right);
       i = right.end;
 
       expression = BinaryExpression(

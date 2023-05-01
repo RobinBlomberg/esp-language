@@ -1,4 +1,4 @@
-import { Parser, abrupt, consumeToken } from '../../esp-lexer';
+import { Parser, consumeToken, isAbrupt } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { Expression, UpdateExpression } from '../ast';
 import { errors } from '../errors';
@@ -9,11 +9,11 @@ import { parseUnaryExpression } from './unary-expression';
 
 export const parseUpdateExpression: Parser<Expression> = (data, i) => {
   const prefixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
-  if (!abrupt(prefixOperator)) {
+  if (!isAbrupt(prefixOperator)) {
     i = prefixOperator.end;
 
     const argument = parseUnaryExpression(data, i);
-    if (abrupt(argument)) return error(argument);
+    if (isAbrupt(argument)) return error(argument);
     if (!isSimpleNode(argument)) {
       throw new ReferenceError(errors.invalidLeftHandSideInAssigment());
     }
@@ -28,11 +28,11 @@ export const parseUpdateExpression: Parser<Expression> = (data, i) => {
   }
 
   const argument = parseLeftHandSideExpression(data, i);
-  if (abrupt(argument)) return argument;
+  if (isAbrupt(argument)) return argument;
   i = argument.end;
 
   const postfixOperator = consumeToken(data, i, UpdateOperatorTokenMatcher);
-  if (abrupt(postfixOperator)) return argument;
+  if (isAbrupt(postfixOperator)) return argument;
   if (!isSimpleNode(argument)) {
     throw new ReferenceError(errors.invalidLeftHandSideInAssigment());
   }

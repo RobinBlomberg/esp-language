@@ -1,4 +1,5 @@
 import { MemberExpression } from '../es-ast';
+import { ControlKeyword, Keyword } from '../esp-grammar';
 
 export const enum NodeType {
   ArrayLiteral = 'ArrayLiteral',
@@ -12,6 +13,7 @@ export const enum NodeType {
   ContinueStatement = 'ContinueStatement',
   DoWhileStatement = 'DoWhileStatement',
   ExpressionStatement = 'ExpressionStatement',
+  ForStatement = 'ForStatement',
   Function = 'Function',
   Identifier = 'Identifier',
   IfStatement = 'IfStatement',
@@ -62,6 +64,7 @@ export type NodeMap = {
   [NodeType.ContinueStatement]: ContinueStatement;
   [NodeType.DoWhileStatement]: DoWhileStatement;
   [NodeType.ExpressionStatement]: ExpressionStatement;
+  [NodeType.ForStatement]: ForStatement;
   [NodeType.Function]: Function;
   [NodeType.Identifier]: Identifier;
   [NodeType.IfStatement]: IfStatement;
@@ -344,6 +347,27 @@ export const ExpressionStatement = (
   expression: Expression,
 ) => {
   return Node(start, end, NodeType.ExpressionStatement, { expression });
+};
+
+export type ForStatement = {
+  type: NodeType.ForStatement;
+  start: number;
+  end: number;
+  init: Expression | null;
+  test: Expression | null;
+  update: Expression | null;
+  body: Statement;
+};
+
+export const ForStatement = (
+  start: number,
+  end: number,
+  init: Expression | null,
+  test: Expression | null,
+  update: Expression | null,
+  body: Statement,
+) => {
+  return Node(start, end, NodeType.ForStatement, { init, test, update, body });
 };
 
 export type Function = {
@@ -680,9 +704,9 @@ export const VariableDeclaration = (
   return Node(start, end, NodeType.VariableDeclaration, { kind, id, init });
 };
 
-export type VariableKind = 'const' | 'let';
+export type VariableKind = ControlKeyword.Const | ControlKeyword.Let;
 
-export const VariableKind: VariableKind[] = ['const', 'let'];
+export const VariableKind: VariableKind[] = [Keyword.Const, Keyword.Let];
 
 export type WhileStatement = {
   type: NodeType.WhileStatement;

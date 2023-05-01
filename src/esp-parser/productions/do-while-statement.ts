@@ -1,36 +1,37 @@
-import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
+import { Keyword } from '../../esp-grammar';
+import { Parser, TokenType, consume, isAbrupt } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { DoWhileStatement } from '../ast';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
 export const parseDoWhileStatement: Parser<DoWhileStatement> = (data, i) => {
-  const do_ = consume(data, i, TokenType.Keyword, 'do');
-  if (abrupt(do_)) return do_;
+  const do_ = consume(data, i, TokenType.Keyword, Keyword.Do);
+  if (isAbrupt(do_)) return do_;
   i = do_.end;
 
   const body = parseStatement(data, i);
-  if (abrupt(body)) return error(body);
+  if (isAbrupt(body)) return error(body);
   i = body.end;
 
-  const while_ = consume(data, i, TokenType.Keyword, 'while');
-  if (abrupt(while_)) return error(while_);
+  const while_ = consume(data, i, TokenType.Keyword, Keyword.While);
+  if (isAbrupt(while_)) return error(while_);
   i = while_.end;
 
   const open = consume(data, i, TokenType.Punctuator, '(');
-  if (abrupt(open)) return error(open);
+  if (isAbrupt(open)) return error(open);
   i = open.end;
 
   const test = parseExpression(data, i);
-  if (abrupt(test)) return error(test);
+  if (isAbrupt(test)) return error(test);
   i = test.end;
 
   const close = consume(data, i, TokenType.Punctuator, ')');
-  if (abrupt(close)) return error(close);
+  if (isAbrupt(close)) return error(close);
   i = close.end;
 
   const terminator = consume(data, i, TokenType.Punctuator, ';');
-  if (abrupt(terminator)) return error(terminator);
+  if (isAbrupt(terminator)) return error(terminator);
 
   return DoWhileStatement(do_.start, body.end, body, test);
 };

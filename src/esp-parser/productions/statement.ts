@@ -1,4 +1,4 @@
-import { Parser, abrupt, lex } from '../../esp-lexer';
+import { Parser, isAbrupt, lex } from '../../esp-lexer';
 import { Statement } from '../ast';
 import { parseBlockStatement } from './block-statement';
 import { parseBreakStatement } from './break-statement';
@@ -14,7 +14,7 @@ import { parseWhileStatement } from './while-statement';
 
 export const parseStatement: Parser<Statement> = (data, i) => {
   const token = lex(data, i);
-  if (abrupt(token)) return token;
+  if (isAbrupt(token)) return token;
 
   switch (token.value) {
     case '{':
