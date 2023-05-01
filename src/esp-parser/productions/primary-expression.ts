@@ -15,10 +15,13 @@ export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
   switch (token.value) {
     case '[':
       return parseArrayLiteral(data, i);
-    case '{':
-      return parseObjectLiteral(data, i);
-    case '#':
-      return parseSetLiteral(data, i);
+    case '{': {
+      const nextToken = lex(data, i + 1);
+      if (abrupt(nextToken)) return error(nextToken);
+      return nextToken.value === '['
+        ? parseSetLiteral(data, i)
+        : parseObjectLiteral(data, i);
+    }
     case '(': {
       const open = consume(data, i, TokenType.Punctuator, '(');
       if (abrupt(open)) return open;

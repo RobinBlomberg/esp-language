@@ -20,7 +20,7 @@ suite('PrimaryExpression', () => {
     ok('987.6543210');
     ok('Infinity');
     ok('NaN');
-    ok(/* s */ ``);
+    ok('""');
     ok('"ab\\"cd"');
     ok('undefined');
   });
@@ -28,21 +28,21 @@ suite('PrimaryExpression', () => {
   test(/* s */ `ArrayLiteral`, () => {
     ok('[]');
     ok('[1]');
-    ok('[1, 2]');
+    ok('[1,2]');
     error('[');
   });
 
   test(/* s */ `ObjectLiteral`, () => {
     ok('{}');
-    ok('{a: 1}');
-    ok('{a: 1, b: 2}');
+    ok('{a:1}');
+    ok('{a:1,b:2}');
     error('{');
   });
 
   test(/* s */ `SetLiteral`, () => {
-    ok('#{}');
-    ok('#{1}');
-    ok('#{1, 2}');
+    ok('{[]}');
+    ok('{[1]}');
+    ok('{[1,2]}');
   });
 
   test(/* s */ `CoverParenthesizedExpression`, () => {

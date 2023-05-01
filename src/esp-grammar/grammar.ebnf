@@ -254,7 +254,7 @@ ReturnStatement ::=
   | 'return' Expression ';'
 
 SetLiteral ::=
-  | '#' '{' ExpressionList '}'
+  | '{' '[' ExpressionList ']' '}'
 
 ShiftExpression ::=
   | AdditiveExpression

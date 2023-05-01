@@ -4,20 +4,24 @@ import { SetLiteral } from '../ast';
 import { parseExpressionList } from './internal/expression-list';
 
 export const parseSetLiteral: Parser<SetLiteral> = (data, i) => {
-  const open = consume(data, i, TokenType.Punctuator, '#');
-  if (abrupt(open)) return open;
-  i = open.end;
+  const openCurly = consume(data, i, TokenType.Punctuator, '{');
+  if (abrupt(openCurly)) return openCurly;
+  i = openCurly.end;
 
-  const openParen = consume(data, i, TokenType.Punctuator, '{');
-  if (abrupt(openParen)) return error(openParen);
-  i = openParen.end;
+  const openBracket = consume(data, i, TokenType.Punctuator, '[');
+  if (abrupt(openBracket)) return error(openBracket);
+  i = openBracket.end;
 
   const values = parseExpressionList(data, i);
   if (abrupt(values)) return error(values);
   i = values.end;
 
-  const closeParen = consume(data, i, TokenType.Punctuator, '}');
-  if (abrupt(closeParen)) return error(closeParen);
+  const closeBracket = consume(data, i, TokenType.Punctuator, ']');
+  if (abrupt(closeBracket)) return error(closeBracket);
+  i = closeBracket.end;
 
-  return SetLiteral(open.start, closeParen.end, values.values);
+  const closeCurly = consume(data, i, TokenType.Punctuator, '}');
+  if (abrupt(closeCurly)) return error(closeCurly);
+
+  return SetLiteral(openCurly.start, closeCurly.end, values.values);
 };
