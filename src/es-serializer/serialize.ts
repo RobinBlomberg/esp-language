@@ -70,10 +70,7 @@ import { writeVariableDeclarator } from './nodes/variable-declarator';
 import { writeWhileStatement } from './nodes/while-statement';
 import { writeWithStatement } from './nodes/with-statement';
 import { writeYieldExpression } from './nodes/yield-expression';
-import {
-  isIdentifierPartChar as isIdentifierEnd,
-  isIdentifierStart,
-} from './writer-utils';
+import { needsSpaceBetween } from './writer-utils';
 
 const writers: { [K in NodeType]: Writer<NodeMap[K]> } = {
   [NodeType.ArrayExpression]: writeArrayExpression,
@@ -165,12 +162,7 @@ export const serializeWithSourceMap = (node: Node) => {
     if (typeof input === 'string') {
       const lastChar = output[output.length - 1];
 
-      if (
-        lastChar &&
-        !isLexical &&
-        isIdentifierEnd(lastChar) &&
-        isIdentifierStart(input[0]!)
-      ) {
+      if (lastChar && !isLexical && needsSpaceBetween(lastChar, input[0]!)) {
         output += ' ';
       }
 

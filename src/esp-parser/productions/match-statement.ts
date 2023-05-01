@@ -1,9 +1,8 @@
 import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { MatchCase, MatchStatement, Statement } from '../ast';
-import { lookahead } from '../parser-utils';
 import { parseExpression } from './expression';
-import { parseUnionClause } from './internal/union-clause';
+import { parseExpressionList } from './internal/expression-list';
 import { parseStatement } from './statement';
 
 /**
@@ -21,8 +20,11 @@ import { parseStatement } from './statement';
  *   CaseClauses CaseClause
  *
  * CaseClause :
- *   Expression Statement
- *   UnionClause Statement
+ *   ExpressionList Statement
+ *
+ * ExpressionList :
+ *   Expression
+ *   ExpressionList , Expression
  * ```
  *
  * @see https://tc39.es/ecma262/#prod-SwitchStatement
@@ -60,20 +62,20 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
       if (abrupt(alternateResult)) return error(alternateResult);
       alternate = alternateResult;
       i = alternate.end;
+      break;
     }
 
-    const test =
-      lookahead(data, i) === '{'
-        ? parseUnionClause(data, i)
-        : parseExpression(data, i);
-    if (abrupt(test)) break;
-    i = test.end;
+    const tests = parseExpressionList(data, i);
+    if (abrupt(tests) || tests.values.length === 0) break;
+    i = tests.end;
 
     const consequent = parseStatement(data, i);
     if (abrupt(consequent)) return error(consequent);
     i = consequent.end;
 
-    cases.push(MatchCase(test.start, consequent.end, test, consequent));
+    cases.push(
+      MatchCase(tests.start, consequent.end, tests.values, consequent),
+    );
   }
 
   const closeCurly = consume(data, i, TokenType.Punctuator, '}');

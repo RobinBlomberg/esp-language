@@ -6,12 +6,12 @@ import { parseExpression } from '../expression';
 
 /**
  * ```ecmarkup
- * ValueList :
- *   Value
- *   ValueList , Value
+ * ExpressionList :
+ *   Expression
+ *   ExpressionList , Expression
  * ```
  */
-export const parseValueList = (data: string, i: number) => {
+export const parseExpressionList = (data: string, i: number) => {
   const values: Expression[] = [];
 
   while (true) {
@@ -31,5 +31,5 @@ export const parseValueList = (data: string, i: number) => {
     values.push(value);
   }
 
-  return { end: i, values };
+  return { start: values[0]?.start ?? i, end: i, values };
 };

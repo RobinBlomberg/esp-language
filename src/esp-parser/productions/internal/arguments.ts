@@ -1,6 +1,6 @@
 import { TokenType, abrupt, consume } from '../../../esp-lexer';
 import { error, unused } from '../../../esp-lexer/abrupt';
-import { parseValueList } from './value-list';
+import { parseExpressionList } from './expression-list';
 
 /**
  * Modified from ECMA-262:
@@ -17,7 +17,7 @@ export const parseArguments = (data: string, i: number) => {
   if (abrupt(open)) return unused(open);
   i = open.end;
 
-  const arguments_ = parseValueList(data, i);
+  const arguments_ = parseExpressionList(data, i);
   if (abrupt(arguments_)) return error(arguments_);
   i = arguments_.end;
 

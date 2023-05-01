@@ -1,7 +1,7 @@
 import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error, unused } from '../../esp-lexer/abrupt';
 import { ArrayLiteral } from '../ast';
-import { parseValueList } from './internal/value-list';
+import { parseExpressionList } from './internal/expression-list';
 
 /**
  * Adapted from ECMA-262:
@@ -24,7 +24,7 @@ export const parseArrayLiteral: Parser<ArrayLiteral> = (data, i) => {
   if (abrupt(open)) return unused(open);
   i = open.end;
 
-  const elements = parseValueList(data, i);
+  const elements = parseExpressionList(data, i);
   if (abrupt(elements)) return error(elements);
   i = elements.end;
 

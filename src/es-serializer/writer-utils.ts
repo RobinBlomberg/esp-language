@@ -42,3 +42,7 @@ export const isIdentifierStart = (char: string) => {
     UnicodeIDStart.test(char) || char === '$' || char === '_' || char === '\\'
   );
 };
+
+export const needsSpaceBetween = (leftChar: string, rightChar: string) => {
+  return isIdentifierPartChar(leftChar) && isIdentifierPartChar(rightChar);
+};

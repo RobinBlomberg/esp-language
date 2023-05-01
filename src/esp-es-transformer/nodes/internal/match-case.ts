@@ -4,29 +4,17 @@ import { injectSourceRange } from '../../inject-source-range';
 import { transform } from '../../transform';
 
 export const transformMatchCase = (node: ESP.MatchCase) => {
-  if (node.test.type === ESP.NodeType.UnionClause) {
-    const length = node.test.values.length;
+  const lastIndex = node.tests.length - 1;
 
-    return node.test.values.map((value, index) => {
-      return injectSourceRange(
-        value,
-        ES.SwitchCase(
-          transform(value),
-          index === length - 1
-            ? [transform(node.consequent), ES.BreakStatement(null)]
-            : [],
-        ),
-      );
-    });
-  }
-
-  return [
-    injectSourceRange(
-      node,
-      ES.SwitchCase(transform(node.test), [
-        transform(node.consequent),
-        ES.BreakStatement(null),
-      ]),
-    ),
-  ];
+  return node.tests.map((value, index) => {
+    return injectSourceRange(
+      value,
+      ES.SwitchCase(
+        transform(value),
+        index === lastIndex
+          ? [transform(node.consequent), ES.BreakStatement(null)]
+          : [],
+      ),
+    );
+  });
 };

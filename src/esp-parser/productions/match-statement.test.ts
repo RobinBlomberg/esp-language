@@ -5,16 +5,16 @@ import { parseMatchStatement } from './match-statement';
 const { error, ok, unused } = createParseAssert(parseMatchStatement);
 
 suite('MatchStatement', () => {
-  test('"match ( Expression ) ExpressionBlock"', () => {
+  test('"match ( Expression ) CaseBlock"', () => {
     unused();
     ok('match(a){}');
     ok('match(a){b c;}');
     ok('match(a){b c;d e;}');
     ok('match(a){b c;else d;}');
     ok('match(a){b c;d e;f g;}');
-    ok('match(a){{c,d}e;}');
-    ok('match(a){{1}{}}');
-    ok('match(a){{1,2}{}}');
+    ok('match(a){c,d e;}');
+    ok('match(a){1{}}');
+    ok('match(a){1,2{}}');
     error('match');
     error('match(');
     error('match(a');
@@ -31,21 +31,21 @@ suite('MatchStatement', () => {
     error('match(a){b c;else d;');
     error('match(a){');
     error('match(a){,}');
-    error('match(a){, 1}');
+    error('match(a){,1}');
     error('match(a){1');
     error('match(a){1,');
     error('match(a){1,}');
-    error('match(a){1, 2');
-    error('match(a){1, 2,}');
-    error('match(a){1, , 2}');
+    error('match(a){1,2');
+    error('match(a){1,2,}');
+    error('match(a){1,,2}');
     error('match(a){1 2}');
-    error('match(a){{b');
-    error('match(a){{b}');
-    error('match(a){{b,}');
-    error('match(a){{b,c');
-    error('match(a){{b,c}');
-    error('match(a){{b,c}}');
-    error('match(a){{b,c}d;');
-    error('match(a){{b,c}d }');
+    error('match(a){b');
+    error('match(a){b}');
+    error('match(a){b,}');
+    error('match(a){b,c');
+    error('match(a){b,c');
+    error('match(a){b,c}');
+    error('match(a){b,c d;');
+    error('match(a){b,c d}');
   });
 });

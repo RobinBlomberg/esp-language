@@ -1,7 +1,7 @@
 import { Parser, TokenType, abrupt, consume } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
 import { SetLiteral } from '../ast';
-import { parseValueList } from './internal/value-list';
+import { parseExpressionList } from './internal/expression-list';
 
 /**
  * ```ecmarkup
@@ -18,7 +18,7 @@ export const parseSetLiteral: Parser<SetLiteral> = (data, i) => {
   if (abrupt(openParen)) return error(openParen);
   i = openParen.end;
 
-  const values = parseValueList(data, i);
+  const values = parseExpressionList(data, i);
   if (abrupt(values)) return error(values);
   i = values.end;
 

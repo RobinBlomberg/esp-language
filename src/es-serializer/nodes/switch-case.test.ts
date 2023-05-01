@@ -4,6 +4,7 @@ import {
   CallExpression,
   ExpressionStatement,
   Identifier,
+  Literal,
   SwitchCase,
 } from '../../es-ast';
 import { serialize } from '../serialize';
@@ -23,6 +24,7 @@ suite('SwitchCase', () => {
             ]),
           ),
         ).toBe('case a:b();break;');
+        expect(serialize(SwitchCase(Literal(0), []))).toBe('case 0:');
       },
     );
   });

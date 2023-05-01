@@ -414,17 +414,17 @@ export type MatchCase = {
   type: NodeType.MatchCase;
   start: number;
   end: number;
-  test: Expression | UnionClause;
+  tests: Expression[];
   consequent: Statement;
 };
 
 export const MatchCase = (
   start: number,
   end: number,
-  test: Expression | UnionClause,
+  tests: Expression[],
   consequent: Statement,
 ) => {
-  return Node(start, end, NodeType.MatchCase, { test, consequent });
+  return Node(start, end, NodeType.MatchCase, { tests, consequent });
 };
 
 export type MatchStatement = {
