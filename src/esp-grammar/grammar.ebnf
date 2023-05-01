@@ -138,6 +138,9 @@ ExpressionList ::=
 ExpressionStatement ::=
   | Expression ';'
 
+ForStatement ::=
+  | 'for' '(' VariableDeclaration? ';' Expression? ';' Expression? ')' Statement
+
 Function ::=
   | ':' '(' ParameterList? ')' BlockStatement
   | ':' '(' ParameterList? ')' Expression
@@ -271,6 +274,7 @@ Statement ::=
   | ContinueStatement
   | DoWhileStatement
   | ExpressionStatement
+  | ForStatement
   | IfStatement
   | MatchStatement
   | ReturnStatement

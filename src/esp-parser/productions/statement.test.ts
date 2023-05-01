@@ -28,6 +28,10 @@ suite('Statement', () => {
     ok('a;');
   });
 
+  test(/* s */ `ForStatement`, () => {
+    ok('for(;;){};');
+  });
+
   test(/* s */ `IfStatement`, () => {
     ok('if(a)b;');
     ok('if(a)b;else c;');

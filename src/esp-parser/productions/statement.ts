@@ -5,6 +5,7 @@ import { parseBreakStatement } from './break-statement';
 import { parseContinueStatement } from './continue-statement';
 import { parseDoWhileStatement } from './do-while-statement';
 import { parseExpressionStatement } from './expression-statement';
+import { parseForStatement } from './for-statement';
 import { parseIfStatement } from './if-statement';
 import { parseMatchStatement } from './match-statement';
 import { parseReturnStatement } from './return-statement';
@@ -25,6 +26,8 @@ export const parseStatement: Parser<Statement> = (data, i) => {
       return parseContinueStatement(data, i);
     case 'do':
       return parseDoWhileStatement(data, i);
+    case 'for':
+      return parseForStatement(data, i);
     case 'if':
       return parseIfStatement(data, i);
     case 'const':

@@ -353,7 +353,7 @@ export type ForStatement = {
   type: NodeType.ForStatement;
   start: number;
   end: number;
-  init: Expression | null;
+  init: VariableDeclaration | null;
   test: Expression | null;
   update: Expression | null;
   body: Statement;
@@ -362,7 +362,7 @@ export type ForStatement = {
 export const ForStatement = (
   start: number,
   end: number,
-  init: Expression | null,
+  init: VariableDeclaration | null,
   test: Expression | null,
   update: Expression | null,
   body: Statement,
@@ -579,6 +579,7 @@ export type Statement =
   | ContinueStatement
   | DoWhileStatement
   | ExpressionStatement
+  | ForStatement
   | IfStatement
   | MatchStatement
   | ReturnStatement

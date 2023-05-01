@@ -7,12 +7,12 @@ const { error, ok, unused } = createParseAssert(parseVariableDeclaration);
 suite('VariableDeclaration', () => {
   test(/* s */ `LetOrConst Identifier '=' Expression ';'`, () => {
     unused();
-    ok('let a=b;');
     ok('const a=b;');
+    ok('let i=0;');
     error('let');
-    error('let a');
-    error('let a=');
-    error('let a=b');
-    error('let continue=b');
+    error('let i');
+    error('let i=');
+    error('let i=0');
+    error('let continue=0');
   });
 });
