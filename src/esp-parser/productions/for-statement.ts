@@ -1,12 +1,26 @@
 import { Keyword } from '../../esp-grammar';
-import { Parser, TokenType, consume, isAbrupt } from '../../esp-lexer';
+import {
+  Parser,
+  TokenType,
+  consume,
+  consumeToken,
+  isAbrupt,
+} from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
-import { ForStatement, VariableDeclaration } from '../ast';
+import { ForOfStatement, ForStatement, VariableDeclaration } from '../ast';
+import { lookahead } from '../parser-utils';
+import {
+  ForStatementInitTokenMatcher,
+  VariableKindTokenMatcher,
+} from '../token-matchers';
 import { parseExpression } from './expression';
+import { parseIdentifier } from './identifier';
 import { parseStatement } from './statement';
-import { parseVariableDeclaration } from './variable-declaration';
 
-export const parseForStatement: Parser<ForStatement> = (data, i) => {
+export const parseForStatement: Parser<ForOfStatement | ForStatement> = (
+  data,
+  i,
+) => {
   const for_ = consume(data, i, TokenType.Keyword, Keyword.For);
   if (isAbrupt(for_)) return for_;
   i = for_.end;
@@ -15,34 +29,66 @@ export const parseForStatement: Parser<ForStatement> = (data, i) => {
   if (isAbrupt(open)) return error(open);
   i = open.end;
 
-  const initResult = parseVariableDeclaration(data, i);
-  let init: VariableDeclaration | null = null;
-  if (isAbrupt(initResult)) {
-    const initTerminator = consume(data, i, TokenType.Punctuator, ';');
-    if (isAbrupt(initTerminator)) return error(initTerminator);
-    i = initTerminator.end;
-  } else {
-    i = initResult.end;
-    init = initResult;
+  const kind = consumeToken(data, i, VariableKindTokenMatcher);
+  if (isAbrupt(kind)) return error(kind);
+  i = kind.end;
+
+  const id = parseIdentifier(data, i);
+  if (isAbrupt(id)) return error(id);
+  i = id.end;
+
+  const operator = consumeToken(data, i, ForStatementInitTokenMatcher);
+  if (isAbrupt(operator)) return error(operator);
+  i = operator.end;
+
+  if (operator.value === Keyword.Of) {
+    const right = parseExpression(data, i);
+    if (isAbrupt(right)) return error(right);
+    i = right.end;
+
+    const close = consume(data, i, TokenType.Punctuator, ')');
+    if (isAbrupt(close)) return error(close);
+    i = close.end;
+
+    const body = parseStatement(data, i);
+    if (isAbrupt(body)) return error(body);
+
+    return ForOfStatement(for_.start, body.end, id, right, body);
   }
 
-  let testTerminator = consume(data, i, TokenType.Punctuator, ';');
-  const test = isAbrupt(testTerminator) ? parseExpression(data, i) : null;
+  const declarationInit = parseExpression(data, i);
+  if (isAbrupt(declarationInit)) return error(declarationInit);
+  i = declarationInit.end;
+
+  const init = VariableDeclaration(
+    kind.start,
+    declarationInit.end,
+    kind.value,
+    id,
+    declarationInit,
+  );
+
+  const initTerminator = consume(data, i, TokenType.Punctuator, ';');
+  if (isAbrupt(initTerminator)) return error(initTerminator);
+  i = initTerminator.end;
+
+  const test = lookahead(data, i) === ';' ? null : parseExpression(data, i);
   if (test) {
     if (isAbrupt(test)) return error(test);
     i = test.end;
   }
-  testTerminator = consume(data, i, TokenType.Punctuator, ';');
+
+  const testTerminator = consume(data, i, TokenType.Punctuator, ';');
   if (isAbrupt(testTerminator)) return error(testTerminator);
   i = testTerminator.end;
 
-  let close = consume(data, i, TokenType.Punctuator, ')');
-  const update = isAbrupt(close) ? parseExpression(data, i) : null;
+  const update = lookahead(data, i) === ';' ? null : parseExpression(data, i);
   if (update) {
     if (isAbrupt(update)) return error(update);
     i = update.end;
   }
-  close = consume(data, i, TokenType.Punctuator, ')');
+
+  const close = consume(data, i, TokenType.Punctuator, ')');
   if (isAbrupt(close)) return error(close);
   i = close.end;
 

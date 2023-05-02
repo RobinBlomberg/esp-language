@@ -140,6 +140,7 @@ ExpressionStatement ::=
 
 ForStatement ::=
   | 'for' '(' VariableDeclaration? ';' Expression? ';' Expression? ')' Statement
+  | 'for' '(' LetOrConst Identifier 'of' Expression ')' Statement
 
 Function ::=
   | ':' '(' ParameterList? ')' BlockStatement

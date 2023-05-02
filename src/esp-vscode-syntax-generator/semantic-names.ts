@@ -30,6 +30,7 @@ export const controlKeywordNames: Record<ControlKeyword, Name> = {
   [ControlKeyword.Let]: 'storage.type.esp',
   [ControlKeyword.Match]: 'keyword.control.switch.esp',
   [ControlKeyword.New]: 'keyword.operator.new.esp',
+  [ControlKeyword.Of]: 'keyword.operator.expression.of.esp',
   [ControlKeyword.Return]: 'keyword.control.flow.esp',
   [ControlKeyword.Throw]: 'keyword.control.trycatch.esp',
   [ControlKeyword.While]: 'keyword.control.loop.esp',

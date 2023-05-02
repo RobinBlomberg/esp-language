@@ -11,6 +11,7 @@ import { transformConditionalExpression } from './nodes/conditional-expression';
 import { transformContinueStatement } from './nodes/continue-statement';
 import { transformDoWhileStatement } from './nodes/do-while-statement';
 import { transformExpressionStatement } from './nodes/expression-statement';
+import { transformForOfStatement } from './nodes/for-of-statement';
 import { transformForStatement } from './nodes/for-statement';
 import { transformFunction } from './nodes/function';
 import { transformIdentifier } from './nodes/identifier';
@@ -41,6 +42,7 @@ type ToESNode<T extends ESP.Node> = {
   [ESP.NodeType.ContinueStatement]: ES.ContinueStatement;
   [ESP.NodeType.DoWhileStatement]: ES.DoWhileStatement;
   [ESP.NodeType.ExpressionStatement]: ES.ExpressionStatement;
+  [ESP.NodeType.ForOfStatement]: ES.ForOfStatement;
   [ESP.NodeType.ForStatement]: ES.ForStatement;
   [ESP.NodeType.Function]: ES.ArrowFunctionExpression;
   [ESP.NodeType.Identifier]: ES.Identifier;
@@ -74,6 +76,7 @@ const transformers: {
   [ESP.NodeType.ContinueStatement]: transformContinueStatement,
   [ESP.NodeType.DoWhileStatement]: transformDoWhileStatement,
   [ESP.NodeType.ExpressionStatement]: transformExpressionStatement,
+  [ESP.NodeType.ForOfStatement]: transformForOfStatement,
   [ESP.NodeType.ForStatement]: transformForStatement,
   [ESP.NodeType.Function]: transformFunction,
   [ESP.NodeType.Identifier]: transformIdentifier,

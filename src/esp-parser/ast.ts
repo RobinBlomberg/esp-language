@@ -13,6 +13,7 @@ export const enum NodeType {
   ContinueStatement = 'ContinueStatement',
   DoWhileStatement = 'DoWhileStatement',
   ExpressionStatement = 'ExpressionStatement',
+  ForOfStatement = 'ForOfStatement',
   ForStatement = 'ForStatement',
   Function = 'Function',
   Identifier = 'Identifier',
@@ -64,6 +65,7 @@ export type NodeMap = {
   [NodeType.ContinueStatement]: ContinueStatement;
   [NodeType.DoWhileStatement]: DoWhileStatement;
   [NodeType.ExpressionStatement]: ExpressionStatement;
+  [NodeType.ForOfStatement]: ForOfStatement;
   [NodeType.ForStatement]: ForStatement;
   [NodeType.Function]: Function;
   [NodeType.Identifier]: Identifier;
@@ -153,6 +155,24 @@ export type AssignmentOperator =
   | '**='
   | '&&='
   | '||=';
+
+export const AssignmentOperator: AssignmentOperator[] = [
+  '=',
+  '*=',
+  '/=',
+  '%=',
+  '+=',
+  '-=',
+  '<<=',
+  '>>=',
+  '>>>=',
+  '&=',
+  '^=',
+  '|=',
+  '**=',
+  '&&=',
+  '||=',
+];
 
 export type BinaryExpression = {
   type: NodeType.BinaryExpression;
@@ -347,6 +367,25 @@ export const ExpressionStatement = (
   expression: Expression,
 ) => {
   return Node(start, end, NodeType.ExpressionStatement, { expression });
+};
+
+export type ForOfStatement = {
+  type: NodeType.ForOfStatement;
+  start: number;
+  end: number;
+  left: Identifier;
+  right: Expression;
+  body: Statement;
+};
+
+export const ForOfStatement = (
+  start: number,
+  end: number,
+  left: Identifier,
+  right: Expression,
+  body: Statement,
+) => {
+  return Node(start, end, NodeType.ForOfStatement, { left, right, body });
 };
 
 export type ForStatement = {
@@ -579,6 +618,7 @@ export type Statement =
   | ContinueStatement
   | DoWhileStatement
   | ExpressionStatement
+  | ForOfStatement
   | ForStatement
   | IfStatement
   | MatchStatement
@@ -644,6 +684,8 @@ export const UnaryExpression = (
 
 export type UnaryOperator = '-' | '!';
 
+export const UnaryOperator: UnaryOperator[] = ['-', '!'];
+
 export type UnionClause = {
   type: NodeType.UnionClause;
   start: number;
@@ -691,7 +733,7 @@ export type VariableDeclaration = {
   start: number;
   end: number;
   kind: VariableKind;
-  id: string;
+  id: Identifier;
   init: Expression;
 };
 
@@ -699,7 +741,7 @@ export const VariableDeclaration = (
   start: number,
   end: number,
   kind: VariableKind,
-  id: string,
+  id: Identifier,
   init: Expression,
 ) => {
   return Node(start, end, NodeType.VariableDeclaration, { kind, id, init });

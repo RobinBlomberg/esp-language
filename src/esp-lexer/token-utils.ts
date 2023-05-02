@@ -39,7 +39,7 @@ export const consumeToken = <T extends TokenMatcher>(
   data: string,
   i: number,
   expected: T,
-): (T extends TokenMatcher<infer V> ? Token<TokenType, V> : never) | Abrupt => {
+) => {
   const token = lex(data, i);
   if (isAbrupt(token)) return token;
   return matchToken(token, expected) ? token : error(token);
@@ -70,9 +70,9 @@ export const match = <T extends TokenType, V extends string = string>(
 };
 
 export const matchToken = <T extends TokenMatcher>(
-  actual: Token,
-  expected: T,
-): actual is T extends TokenMatcher<infer V> ? Token<TokenType, V> : never => {
-  const expectedValue: string[] | undefined = expected[actual.type];
-  return Boolean(expectedValue?.includes(actual.value));
+  token: Token,
+  matcher: T,
+): token is T extends TokenMatcher<infer U> ? U : never => {
+  const expectedValue = matcher[token.type];
+  return Boolean(expectedValue?.includes(token.value));
 };

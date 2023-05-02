@@ -9,6 +9,7 @@ import { error } from '../../esp-lexer/abrupt';
 import { VariableDeclaration } from '../ast';
 import { VariableKindTokenMatcher } from '../token-matchers';
 import { parseExpression } from './expression';
+import { parseIdentifier } from './identifier';
 
 export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   data,
@@ -18,7 +19,7 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   if (isAbrupt(kind)) return kind;
   i = kind.end;
 
-  const id = consume(data, i, TokenType.Identifier);
+  const id = parseIdentifier(data, i);
   if (isAbrupt(id)) return error(id);
   i = id.end;
 
@@ -33,11 +34,5 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   const terminator = consume(data, i, TokenType.Punctuator, ';');
   if (isAbrupt(terminator)) return error(terminator);
 
-  return VariableDeclaration(
-    kind.start,
-    terminator.end,
-    kind.value,
-    id.value,
-    init,
-  );
+  return VariableDeclaration(kind.start, terminator.end, kind.value, id, init);
 };

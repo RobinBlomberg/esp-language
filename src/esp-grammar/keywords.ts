@@ -20,6 +20,7 @@ export enum ControlKeyword {
   Let = 'let',
   Match = 'match',
   New = 'new',
+  Of = 'of',
   Return = 'return',
   Throw = 'throw',
   While = 'while',

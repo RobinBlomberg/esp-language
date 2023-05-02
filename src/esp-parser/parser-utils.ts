@@ -2,6 +2,7 @@ import {
   Parser,
   Token,
   TokenMatcher,
+  TokenType,
   consumeToken,
   isAbrupt,
   lex,
@@ -18,7 +19,7 @@ import {
 
 export const createLeftAssociativeBinaryExpressionParser = (
   parse: Parser<Expression>,
-  operatorToken: TokenMatcher<BinaryOperator>,
+  operatorToken: TokenMatcher<Token<TokenType.Punctuator, BinaryOperator>>,
 ): Parser<Expression> => {
   return (data, i) => {
     let expression = parse(data, i);

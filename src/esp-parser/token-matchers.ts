@@ -1,4 +1,5 @@
-import { TokenMatcher, TokenType } from '../esp-lexer';
+import { ControlKeyword, Keyword } from '../esp-grammar';
+import { TokenType } from '../esp-lexer';
 import {
   AssignmentOperator,
   UnaryOperator,
@@ -6,35 +7,23 @@ import {
   VariableKind,
 } from './ast';
 
-export const AssignmentOperatorTokenMatcher: TokenMatcher<AssignmentOperator> =
-  {
-    [TokenType.Punctuator]: [
-      '=',
-      '*=',
-      '/=',
-      '%=',
-      '+=',
-      '-=',
-      '<<=',
-      '>>=',
-      '>>>=',
-      '&=',
-      '^=',
-      '|=',
-      '**=',
-      '&&=',
-      '||=',
-    ],
-  };
-
-export const UnaryOperatorTokenMatcher: TokenMatcher<UnaryOperator> = {
-  [TokenType.Punctuator]: ['-', '!'],
+export const AssignmentOperatorTokenMatcher = {
+  [TokenType.Punctuator]: AssignmentOperator,
 };
 
-export const UpdateOperatorTokenMatcher: TokenMatcher<UpdateOperator> = {
+export const ForStatementInitTokenMatcher = {
+  [TokenType.Keyword]: [Keyword.Of] as [ControlKeyword.Of],
+  [TokenType.Punctuator]: ['='] as ['='],
+};
+
+export const UnaryOperatorTokenMatcher = {
+  [TokenType.Punctuator]: UnaryOperator,
+};
+
+export const UpdateOperatorTokenMatcher = {
   [TokenType.Punctuator]: UpdateOperator,
 };
 
-export const VariableKindTokenMatcher: TokenMatcher<VariableKind> = {
+export const VariableKindTokenMatcher = {
   [TokenType.Keyword]: VariableKind,
 };

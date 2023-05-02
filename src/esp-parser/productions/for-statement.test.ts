@@ -36,4 +36,9 @@ suite('ForStatement', () => {
       error('for(let');
     },
   );
+
+  test(/* s */ `'for' '(' VariableDeclaration 'of' Expression ')' Statement`, () => {
+    ok('for(let a of b){};');
+    error('for(let a=b of');
+  });
 });
