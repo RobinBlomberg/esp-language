@@ -4,9 +4,9 @@ import { lex } from './lex';
 import { Token } from './token';
 import { TokenType } from './token-type';
 
-const createAbruptAssert = (type: 'Error' | 'Unused') => (data: string) => {
+const createAbruptAssert = (abrupt: 'Error' | 'Unused') => (data: string) => {
   const token = lex(data, 0);
-  expect(token.type).toBe(type);
+  expect(token.abrupt).toBe(abrupt);
 };
 
 const createAssert = (type: TokenType) => (data: string, expected?: string) => {

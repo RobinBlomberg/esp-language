@@ -1,28 +1,27 @@
-import { Parser, TokenType, consume, isAbrupt } from '../../esp-lexer';
-import { error } from '../../esp-lexer/abrupt';
+import { consume, error, Parser, TokenType } from '../../esp-lexer';
 import { ConditionalExpression, Expression } from '../ast';
 import { parseExpression } from './expression';
 import { parseLogicalORExpression } from './logical-or-expression';
 
 export const parseConditionalExpression: Parser<Expression> = (data, i) => {
   const test = parseLogicalORExpression(data, i);
-  if (isAbrupt(test)) return test;
+  if (test.abrupt) return test;
   i = test.end;
 
   const consequentOperator = consume(data, i, TokenType.Punctuator, '?');
-  if (isAbrupt(consequentOperator)) return test;
+  if (consequentOperator.abrupt) return test;
   i = consequentOperator.end;
 
   const consequent = parseExpression(data, i);
-  if (isAbrupt(consequent)) return error(consequent);
+  if (consequent.abrupt) return error(consequent);
   i = consequent.end;
 
   const alternateOperator = consume(data, i, TokenType.Punctuator, ':');
-  if (isAbrupt(alternateOperator)) return error(alternateOperator);
+  if (alternateOperator.abrupt) return error(alternateOperator);
   i = alternateOperator.end;
 
   const alternate = parseExpression(data, i);
-  if (isAbrupt(alternate)) return error(alternate);
+  if (alternate.abrupt) return error(alternate);
 
   return ConditionalExpression(
     test.start,

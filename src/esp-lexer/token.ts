@@ -5,6 +5,7 @@ export type Token<
   T extends TokenType = TokenType,
   V extends string = string,
 > = {
+  abrupt?: never;
   type: T;
   start: number;
   end: number;

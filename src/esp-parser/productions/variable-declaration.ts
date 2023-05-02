@@ -1,11 +1,10 @@
 import {
-  Parser,
-  TokenType,
   consume,
   consumeToken,
-  isAbrupt,
+  error,
+  Parser,
+  TokenType,
 } from '../../esp-lexer';
-import { error } from '../../esp-lexer/abrupt';
 import { VariableDeclaration } from '../ast';
 import { VariableKindTokenMatcher } from '../token-matchers';
 import { parseExpression } from './expression';
@@ -15,23 +14,23 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   i,
 ) => {
   const kind = consumeToken(data, i, VariableKindTokenMatcher);
-  if (isAbrupt(kind)) return kind;
+  if (kind.abrupt) return kind;
   i = kind.end;
 
   const id = consume(data, i, TokenType.Identifier);
-  if (isAbrupt(id)) return error(id);
+  if (id.abrupt) return error(id);
   i = id.end;
 
   const operator = consume(data, i, TokenType.Punctuator, '=');
-  if (isAbrupt(operator)) return error(operator);
+  if (operator.abrupt) return error(operator);
   i = operator.end;
 
   const init = parseExpression(data, i);
-  if (isAbrupt(init)) return error(init);
+  if (init.abrupt) return error(init);
   i = init.end;
 
   const terminator = consume(data, i, TokenType.Punctuator, ';');
-  if (isAbrupt(terminator)) return error(terminator);
+  if (terminator.abrupt) return error(terminator);
 
   return VariableDeclaration(
     kind.start,

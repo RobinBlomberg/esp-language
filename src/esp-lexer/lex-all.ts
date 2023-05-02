@@ -1,6 +1,5 @@
 import { lex } from './lex';
 import { Token } from './token';
-import { isAbrupt } from './token-utils';
 
 export const lexAll = (data: string, i = 0) => {
   const tokens: Token[] = [];
@@ -8,7 +7,7 @@ export const lexAll = (data: string, i = 0) => {
   while (true) {
     const token = lex(data, i);
 
-    if (isAbrupt(token)) {
+    if (token.abrupt) {
       return tokens;
     }
 

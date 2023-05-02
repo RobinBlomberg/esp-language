@@ -1,6 +1,5 @@
 import { Keyword } from '../../esp-grammar';
-import { Parser, TokenType, consume, isAbrupt } from '../../esp-lexer';
-import { error } from '../../esp-lexer/abrupt';
+import { consume, error, Parser, TokenType } from '../../esp-lexer';
 import { MatchCase, MatchStatement, Statement } from '../ast';
 import { parseExpression } from './expression';
 import { parseExpressionList } from './internal/expression-list';
@@ -8,23 +7,23 @@ import { parseStatement } from './statement';
 
 export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
   const match_ = consume(data, i, TokenType.Keyword, Keyword.Match);
-  if (isAbrupt(match_)) return match_;
+  if (match_.abrupt) return match_;
   i = match_.end;
 
   const openParen = consume(data, i, TokenType.Punctuator, '(');
-  if (isAbrupt(openParen)) return error(openParen);
+  if (openParen.abrupt) return error(openParen);
   i = openParen.end;
 
   const discriminant = parseExpression(data, i);
-  if (isAbrupt(discriminant)) return error(discriminant);
+  if (discriminant.abrupt) return error(discriminant);
   i = discriminant.end;
 
   const closeParen = consume(data, i, TokenType.Punctuator, ')');
-  if (isAbrupt(closeParen)) return error(closeParen);
+  if (closeParen.abrupt) return error(closeParen);
   i = closeParen.end;
 
   const openCurly = consume(data, i, TokenType.Punctuator, '{');
-  if (isAbrupt(openCurly)) return error(openCurly);
+  if (openCurly.abrupt) return error(openCurly);
   i = openCurly.end;
 
   const cases: MatchCase[] = [];
@@ -32,22 +31,22 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
 
   while (true) {
     const else_ = consume(data, i, TokenType.Keyword, Keyword.Else);
-    if (!isAbrupt(else_)) {
+    if (!else_.abrupt) {
       i = else_.end;
 
       const alternateResult = parseStatement(data, i);
-      if (isAbrupt(alternateResult)) return error(alternateResult);
+      if (alternateResult.abrupt) return error(alternateResult);
       alternate = alternateResult;
       i = alternate.end;
       break;
     }
 
     const tests = parseExpressionList(data, i);
-    if (isAbrupt(tests) || tests.values.length === 0) break;
+    if (tests.abrupt || tests.values.length === 0) break;
     i = tests.end;
 
     const consequent = parseStatement(data, i);
-    if (isAbrupt(consequent)) return error(consequent);
+    if (consequent.abrupt) return error(consequent);
     i = consequent.end;
 
     cases.push(
@@ -56,7 +55,7 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
   }
 
   const closeCurly = consume(data, i, TokenType.Punctuator, '}');
-  if (isAbrupt(closeCurly)) return error(closeCurly);
+  if (closeCurly.abrupt) return error(closeCurly);
 
   return MatchStatement(
     openParen.start,

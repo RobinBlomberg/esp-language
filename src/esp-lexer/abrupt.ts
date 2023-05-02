@@ -1,25 +1,27 @@
 export type Abrupt = Error | Unused;
 
 export type Error = {
-  type: 'Error';
+  abrupt: 'Error';
+  type?: never;
   start: number;
   end: number;
 };
 
 export const Error = (start: number, end: number): Error => ({
-  type: 'Error',
+  abrupt: 'Error',
   start,
   end,
 });
 
 export type Unused = {
-  type: 'Unused';
+  abrupt: 'Unused';
+  type?: never;
   start: number;
   end: number;
 };
 
 export const Unused = (index: number): Unused => ({
-  type: 'Unused',
+  abrupt: 'Unused',
   start: index,
   end: index,
 });
@@ -31,7 +33,7 @@ export const error = ({
   start: number;
   end: number;
 }): Error => ({
-  type: 'Error',
+  abrupt: 'Error',
   start,
   end,
 });
@@ -43,7 +45,7 @@ export const unused = ({
   start: number;
   end: number;
 }): Unused => ({
-  type: 'Unused',
+  abrupt: 'Unused',
   start,
   end,
 });

@@ -1,10 +1,9 @@
-import { Parser, TokenType, isAbrupt, lex } from '../../esp-lexer';
-import { error } from '../../esp-lexer/abrupt';
+import { error, lex, Parser, TokenType } from '../../esp-lexer';
 import { Literal } from '../ast';
 
 export const parseLiteral: Parser<Literal> = (data, i) => {
   const token = lex(data, i);
-  if (isAbrupt(token)) return token;
+  if (token.abrupt) return token;
 
   switch (token.type) {
     case TokenType.Keyword:
