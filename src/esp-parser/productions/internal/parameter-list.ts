@@ -7,18 +7,18 @@ import {
   Unused,
   unused,
 } from '../../../esp-lexer';
-import { Identifier, NonAbrupt } from '../../ast';
+import { IR } from '../../../ir';
 import { parseIdentifier } from '../identifier';
 
 export const parseParameterList = (
   data: string,
   i: number,
-): NonAbrupt<{ end: number; parameters: Identifier[] }> | Abrupt => {
+): { abrupt?: never; end: number; parameters: IR.Identifier[] } | Abrupt => {
   const open = consume(data, i, TokenType.Punctuator, '(');
   if (open.abrupt) return unused(open);
   i = open.end;
 
-  const parameters: Identifier[] = [];
+  const parameters: IR.Identifier[] = [];
 
   while (true) {
     let comma: PunctuatorToken<','> | Abrupt = Unused(i);

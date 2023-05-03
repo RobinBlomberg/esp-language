@@ -1,8 +1,8 @@
 import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
+import { IR } from '../../ir';
 import { injectSourceRange } from '../inject-source-range';
 
-export const transformLiteral = (node: ESP.Literal) => {
+export const transformLiteral = (node: IR.Literal) => {
   return injectSourceRange(
     node,
     node.value === undefined

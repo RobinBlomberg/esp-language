@@ -1,12 +1,12 @@
 import { consumeToken, error, Parser } from '../../esp-lexer';
-import { AssignmentExpression, Expression } from '../ast';
+import { IR } from '../../ir';
 import { errors } from '../errors';
 import { isSimpleNode, lookahead } from '../parser-utils';
 import { AssignmentOperatorTokenMatcher } from '../token-matchers';
 import { parseConditionalExpression } from './conditional-expression';
 import { parseFunction } from './function';
 
-export const parseExpression: Parser<Expression> = (data, i) => {
+export const parseExpression: Parser<IR.Expression> = (data, i) => {
   const left =
     lookahead(data, i) === ':'
       ? parseFunction(data, i)
@@ -25,7 +25,7 @@ export const parseExpression: Parser<Expression> = (data, i) => {
   const right = parseExpression(data, operator.end);
   if (right.abrupt) return error(right);
 
-  return AssignmentExpression(
+  return IR.AssignmentExpression(
     left.start,
     right.end,
     operator.value,

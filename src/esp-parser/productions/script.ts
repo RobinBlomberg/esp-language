@@ -1,16 +1,16 @@
 import { Parser } from '../../esp-lexer';
-import { Script, Statement } from '../ast';
+import { IR } from '../../ir';
 import { parseStatement } from './statement';
 
-export const parseScript: Parser<Script> = (data, i) => {
-  const body: Statement[] = [];
+export const parseScript: Parser<IR.Script> = (data, i) => {
+  const body: IR.Statement[] = [];
 
   while (true) {
     const statement = parseStatement(data, i);
     if (statement.abrupt) {
       return statement.abrupt === 'Error'
         ? statement
-        : Script(body[0]?.start ?? 0, body[body.length - 1]?.end ?? 0, body);
+        : IR.Script(body[0]?.start ?? 0, body[body.length - 1]?.end ?? 0, body);
     }
 
     body.push(statement);

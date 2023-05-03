@@ -1,9 +1,9 @@
 import { consumeToken, error, Parser } from '../../esp-lexer';
-import { Expression, UnaryExpression } from '../ast';
+import { IR } from '../../ir';
 import { UnaryOperatorTokenMatcher } from '../token-matchers';
 import { parseUpdateExpression } from './update-expression';
 
-export const parseUnaryExpression: Parser<Expression> = (data, i) => {
+export const parseUnaryExpression: Parser<IR.Expression> = (data, i) => {
   const operator = consumeToken(data, i, UnaryOperatorTokenMatcher);
 
   if (operator.abrupt) return parseUpdateExpression(data, i);
@@ -12,7 +12,7 @@ export const parseUnaryExpression: Parser<Expression> = (data, i) => {
   const argument = parseUnaryExpression(data, i);
   if (argument.abrupt) return error(argument);
 
-  return UnaryExpression(
+  return IR.UnaryExpression(
     operator.start,
     argument.end,
     operator.value,

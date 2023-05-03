@@ -1,5 +1,5 @@
 import { ES } from '../es-ast';
-import { ESP } from '../esp-parser';
+import { IR } from '../ir';
 import { transformArrayLiteral } from './nodes/array-literal';
 import { transformAssignmentExpression } from './nodes/assignment-expression';
 import { transformBinaryExpression } from './nodes/binary-expression';
@@ -30,75 +30,75 @@ import { transformUpdateExpression } from './nodes/update-expression';
 import { transformVariableDeclaration } from './nodes/variable-declaration';
 import { transformWhileStatement } from './nodes/while-statement';
 
-type ToESNode<T extends ESP.Node> = {
-  [ESP.NodeType.ArrayLiteral]: ES.ArrayExpression;
-  [ESP.NodeType.AssignmentExpression]: ES.AssignmentExpression;
-  [ESP.NodeType.BinaryExpression]: ES.BinaryExpression | ES.LogicalExpression;
-  [ESP.NodeType.BlockStatement]: ES.BlockStatement;
-  [ESP.NodeType.BreakStatement]: ES.BreakStatement;
-  [ESP.NodeType.CallExpression]: ES.CallExpression;
-  [ESP.NodeType.ComputedMemberExpression]: ES.MemberExpression;
-  [ESP.NodeType.ConditionalExpression]: ES.ConditionalExpression;
-  [ESP.NodeType.ContinueStatement]: ES.ContinueStatement;
-  [ESP.NodeType.DoWhileStatement]: ES.DoWhileStatement;
-  [ESP.NodeType.ExpressionStatement]: ES.ExpressionStatement;
-  [ESP.NodeType.ForOfStatement]: ES.ForOfStatement;
-  [ESP.NodeType.ForStatement]: ES.ForStatement;
-  [ESP.NodeType.Function]: ES.ArrowFunctionExpression;
-  [ESP.NodeType.Identifier]: ES.Identifier;
-  [ESP.NodeType.IfStatement]: ES.IfStatement;
-  [ESP.NodeType.Literal]: ES.Identifier | ES.Literal;
-  [ESP.NodeType.MatchStatement]: ES.SwitchStatement;
-  [ESP.NodeType.NewExpression]: ES.NewExpression;
-  [ESP.NodeType.ObjectLiteral]: ES.ObjectExpression;
-  [ESP.NodeType.ReturnStatement]: ES.ReturnStatement;
-  [ESP.NodeType.Script]: ES.Program;
-  [ESP.NodeType.SetLiteral]: ES.NewExpression;
-  [ESP.NodeType.StaticMemberExpression]: ES.MemberExpression;
-  [ESP.NodeType.ThrowStatement]: ES.ThrowStatement;
-  [ESP.NodeType.UnaryExpression]: ES.UnaryExpression;
-  [ESP.NodeType.UpdateExpression]: ES.UpdateExpression;
-  [ESP.NodeType.VariableDeclaration]: ES.VariableDeclaration;
-  [ESP.NodeType.WhileStatement]: ES.WhileStatement;
+type ToESNode<T extends IR.Node> = {
+  [IR.NodeType.ArrayLiteral]: ES.ArrayExpression;
+  [IR.NodeType.AssignmentExpression]: ES.AssignmentExpression;
+  [IR.NodeType.BinaryExpression]: ES.BinaryExpression | ES.LogicalExpression;
+  [IR.NodeType.BlockStatement]: ES.BlockStatement;
+  [IR.NodeType.BreakStatement]: ES.BreakStatement;
+  [IR.NodeType.CallExpression]: ES.CallExpression;
+  [IR.NodeType.ComputedMemberExpression]: ES.MemberExpression;
+  [IR.NodeType.ConditionalExpression]: ES.ConditionalExpression;
+  [IR.NodeType.ContinueStatement]: ES.ContinueStatement;
+  [IR.NodeType.DoWhileStatement]: ES.DoWhileStatement;
+  [IR.NodeType.ExpressionStatement]: ES.ExpressionStatement;
+  [IR.NodeType.ForOfStatement]: ES.ForOfStatement;
+  [IR.NodeType.ForStatement]: ES.ForStatement;
+  [IR.NodeType.Function]: ES.ArrowFunctionExpression;
+  [IR.NodeType.Identifier]: ES.Identifier;
+  [IR.NodeType.IfStatement]: ES.IfStatement;
+  [IR.NodeType.Literal]: ES.Identifier | ES.Literal;
+  [IR.NodeType.MatchStatement]: ES.SwitchStatement;
+  [IR.NodeType.NewExpression]: ES.NewExpression;
+  [IR.NodeType.ObjectLiteral]: ES.ObjectExpression;
+  [IR.NodeType.ReturnStatement]: ES.ReturnStatement;
+  [IR.NodeType.Script]: ES.Program;
+  [IR.NodeType.SetLiteral]: ES.NewExpression;
+  [IR.NodeType.StaticMemberExpression]: ES.MemberExpression;
+  [IR.NodeType.ThrowStatement]: ES.ThrowStatement;
+  [IR.NodeType.UnaryExpression]: ES.UnaryExpression;
+  [IR.NodeType.UpdateExpression]: ES.UpdateExpression;
+  [IR.NodeType.VariableDeclaration]: ES.VariableDeclaration;
+  [IR.NodeType.WhileStatement]: ES.WhileStatement;
 }[T['type']];
 
 const transformers: {
-  [T in ESP.Node['type']]: Transformer<ESP.NodeMap[T]>;
+  [T in IR.Node['type']]: Transformer<IR.NodeMap[T]>;
 } = {
-  [ESP.NodeType.ArrayLiteral]: transformArrayLiteral,
-  [ESP.NodeType.AssignmentExpression]: transformAssignmentExpression,
-  [ESP.NodeType.BinaryExpression]: transformBinaryExpression,
-  [ESP.NodeType.BlockStatement]: transformBlockStatement,
-  [ESP.NodeType.BreakStatement]: transformBreakStatement,
-  [ESP.NodeType.CallExpression]: transformCallExpression,
-  [ESP.NodeType.ComputedMemberExpression]: transformComputedMemberExpression,
-  [ESP.NodeType.ConditionalExpression]: transformConditionalExpression,
-  [ESP.NodeType.ContinueStatement]: transformContinueStatement,
-  [ESP.NodeType.DoWhileStatement]: transformDoWhileStatement,
-  [ESP.NodeType.ExpressionStatement]: transformExpressionStatement,
-  [ESP.NodeType.ForOfStatement]: transformForOfStatement,
-  [ESP.NodeType.ForStatement]: transformForStatement,
-  [ESP.NodeType.Function]: transformFunction,
-  [ESP.NodeType.Identifier]: transformIdentifier,
-  [ESP.NodeType.IfStatement]: transformIfStatement,
-  [ESP.NodeType.Literal]: transformLiteral,
-  [ESP.NodeType.MatchStatement]: transformMatchStatement,
-  [ESP.NodeType.NewExpression]: transformNewExpression,
-  [ESP.NodeType.ObjectLiteral]: transformObjectLiteral,
-  [ESP.NodeType.ReturnStatement]: transformReturnStatement,
-  [ESP.NodeType.Script]: transformScript,
-  [ESP.NodeType.SetLiteral]: transformSetLiteral,
-  [ESP.NodeType.StaticMemberExpression]: transformStaticMemberExpression,
-  [ESP.NodeType.ThrowStatement]: transformThrowStatement,
-  [ESP.NodeType.UnaryExpression]: transformUnaryExpression,
-  [ESP.NodeType.UpdateExpression]: transformUpdateExpression,
-  [ESP.NodeType.VariableDeclaration]: transformVariableDeclaration,
-  [ESP.NodeType.WhileStatement]: transformWhileStatement,
+  [IR.NodeType.ArrayLiteral]: transformArrayLiteral,
+  [IR.NodeType.AssignmentExpression]: transformAssignmentExpression,
+  [IR.NodeType.BinaryExpression]: transformBinaryExpression,
+  [IR.NodeType.BlockStatement]: transformBlockStatement,
+  [IR.NodeType.BreakStatement]: transformBreakStatement,
+  [IR.NodeType.CallExpression]: transformCallExpression,
+  [IR.NodeType.ComputedMemberExpression]: transformComputedMemberExpression,
+  [IR.NodeType.ConditionalExpression]: transformConditionalExpression,
+  [IR.NodeType.ContinueStatement]: transformContinueStatement,
+  [IR.NodeType.DoWhileStatement]: transformDoWhileStatement,
+  [IR.NodeType.ExpressionStatement]: transformExpressionStatement,
+  [IR.NodeType.ForOfStatement]: transformForOfStatement,
+  [IR.NodeType.ForStatement]: transformForStatement,
+  [IR.NodeType.Function]: transformFunction,
+  [IR.NodeType.Identifier]: transformIdentifier,
+  [IR.NodeType.IfStatement]: transformIfStatement,
+  [IR.NodeType.Literal]: transformLiteral,
+  [IR.NodeType.MatchStatement]: transformMatchStatement,
+  [IR.NodeType.NewExpression]: transformNewExpression,
+  [IR.NodeType.ObjectLiteral]: transformObjectLiteral,
+  [IR.NodeType.ReturnStatement]: transformReturnStatement,
+  [IR.NodeType.Script]: transformScript,
+  [IR.NodeType.SetLiteral]: transformSetLiteral,
+  [IR.NodeType.StaticMemberExpression]: transformStaticMemberExpression,
+  [IR.NodeType.ThrowStatement]: transformThrowStatement,
+  [IR.NodeType.UnaryExpression]: transformUnaryExpression,
+  [IR.NodeType.UpdateExpression]: transformUpdateExpression,
+  [IR.NodeType.VariableDeclaration]: transformVariableDeclaration,
+  [IR.NodeType.WhileStatement]: transformWhileStatement,
 };
 
-export type Transformer<T extends ESP.Node> = (node: T) => ToESNode<T>;
+export type Transformer<T extends IR.Node> = (node: T) => ToESNode<T>;
 
-export const transform = <T extends ESP.Node>(node: T) => {
-  const transformer = transformers[node.type] as Transformer<ESP.Node>;
+export const transform = <T extends IR.Node>(node: T) => {
+  const transformer = transformers[node.type] as Transformer<IR.Node>;
   return transformer(node) as ToESNode<T>;
 };

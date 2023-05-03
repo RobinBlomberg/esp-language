@@ -1,5 +1,5 @@
 import { lex, Parser } from '../../esp-lexer';
-import { Statement } from '../ast';
+import { IR } from '../../ir';
 import { parseBlockStatement } from './block-statement';
 import { parseBreakStatement } from './break-statement';
 import { parseContinueStatement } from './continue-statement';
@@ -13,7 +13,7 @@ import { parseThrowStatement } from './throw-statement';
 import { parseVariableDeclaration } from './variable-declaration';
 import { parseWhileStatement } from './while-statement';
 
-export const parseStatement: Parser<Statement> = (data, i) => {
+export const parseStatement: Parser<IR.Statement> = (data, i) => {
   const token = lex(data, i);
   if (token.abrupt) return token;
 

@@ -1,8 +1,8 @@
 import { consume, error, Parser, TokenType, unused } from '../../esp-lexer';
-import { ArrayLiteral } from '../ast';
+import { IR } from '../../ir';
 import { parseExpressionList } from './internal/expression-list';
 
-export const parseArrayLiteral: Parser<ArrayLiteral> = (data, i) => {
+export const parseArrayLiteral: Parser<IR.ArrayLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '[');
   if (open.abrupt) return unused(open);
   i = open.end;
@@ -14,5 +14,5 @@ export const parseArrayLiteral: Parser<ArrayLiteral> = (data, i) => {
   const close = consume(data, i, TokenType.Punctuator, ']');
   if (close.abrupt) return error(close);
 
-  return ArrayLiteral(open.start, close.end, elements.values);
+  return IR.ArrayLiteral(open.start, close.end, elements.values);
 };

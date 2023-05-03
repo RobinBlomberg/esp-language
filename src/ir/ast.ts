@@ -1,6 +1,3 @@
-import { MemberExpression } from '../es-ast';
-import { ControlKeyword, Keyword } from '../esp-grammar';
-
 export const enum NodeType {
   ArrayLiteral = 'ArrayLiteral',
   AssignmentExpression = 'AssignmentExpression',
@@ -21,6 +18,7 @@ export const enum NodeType {
   Literal = 'Literal',
   MatchCase = 'MatchCase',
   MatchStatement = 'MatchStatement',
+  MemberExpression = 'MemberExpression',
   NewExpression = 'NewExpression',
   ObjectLiteral = 'ObjectLiteral',
   Property = 'Property',
@@ -36,16 +34,12 @@ export const enum NodeType {
   WhileStatement = 'WhileStatement',
 }
 
-export type BaseNode<
-  T extends NodeType,
-  U extends Record<string, unknown>,
-> = NonAbrupt<
-  {
-    type: T;
-    start: number;
-    end: number;
-  } & U
->;
+export type BaseNode<T extends NodeType, U extends Record<string, unknown>> = {
+  abrupt?: never;
+  type: T;
+  start: number;
+  end: number;
+} & U;
 
 export type LeftHandSideExpression =
   | CallExpression
@@ -84,6 +78,7 @@ export type NodeMap = {
   [NodeType.Literal]: Literal;
   [NodeType.MatchCase]: MatchCase;
   [NodeType.MatchStatement]: MatchStatement;
+  [NodeType.MemberExpression]: MemberExpression;
   [NodeType.NewExpression]: NewExpression;
   [NodeType.ObjectLiteral]: ObjectLiteral;
   [NodeType.Property]: Property;
@@ -97,10 +92,6 @@ export type NodeMap = {
   [NodeType.UpdateExpression]: UpdateExpression;
   [NodeType.VariableDeclaration]: VariableDeclaration;
   [NodeType.WhileStatement]: WhileStatement;
-};
-
-export type NonAbrupt<T extends Record<string, unknown>> = T & {
-  abrupt?: never;
 };
 
 export type PrimaryExpression =
@@ -520,6 +511,29 @@ export const MatchStatement = (
   });
 };
 
+export type MemberExpression = BaseNode<
+  NodeType.MemberExpression,
+  {
+    object: Expression;
+    property: Expression;
+    computed: boolean;
+  }
+>;
+
+export const MemberExpression = (
+  start: number,
+  end: number,
+  object: Expression,
+  property: Expression,
+  computed: boolean,
+) => {
+  return Node(start, end, NodeType.MemberExpression, {
+    object,
+    property,
+    computed,
+  });
+};
+
 export type MultiplicativeOperator = '*' | '/' | '%';
 
 export type NewExpression = BaseNode<
@@ -738,7 +752,7 @@ export const UpdateOperator: UpdateOperator[] = ['++', '--'];
 export type VariableDeclaration = BaseNode<
   NodeType.VariableDeclaration,
   {
-    kind: VariableKind;
+    mutable: boolean;
     id: Identifier;
     init: Expression;
   }
@@ -747,16 +761,12 @@ export type VariableDeclaration = BaseNode<
 export const VariableDeclaration = (
   start: number,
   end: number,
-  kind: VariableKind,
+  mutable: boolean,
   id: Identifier,
   init: Expression,
 ) => {
-  return Node(start, end, NodeType.VariableDeclaration, { kind, id, init });
+  return Node(start, end, NodeType.VariableDeclaration, { mutable, id, init });
 };
-
-export type VariableKind = ControlKeyword.Const | ControlKeyword.Let;
-
-export const VariableKind: VariableKind[] = [Keyword.Const, Keyword.Let];
 
 export type WhileStatement = BaseNode<
   NodeType.WhileStatement,

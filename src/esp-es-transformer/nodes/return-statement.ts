@@ -1,8 +1,8 @@
 import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
+import { IR } from '../../ir';
 import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
 
-export const transformReturnStatement = (node: ESP.ReturnStatement) => {
+export const transformReturnStatement = (node: IR.ReturnStatement) => {
   return injectSourceRange(node, ES.ReturnStatement(transform(node.argument)));
 };

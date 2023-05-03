@@ -1,14 +1,9 @@
 import { ControlKeyword, Keyword } from '../esp-grammar';
 import { TokenType } from '../esp-lexer';
-import {
-  AssignmentOperator,
-  UnaryOperator,
-  UpdateOperator,
-  VariableKind,
-} from './ast';
+import { IR } from '../ir';
 
 export const AssignmentOperatorTokenMatcher = {
-  [TokenType.Punctuator]: AssignmentOperator,
+  [TokenType.Punctuator]: IR.AssignmentOperator,
 };
 
 export const ForStatementInitTokenMatcher = {
@@ -17,13 +12,13 @@ export const ForStatementInitTokenMatcher = {
 };
 
 export const UnaryOperatorTokenMatcher = {
-  [TokenType.Punctuator]: UnaryOperator,
+  [TokenType.Punctuator]: IR.UnaryOperator,
 };
 
 export const UpdateOperatorTokenMatcher = {
-  [TokenType.Punctuator]: UpdateOperator,
+  [TokenType.Punctuator]: IR.UpdateOperator,
 };
 
 export const VariableKindTokenMatcher = {
-  [TokenType.Keyword]: VariableKind,
+  [TokenType.Keyword]: ['const', 'let'] as ['const', 'let'],
 };

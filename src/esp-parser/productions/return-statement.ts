@@ -1,9 +1,9 @@
 import { Keyword } from '../../esp-grammar';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ReturnStatement } from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 
-export const parseReturnStatement: Parser<ReturnStatement> = (data, i) => {
+export const parseReturnStatement: Parser<IR.ReturnStatement> = (data, i) => {
   const return_ = consume(data, i, TokenType.Keyword, Keyword.Return);
   if (return_.abrupt) return return_;
   i = return_.end;
@@ -15,5 +15,5 @@ export const parseReturnStatement: Parser<ReturnStatement> = (data, i) => {
   const terminator = consume(data, i, TokenType.Punctuator, ';');
   if (terminator.abrupt) return error(terminator);
 
-  return ReturnStatement(return_.start, terminator.end, argument);
+  return IR.ReturnStatement(return_.start, terminator.end, argument);
 };

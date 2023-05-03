@@ -1,11 +1,11 @@
 import { Abrupt, consume, error, TokenType, unused } from '../../../esp-lexer';
-import { Expression, NonAbrupt } from '../../ast';
+import { IR } from '../../../ir';
 import { parseExpressionList } from './expression-list';
 
 export const parseArguments = (
   data: string,
   i: number,
-): NonAbrupt<{ end: number; arguments: Expression[] }> | Abrupt => {
+): { abrupt?: never; end: number; arguments: IR.Expression[] } | Abrupt => {
   const open = consume(data, i, TokenType.Punctuator, '(');
   if (open.abrupt) return unused(open);
   i = open.end;

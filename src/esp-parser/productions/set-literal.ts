@@ -1,8 +1,8 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { SetLiteral } from '../ast';
+import { IR } from '../../ir';
 import { parseExpressionList } from './internal/expression-list';
 
-export const parseSetLiteral: Parser<SetLiteral> = (data, i) => {
+export const parseSetLiteral: Parser<IR.SetLiteral> = (data, i) => {
   const openCurly = consume(data, i, TokenType.Punctuator, '{');
   if (openCurly.abrupt) return openCurly;
   i = openCurly.end;
@@ -22,5 +22,5 @@ export const parseSetLiteral: Parser<SetLiteral> = (data, i) => {
   const closeCurly = consume(data, i, TokenType.Punctuator, '}');
   if (closeCurly.abrupt) return error(closeCurly);
 
-  return SetLiteral(openCurly.start, closeCurly.end, values.values);
+  return IR.SetLiteral(openCurly.start, closeCurly.end, values.values);
 };

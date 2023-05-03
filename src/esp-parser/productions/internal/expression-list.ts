@@ -7,14 +7,16 @@ import {
   TokenType,
   Unused,
 } from '../../../esp-lexer';
-import { Expression, NonAbrupt } from '../../ast';
+import { IR } from '../../../ir';
 import { parseExpression } from '../expression';
 
 export const parseExpressionList = (
   data: string,
   i: number,
-): NonAbrupt<{ start: number; end: number; values: Expression[] }> | Error => {
-  const values: Expression[] = [];
+):
+  | { abrupt?: never; start: number; end: number; values: IR.Expression[] }
+  | Error => {
+  const values: IR.Expression[] = [];
 
   while (true) {
     let comma: PunctuatorToken<','> | Abrupt = Unused(i);

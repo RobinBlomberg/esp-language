@@ -1,19 +1,19 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ObjectLiteral, Property } from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
 
-export const parseObjectLiteral: Parser<ObjectLiteral> = (data, i) => {
+export const parseObjectLiteral: Parser<IR.ObjectLiteral> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, '{');
   if (open.abrupt) return open;
   i = open.end;
 
-  const properties: Property[] = [];
+  const properties: IR.Property[] = [];
 
   while (true) {
     const close = consume(data, i, TokenType.Punctuator, '}');
     if (!close.abrupt) {
-      return ObjectLiteral(open.start, close.end, properties);
+      return IR.ObjectLiteral(open.start, close.end, properties);
     }
 
     if (properties.length >= 1) {
@@ -34,6 +34,6 @@ export const parseObjectLiteral: Parser<ObjectLiteral> = (data, i) => {
     if (value.abrupt) return error(value);
     i = value.end;
 
-    properties.push(Property(key.start, value.end, key, value));
+    properties.push(IR.Property(key.start, value.end, key, value));
   }
 };

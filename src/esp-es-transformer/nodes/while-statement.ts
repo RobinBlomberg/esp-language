@@ -1,9 +1,9 @@
 import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
+import { IR } from '../../ir';
 import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
 
-export const transformWhileStatement = (node: ESP.WhileStatement) => {
+export const transformWhileStatement = (node: IR.WhileStatement) => {
   return injectSourceRange(
     node,
     ES.WhileStatement(transform(node.test), transform(node.body)),

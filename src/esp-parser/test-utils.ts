@@ -1,8 +1,8 @@
 import { expect } from 'vitest';
 import { Parser } from '../esp-lexer';
-import { Node } from './ast';
+import { IR } from '../ir';
 
-export const createParseAssert = <T extends Node>(parse: Parser<T>) => {
+export const createParseAssert = <T extends IR.Node>(parse: Parser<T>) => {
   return {
     error: (data: string) => {
       expect(parse(data, 0)).toMatchObject({ abrupt: 'Error' });

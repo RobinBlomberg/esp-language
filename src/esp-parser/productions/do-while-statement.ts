@@ -1,10 +1,10 @@
 import { Keyword } from '../../esp-grammar';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { DoWhileStatement } from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
-export const parseDoWhileStatement: Parser<DoWhileStatement> = (data, i) => {
+export const parseDoWhileStatement: Parser<IR.DoWhileStatement> = (data, i) => {
   const do_ = consume(data, i, TokenType.Keyword, Keyword.Do);
   if (do_.abrupt) return do_;
   i = do_.end;
@@ -32,5 +32,5 @@ export const parseDoWhileStatement: Parser<DoWhileStatement> = (data, i) => {
   const terminator = consume(data, i, TokenType.Punctuator, ';');
   if (terminator.abrupt) return error(terminator);
 
-  return DoWhileStatement(do_.start, body.end, body, test);
+  return IR.DoWhileStatement(do_.start, body.end, body, test);
 };

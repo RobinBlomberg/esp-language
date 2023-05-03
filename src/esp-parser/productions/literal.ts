@@ -1,7 +1,7 @@
 import { error, lex, Parser, TokenType } from '../../esp-lexer';
-import { Literal } from '../ast';
+import { IR } from '../../ir';
 
-export const parseLiteral: Parser<Literal> = (data, i) => {
+export const parseLiteral: Parser<IR.Literal> = (data, i) => {
   const token = lex(data, i);
   if (token.abrupt) return token;
 
@@ -9,22 +9,22 @@ export const parseLiteral: Parser<Literal> = (data, i) => {
     case TokenType.Keyword:
       switch (token.value) {
         case 'false':
-          return Literal(token.start, token.end, false);
+          return IR.Literal(token.start, token.end, false);
         case 'Infinity':
-          return Literal(token.start, token.end, Infinity);
+          return IR.Literal(token.start, token.end, Infinity);
         case 'NaN':
-          return Literal(token.start, token.end, NaN);
+          return IR.Literal(token.start, token.end, NaN);
         case 'null':
-          return Literal(token.start, token.end, null);
+          return IR.Literal(token.start, token.end, null);
         case 'true':
-          return Literal(token.start, token.end, true);
+          return IR.Literal(token.start, token.end, true);
         case 'undefined':
-          return Literal(token.start, token.end, undefined);
+          return IR.Literal(token.start, token.end, undefined);
         default:
           return error(token);
       }
     case TokenType.Number:
-      return Literal(token.start, token.end, Number(token.value));
+      return IR.Literal(token.start, token.end, Number(token.value));
     case TokenType.String: {
       let value = '';
 
@@ -36,7 +36,7 @@ export const parseLiteral: Parser<Literal> = (data, i) => {
         value += token.value[i]!;
       }
 
-      return Literal(token.start, token.end, value);
+      return IR.Literal(token.start, token.end, value);
     }
     default:
       return error(token);

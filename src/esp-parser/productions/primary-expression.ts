@@ -1,5 +1,5 @@
 import { consume, error, lex, Parser, TokenType } from '../../esp-lexer';
-import { Expression } from '../ast';
+import { IR } from '../../ir';
 import { parseArrayLiteral } from './array-literal';
 import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';
@@ -7,7 +7,7 @@ import { parseLiteral } from './literal';
 import { parseObjectLiteral } from './object-literal';
 import { parseSetLiteral } from './set-literal';
 
-export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
+export const parsePrimaryExpression: Parser<IR.Expression> = (data, i) => {
   const token = lex(data, i);
   if (token.abrupt) return token;
 

@@ -1,9 +1,9 @@
 import { ES } from '../../../es-ast';
-import { ESP } from '../../../esp-parser';
+import { IR } from '../../../ir';
 import { injectSourceRange } from '../../inject-source-range';
 import { transform } from '../../transform';
 
-export const transformProperty = (node: ESP.Property) => {
+export const transformProperty = (node: IR.Property) => {
   return injectSourceRange(
     node,
     ES.Property(

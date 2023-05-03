@@ -1,7 +1,7 @@
 import { Keyword } from '../../esp-grammar';
 import { Parser, TokenType, consume, consumeToken } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
-import { ForOfStatement, ForStatement, VariableDeclaration } from '../ast';
+import { IR } from '../../ir';
 import { lookahead } from '../parser-utils';
 import {
   ForStatementInitTokenMatcher,
@@ -11,7 +11,7 @@ import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';
 import { parseStatement } from './statement';
 
-export const parseForStatement: Parser<ForOfStatement | ForStatement> = (
+export const parseForStatement: Parser<IR.ForOfStatement | IR.ForStatement> = (
   data,
   i,
 ) => {
@@ -24,7 +24,7 @@ export const parseForStatement: Parser<ForOfStatement | ForStatement> = (
   i = open.end;
 
   const kind = consumeToken(data, i, VariableKindTokenMatcher);
-  let init: VariableDeclaration | null = null;
+  let init: IR.VariableDeclaration | null = null;
   if (!kind.abrupt) {
     i = kind.end;
 
@@ -48,13 +48,19 @@ export const parseForStatement: Parser<ForOfStatement | ForStatement> = (
       const body = parseStatement(data, i);
       if (body.abrupt) return error(body);
 
-      return ForOfStatement(for_.start, body.end, id, right, body);
+      return IR.ForOfStatement(for_.start, body.end, id, right, body);
     }
 
     const init_ = parseExpression(data, i);
     if (init_.abrupt) return error(init_);
     i = init_.end;
-    init = VariableDeclaration(kind.start, init_.end, kind.value, id, init_);
+    init = IR.VariableDeclaration(
+      kind.start,
+      init_.end,
+      kind.value === 'let',
+      id,
+      init_,
+    );
   }
 
   const initTerm = consume(data, i, TokenType.Punctuator, ';');
@@ -84,5 +90,5 @@ export const parseForStatement: Parser<ForOfStatement | ForStatement> = (
   const body = parseStatement(data, i);
   if (body.abrupt) return error(body);
 
-  return ForStatement(for_.start, body.end, init, test, update, body);
+  return IR.ForStatement(for_.start, body.end, init, test, update, body);
 };

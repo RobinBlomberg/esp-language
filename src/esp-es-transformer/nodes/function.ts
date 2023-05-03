@@ -1,9 +1,9 @@
 import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
+import { IR } from '../../ir';
 import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
 
-export const transformFunction = (node: ESP.Function) => {
+export const transformFunction = (node: IR.Function) => {
   return injectSourceRange(
     node,
     ES.ArrowFunctionExpression(

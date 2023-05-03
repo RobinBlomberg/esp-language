@@ -1,17 +1,12 @@
 import { Keyword } from '../../esp-grammar';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import {
-  ComputedMemberExpression,
-  Expression,
-  NewExpression,
-  StaticMemberExpression,
-} from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
 import { parseArguments } from './internal/arguments';
 import { parsePrimaryExpression } from './primary-expression';
 
-export const parseMemberExpression: Parser<Expression> = (data, i) => {
+export const parseMemberExpression: Parser<IR.Expression> = (data, i) => {
   const new_ = consume(data, i, TokenType.Keyword, Keyword.New);
   if (!new_.abrupt) {
     i = new_.end;
@@ -23,7 +18,7 @@ export const parseMemberExpression: Parser<Expression> = (data, i) => {
     const args = parseArguments(data, i);
     if (args.abrupt) return error(args);
 
-    return NewExpression(new_.start, args.end, callee, args.arguments);
+    return IR.NewExpression(new_.start, args.end, callee, args.arguments);
   }
 
   let object = parsePrimaryExpression(data, i);
@@ -39,7 +34,7 @@ export const parseMemberExpression: Parser<Expression> = (data, i) => {
       if (property.abrupt) return error(property);
       i = property.end;
 
-      object = StaticMemberExpression(
+      object = IR.StaticMemberExpression(
         object.start,
         property.end,
         object,
@@ -60,7 +55,7 @@ export const parseMemberExpression: Parser<Expression> = (data, i) => {
     if (close.abrupt) return error(close);
     i = close.end;
 
-    object = ComputedMemberExpression(object.start, i, object, property);
+    object = IR.ComputedMemberExpression(object.start, i, object, property);
     continue;
   }
 

@@ -1,9 +1,9 @@
 import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
+import { IR } from '../../ir';
 import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
 
-export const transformIfStatement = (node: ESP.IfStatement) => {
+export const transformIfStatement = (node: IR.IfStatement) => {
   return injectSourceRange(
     node,
     ES.IfStatement(

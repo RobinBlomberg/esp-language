@@ -1,10 +1,10 @@
 import { Keyword } from '../../esp-grammar';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { IfStatement, Statement } from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
-export const parseIfStatement: Parser<IfStatement> = (data, i) => {
+export const parseIfStatement: Parser<IR.IfStatement> = (data, i) => {
   const if_ = consume(data, i, TokenType.Keyword, Keyword.If);
   if (if_.abrupt) return if_;
   i = if_.end;
@@ -26,7 +26,7 @@ export const parseIfStatement: Parser<IfStatement> = (data, i) => {
   i = consequent.end;
 
   const else_ = consume(data, i, TokenType.Keyword, Keyword.Else);
-  let alternate: Statement | null = null;
+  let alternate: IR.Statement | null = null;
 
   if (!else_.abrupt) {
     i = else_.end;
@@ -36,7 +36,7 @@ export const parseIfStatement: Parser<IfStatement> = (data, i) => {
     alternate = alternateResult;
   }
 
-  return IfStatement(
+  return IR.IfStatement(
     if_.start,
     (alternate ?? consequent).end,
     test,

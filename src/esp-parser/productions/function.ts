@@ -1,11 +1,11 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { Function } from '../ast';
+import { IR } from '../../ir';
 import { lookahead } from '../parser-utils';
 import { parseBlockStatement } from './block-statement';
 import { parseExpression } from './expression';
 import { parseParameterList } from './internal/parameter-list';
 
-export const parseFunction: Parser<Function> = (data, i) => {
+export const parseFunction: Parser<IR.Function> = (data, i) => {
   const open = consume(data, i, TokenType.Punctuator, ':');
   if (open.abrupt) return open;
   i = open.end;
@@ -20,5 +20,5 @@ export const parseFunction: Parser<Function> = (data, i) => {
       : parseExpression(data, i);
   if (body.abrupt) return error(body);
 
-  return Function(open.start, body.end, parameters.parameters, body);
+  return IR.Function(open.start, body.end, parameters.parameters, body);
 };

@@ -7,19 +7,12 @@ import {
   error,
   lex,
 } from '../esp-lexer';
-import {
-  BinaryExpression,
-  BinaryOperator,
-  Expression,
-  Node,
-  NodeType,
-  SimpleNode,
-} from './ast';
+import { IR } from '../ir';
 
 export const createLeftAssociativeBinaryExpressionParser = (
-  parse: Parser<Expression>,
-  operatorToken: TokenMatcher<Token<TokenType.Punctuator, BinaryOperator>>,
-): Parser<Expression> => {
+  parse: Parser<IR.Expression>,
+  operatorToken: TokenMatcher<Token<TokenType.Punctuator, IR.BinaryOperator>>,
+): Parser<IR.Expression> => {
   return (data, i) => {
     let expression = parse(data, i);
     if (expression.abrupt) return expression;
@@ -34,7 +27,7 @@ export const createLeftAssociativeBinaryExpressionParser = (
       if (right.abrupt) return error(right);
       i = right.end;
 
-      expression = BinaryExpression(
+      expression = IR.BinaryExpression(
         expression.start,
         right.end,
         operator.value,
@@ -48,11 +41,11 @@ export const createLeftAssociativeBinaryExpressionParser = (
 /**
  * @see https://tc39.es/ecma262/#sec-static-semantics-assignmenttargettype
  */
-export const isSimpleNode = (node: Node): node is SimpleNode => {
+export const isSimpleNode = (node: IR.Node): node is IR.SimpleNode => {
   return (
-    node.type === NodeType.Identifier ||
-    node.type === NodeType.StaticMemberExpression ||
-    node.type === NodeType.ComputedMemberExpression
+    node.type === IR.NodeType.Identifier ||
+    node.type === IR.NodeType.StaticMemberExpression ||
+    node.type === IR.NodeType.ComputedMemberExpression
   );
 };
 

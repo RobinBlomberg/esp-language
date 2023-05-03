@@ -1,8 +1,8 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ExpressionStatement } from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 
-export const parseExpressionStatement: Parser<ExpressionStatement> = (
+export const parseExpressionStatement: Parser<IR.ExpressionStatement> = (
   data,
   i,
 ) => {
@@ -13,5 +13,5 @@ export const parseExpressionStatement: Parser<ExpressionStatement> = (
   const terminator = consume(data, i, TokenType.Punctuator, ';');
   if (terminator.abrupt) return error(terminator);
 
-  return ExpressionStatement(expression.start, terminator.end, expression);
+  return IR.ExpressionStatement(expression.start, terminator.end, expression);
 };

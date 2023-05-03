@@ -1,11 +1,11 @@
 import { Keyword } from '../../esp-grammar';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { MatchCase, MatchStatement, Statement } from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 import { parseExpressionList } from './internal/expression-list';
 import { parseStatement } from './statement';
 
-export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
+export const parseMatchStatement: Parser<IR.MatchStatement> = (data, i) => {
   const match_ = consume(data, i, TokenType.Keyword, Keyword.Match);
   if (match_.abrupt) return match_;
   i = match_.end;
@@ -26,8 +26,8 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
   if (openCurly.abrupt) return error(openCurly);
   i = openCurly.end;
 
-  const cases: MatchCase[] = [];
-  let alternate: Statement | null = null;
+  const cases: IR.MatchCase[] = [];
+  let alternate: IR.Statement | null = null;
 
   while (true) {
     const else_ = consume(data, i, TokenType.Keyword, Keyword.Else);
@@ -50,14 +50,14 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
     i = consequent.end;
 
     cases.push(
-      MatchCase(tests.start, consequent.end, tests.values, consequent),
+      IR.MatchCase(tests.start, consequent.end, tests.values, consequent),
     );
   }
 
   const closeCurly = consume(data, i, TokenType.Punctuator, '}');
   if (closeCurly.abrupt) return error(closeCurly);
 
-  return MatchStatement(
+  return IR.MatchStatement(
     openParen.start,
     closeCurly.end,
     discriminant,

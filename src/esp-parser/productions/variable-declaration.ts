@@ -5,12 +5,12 @@ import {
   Parser,
   TokenType,
 } from '../../esp-lexer';
-import { VariableDeclaration } from '../ast';
+import { IR } from '../../ir';
 import { VariableKindTokenMatcher } from '../token-matchers';
 import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';
 
-export const parseVariableDeclaration: Parser<VariableDeclaration> = (
+export const parseVariableDeclaration: Parser<IR.VariableDeclaration> = (
   data,
   i,
 ) => {
@@ -33,5 +33,11 @@ export const parseVariableDeclaration: Parser<VariableDeclaration> = (
   const terminator = consume(data, i, TokenType.Punctuator, ';');
   if (terminator.abrupt) return error(terminator);
 
-  return VariableDeclaration(kind.start, terminator.end, kind.value, id, init);
+  return IR.VariableDeclaration(
+    kind.start,
+    terminator.end,
+    kind.value === 'let',
+    id,
+    init,
+  );
 };

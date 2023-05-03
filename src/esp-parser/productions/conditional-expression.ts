@@ -1,9 +1,9 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ConditionalExpression, Expression } from '../ast';
+import { IR } from '../../ir';
 import { parseExpression } from './expression';
 import { parseLogicalORExpression } from './logical-or-expression';
 
-export const parseConditionalExpression: Parser<Expression> = (data, i) => {
+export const parseConditionalExpression: Parser<IR.Expression> = (data, i) => {
   const test = parseLogicalORExpression(data, i);
   if (test.abrupt) return test;
   i = test.end;
@@ -23,7 +23,7 @@ export const parseConditionalExpression: Parser<Expression> = (data, i) => {
   const alternate = parseExpression(data, i);
   if (alternate.abrupt) return error(alternate);
 
-  return ConditionalExpression(
+  return IR.ConditionalExpression(
     test.start,
     alternate.end,
     test,
