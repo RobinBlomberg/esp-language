@@ -276,6 +276,9 @@ export const CallExpression = (
   });
 };
 
+/**
+ * This node has been separated from `StaticMemberExpression` for safer `property` typing.
+ */
 export type ComputedMemberExpression = BaseNode<
   NodeType.ComputedMemberExpression,
   {
@@ -634,6 +637,9 @@ export type Statement =
   | VariableDeclaration
   | WhileStatement;
 
+/**
+ * This node has been separated from `ComputedMemberExpression` for safer `property` typing.
+ */
 export type StaticMemberExpression = BaseNode<
   NodeType.StaticMemberExpression,
   {
