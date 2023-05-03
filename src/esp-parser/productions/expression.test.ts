@@ -13,29 +13,29 @@ suite('Expression', () => {
 
   test(/* s */ `Function`, () => {
     ok(':(){}');
-    ok(':(a){}');
-    ok(':(a,b){}');
     ok(':()c;');
-    ok(':(a)c;');
+    ok(':(a,b){}');
     ok(':(a,b)c;');
+    ok(':(a){}');
+    ok(':(a)c;');
     error(':');
     error(':(');
+    error(':(,');
     error(':()');
     error(':(){');
-    error(':(,');
     error(':(a');
-    error(':(a,');
-    error(':(a)');
-    error(':(a){');
     error(':(a b){}');
     error(':(a,');
+    error(':(a,');
     error(':(a,){}');
+    error(':(a,)c;');
     error(':(a,b');
+    error(':(a,b,){}');
+    error(':(a,b,)c;');
     error(':(a,b)');
     error(':(a,b){');
-    error(':(a,b,){}');
-    error(':(a,)c;');
-    error(':(a,b,)c;');
+    error(':(a)');
+    error(':(a){');
   });
 
   test(/* s */ `LeftHandSideExpression AssignmentOperator Expression`, () => {

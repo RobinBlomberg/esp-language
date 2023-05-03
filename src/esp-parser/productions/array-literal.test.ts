@@ -14,11 +14,11 @@ suite('ArrayLiteral', () => {
     error('[,]');
     error('[,1]');
     error('[1');
+    error('[1 2]');
     error('[1,');
+    error('[1,,2]');
     error('[1,]');
     error('[1,2');
     error('[1,2,]');
-    error('[1,,2]');
-    error('[1 2]');
   });
 });

@@ -10,10 +10,16 @@ suite('DoWhileStatement', () => {
     ok('do a;while(b);');
     error('do');
     error('do a');
+    error('do a while();');
     error('do a;');
+    error('do a;();');
     error('do a;while');
     error('do a;while(');
+    error('do a;while();');
     error('do a;while(b');
+    error('do a;while(b;');
     error('do a;while(b)');
+    error('do a;while);');
+    error('do;while();');
   });
 });

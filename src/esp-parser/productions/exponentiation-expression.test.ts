@@ -13,8 +13,8 @@ suite('ExponentiationExpression', () => {
   test(/* s */ `UpdateExpression '**' ExponentiationExpression`, () => {
     ok('a**b');
     ok('++a**b');
-    error('a**');
     error('-a**b');
+    error('a**');
   });
 
   it('should respect operator precedence', () => {

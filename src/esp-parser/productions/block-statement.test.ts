@@ -12,11 +12,12 @@ suite('BlockStatement', () => {
     ok('{a;b;}');
     error('{');
     error('{;');
+    error('{;}');
     error('{a');
     error('{a;');
-    error('{a}');
     error('{a;b');
     error('{a;b;');
     error('{a;b}');
+    error('{a}');
   });
 });
