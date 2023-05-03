@@ -30,6 +30,8 @@ export const Keyword = { ...ConstantKeyword, ...ControlKeyword };
 
 export const constantKeywords = Object.values(ConstantKeyword);
 
+export const constantKeywordsSet = new Set<string>(constantKeywords);
+
 export const controlKeywords = Object.values(ControlKeyword);
 
 export const keywords = [...constantKeywords, ...controlKeywords];

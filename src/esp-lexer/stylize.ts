@@ -1,5 +1,5 @@
 import { clear, cyan, green, magenta, red, yellow } from '../ansi-escape-codes';
-import { operatorsSet } from '../esp-grammar';
+import { constantKeywordsSet, operatorsSet } from '../esp-grammar';
 import { lexAll } from './lex-all';
 import { Token } from './token';
 import { TokenType } from './token-type';
@@ -9,7 +9,7 @@ const getTokenStyle = (token: Token) => {
     case TokenType.Identifier:
       return red;
     case TokenType.Keyword:
-      return magenta;
+      return constantKeywordsSet.has(token.value) ? yellow : magenta;
     case TokenType.Number:
       return yellow;
     case TokenType.Punctuator:
