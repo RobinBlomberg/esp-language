@@ -11,11 +11,11 @@ export const enum NodeType {
   DoWhileStatement = 'DoWhileStatement',
   ExpressionStatement = 'ExpressionStatement',
   ForOfStatement = 'ForOfStatement',
-  ForStatement = 'ForStatement',
   Function = 'Function',
   Identifier = 'Identifier',
   IfStatement = 'IfStatement',
   Literal = 'Literal',
+  LoopStatement = 'ForStatement',
   MatchCase = 'MatchCase',
   MatchStatement = 'MatchStatement',
   MemberExpression = 'MemberExpression',
@@ -31,7 +31,6 @@ export const enum NodeType {
   UnionClause = 'UnionClause',
   UpdateExpression = 'UpdateExpression',
   VariableDeclaration = 'VariableDeclaration',
-  WhileStatement = 'WhileStatement',
 }
 
 export type BaseNode<T extends NodeType, U extends Record<string, unknown>> = {
@@ -71,11 +70,11 @@ export type NodeMap = {
   [NodeType.DoWhileStatement]: DoWhileStatement;
   [NodeType.ExpressionStatement]: ExpressionStatement;
   [NodeType.ForOfStatement]: ForOfStatement;
-  [NodeType.ForStatement]: ForStatement;
   [NodeType.Function]: Function;
   [NodeType.Identifier]: Identifier;
   [NodeType.IfStatement]: IfStatement;
   [NodeType.Literal]: Literal;
+  [NodeType.LoopStatement]: LoopStatement;
   [NodeType.MatchCase]: MatchCase;
   [NodeType.MatchStatement]: MatchStatement;
   [NodeType.MemberExpression]: MemberExpression;
@@ -91,7 +90,6 @@ export type NodeMap = {
   [NodeType.UnionClause]: UnionClause;
   [NodeType.UpdateExpression]: UpdateExpression;
   [NodeType.VariableDeclaration]: VariableDeclaration;
-  [NodeType.WhileStatement]: WhileStatement;
 };
 
 export type PrimaryExpression =
@@ -386,8 +384,8 @@ export const ForOfStatement = (
   return Node(start, end, NodeType.ForOfStatement, { left, right, body });
 };
 
-export type ForStatement = BaseNode<
-  NodeType.ForStatement,
+export type LoopStatement = BaseNode<
+  NodeType.LoopStatement,
   {
     init: VariableDeclaration | null;
     test: Expression | null;
@@ -396,7 +394,7 @@ export type ForStatement = BaseNode<
   }
 >;
 
-export const ForStatement = (
+export const LoopStatement = (
   start: number,
   end: number,
   init: VariableDeclaration | null,
@@ -404,7 +402,7 @@ export const ForStatement = (
   update: Expression | null,
   body: Statement,
 ) => {
-  return Node(start, end, NodeType.ForStatement, { init, test, update, body });
+  return Node(start, end, NodeType.LoopStatement, { init, test, update, body });
 };
 
 export type Function = BaseNode<
@@ -640,13 +638,12 @@ export type Statement =
   | DoWhileStatement
   | ExpressionStatement
   | ForOfStatement
-  | ForStatement
   | IfStatement
+  | LoopStatement
   | MatchStatement
   | ReturnStatement
   | ThrowStatement
-  | VariableDeclaration
-  | WhileStatement;
+  | VariableDeclaration;
 
 export type StaticMemberExpression = BaseNode<
   NodeType.StaticMemberExpression,
@@ -766,21 +763,4 @@ export const VariableDeclaration = (
   init: Expression,
 ) => {
   return Node(start, end, NodeType.VariableDeclaration, { mutable, id, init });
-};
-
-export type WhileStatement = BaseNode<
-  NodeType.WhileStatement,
-  {
-    test: Expression;
-    body: Statement;
-  }
->;
-
-export const WhileStatement = (
-  start: number,
-  end: number,
-  test: Expression,
-  body: Statement,
-) => {
-  return Node(start, end, NodeType.WhileStatement, { test, body });
 };

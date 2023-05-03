@@ -11,7 +11,7 @@ import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';
 import { parseStatement } from './statement';
 
-export const parseForStatement: Parser<IR.ForOfStatement | IR.ForStatement> = (
+export const parseForStatement: Parser<IR.ForOfStatement | IR.LoopStatement> = (
   data,
   i,
 ) => {
@@ -90,5 +90,5 @@ export const parseForStatement: Parser<IR.ForOfStatement | IR.ForStatement> = (
   const body = parseStatement(data, i);
   if (body.abrupt) return error(body);
 
-  return IR.ForStatement(for_.start, body.end, init, test, update, body);
+  return IR.LoopStatement(for_.start, body.end, init, test, update, body);
 };

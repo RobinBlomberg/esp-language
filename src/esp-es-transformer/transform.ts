@@ -12,11 +12,11 @@ import { transformContinueStatement } from './nodes/continue-statement';
 import { transformDoWhileStatement } from './nodes/do-while-statement';
 import { transformExpressionStatement } from './nodes/expression-statement';
 import { transformForOfStatement } from './nodes/for-of-statement';
-import { transformForStatement } from './nodes/for-statement';
 import { transformFunction } from './nodes/function';
 import { transformIdentifier } from './nodes/identifier';
 import { transformIfStatement } from './nodes/if-statement';
 import { transformLiteral } from './nodes/literal';
+import { transformLoopStatement } from './nodes/loop-statement';
 import { transformMatchStatement } from './nodes/match-statement';
 import { transformNewExpression } from './nodes/new-expression';
 import { transformObjectLiteral } from './nodes/object-literal';
@@ -28,7 +28,6 @@ import { transformThrowStatement } from './nodes/throw-statement';
 import { transformUnaryExpression } from './nodes/unary-expression';
 import { transformUpdateExpression } from './nodes/update-expression';
 import { transformVariableDeclaration } from './nodes/variable-declaration';
-import { transformWhileStatement } from './nodes/while-statement';
 
 type ToESNode<T extends IR.Node> = {
   [IR.NodeType.ArrayLiteral]: ES.ArrayExpression;
@@ -43,11 +42,11 @@ type ToESNode<T extends IR.Node> = {
   [IR.NodeType.DoWhileStatement]: ES.DoWhileStatement;
   [IR.NodeType.ExpressionStatement]: ES.ExpressionStatement;
   [IR.NodeType.ForOfStatement]: ES.ForOfStatement;
-  [IR.NodeType.ForStatement]: ES.ForStatement;
   [IR.NodeType.Function]: ES.ArrowFunctionExpression;
   [IR.NodeType.Identifier]: ES.Identifier;
   [IR.NodeType.IfStatement]: ES.IfStatement;
   [IR.NodeType.Literal]: ES.Identifier | ES.Literal;
+  [IR.NodeType.LoopStatement]: ES.ForStatement | ES.WhileStatement;
   [IR.NodeType.MatchStatement]: ES.SwitchStatement;
   [IR.NodeType.NewExpression]: ES.NewExpression;
   [IR.NodeType.ObjectLiteral]: ES.ObjectExpression;
@@ -59,7 +58,6 @@ type ToESNode<T extends IR.Node> = {
   [IR.NodeType.UnaryExpression]: ES.UnaryExpression;
   [IR.NodeType.UpdateExpression]: ES.UpdateExpression;
   [IR.NodeType.VariableDeclaration]: ES.VariableDeclaration;
-  [IR.NodeType.WhileStatement]: ES.WhileStatement;
 }[T['type']];
 
 const transformers: {
@@ -77,11 +75,11 @@ const transformers: {
   [IR.NodeType.DoWhileStatement]: transformDoWhileStatement,
   [IR.NodeType.ExpressionStatement]: transformExpressionStatement,
   [IR.NodeType.ForOfStatement]: transformForOfStatement,
-  [IR.NodeType.ForStatement]: transformForStatement,
   [IR.NodeType.Function]: transformFunction,
   [IR.NodeType.Identifier]: transformIdentifier,
   [IR.NodeType.IfStatement]: transformIfStatement,
   [IR.NodeType.Literal]: transformLiteral,
+  [IR.NodeType.LoopStatement]: transformLoopStatement,
   [IR.NodeType.MatchStatement]: transformMatchStatement,
   [IR.NodeType.NewExpression]: transformNewExpression,
   [IR.NodeType.ObjectLiteral]: transformObjectLiteral,
@@ -93,7 +91,6 @@ const transformers: {
   [IR.NodeType.UnaryExpression]: transformUnaryExpression,
   [IR.NodeType.UpdateExpression]: transformUpdateExpression,
   [IR.NodeType.VariableDeclaration]: transformVariableDeclaration,
-  [IR.NodeType.WhileStatement]: transformWhileStatement,
 };
 
 export type Transformer<T extends IR.Node> = (node: T) => ToESNode<T>;

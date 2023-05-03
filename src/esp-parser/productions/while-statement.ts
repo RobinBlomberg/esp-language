@@ -4,7 +4,7 @@ import { IR } from '../../ir';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
-export const parseWhileStatement: Parser<IR.WhileStatement> = (data, i) => {
+export const parseWhileStatement: Parser<IR.LoopStatement> = (data, i) => {
   const while_ = consume(data, i, TokenType.Keyword, Keyword.While);
   if (while_.abrupt) return while_;
   i = while_.end;
@@ -24,5 +24,5 @@ export const parseWhileStatement: Parser<IR.WhileStatement> = (data, i) => {
   const body = parseStatement(data, i);
   if (body.abrupt) return error(body);
 
-  return IR.WhileStatement(while_.start, body.end, test, body);
+  return IR.LoopStatement(while_.start, body.end, null, test, null, body);
 };

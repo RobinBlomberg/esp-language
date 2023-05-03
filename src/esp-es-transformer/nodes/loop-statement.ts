@@ -3,7 +3,14 @@ import { IR } from '../../ir';
 import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
 
-export const transformForStatement = (node: IR.ForStatement) => {
+export const transformLoopStatement = (node: IR.LoopStatement) => {
+  if (node.test && !node.init && !node.update) {
+    return injectSourceRange(
+      node,
+      ES.WhileStatement(transform(node.test), transform(node.body)),
+    );
+  }
+
   return injectSourceRange(
     node,
     ES.ForStatement(
