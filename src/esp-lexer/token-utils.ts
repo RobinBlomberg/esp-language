@@ -1,7 +1,7 @@
 import { Keyword, Punctuator } from '../esp-grammar';
-import { Abrupt, Error, Unused, error } from './abrupt';
+import { Abrupt, error } from './abrupt';
 import { lex } from './lex';
-import { Token, TokenMatcher } from './token';
+import { MatchedToken, Token, TokenMatcher } from './token';
 import { TokenType } from './token-type';
 
 export type Parser<T = { type: string }> = (
@@ -31,7 +31,7 @@ export const consume = <
   value?: V,
 ): Token<T, V> | Abrupt => {
   const token = lex(data, i);
-  if (isAbrupt(token)) return token;
+  if (token.abrupt) return token;
   return match(token, type, value) ? token : error(token);
 };
 
@@ -41,20 +41,8 @@ export const consumeToken = <T extends TokenMatcher>(
   expected: T,
 ) => {
   const token = lex(data, i);
-  if (isAbrupt(token)) return token;
+  if (token.abrupt) return token;
   return matchToken(token, expected) ? token : error(token);
-};
-
-export const isAbrupt = (token: {} | { type: string }): token is Abrupt => {
-  return isError(token) || isUnused(token);
-};
-
-export const isError = (token: {} | { type: string }): token is Error => {
-  return (token as any)?.type === 'Error';
-};
-
-export const isUnused = (token: {} | { type: string }): token is Unused => {
-  return (token as any)?.type === 'Unused';
 };
 
 export const match = <T extends TokenType, V extends string = string>(
@@ -72,7 +60,7 @@ export const match = <T extends TokenType, V extends string = string>(
 export const matchToken = <T extends TokenMatcher>(
   token: Token,
   matcher: T,
-): token is T extends TokenMatcher<infer U> ? U : never => {
+): token is MatchedToken<T> => {
   const expectedValue = matcher[token.type];
   return Boolean(expectedValue?.includes(token.value));
 };

@@ -1,5 +1,4 @@
-import { Parser, TokenType, consume, isAbrupt, lex } from '../../esp-lexer';
-import { error } from '../../esp-lexer/abrupt';
+import { consume, error, lex, Parser, TokenType } from '../../esp-lexer';
 import { Expression } from '../ast';
 import { parseArrayLiteral } from './array-literal';
 import { parseExpression } from './expression';
@@ -10,29 +9,29 @@ import { parseSetLiteral } from './set-literal';
 
 export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
   const token = lex(data, i);
-  if (isAbrupt(token)) return token;
+  if (token.abrupt) return token;
 
   switch (token.value) {
     case '[':
       return parseArrayLiteral(data, i);
     case '{': {
       const nextToken = lex(data, i + 1);
-      if (isAbrupt(nextToken)) return error(nextToken);
+      if (nextToken.abrupt) return error(nextToken);
       return nextToken.value === '['
         ? parseSetLiteral(data, i)
         : parseObjectLiteral(data, i);
     }
     case '(': {
       const open = consume(data, i, TokenType.Punctuator, '(');
-      if (isAbrupt(open)) return open;
+      if (open.abrupt) return open;
       i = open.end;
 
       const expression = parseExpression(data, i);
-      if (isAbrupt(expression)) return error(expression);
+      if (expression.abrupt) return error(expression);
       i = expression.end;
 
       const close = consume(data, i, TokenType.Punctuator, ')');
-      if (isAbrupt(close)) return error(close);
+      if (close.abrupt) return error(close);
 
       expression.start = open.start;
       expression.end = close.end;
@@ -40,7 +39,7 @@ export const parsePrimaryExpression: Parser<Expression> = (data, i) => {
     }
     default: {
       const literal = parseLiteral(data, i);
-      if (!isAbrupt(literal)) return literal;
+      if (!literal.abrupt) return literal;
 
       return parseIdentifier(data, i);
     }

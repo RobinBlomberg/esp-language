@@ -26,35 +26,11 @@ export enum ControlKeyword {
   While = 'while',
 }
 
-export const Keyword = {
-  ...ConstantKeyword,
-  ...ControlKeyword,
-};
+export const Keyword = { ...ConstantKeyword, ...ControlKeyword };
 
-export const constantKeywords = [
-  ConstantKeyword.False,
-  ConstantKeyword.Infinity,
-  ConstantKeyword.NaN,
-  ConstantKeyword.Null,
-  ConstantKeyword.True,
-  ConstantKeyword.Undefined,
-] as const;
+export const constantKeywords = Object.values(ConstantKeyword);
 
-export const controlKeywords = [
-  ControlKeyword.Break,
-  ControlKeyword.Const,
-  ControlKeyword.Continue,
-  ControlKeyword.Do,
-  ControlKeyword.Else,
-  ControlKeyword.For,
-  ControlKeyword.If,
-  ControlKeyword.Let,
-  ControlKeyword.Match,
-  ControlKeyword.New,
-  ControlKeyword.Return,
-  ControlKeyword.Throw,
-  ControlKeyword.While,
-] as const;
+export const controlKeywords = Object.values(ControlKeyword);
 
 export const keywords = [...constantKeywords, ...controlKeywords];
 

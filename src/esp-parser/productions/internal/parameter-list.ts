@@ -1,35 +1,44 @@
-import { TokenType, consume, isAbrupt } from '../../../esp-lexer';
-import { Error, Unused, error, unused } from '../../../esp-lexer/abrupt';
-import { PunctuatorToken } from '../../../esp-lexer/token';
-import { Identifier } from '../../ast';
+import {
+  Abrupt,
+  consume,
+  error,
+  PunctuatorToken,
+  TokenType,
+  Unused,
+  unused,
+} from '../../../esp-lexer';
+import { Identifier, NonAbrupt } from '../../ast';
 import { parseIdentifier } from '../identifier';
 
-export const parseParameterList = (data: string, i: number) => {
+export const parseParameterList = (
+  data: string,
+  i: number,
+): NonAbrupt<{ end: number; parameters: Identifier[] }> | Abrupt => {
   const open = consume(data, i, TokenType.Punctuator, '(');
-  if (isAbrupt(open)) return unused(open);
+  if (open.abrupt) return unused(open);
   i = open.end;
 
   const parameters: Identifier[] = [];
 
   while (true) {
-    let comma: PunctuatorToken<','> | Error | Unused = Unused(i);
+    let comma: PunctuatorToken<','> | Abrupt = Unused(i);
 
     if (parameters.length >= 1) {
       comma = consume(data, i, TokenType.Punctuator, ',');
-      if (isAbrupt(comma)) break;
+      if (comma.abrupt) break;
       else i = comma.end;
     }
 
     const value = parseIdentifier(data, i);
-    if (!isAbrupt(value)) i = value.end;
-    else if (isAbrupt(comma)) break;
+    if (!value.abrupt) i = value.end;
+    else if (comma.abrupt) break;
     else return error(value);
 
     parameters.push(value);
   }
 
   const close = consume(data, i, TokenType.Punctuator, ')');
-  if (isAbrupt(close)) return error(close);
+  if (close.abrupt) return error(close);
 
   return { end: close.end, parameters };
 };

@@ -1,24 +1,33 @@
-import { TokenType, consume, isAbrupt } from '../../../esp-lexer';
-import { Error, Unused, error } from '../../../esp-lexer/abrupt';
-import { PunctuatorToken } from '../../../esp-lexer/token';
-import { Expression } from '../../ast';
+import {
+  Abrupt,
+  consume,
+  Error,
+  error,
+  PunctuatorToken,
+  TokenType,
+  Unused,
+} from '../../../esp-lexer';
+import { Expression, NonAbrupt } from '../../ast';
 import { parseExpression } from '../expression';
 
-export const parseExpressionList = (data: string, i: number) => {
+export const parseExpressionList = (
+  data: string,
+  i: number,
+): NonAbrupt<{ start: number; end: number; values: Expression[] }> | Error => {
   const values: Expression[] = [];
 
   while (true) {
-    let comma: PunctuatorToken<','> | Error | Unused = Unused(i);
+    let comma: PunctuatorToken<','> | Abrupt = Unused(i);
 
     if (values.length >= 1) {
       comma = consume(data, i, TokenType.Punctuator, ',');
-      if (isAbrupt(comma)) break;
+      if (comma.abrupt) break;
       else i = comma.end;
     }
 
     const value = parseExpression(data, i);
-    if (!isAbrupt(value)) i = value.end;
-    else if (isAbrupt(comma)) break;
+    if (!value.abrupt) i = value.end;
+    else if (comma.abrupt) break;
     else return error(value);
 
     values.push(value);

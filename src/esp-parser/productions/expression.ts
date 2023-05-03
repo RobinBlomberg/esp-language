@@ -1,5 +1,4 @@
-import { Parser, consumeToken, isAbrupt } from '../../esp-lexer';
-import { error } from '../../esp-lexer/abrupt';
+import { consumeToken, error, Parser } from '../../esp-lexer';
 import { AssignmentExpression, Expression } from '../ast';
 import { errors } from '../errors';
 import { isSimpleNode, lookahead } from '../parser-utils';
@@ -12,11 +11,11 @@ export const parseExpression: Parser<Expression> = (data, i) => {
     lookahead(data, i) === ':'
       ? parseFunction(data, i)
       : parseConditionalExpression(data, i);
-  if (isAbrupt(left)) return left;
+  if (left.abrupt) return left;
   i = left.end;
 
   const operator = consumeToken(data, i, AssignmentOperatorTokenMatcher);
-  if (isAbrupt(operator)) return left;
+  if (operator.abrupt) return left;
   i = operator.end;
 
   if (!isSimpleNode(left)) {
@@ -24,7 +23,7 @@ export const parseExpression: Parser<Expression> = (data, i) => {
   }
 
   const right = parseExpression(data, operator.end);
-  if (isAbrupt(right)) return error(right);
+  if (right.abrupt) return error(right);
 
   return AssignmentExpression(
     left.start,

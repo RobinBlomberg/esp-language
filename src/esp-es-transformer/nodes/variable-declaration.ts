@@ -7,7 +7,7 @@ export const transformVariableDeclaration = (node: ESP.VariableDeclaration) => {
   return injectSourceRange(
     node,
     ES.VariableDeclaration(
-      [ES.VariableDeclarator(ES.Identifier(node.id), transform(node.init))],
+      [ES.VariableDeclarator(transform(node.id), transform(node.init))],
       node.kind,
     ),
   );

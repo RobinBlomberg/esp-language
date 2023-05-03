@@ -14,6 +14,7 @@ suite('ExponentiationExpression', () => {
     ok('a**b');
     ok('++a**b');
     error('a**');
+    error('-a**b');
   });
 
   it('should respect operator precedence', () => {

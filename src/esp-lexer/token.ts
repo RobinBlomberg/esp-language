@@ -4,6 +4,7 @@ export type Token<
   T extends TokenType = TokenType,
   V extends string = string,
 > = {
+  abrupt?: never;
   type: T;
   start: number;
   end: number;
@@ -42,6 +43,13 @@ export const KeywordToken = <V extends string = string>(
   value: V,
 ): KeywordToken<V> => Token(TokenType.Keyword, start, end, value);
 
+export type MatchedToken<T extends TokenMatcher> = {
+  [K in keyof T]: Token<
+    K extends TokenType ? K : never,
+    T[K] extends string[] ? T[K][number] : never
+  >;
+}[keyof T];
+
 export type NumberToken<V extends string = string> = Token<TokenType.Number, V>;
 
 export const NumberToken = <V extends string = string>(
@@ -69,8 +77,8 @@ export const StringToken = <V extends string = string>(
   value: V,
 ): StringToken<V> => Token(TokenType.String, start, end, value);
 
-export type TokenMatcher<T extends Token = Token> = {
-  [K in T extends Token<infer Type> ? Type : never]: T extends Token<K, infer V>
-    ? V
-    : never;
-};
+export type TokenMatcher<T extends Token = Token> = TokenType extends T['type']
+  ? { [K in TokenType]?: string[] }
+  : {
+      [K in T['type']]: (T extends Token<K, infer V> ? V : never)[];
+    };
