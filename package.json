@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "build:syntax:watch": "ts-node-dev --quiet --watch ./src/esp-vscode-syntax-generator/generate.ts --respawn ./bin/esp.ts --generate-syntax \"C:/Users/arca/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/esp/syntaxes/esp.tmLanguage.json\"",
     "check": "tsc",
     "lint": "eslint src",
-    "start": "ts-node-dev --quiet --watch ./src,./.test.esp ./bin/esp.ts ./.test.esp",
     "start:watch": "ts-node-dev --quiet --respawn --watch ./src,./.test.esp ./bin/esp.ts ./.test.esp",
+    "start": "ts-node-dev --quiet --watch ./src,./.test.esp ./bin/esp.ts ./.test.esp",
+    "syntax:generate:watch": "ts-node-dev --quiet --watch ./src/esp-vscode-syntax-generator/generate.ts --respawn ./bin/esp.ts --generate-syntax \"C:/Users/arca/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/esp/syntaxes/esp.tmLanguage.json\"",
     "test": "vitest"
   },
   "devDependencies": {
