@@ -71,7 +71,7 @@ export const writeLiteral: Writer<Literal> = (node, write) => {
       }
       break;
     case 'string':
-      write(`"${node.value.replace(/"/g, '\\"')}"`);
+      write(`"${node.value.replace(/[\\"]/g, '\\$&')}"`);
       break;
     default:
   }

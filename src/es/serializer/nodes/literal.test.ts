@@ -50,6 +50,7 @@ suite('Literal', () => {
 
         test('\\ EscapeSequence', () => {
           expect(serialize(Literal('a"b'))).toBe('"a\\"b"');
+          expect(serialize(Literal('a\\b'))).toBe('"a\\\\b"');
         });
       });
     });
