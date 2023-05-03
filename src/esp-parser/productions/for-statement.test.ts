@@ -39,6 +39,14 @@ suite('ForStatement', () => {
 
   test(/* s */ `'for' '(' VariableDeclaration 'of' Expression ')' Statement`, () => {
     ok('for(let a of b){};');
-    error('for(let a=b of');
+    ok('for(const a of []){};');
+    error('for(let a of b');
+    error('for(let a of b)');
+    error('for(let a of b){');
+    error('for(let a of');
+    error('for(let a');
+    error('for(let a=b of b){}');
+    error('for(let a=b of){}');
+    error('for(let a=b){}');
   });
 });
