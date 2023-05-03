@@ -1,7 +1,7 @@
 import { runInNewContext } from 'vm';
 import { serializeWithSourceMap } from '../es-serializer';
-import { transformScript } from '../esp-es-transformer';
 import { parse } from '../esp-parser';
+import { transformScript } from '../ir-es-transformer';
 import { createRuntimeError, createSyntaxError } from './errors';
 import { logError } from './log-error';
 
