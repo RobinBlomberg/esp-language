@@ -1,5 +1,5 @@
 import { ES, SwitchCase } from '../../es-ast';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
 import { transformMatchCase } from './internal/match-case';

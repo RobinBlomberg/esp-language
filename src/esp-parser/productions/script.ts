@@ -1,5 +1,5 @@
 import { Parser } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { parseStatement } from './statement';
 
 export const parseScript: Parser<IR.Script> = (data, i) => {

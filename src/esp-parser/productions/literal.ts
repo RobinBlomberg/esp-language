@@ -1,5 +1,5 @@
 import { error, lex, Parser, TokenType } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 
 export const parseLiteral: Parser<IR.Literal> = (data, i) => {
   const token = lex(data, i);

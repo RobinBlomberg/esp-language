@@ -1,5 +1,5 @@
 import { consumeToken, error, Parser } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { UnaryOperatorTokenMatcher } from '../token-matchers';
 import { parseUpdateExpression } from './update-expression';
 

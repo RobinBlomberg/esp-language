@@ -1,5 +1,5 @@
 import { error, lex, match, Parser, TokenType } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 
 export const parseIdentifier: Parser<IR.Identifier> = (data, i) => {
   const node = lex(data, i);

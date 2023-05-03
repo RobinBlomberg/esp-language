@@ -1,5 +1,5 @@
 import { Parser } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { parseArguments } from './internal/arguments';
 import { parseMemberExpression } from './member-expression';
 

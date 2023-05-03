@@ -1,7 +1,7 @@
 import { Keyword } from '../../esp-grammar';
 import { Parser, TokenType, consume, consumeToken } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { lookahead } from '../parser-utils';
 import {
   ForStatementInitTokenMatcher,

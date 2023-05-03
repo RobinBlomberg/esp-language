@@ -1,5 +1,5 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { parseStatement } from './statement';
 
 export const parseBlockStatement: Parser<IR.BlockStatement> = (data, i) => {

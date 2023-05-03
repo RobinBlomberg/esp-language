@@ -7,7 +7,7 @@ import {
   error,
   lex,
 } from '../esp-lexer';
-import { IR } from '../ir';
+import { IR } from '../ir-ast';
 
 export const createLeftAssociativeBinaryExpressionParser = (
   parse: Parser<IR.Expression>,

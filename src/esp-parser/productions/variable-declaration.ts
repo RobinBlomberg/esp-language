@@ -5,7 +5,7 @@ import {
   Parser,
   TokenType,
 } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { VariableKindTokenMatcher } from '../token-matchers';
 import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';

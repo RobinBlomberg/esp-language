@@ -1,5 +1,5 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { lookahead } from '../parser-utils';
 import { parseBlockStatement } from './block-statement';
 import { parseExpression } from './expression';

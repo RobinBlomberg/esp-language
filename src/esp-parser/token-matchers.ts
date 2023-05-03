@@ -1,6 +1,6 @@
 import { ControlKeyword, Keyword } from '../esp-grammar';
 import { TokenType } from '../esp-lexer';
-import { IR } from '../ir';
+import { IR } from '../ir-ast';
 
 export const AssignmentOperatorTokenMatcher = {
   [TokenType.Punctuator]: IR.AssignmentOperator,

@@ -1,5 +1,5 @@
 import { ES } from '../es-ast';
-import { IR } from '../ir';
+import { IR } from '../ir-ast';
 import { transformArrayLiteral } from './nodes/array-literal';
 import { transformAssignmentExpression } from './nodes/assignment-expression';
 import { transformBinaryExpression } from './nodes/binary-expression';

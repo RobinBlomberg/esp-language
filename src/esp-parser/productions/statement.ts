@@ -1,5 +1,5 @@
 import { lex, Parser } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { parseBlockStatement } from './block-statement';
 import { parseBreakStatement } from './break-statement';
 import { parseContinueStatement } from './continue-statement';

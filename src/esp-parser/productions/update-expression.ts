@@ -1,5 +1,5 @@
 import { consumeToken, error, Parser } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { errors } from '../errors';
 import { isSimpleNode } from '../parser-utils';
 import { UpdateOperatorTokenMatcher } from '../token-matchers';

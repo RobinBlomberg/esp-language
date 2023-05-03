@@ -7,7 +7,7 @@ import {
   Unused,
   unused,
 } from '../../../esp-lexer';
-import { IR } from '../../../ir';
+import { IR } from '../../../ir-ast';
 import { parseIdentifier } from '../identifier';
 
 export const parseParameterList = (

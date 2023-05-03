@@ -1,5 +1,5 @@
 import { ES } from '../../es-ast';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { injectSourceRange } from '../inject-source-range';
 import { transformProperty } from './internal/property';
 

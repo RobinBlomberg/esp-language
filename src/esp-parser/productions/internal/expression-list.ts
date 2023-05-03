@@ -7,7 +7,7 @@ import {
   TokenType,
   Unused,
 } from '../../../esp-lexer';
-import { IR } from '../../../ir';
+import { IR } from '../../../ir-ast';
 import { parseExpression } from '../expression';
 
 export const parseExpressionList = (

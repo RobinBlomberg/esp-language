@@ -1,5 +1,5 @@
 import { Abrupt, consume, error, TokenType, unused } from '../../../esp-lexer';
-import { IR } from '../../../ir';
+import { IR } from '../../../ir-ast';
 import { parseExpressionList } from './expression-list';
 
 export const parseArguments = (

@@ -1,5 +1,5 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { parseUnaryExpression } from './unary-expression';
 
 export const parseExponentiationExpression: Parser<IR.Expression> = (

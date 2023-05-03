@@ -1,5 +1,5 @@
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 import { parseExpressionList } from './internal/expression-list';
 
 export const parseSetLiteral: Parser<IR.SetLiteral> = (data, i) => {

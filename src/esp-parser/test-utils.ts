@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 import { Parser } from '../esp-lexer';
-import { IR } from '../ir';
+import { IR } from '../ir-ast';
 
 export const createParseAssert = <T extends IR.Node>(parse: Parser<T>) => {
   return {

@@ -1,6 +1,6 @@
 import { Keyword } from '../../esp-grammar';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { IR } from '../../ir';
+import { IR } from '../../ir-ast';
 
 export const parseContinueStatement: Parser<IR.ContinueStatement> = (
   data,
