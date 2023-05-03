@@ -72,7 +72,7 @@ export const language: Language = {
     },
     StringEscape: {
       name: 'constant.character.escape.esp',
-      match: '\\\\',
+      match: /\\./.source,
     },
     StringLiteral: {
       patterns: [stringLiteral('single', "'"), stringLiteral('double', '"')],
