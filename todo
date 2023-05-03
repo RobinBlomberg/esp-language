@@ -1,0 +1,7 @@
+esp:
+  lexer:
+    ☐ add comment support
+  serializer:
+    ☐ add module
+  vscocde-syntax-generator:
+    ☐ solve how to generate the grammar programmatically
