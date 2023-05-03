@@ -26,7 +26,6 @@ export const enum NodeType {
   Script = 'Script',
   ThrowStatement = 'ThrowStatement',
   UnaryExpression = 'UnaryExpression',
-  UnionClause = 'UnionClause',
   UpdateExpression = 'UpdateExpression',
   VariableDeclaration = 'VariableDeclaration',
 }
@@ -83,7 +82,6 @@ export type NodeMap = {
   [NodeType.SetLiteral]: SetLiteral;
   [NodeType.ThrowStatement]: ThrowStatement;
   [NodeType.UnaryExpression]: UnaryExpression;
-  [NodeType.UnionClause]: UnionClause;
   [NodeType.UpdateExpression]: UpdateExpression;
   [NodeType.VariableDeclaration]: VariableDeclaration;
 };
@@ -655,21 +653,6 @@ export const UnaryExpression = (
 export type UnaryOperator = '-' | '!';
 
 export const UnaryOperator: UnaryOperator[] = ['-', '!'];
-
-export type UnionClause = BaseNode<
-  NodeType.UnionClause,
-  {
-    values: Expression[];
-  }
->;
-
-export const UnionClause = (
-  start: number,
-  end: number,
-  values: Expression[],
-) => {
-  return Node(start, end, NodeType.UnionClause, { values });
-};
 
 export type UpdateExpression = BaseNode<
   NodeType.UpdateExpression,
