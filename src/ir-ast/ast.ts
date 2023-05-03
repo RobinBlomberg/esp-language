@@ -14,7 +14,7 @@ export const enum NodeType {
   Identifier = 'Identifier',
   IfStatement = 'IfStatement',
   Literal = 'Literal',
-  LoopStatement = 'ForStatement',
+  LoopStatement = 'LoopStatement',
   MatchCase = 'MatchCase',
   MatchStatement = 'MatchStatement',
   MemberExpression = 'MemberExpression',
