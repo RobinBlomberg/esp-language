@@ -1,6 +1,6 @@
 import { Keyword } from '../../esp-grammar';
-import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { MatchCase, MatchStatement, Statement } from '../ast';
+import { MatchCase, MatchStatement, Statement } from '../../esp-grammar/ast';
+import { Parser, TokenType, consume, error } from '../../esp-lexer';
 import { parseExpression } from './expression';
 import { parseExpressionList } from './internal/expression-list';
 import { parseStatement } from './statement';

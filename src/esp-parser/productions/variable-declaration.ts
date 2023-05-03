@@ -1,3 +1,4 @@
+import { VariableDeclaration } from '../../esp-grammar/ast';
 import {
   consume,
   consumeToken,
@@ -5,7 +6,6 @@ import {
   Parser,
   TokenType,
 } from '../../esp-lexer';
-import { VariableDeclaration } from '../ast';
 import { VariableKindTokenMatcher } from '../token-matchers';
 import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';

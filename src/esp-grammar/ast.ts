@@ -1,5 +1,5 @@
-import { MemberExpression } from '../es-ast';
-import { ControlKeyword, Keyword } from '../esp-grammar';
+import { ControlKeyword, Keyword } from './keywords';
+import { BinaryOperator, LogicalOperator } from './punctuators';
 
 export const enum NodeType {
   ArrayLiteral = 'ArrayLiteral',
@@ -52,6 +52,10 @@ export type LeftHandSideExpression =
   | MemberExpression
   | NewExpression
   | PrimaryExpression;
+
+export type MemberExpression =
+  | ComputedMemberExpression
+  | StaticMemberExpression;
 
 export type Node = Expression | Script | Statement;
 
@@ -109,10 +113,7 @@ export type PrimaryExpression =
   | ArrayLiteral
   | ObjectLiteral;
 
-export type SimpleNode =
-  | Identifier
-  | StaticMemberExpression
-  | ComputedMemberExpression;
+export type SimpleNode = Identifier | MemberExpression;
 
 export type AdditiveOperator = '+' | '-';
 
@@ -192,7 +193,7 @@ export const AssignmentOperator: AssignmentOperator[] = [
 export type BinaryExpression = BaseNode<
   NodeType.BinaryExpression,
   {
-    operator: BinaryOperator;
+    operator: BinaryOperator | LogicalOperator;
     left: Expression;
     right: Expression;
   }
@@ -201,7 +202,7 @@ export type BinaryExpression = BaseNode<
 export const BinaryExpression = (
   start: number,
   end: number,
-  operator: BinaryOperator,
+  operator: BinaryOperator | LogicalOperator,
   left: Expression,
   right: Expression,
 ) => {
@@ -211,29 +212,6 @@ export const BinaryExpression = (
     right,
   });
 };
-
-export type BinaryOperator =
-  | '**'
-  | '*'
-  | '/'
-  | '%'
-  | '+'
-  | '-'
-  | '<<'
-  | '>>'
-  | '>>>'
-  | '<'
-  | '>'
-  | '<='
-  | '>='
-  | '=='
-  | '!='
-  | '&'
-  | '^'
-  | '|'
-  | '&&'
-  | '||'
-  | '??';
 
 export type BlockStatement = BaseNode<
   NodeType.BlockStatement,
@@ -352,15 +330,14 @@ export type Expression =
   | AssignmentExpression
   | BinaryExpression
   | CallExpression
-  | ComputedMemberExpression
   | ConditionalExpression
   | Function
   | Identifier
   | Literal
+  | MemberExpression
   | NewExpression
   | ObjectLiteral
   | SetLiteral
-  | StaticMemberExpression
   | UnaryExpression
   | UpdateExpression;
 

@@ -1,5 +1,5 @@
+import { Expression, UnaryExpression } from '../../esp-grammar/ast';
 import { consumeToken, error, Parser } from '../../esp-lexer';
-import { Expression, UnaryExpression } from '../ast';
 import { UnaryOperatorTokenMatcher } from '../token-matchers';
 import { parseUpdateExpression } from './update-expression';
 

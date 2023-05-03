@@ -1,16 +1,47 @@
-export type Operator = (typeof operators)[number];
+export type BinaryOperator = (typeof BinaryOperators)[number];
 
-export type Punctuation = (typeof punctuations)[number];
+export type LogicalOperator = (typeof LogicalOperators)[number];
 
-export type Punctuator = (typeof punctuators)[number];
+export type Operator = (typeof Operators)[number];
 
-export const operators = [
+export type Punctuation = (typeof Punctuations)[number];
+
+export type Punctuator = (typeof Punctuators)[number];
+
+export const BinaryOperators = [
+  '**',
+  '*',
+  '/',
+  '%',
+  '+',
+  '-',
+  '<<',
+  '>>',
+  '>>>',
+  '<',
+  '>',
+  '<=',
+  '>=',
+  '==',
+  '!=',
+  '&',
+  '^',
+  '|',
+] as const;
+
+export const BinaryOperatorsSet = new Set<string>(BinaryOperators);
+
+export const LogicalOperators = ['&&', '||', '??'] as const;
+
+export const LogicalOperatorsSet = new Set<string>(LogicalOperators);
+
+export const Operators = [
+  ...LogicalOperators,
   '--',
   '-',
   '-=',
   '!',
   '!=',
-  '??',
   '??=',
   '?',
   '*',
@@ -20,7 +51,6 @@ export const operators = [
   '/',
   '/=',
   '&',
-  '&&',
   '&&=',
   '&=',
   '%',
@@ -44,14 +74,13 @@ export const operators = [
   '>>>=',
   '|',
   '|=',
-  '||',
   '||=',
   '~',
 ] as const;
 
-export const operatorsSet = new Set<string>(operators);
+export const OperatorsSet = new Set<string>(Operators);
 
-export const punctuations = [
+export const Punctuations = [
   ',',
   ';',
   ':',
@@ -65,6 +94,18 @@ export const punctuations = [
   '#',
 ] as const;
 
-export const punctuators = [...operators, ...punctuations];
+export const Punctuators = [...Operators, ...Punctuations];
 
-export const punctuatorsSet = new Set<string>(punctuators);
+export const PunctuatorsSet = new Set<string>(Punctuators);
+
+export const isBinaryOperator = (
+  operator: string,
+): operator is BinaryOperator => {
+  return BinaryOperatorsSet.has(operator);
+};
+
+export const isLogicalOperator = (
+  operator: string,
+): operator is LogicalOperator => {
+  return LogicalOperatorsSet.has(operator);
+};

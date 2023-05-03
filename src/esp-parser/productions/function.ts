@@ -1,5 +1,5 @@
+import { Function } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { Function } from '../ast';
 import { lookahead } from '../parser-utils';
 import { parseBlockStatement } from './block-statement';
 import { parseExpression } from './expression';

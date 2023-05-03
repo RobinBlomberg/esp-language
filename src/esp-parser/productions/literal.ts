@@ -1,5 +1,5 @@
+import { Literal } from '../../esp-grammar/ast';
 import { error, lex, Parser, TokenType } from '../../esp-lexer';
-import { Literal } from '../ast';
 
 export const parseLiteral: Parser<Literal> = (data, i) => {
   const token = lex(data, i);

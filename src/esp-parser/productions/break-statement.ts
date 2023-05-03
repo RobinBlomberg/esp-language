@@ -1,6 +1,6 @@
 import { Keyword } from '../../esp-grammar';
+import { BreakStatement } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { BreakStatement } from '../ast';
 
 export const parseBreakStatement: Parser<BreakStatement> = (data, i) => {
   const break_ = consume(data, i, TokenType.Keyword, Keyword.Break);

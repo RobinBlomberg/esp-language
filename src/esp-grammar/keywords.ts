@@ -26,14 +26,14 @@ export enum ControlKeyword {
   While = 'while',
 }
 
+export const ConstantKeywords = Object.values(ConstantKeyword);
+
+export const ConstantKeywordsSet = new Set<string>(ConstantKeywords);
+
+export const ControlKeywords = Object.values(ControlKeyword);
+
 export const Keyword = { ...ConstantKeyword, ...ControlKeyword };
 
-export const constantKeywords = Object.values(ConstantKeyword);
+export const Keywords = [...ConstantKeywords, ...ControlKeywords];
 
-export const constantKeywordsSet = new Set<string>(constantKeywords);
-
-export const controlKeywords = Object.values(ControlKeyword);
-
-export const keywords = [...constantKeywords, ...controlKeywords];
-
-export const keywordsSet = new Set<string>(keywords);
+export const KeywordsSet = new Set<string>(Keywords);

@@ -1,5 +1,5 @@
+import { ObjectLiteral, Property } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ObjectLiteral, Property } from '../ast';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
 

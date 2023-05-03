@@ -1,5 +1,5 @@
+import { ExpressionStatement } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ExpressionStatement } from '../ast';
 import { parseExpression } from './expression';
 
 export const parseExpressionStatement: Parser<ExpressionStatement> = (

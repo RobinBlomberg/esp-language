@@ -1,5 +1,5 @@
+import { ConditionalExpression, Expression } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ConditionalExpression, Expression } from '../ast';
 import { parseExpression } from './expression';
 import { parseLogicalORExpression } from './logical-or-expression';
 

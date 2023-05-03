@@ -1,5 +1,5 @@
+import { Expression, NonAbrupt } from '../../../esp-grammar/ast';
 import { Abrupt, consume, error, TokenType, unused } from '../../../esp-lexer';
-import { Expression, NonAbrupt } from '../../ast';
 import { parseExpressionList } from './expression-list';
 
 export const parseArguments = (

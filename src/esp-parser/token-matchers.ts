@@ -1,11 +1,11 @@
 import { ControlKeyword, Keyword } from '../esp-grammar';
-import { TokenType } from '../esp-lexer';
 import {
   AssignmentOperator,
   UnaryOperator,
   UpdateOperator,
   VariableKind,
-} from './ast';
+} from '../esp-grammar/ast';
+import { TokenType } from '../esp-lexer';
 
 export const AssignmentOperatorTokenMatcher = {
   [TokenType.Punctuator]: AssignmentOperator,

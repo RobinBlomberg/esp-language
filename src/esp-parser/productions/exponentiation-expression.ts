@@ -1,5 +1,5 @@
+import { BinaryExpression, Expression, NodeType } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { BinaryExpression, Expression, NodeType } from '../ast';
 import { parseUnaryExpression } from './unary-expression';
 
 export const parseExponentiationExpression: Parser<Expression> = (data, i) => {

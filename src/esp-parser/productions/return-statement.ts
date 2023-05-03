@@ -1,6 +1,6 @@
 import { Keyword } from '../../esp-grammar';
+import { ReturnStatement } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ReturnStatement } from '../ast';
 import { parseExpression } from './expression';
 
 export const parseReturnStatement: Parser<ReturnStatement> = (data, i) => {

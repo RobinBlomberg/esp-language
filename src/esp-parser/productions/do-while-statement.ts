@@ -1,6 +1,6 @@
 import { Keyword } from '../../esp-grammar';
+import { DoWhileStatement } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { DoWhileStatement } from '../ast';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 

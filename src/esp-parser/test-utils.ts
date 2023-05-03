@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
+import { Node } from '../esp-grammar/ast';
 import { Parser } from '../esp-lexer';
-import { Node } from './ast';
 
 export const createParseAssert = <T extends Node>(parse: Parser<T>) => {
   return {

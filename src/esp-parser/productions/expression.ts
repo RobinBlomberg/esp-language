@@ -1,5 +1,5 @@
+import { AssignmentExpression, Expression } from '../../esp-grammar/ast';
 import { consumeToken, error, Parser } from '../../esp-lexer';
-import { AssignmentExpression, Expression } from '../ast';
 import { errors } from '../errors';
 import { isSimpleNode, lookahead } from '../parser-utils';
 import { AssignmentOperatorTokenMatcher } from '../token-matchers';

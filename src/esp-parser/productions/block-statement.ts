@@ -1,5 +1,5 @@
+import { BlockStatement, Statement } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { BlockStatement, Statement } from '../ast';
 import { parseStatement } from './statement';
 
 export const parseBlockStatement: Parser<BlockStatement> = (data, i) => {

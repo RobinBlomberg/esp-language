@@ -1,5 +1,5 @@
 import { ES } from '../es-ast';
-import { ESP } from '../esp-parser';
+import { ESP } from '../esp-grammar';
 import { transformArrayLiteral } from './nodes/array-literal';
 import { transformAssignmentExpression } from './nodes/assignment-expression';
 import { transformBinaryExpression } from './nodes/binary-expression';

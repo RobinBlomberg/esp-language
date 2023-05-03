@@ -1,5 +1,5 @@
+import { Expression, UpdateExpression } from '../../esp-grammar/ast';
 import { consumeToken, error, Parser } from '../../esp-lexer';
-import { Expression, UpdateExpression } from '../ast';
 import { errors } from '../errors';
 import { isSimpleNode } from '../parser-utils';
 import { UpdateOperatorTokenMatcher } from '../token-matchers';

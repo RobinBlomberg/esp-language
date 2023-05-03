@@ -1,3 +1,4 @@
+import { Identifier, NonAbrupt } from '../../../esp-grammar/ast';
 import {
   Abrupt,
   consume,
@@ -7,7 +8,6 @@ import {
   Unused,
   unused,
 } from '../../../esp-lexer';
-import { Identifier, NonAbrupt } from '../../ast';
 import { parseIdentifier } from '../identifier';
 
 export const parseParameterList = (

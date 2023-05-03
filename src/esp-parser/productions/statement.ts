@@ -1,5 +1,5 @@
+import { Statement } from '../../esp-grammar/ast';
 import { lex, Parser } from '../../esp-lexer';
-import { Statement } from '../ast';
 import { parseBlockStatement } from './block-statement';
 import { parseBreakStatement } from './break-statement';
 import { parseContinueStatement } from './continue-statement';

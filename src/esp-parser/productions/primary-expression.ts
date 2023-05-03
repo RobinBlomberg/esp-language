@@ -1,5 +1,5 @@
+import { Expression } from '../../esp-grammar/ast';
 import { consume, error, lex, Parser, TokenType } from '../../esp-lexer';
-import { Expression } from '../ast';
 import { parseArrayLiteral } from './array-literal';
 import { parseExpression } from './expression';
 import { parseIdentifier } from './identifier';

@@ -1,5 +1,5 @@
+import { CallExpression, Expression } from '../../esp-grammar/ast';
 import { Parser } from '../../esp-lexer';
-import { CallExpression, Expression } from '../ast';
 import { parseArguments } from './internal/arguments';
 import { parseMemberExpression } from './member-expression';
 

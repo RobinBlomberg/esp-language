@@ -1,6 +1,6 @@
 import { Keyword } from '../../esp-grammar';
+import { ContinueStatement } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ContinueStatement } from '../ast';
 
 export const parseContinueStatement: Parser<ContinueStatement> = (data, i) => {
   const continue_ = consume(data, i, TokenType.Keyword, Keyword.Continue);

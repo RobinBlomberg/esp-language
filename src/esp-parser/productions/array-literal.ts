@@ -1,5 +1,5 @@
+import { ArrayLiteral } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType, unused } from '../../esp-lexer';
-import { ArrayLiteral } from '../ast';
 import { parseExpressionList } from './internal/expression-list';
 
 export const parseArrayLiteral: Parser<ArrayLiteral> = (data, i) => {

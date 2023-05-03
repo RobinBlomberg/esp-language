@@ -1,7 +1,11 @@
 import { Keyword } from '../../esp-grammar';
+import {
+  ForOfStatement,
+  ForStatement,
+  VariableDeclaration,
+} from '../../esp-grammar/ast';
 import { Parser, TokenType, consume, consumeToken } from '../../esp-lexer';
 import { error } from '../../esp-lexer/abrupt';
-import { ForOfStatement, ForStatement, VariableDeclaration } from '../ast';
 import { lookahead } from '../parser-utils';
 import {
   ForStatementInitTokenMatcher,

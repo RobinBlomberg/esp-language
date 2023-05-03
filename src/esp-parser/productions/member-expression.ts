@@ -1,11 +1,11 @@
 import { Keyword } from '../../esp-grammar';
-import { consume, error, Parser, TokenType } from '../../esp-lexer';
 import {
   ComputedMemberExpression,
   Expression,
   NewExpression,
   StaticMemberExpression,
-} from '../ast';
+} from '../../esp-grammar/ast';
+import { Parser, TokenType, consume, error } from '../../esp-lexer';
 import { parseExpression } from './expression';
 import { parseIdentifierName } from './identifier-name';
 import { parseArguments } from './internal/arguments';

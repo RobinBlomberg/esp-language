@@ -1,19 +1,52 @@
 import { ES } from '../../es-ast';
-import { ESP } from '../../esp-parser';
+import { ESP } from '../../esp-grammar';
 import { injectSourceRange } from '../inject-source-range';
 import { transform } from '../transform';
+
+const binaryOperatorTransformMap: Record<
+  ESP.BinaryOperator,
+  ES.BinaryOperator
+> = {
+  '**': '**',
+  '*': '*',
+  '/': '/',
+  '%': '%',
+  '+': '+',
+  '-': '-',
+  '<<': '<<',
+  '>>': '>>',
+  '>>>': '>>>',
+  '<': '<',
+  '>': '>',
+  '<=': '<=',
+  '>=': '>=',
+  '==': '===',
+  '!=': '!==',
+  '&': '&',
+  '^': '^',
+  '|': '|',
+};
+
+const logicalOperatorTransformMap: Record<
+  ESP.LogicalOperator,
+  ES.LogicalOperator
+> = {
+  '&&': '&&',
+  '||': '||',
+  '??': '??',
+};
 
 export const transformBinaryExpression = (node: ESP.BinaryExpression) => {
   return injectSourceRange(
     node,
-    node.operator === '&&' || node.operator === '||' || node.operator === '??'
+    ESP.isLogicalOperator(node.operator)
       ? ES.LogicalExpression(
-          node.operator,
+          logicalOperatorTransformMap[node.operator],
           transform(node.left),
           transform(node.right),
         )
       : ES.BinaryExpression(
-          node.operator,
+          binaryOperatorTransformMap[node.operator],
           transform(node.left),
           transform(node.right),
         ),

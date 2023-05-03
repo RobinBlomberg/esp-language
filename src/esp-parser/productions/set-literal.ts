@@ -1,5 +1,5 @@
+import { SetLiteral } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { SetLiteral } from '../ast';
 import { parseExpressionList } from './internal/expression-list';
 
 export const parseSetLiteral: Parser<SetLiteral> = (data, i) => {

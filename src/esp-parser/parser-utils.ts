@@ -1,4 +1,13 @@
 import {
+  BinaryExpression,
+  BinaryOperator,
+  Expression,
+  LogicalOperator,
+  Node,
+  NodeType,
+  SimpleNode,
+} from '../esp-grammar';
+import {
   Parser,
   Token,
   TokenMatcher,
@@ -7,18 +16,12 @@ import {
   error,
   lex,
 } from '../esp-lexer';
-import {
-  BinaryExpression,
-  BinaryOperator,
-  Expression,
-  Node,
-  NodeType,
-  SimpleNode,
-} from './ast';
 
 export const createLeftAssociativeBinaryExpressionParser = (
   parse: Parser<Expression>,
-  operatorToken: TokenMatcher<Token<TokenType.Punctuator, BinaryOperator>>,
+  operatorToken: TokenMatcher<
+    Token<TokenType.Punctuator, BinaryOperator | LogicalOperator>
+  >,
 ): Parser<Expression> => {
   return (data, i) => {
     let expression = parse(data, i);

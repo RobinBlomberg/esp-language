@@ -1,5 +1,5 @@
+import { Script, Statement } from '../../esp-grammar/ast';
 import { Parser } from '../../esp-lexer';
-import { Script, Statement } from '../ast';
 import { parseStatement } from './statement';
 
 export const parseScript: Parser<Script> = (data, i) => {

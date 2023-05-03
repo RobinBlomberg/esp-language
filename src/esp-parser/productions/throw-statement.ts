@@ -1,6 +1,6 @@
 import { Keyword } from '../../esp-grammar';
+import { ThrowStatement } from '../../esp-grammar/ast';
 import { consume, error, Parser, TokenType } from '../../esp-lexer';
-import { ThrowStatement } from '../ast';
 import { parseExpression } from './expression';
 
 export const parseThrowStatement: Parser<ThrowStatement> = (data, i) => {
