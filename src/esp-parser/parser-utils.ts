@@ -44,8 +44,7 @@ export const createLeftAssociativeBinaryExpressionParser = (
 export const isSimpleNode = (node: IR.Node): node is IR.SimpleNode => {
   return (
     node.type === IR.NodeType.Identifier ||
-    node.type === IR.NodeType.StaticMemberExpression ||
-    node.type === IR.NodeType.ComputedMemberExpression
+    node.type === IR.NodeType.MemberExpression
   );
 };
 

@@ -6,7 +6,6 @@ import { transformBinaryExpression } from './nodes/binary-expression';
 import { transformBlockStatement } from './nodes/block-statement';
 import { transformBreakStatement } from './nodes/break-statement';
 import { transformCallExpression } from './nodes/call-expression';
-import { transformComputedMemberExpression } from './nodes/computed-member-expression';
 import { transformConditionalExpression } from './nodes/conditional-expression';
 import { transformContinueStatement } from './nodes/continue-statement';
 import { transformDoWhileStatement } from './nodes/do-while-statement';
@@ -18,12 +17,12 @@ import { transformIfStatement } from './nodes/if-statement';
 import { transformLiteral } from './nodes/literal';
 import { transformLoopStatement } from './nodes/loop-statement';
 import { transformMatchStatement } from './nodes/match-statement';
+import { transformMemberExpression } from './nodes/member-expression';
 import { transformNewExpression } from './nodes/new-expression';
 import { transformObjectLiteral } from './nodes/object-literal';
 import { transformReturnStatement } from './nodes/return-statement';
 import { transformScript } from './nodes/script';
 import { transformSetLiteral } from './nodes/set-literal';
-import { transformStaticMemberExpression } from './nodes/static-member-expression';
 import { transformThrowStatement } from './nodes/throw-statement';
 import { transformUnaryExpression } from './nodes/unary-expression';
 import { transformUpdateExpression } from './nodes/update-expression';
@@ -36,7 +35,6 @@ type ToESNode<T extends IR.Node> = {
   [IR.NodeType.BlockStatement]: ES.BlockStatement;
   [IR.NodeType.BreakStatement]: ES.BreakStatement;
   [IR.NodeType.CallExpression]: ES.CallExpression;
-  [IR.NodeType.ComputedMemberExpression]: ES.MemberExpression;
   [IR.NodeType.ConditionalExpression]: ES.ConditionalExpression;
   [IR.NodeType.ContinueStatement]: ES.ContinueStatement;
   [IR.NodeType.DoWhileStatement]: ES.DoWhileStatement;
@@ -48,12 +46,12 @@ type ToESNode<T extends IR.Node> = {
   [IR.NodeType.Literal]: ES.Identifier | ES.Literal;
   [IR.NodeType.LoopStatement]: ES.ForStatement | ES.WhileStatement;
   [IR.NodeType.MatchStatement]: ES.SwitchStatement;
+  [IR.NodeType.MemberExpression]: ES.MemberExpression;
   [IR.NodeType.NewExpression]: ES.NewExpression;
   [IR.NodeType.ObjectLiteral]: ES.ObjectExpression;
   [IR.NodeType.ReturnStatement]: ES.ReturnStatement;
   [IR.NodeType.Script]: ES.Program;
   [IR.NodeType.SetLiteral]: ES.NewExpression;
-  [IR.NodeType.StaticMemberExpression]: ES.MemberExpression;
   [IR.NodeType.ThrowStatement]: ES.ThrowStatement;
   [IR.NodeType.UnaryExpression]: ES.UnaryExpression;
   [IR.NodeType.UpdateExpression]: ES.UpdateExpression;
@@ -69,7 +67,6 @@ const transformers: {
   [IR.NodeType.BlockStatement]: transformBlockStatement,
   [IR.NodeType.BreakStatement]: transformBreakStatement,
   [IR.NodeType.CallExpression]: transformCallExpression,
-  [IR.NodeType.ComputedMemberExpression]: transformComputedMemberExpression,
   [IR.NodeType.ConditionalExpression]: transformConditionalExpression,
   [IR.NodeType.ContinueStatement]: transformContinueStatement,
   [IR.NodeType.DoWhileStatement]: transformDoWhileStatement,
@@ -81,12 +78,12 @@ const transformers: {
   [IR.NodeType.Literal]: transformLiteral,
   [IR.NodeType.LoopStatement]: transformLoopStatement,
   [IR.NodeType.MatchStatement]: transformMatchStatement,
+  [IR.NodeType.MemberExpression]: transformMemberExpression,
   [IR.NodeType.NewExpression]: transformNewExpression,
   [IR.NodeType.ObjectLiteral]: transformObjectLiteral,
   [IR.NodeType.ReturnStatement]: transformReturnStatement,
   [IR.NodeType.Script]: transformScript,
   [IR.NodeType.SetLiteral]: transformSetLiteral,
-  [IR.NodeType.StaticMemberExpression]: transformStaticMemberExpression,
   [IR.NodeType.ThrowStatement]: transformThrowStatement,
   [IR.NodeType.UnaryExpression]: transformUnaryExpression,
   [IR.NodeType.UpdateExpression]: transformUpdateExpression,

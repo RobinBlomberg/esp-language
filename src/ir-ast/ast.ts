@@ -5,7 +5,6 @@ export const enum NodeType {
   BlockStatement = 'BlockStatement',
   BreakStatement = 'BreakStatement',
   CallExpression = 'CallExpression',
-  ComputedMemberExpression = 'ComputedMemberExpression',
   ConditionalExpression = 'ConditionalExpression',
   ContinueStatement = 'ContinueStatement',
   DoWhileStatement = 'DoWhileStatement',
@@ -25,7 +24,6 @@ export const enum NodeType {
   ReturnStatement = 'ReturnStatement',
   SetLiteral = 'SetLiteral',
   Script = 'Script',
-  StaticMemberExpression = 'StaticMemberExpression',
   ThrowStatement = 'ThrowStatement',
   UnaryExpression = 'UnaryExpression',
   UnionClause = 'UnionClause',
@@ -64,7 +62,6 @@ export type NodeMap = {
   [NodeType.BlockStatement]: BlockStatement;
   [NodeType.BreakStatement]: BreakStatement;
   [NodeType.CallExpression]: CallExpression;
-  [NodeType.ComputedMemberExpression]: ComputedMemberExpression;
   [NodeType.ConditionalExpression]: ConditionalExpression;
   [NodeType.ContinueStatement]: ContinueStatement;
   [NodeType.DoWhileStatement]: DoWhileStatement;
@@ -84,7 +81,6 @@ export type NodeMap = {
   [NodeType.ReturnStatement]: ReturnStatement;
   [NodeType.Script]: Script;
   [NodeType.SetLiteral]: SetLiteral;
-  [NodeType.StaticMemberExpression]: StaticMemberExpression;
   [NodeType.ThrowStatement]: ThrowStatement;
   [NodeType.UnaryExpression]: UnaryExpression;
   [NodeType.UnionClause]: UnionClause;
@@ -98,10 +94,7 @@ export type PrimaryExpression =
   | ArrayLiteral
   | ObjectLiteral;
 
-export type SimpleNode =
-  | Identifier
-  | StaticMemberExpression
-  | ComputedMemberExpression;
+export type SimpleNode = Identifier | MemberExpression;
 
 export type AdditiveOperator = '+' | '-';
 
@@ -265,26 +258,6 @@ export const CallExpression = (
   });
 };
 
-export type ComputedMemberExpression = BaseNode<
-  NodeType.ComputedMemberExpression,
-  {
-    object: Expression;
-    property: Expression;
-  }
->;
-
-export const ComputedMemberExpression = (
-  start: number,
-  end: number,
-  object: Expression,
-  property: Expression,
-) => {
-  return Node(start, end, NodeType.ComputedMemberExpression, {
-    object,
-    property,
-  });
-};
-
 export type ConditionalExpression = BaseNode<
   NodeType.ConditionalExpression,
   {
@@ -338,15 +311,14 @@ export type Expression =
   | AssignmentExpression
   | BinaryExpression
   | CallExpression
-  | ComputedMemberExpression
   | ConditionalExpression
   | Function
   | Identifier
   | Literal
+  | MemberExpression
   | NewExpression
   | ObjectLiteral
   | SetLiteral
-  | StaticMemberExpression
   | UnaryExpression
   | UpdateExpression;
 
@@ -644,26 +616,6 @@ export type Statement =
   | ReturnStatement
   | ThrowStatement
   | VariableDeclaration;
-
-export type StaticMemberExpression = BaseNode<
-  NodeType.StaticMemberExpression,
-  {
-    object: Expression;
-    property: Identifier;
-  }
->;
-
-export const StaticMemberExpression = (
-  start: number,
-  end: number,
-  object: Expression,
-  property: Identifier,
-) => {
-  return Node(start, end, NodeType.StaticMemberExpression, {
-    object,
-    property,
-  });
-};
 
 export type ThrowStatement = BaseNode<
   NodeType.ThrowStatement,

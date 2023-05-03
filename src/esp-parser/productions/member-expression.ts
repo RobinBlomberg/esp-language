@@ -34,11 +34,12 @@ export const parseMemberExpression: Parser<IR.Expression> = (data, i) => {
       if (property.abrupt) return error(property);
       i = property.end;
 
-      object = IR.StaticMemberExpression(
+      object = IR.MemberExpression(
         object.start,
         property.end,
         object,
         property,
+        false,
       );
       continue;
     }
@@ -55,7 +56,7 @@ export const parseMemberExpression: Parser<IR.Expression> = (data, i) => {
     if (close.abrupt) return error(close);
     i = close.end;
 
-    object = IR.ComputedMemberExpression(object.start, i, object, property);
+    object = IR.MemberExpression(object.start, i, object, property, true);
     continue;
   }
 
