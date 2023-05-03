@@ -2,8 +2,7 @@
 
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { run } from '../src/esp-vm';
-import { generate } from '../src/esp-vscode-syntax-generator';
+import { ESP } from '../src/esp';
 
 const logHelpAndExit = () => {
   console.info('Usage: esp [options] <file>');
@@ -27,7 +26,7 @@ const logHelpAndExit = () => {
       }
 
       const path = resolve(process.cwd(), unresolvedPath);
-      await generate(path);
+      await ESP.VSCodeSyntaxGenerator.generate(path);
       break;
     }
     default: {
@@ -38,7 +37,7 @@ const logHelpAndExit = () => {
 
       const sourceFileName = resolve(process.cwd(), unresolvedPath);
       const source = readFileSync(sourceFileName, 'utf8');
-      run(source, sourceFileName);
+      ESP.VM.run(source, sourceFileName);
     }
   }
 })();
