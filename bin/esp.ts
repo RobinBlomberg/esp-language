@@ -6,13 +6,13 @@ import { run } from '../src/esp-vm';
 import { generate } from '../src/esp-vscode-syntax-generator';
 
 const logHelpAndExit = () => {
-  console.log('Usage: esp [options] <file>');
-  console.log();
-  console.log('Options:');
-  console.log(
+  console.info('Usage: esp [options] <file>');
+  console.info();
+  console.info('Options:');
+  console.info(
     '  --generate-syntax  generate a syntax highlighting file for VS Code',
   );
-  console.log();
+  console.info();
   process.exit(1);
 };
 

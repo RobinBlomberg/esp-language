@@ -17,7 +17,7 @@ export const generate = async (tmLanguagePath: string) => {
 
   await writeFile(tmLanguagePath, tmLanguageJson, 'utf8');
 
-  console.log(
+  console.info(
     `${green}Syntax highlighting generated at "${tmLanguagePath}"${clear}`,
   );
 };
