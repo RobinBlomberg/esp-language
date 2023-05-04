@@ -98,7 +98,7 @@ export const language: Language = {
           endCaptures: { 0: { name: 'punctuation.definition.comment.esp' } },
         },
         {
-          begin: /\//.source,
+          begin: /\/\//.source,
           beginCaptures: { 0: { name: 'comment.line.double-slash.esp' } },
           end: /(?=$)/.source,
           contentName: 'comment.line.double-slash.esp',
