@@ -10,7 +10,7 @@ suite('ForStatement', () => {
       /* s */ `Statement`,
     () => {
       unused();
-      ok('for(;;){};');
+      ok('for(;;){}');
       ok('for(let a=b;c;d)e;');
       error('for');
       error('for(;;;)e;');
@@ -38,8 +38,8 @@ suite('ForStatement', () => {
   );
 
   test(/* s */ `'for' '(' VariableDeclaration 'of' Expression ')' Statement`, () => {
-    ok('for(let a of b){};');
-    ok('for(const a of []){};');
+    ok('for(let a of b){}');
+    ok('for(const a of []){}');
     error('for(let a of b');
     error('for(let a of b)');
     error('for(let a of b){');

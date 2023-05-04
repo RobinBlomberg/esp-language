@@ -29,10 +29,10 @@ suite('Function', () => {
   });
 
   test(/* s */ `':' '(' ParameterList? ')' Expression`, () => {
-    ok(':()c;');
-    ok(':(a)c;');
-    ok(':(a,b)c;');
-    error(':(a,)c;');
-    error(':(a,b,)c;');
+    ok(':()c');
+    ok(':(a)c');
+    ok(':(a,b)c');
+    error(':(a,)c');
+    error(':(a,b,)c');
   });
 });

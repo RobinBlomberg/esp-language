@@ -8,6 +8,7 @@ suite('IfStatement', () => {
   test(/* s */ `'if' '(' Expression ')' Statement`, () => {
     unused();
     ok('if(a)b;');
+    ok('if(a())b;');
     error('if');
     error('if(');
     error('if(a');

@@ -21,6 +21,6 @@ suite('EqualityExpression', () => {
   });
 
   it('should respect operator precedence', () => {
-    ok('a==b<c!=d in e');
+    ok('a==b<c!=d>=e');
   });
 });

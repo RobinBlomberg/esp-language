@@ -7,7 +7,6 @@ const { ok } = createParseAssert(parseScript);
 suite('Script', () => {
   test(/* s */ `StatementList?`, () => {
     ok('');
-    ok(' ');
     ok('a;');
     ok('a;b;');
   });

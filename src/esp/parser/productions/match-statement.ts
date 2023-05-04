@@ -57,7 +57,7 @@ export const parseMatchStatement: Parser<MatchStatement> = (data, i) => {
   if (closeCurly.abrupt) return error(closeCurly);
 
   return MatchStatement(
-    openParen.start,
+    match_.start,
     closeCurly.end,
     discriminant,
     cases,

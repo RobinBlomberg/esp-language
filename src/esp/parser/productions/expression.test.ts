@@ -13,11 +13,11 @@ suite('Expression', () => {
 
   test(/* s */ `Function`, () => {
     ok(':(){}');
-    ok(':()c;');
+    ok(':()c');
     ok(':(a,b){}');
-    ok(':(a,b)c;');
+    ok(':(a,b)c');
     ok(':(a){}');
-    ok(':(a)c;');
+    ok(':(a)c');
     error(':');
     error(':(');
     error(':(,');
@@ -28,17 +28,17 @@ suite('Expression', () => {
     error(':(a,');
     error(':(a,');
     error(':(a,){}');
-    error(':(a,)c;');
+    error(':(a,)c');
     error(':(a,b');
     error(':(a,b,){}');
-    error(':(a,b,)c;');
+    error(':(a,b,)c');
     error(':(a,b)');
     error(':(a,b){');
     error(':(a)');
     error(':(a){');
   });
 
-  test(/* s */ `LeftHandSideExpression AssignmentOperator Expression`, () => {
+  test(/* s */ `NewExpression AssignmentOperator Expression`, () => {
     ok('a=b');
     ok('a=b');
     ok('a*=b');

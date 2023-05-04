@@ -1,5 +1,5 @@
 import { DoWhileStatement, Keyword } from '../../grammar';
-import { consume, error, Parser, TokenType } from '../../lexer';
+import { Parser, TokenType, consume, error } from '../../lexer';
 import { parseExpression } from './expression';
 import { parseStatement } from './statement';
 
@@ -31,5 +31,5 @@ export const parseDoWhileStatement: Parser<DoWhileStatement> = (data, i) => {
   const terminator = consume(data, i, TokenType.Punctuator, ';');
   if (terminator.abrupt) return error(terminator);
 
-  return DoWhileStatement(do_.start, body.end, body, test);
+  return DoWhileStatement(do_.start, terminator.end, body, test);
 };

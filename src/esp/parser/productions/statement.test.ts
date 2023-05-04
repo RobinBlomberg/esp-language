@@ -29,7 +29,7 @@ suite('Statement', () => {
   });
 
   test(/* s */ `ForStatement`, () => {
-    ok('for(;;){};');
+    ok('for(;;){}');
   });
 
   test(/* s */ `IfStatement`, () => {
