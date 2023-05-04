@@ -1,4 +1,5 @@
 import {
+  blue,
   clear,
   cyan,
   green,
@@ -35,9 +36,21 @@ export const stylize = (data: string) => {
   let lastIndex = 0;
   let output = '';
 
-  for (const token of tokens) {
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i]!;
+    const lookahead = tokens
+      .slice(i + 1)
+      .map((t) => t.value)
+      .join('');
+
     output += data.slice(lastIndex, token.start);
-    output += getTokenStyle(token);
+
+    if (token.type === TokenType.Identifier && /^(?:\(|=:)/.test(lookahead)) {
+      output += blue;
+    } else {
+      output += getTokenStyle(token);
+    }
+
     output += token.value;
     output += clear;
     lastIndex = token.end;
