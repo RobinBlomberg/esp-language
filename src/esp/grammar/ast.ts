@@ -47,12 +47,6 @@ export type BaseNode<
   } & U
 >;
 
-export type LeftHandSideExpression =
-  | CallExpression
-  | MemberExpression
-  | NewExpression
-  | PrimaryExpression;
-
 export type MemberExpression =
   | ComputedMemberExpression
   | StaticMemberExpression;

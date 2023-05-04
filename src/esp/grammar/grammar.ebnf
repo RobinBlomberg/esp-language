@@ -168,7 +168,11 @@ Keyword ::=
   | ControlKeyword
 
 LeftHandSideExpression ::=
-  | MemberExpression Arguments?
+  | PrimaryExpression
+  | LeftHandSideExpression '[' Expression ']'
+  | LeftHandSideExpression '.' IdentifierName
+  | LeftHandSideExpression Arguments
+  | 'new' LeftHandSideExpression Arguments
 
 LetOrConst ::=
   | 'let'
@@ -191,12 +195,6 @@ LogicalORExpression ::=
 
 MatchStatement ::=
   | 'match' '(' Expression ')' CaseBlock
-
-MemberExpression ::=
-  | PrimaryExpression
-  | MemberExpression '[' Expression ']'
-  | MemberExpression '.' IdentifierName
-  | 'new' MemberExpression Arguments
 
 MultiplicativeExpression ::=
   | ExponentiationExpression

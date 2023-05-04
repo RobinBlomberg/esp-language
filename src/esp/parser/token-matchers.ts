@@ -17,6 +17,10 @@ export const ForStatementInitTokenMatcher = {
   [TokenType.Punctuator]: ['='] as ['='],
 };
 
+export const MemberExpressionOpenTokenMatcher = {
+  [TokenType.Punctuator]: ['.', '[', '('] as ['.', '[', '('],
+};
+
 export const UnaryOperatorTokenMatcher = {
   [TokenType.Punctuator]: UnaryOperator,
 };
