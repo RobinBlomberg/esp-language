@@ -4,14 +4,15 @@ AdditiveExpression ::=
   | AdditiveExpression '-' MultiplicativeExpression
 
 ArgumentList ::=
-  | Identifier
-  | ArgumentList ',' Identifier
+  | Expression
+  | ArgumentList ',' Expression
 
 Arguments ::=
   | '(' ArgumentList? ')'
 
 ArrayLiteral ::=
   | '[' ExpressionList ']'
+  // | '[' ElementList ']' (replaces line above)
 
 AssignmentOperator ::=
   | '='
@@ -95,6 +96,7 @@ ControlKeyword ::=
 
 CoverParenthesizedExpression ::=
   | '(' Expression ')'
+  // | '(' Expression ')' IdentifierName
 
 DecimalDigit ::=
   | [0-9]
@@ -117,6 +119,14 @@ DoubleStringCharacters ::=
 DoWhileStatement ::=
   | 'do' Statement 'while' '(' Expression ')' ';'
 
+/*
+ElementList ::=
+  | Expression
+  | SpreadElement
+  | ElementList ',' Expression
+  | ElementList ',' SpreadElement
+*/
+
 EqualityExpression ::=
   | RelationalExpression
   | EqualityExpression '==' RelationalExpression
@@ -124,10 +134,13 @@ EqualityExpression ::=
 
 ExponentiationExpression ::=
   | UnaryExpression
+  // | RangeExpression (replaces line above)
   | UpdateExpression '**' ExponentiationExpression
+  // | RangeExpression '**' ExponentiationExpression (replaces line above)
 
 Expression ::=
   | ConditionalExpression
+  // | IfExpression
   | Function
   | LeftHandSideExpression AssignmentOperator Expression
 
@@ -146,6 +159,10 @@ Function ::=
   | ':' '(' ParameterList? ')' BlockStatement
   | ':' '(' ParameterList? ')' Expression
 
+Identifier ::=
+  | IdentifierName - Keyword
+  // | '*' IdentifierName
+
 IdentifierName ::=
   | IdentifierStartChar
   | IdentifierName IdentifierPartChar
@@ -156,12 +173,23 @@ IdentifierPartChar ::=
 IdentifierStartChar ::=
   | [a-zA-Z$_]
 
-Identifier ::=
-  | IdentifierName - Keyword
+/*
+IfExpression ::=
+  | 'if' '(' Expression ')' Expression
+  | 'if' '(' Expression ')' Expression 'else' Expression
+*/
 
 IfStatement ::=
   | 'if' '(' Expression ')' Statement
   | 'if' '(' Expression ')' Statement 'else' Statement
+
+/*
+InlineDeclaration ::=
+  | InlineIdentifier '=' Literal ';'
+
+InlineIdentifier ::=
+  | '#' IdentifierName
+*/
 
 Keyword ::=
   | ConstantKeyword
@@ -211,17 +239,26 @@ NonZeroDigit ::=
 NumericLiteral ::=
   | DecimalIntegerLiteral
   | DecimalIntegerLiteral '.' DecimalDigits
+  // | DecimalIntegerLiteral IdentifierName
+  // | DecimalIntegerLiteral '.' IdentifierName
 
 ObjectLiteral ::=
+// MapLiteral ::= (replaces line above)
   | '{' '}'
   | '{' PropertyDefinitionList '}'
+
+/*
+ObjectLiteral ::=
+  | '{{' '}}'
+  | '{{' PropertyDefinitionList '}}'
+*/
 
 Parameter ::=
   | Identifier
 
 ParameterList ::=
   | Parameter
-  | ParameterList , Parameter
+  | ParameterList ',' Parameter
 
 PropertyDefinition ::=
   | PropertyName ':' Expression
@@ -231,7 +268,7 @@ PropertyDefinitionList ::=
   | PropertyDefinitionList ',' PropertyDefinition
 
 PropertyName ::=
-  | Identifier
+  | IdentifierName
 
 PrimaryExpression ::=
   | Identifier
@@ -241,12 +278,22 @@ PrimaryExpression ::=
   | SetLiteral
   | CoverParenthesizedExpression
 
+/*
+RangeExpression ::=
+  | Expression '..' Expression
+  | Expression '..=' Expression
+  | Expression '..' Expression '..' Expression
+  | Expression '..' Expression '..=' Expression
+*/
+
 RelationalExpression ::=
   | ShiftExpression
   | RelationalExpression '<' ShiftExpression
   | RelationalExpression '>' ShiftExpression
   | RelationalExpression '<=' ShiftExpression
   | RelationalExpression '>=' ShiftExpression
+  // | RelationalExpression 'in' ShiftExpression
+  // | RelationalExpression 'in' UnionExpression
 
 ReturnStatement ::=
   | 'return' Expression ';'
@@ -266,6 +313,14 @@ SingleStringCharacter ::=
 
 SingleStringCharacters ::=
   | SingleStringCharacter SingleStringCharacters?
+
+/*
+SpreadElement ::=
+  | '...' Expression
+  | 'void'
+  | IfExpression
+  | PrimaryExpression '?'
+*/
 
 Statement ::=
   | BlockStatement
@@ -297,6 +352,11 @@ UnaryExpression ::=
   | '-' UnaryExpression
   | '!' UnaryExpression
 
+/*
+UnionExpression ::=
+  | '(' ExpressionList ')'
+*/
+
 UpdateExpression ::=
   | LeftHandSideExpression
   | LeftHandSideExpression '++'
@@ -309,3 +369,4 @@ VariableDeclaration ::=
 
 WhileStatement ::=
   | 'while' '(' Expression ')' Statement
+  // | 'while' Statement
