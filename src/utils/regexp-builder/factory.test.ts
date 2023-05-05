@@ -7,7 +7,7 @@ test('regexp-builder#factory', () => {
       $.start(),
       $.or(
         '0',
-        $.concat($.class($.range('1', '9')), $.class($.range('0', '9')).star()),
+        $.concat($.range('1', '9').class(), $.range('0', '9').class().star()),
       ),
       $.end(),
     ).regex(),
@@ -15,13 +15,13 @@ test('regexp-builder#factory', () => {
 
   expect(
     $.concat(
-      $.regex(/^/),
-      $.regex(/[a-zA-Z$_]/),
-      $.regex(/[a-zA-Z0-9$_]*/),
-      $.regex(/\(/),
-      $.regex(/(.*)/),
-      $.regex(/\)/),
-      $.regex(/$/),
+      /^/,
+      /[a-zA-Z$_]/,
+      /[a-zA-Z0-9$_]*/,
+      /\(/,
+      /(.*)/,
+      /\)/,
+      /$/,
     ).regex(),
   ).toStrictEqual(/^[a-zA-Z$_][a-zA-Z0-9$_]*\((.*)\)$/);
 
@@ -43,9 +43,9 @@ test('regexp-builder#factory', () => {
       ).optional(),
       $.any().plus().lazy().capture(),
       $(':'),
-      $.class($.range('0', '9')).plus().capture(),
+      $.range('0', '9').class().plus().capture(),
       $(':'),
-      $.class($.range('0', '9')).plus().capture(),
+      $.range('0', '9').class().plus().capture(),
     ).regex(),
   ).toStrictEqual(
     /^ {4}at (?:(?:[^ ]+ \([^ ]+ at )?([^ ]+) \(?)?(.+?):([0-9]+):([0-9]+)/,

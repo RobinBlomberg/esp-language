@@ -83,6 +83,7 @@ export type Range = BasePattern & {
   type: PatternType.Range;
   from: string;
   to: string;
+  class: () => CharacterClass;
   negated: () => CharacterClass;
 };
 
@@ -206,6 +207,9 @@ export const Range = (from: string, to: string): Range => {
     type: PatternType.Range,
     from,
     to,
+    class: () => {
+      return CharacterClass(false, [self]);
+    },
     negated: () => {
       return CharacterClass(true, [self]);
     },
