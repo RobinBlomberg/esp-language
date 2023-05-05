@@ -1,39 +1,27 @@
-import {
-  any,
-  char,
-  charClass,
-  concat,
-  end,
-  group,
-  not,
-  or,
-  range,
-  start,
-  string,
-} from '../regexp-builder';
+import { $ } from '../regexp-builder';
 
-const digit = range('0', '9');
-const nonZeroDigit = range('1', '9');
-const integer = or(
-  char('0'),
-  concat(charClass(nonZeroDigit), charClass(digit).zeroOrMore()),
+const digit = $.range('0', '9');
+const nonZeroDigit = $.range('1', '9');
+const integer = $.or(
+  '0',
+  $.concat($.charClass(nonZeroDigit), $.charClass(digit).zeroOrMore()),
 );
-const nonSpaces = not.char(' ').oneOrMore();
+const nonSpaces = $.not(' ').oneOrMore();
 
-export const INTEGER_REGEXP = concat(start(), integer, end()).regex();
+export const INTEGER_REGEXP = $.concat($.start(), integer, $.end()).regex();
 
-export const STACK_FRAME_REGEXP = concat(
-  start(),
-  string('    at '),
-  group(
-    group(nonSpaces, string(' ('), nonSpaces, string(' at ')).optional(),
+export const STACK_FRAME_REGEXP = $.concat(
+  $.start(),
+  $('    at '),
+  $.group(
+    $.group(nonSpaces, $(' ('), nonSpaces, $(' at ')).optional(),
     nonSpaces.capture(),
-    char(' '),
-    char('(').optional(),
+    $(' '),
+    $('(').optional(),
   ).optional(),
-  any().oneOrMore().lazy().capture(),
-  char(':'),
+  $.any().oneOrMore().lazy().capture(),
+  $(':'),
   integer.capture(),
-  char(':'),
+  $(':'),
   integer.capture(),
 ).regex();

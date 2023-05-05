@@ -6,12 +6,12 @@ export const parse = (pattern: Pattern): string => {
     case PatternType.Alternation: {
       let output = '';
 
-      for (let i = 0; i < pattern.alternatives.length; i++) {
+      for (let i = 0; i < pattern.patterns.length; i++) {
         if (i >= 1) {
           output += '|';
         }
 
-        output += parse(pattern.alternatives[i]!);
+        output += parse(pattern.patterns[i]!);
       }
 
       return output;
