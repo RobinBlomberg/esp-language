@@ -24,7 +24,9 @@
       "@typescript-eslint/no-magic-numbers": 0,
       "@typescript-eslint/prefer-nullish-coalescing": 0,
       "curly": 0,
+      "max-classes-per-file": 0,
       "no-template-curly-in-string": 0,
+      "no-unreachable": 0,
       "sort-keys/sort-keys-fix": 0
     }
   }

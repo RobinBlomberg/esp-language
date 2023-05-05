@@ -1,6 +1,4 @@
-const INTEGER_REGEXP = /^0|[1-9][0-9]*$/;
-const STACK_FRAME_REGEXP =
-  /^ {4}at (?:(?:[^ ]+ \([^ ]+ at )?([^ ]+) \(?)?(.+?):([0-9]+):([0-9]+)/;
+import { INTEGER_REGEXP, STACK_FRAME_REGEXP } from './regexes';
 
 const parseFileName = (fileName: string | undefined) => {
   if (!fileName) {
