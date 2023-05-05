@@ -4,9 +4,9 @@ const digit = $.range('0', '9');
 const nonZeroDigit = $.range('1', '9');
 const integer = $.or(
   '0',
-  $.concat($.charClass(nonZeroDigit), $.charClass(digit).zeroOrMore()),
+  $.concat($.class(nonZeroDigit), $.class(digit).star()),
 );
-const nonSpaces = $.not(' ').oneOrMore();
+const nonSpaces = $.not(' ').plus();
 
 export const INTEGER_REGEXP = $.concat($.start(), integer, $.end()).regex();
 
@@ -19,7 +19,7 @@ export const STACK_FRAME_REGEXP = $.concat(
     $(' '),
     $('(').optional(),
   ).optional(),
-  $.any().oneOrMore().lazy().capture(),
+  $.any().plus().lazy().capture(),
   $(':'),
   integer.capture(),
   $(':'),

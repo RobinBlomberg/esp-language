@@ -20,10 +20,10 @@ export type Any = BasePattern & {
 export type BasePattern = {
   capture: () => Group;
   regex: () => RegExp;
-  oneOrMore: () => Quantifier;
+  plus: () => Quantifier;
   optional: () => Quantifier;
   repeat: (min: number, max?: number) => Quantifier;
-  zeroOrMore: () => Quantifier;
+  star: () => Quantifier;
 };
 
 export type Character = BasePattern & {
@@ -232,7 +232,7 @@ export const toWithGroupQuantifiable = <T extends Record<string, unknown>>(
 ) => {
   const self = BasePattern({
     ...props,
-    oneOrMore: () => {
+    plus: () => {
       return Quantifier(Group(false, [self]), 1, Infinity, false);
     },
     optional: () => {
@@ -241,7 +241,7 @@ export const toWithGroupQuantifiable = <T extends Record<string, unknown>>(
     repeat: (min: number, max?: number) => {
       return Quantifier(Group(false, [self]), min, max ?? min, false);
     },
-    zeroOrMore: () => {
+    star: () => {
       return Quantifier(Group(false, [self]), 0, Infinity, false);
     },
   });
@@ -254,7 +254,7 @@ export const toWithoutGroupQuantifiable = <T extends Record<string, unknown>>(
 ) => {
   const self = BasePattern({
     ...props,
-    oneOrMore: () => {
+    plus: () => {
       return Quantifier(self, 1, Infinity, false);
     },
     optional: () => {
@@ -263,7 +263,7 @@ export const toWithoutGroupQuantifiable = <T extends Record<string, unknown>>(
     repeat: (min: number, max?: number) => {
       return Quantifier(self, min, max ?? min, false);
     },
-    zeroOrMore: () => {
+    star: () => {
       return Quantifier(self, 0, Infinity, false);
     },
   }) as Quantifiable & T;

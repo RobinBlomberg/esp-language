@@ -7,10 +7,7 @@ test('regexp-builder#factory', () => {
       $.start(),
       $.or(
         '0',
-        $.concat(
-          $.charClass($.range('1', '9')),
-          $.charClass($.range('0', '9')).zeroOrMore(),
-        ),
+        $.concat($.class($.range('1', '9')), $.class($.range('0', '9')).star()),
       ),
       $.end(),
     ).regex(),
@@ -35,20 +32,20 @@ test('regexp-builder#factory', () => {
       $('at '),
       $.group(
         $.group(
-          $.not(' ').oneOrMore(),
+          $.not(' ').plus(),
           $(' ('),
-          $.not(' ').oneOrMore(),
+          $.not(' ').plus(),
           $(' at '),
         ).optional(),
-        $.not(' ').oneOrMore().capture(),
+        $.not(' ').plus().capture(),
         $(' '),
         $('(').optional(),
       ).optional(),
-      $.any().oneOrMore().lazy().capture(),
+      $.any().plus().lazy().capture(),
       $(':'),
-      $.charClass($.range('0', '9')).oneOrMore().capture(),
+      $.class($.range('0', '9')).plus().capture(),
       $(':'),
-      $.charClass($.range('0', '9')).oneOrMore().capture(),
+      $.class($.range('0', '9')).plus().capture(),
     ).regex(),
   ).toStrictEqual(
     /^ {4}at (?:(?:[^ ]+ \([^ ]+ at )?([^ ]+) \(?)?(.+?):([0-9]+):([0-9]+)/,

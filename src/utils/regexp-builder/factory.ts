@@ -34,7 +34,7 @@ export const $ = Object.assign(
     char: (value: string) => {
       return Character(value);
     },
-    charClass: (...patternInputs: (Character | Range | Regex)[]) => {
+    class: (...patternInputs: (Character | Range | Regex)[]) => {
       return CharacterClass(false, patternInputs);
     },
     concat: (...patternInputs: PatternInput[]) => {
@@ -72,7 +72,7 @@ export const $ = Object.assign(
         },
       },
     ),
-    oneOrMore: (pattern: QuantifiableInput) => {
+    plus: (pattern: QuantifiableInput) => {
       return Quantifier(pattern, 1, Infinity, false);
     },
     optional: (pattern: QuantifiableInput) => {
@@ -81,7 +81,7 @@ export const $ = Object.assign(
     repeat: (pattern: QuantifiableInput, min: number, max?: number) => {
       return Quantifier(pattern, min, max ?? min, false);
     },
-    zeroOrMore: (pattern: QuantifiableInput) => {
+    star: (pattern: QuantifiableInput) => {
       return Quantifier(pattern, 0, Infinity, false);
     },
     or: (...patternInputs: PatternInput[]) => {
