@@ -24,6 +24,7 @@
       "@typescript-eslint/no-magic-numbers": 0,
       "@typescript-eslint/prefer-nullish-coalescing": 0,
       "curly": 0,
+      "import/exports-last": 0,
       "max-classes-per-file": 0,
       "no-template-curly-in-string": 0,
       "no-unreachable": 0,

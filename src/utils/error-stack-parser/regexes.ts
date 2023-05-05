@@ -1,6 +1,7 @@
 import {
   any,
   char,
+  charClass,
   concat,
   end,
   group,
@@ -15,7 +16,7 @@ const digit = range('0', '9');
 const nonZeroDigit = range('1', '9');
 const integer = or(
   char('0'),
-  concat(nonZeroDigit.charclass(), digit.charclass().zeroOrMore()),
+  concat(charClass(nonZeroDigit), charClass(digit).zeroOrMore()),
 );
 const nonSpaces = not.char(' ').oneOrMore();
 

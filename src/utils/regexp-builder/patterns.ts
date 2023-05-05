@@ -76,7 +76,6 @@ export type Range = PatternBase & {
   type: PatternType.Range;
   from: string;
   to: string;
-  charclass: () => CharacterClass;
   negated: () => CharacterClass;
 };
 
@@ -202,17 +201,10 @@ export const Quantifier = (
 };
 
 export const Range = (from: string, to: string): Range => {
-  if (from > to) {
-    [from, to] = [to, from];
-  }
-
   const self = PatternBase({
     type: PatternType.Range,
     from,
     to,
-    charclass: () => {
-      return CharacterClass(false, [self]);
-    },
     negated: () => {
       return CharacterClass(true, [self]);
     },

@@ -23,7 +23,7 @@ export const char = (value: string) => {
   return Character(value);
 };
 
-export const charclass = (...patterns: (Character | Range)[]) => {
+export const charClass = (...patterns: (Character | Range)[]) => {
   return CharacterClass(false, patterns);
 };
 
@@ -43,7 +43,7 @@ export const not = {
   char: (value: string) => {
     return CharacterClass(true, [Character(value)]);
   },
-  charclass: (...patterns: (Character | Range)[]) => {
+  charClass: (...patterns: (Character | Range)[]) => {
     return CharacterClass(true, patterns);
   },
   range: (from: string, to: string) => {
@@ -57,6 +57,10 @@ export const or = (...alternatives: Pattern[]) => {
 
 export const range = (from: string, to: string) => {
   return Range(from, to);
+};
+
+range.charClass = (from: string, to: string) => {
+  return CharacterClass(false, [Range(from, to)]);
 };
 
 export const start = () => {

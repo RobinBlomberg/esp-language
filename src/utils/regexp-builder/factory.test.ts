@@ -2,6 +2,7 @@ import { expect, test } from 'vitest';
 import {
   any,
   char,
+  charClass,
   concat,
   end,
   group,
@@ -19,13 +20,28 @@ test('regexp-builder#factory', () => {
       or(
         char('0'),
         concat(
-          range('1', '9').charclass(),
-          range('0', '9').charclass().zeroOrMore(),
+          charClass(range('1', '9')),
+          charClass(range('0', '9')).zeroOrMore(),
         ),
       ),
       end(),
     ).regex(),
   ).toStrictEqual(/^0|[1-9][0-9]*$/);
+
+  expect(
+    concat(
+      start(),
+      charClass(range('a', 'z'), range('A', 'Z'), char('$'), char('_')),
+      charClass(
+        range('a', 'z'),
+        range('A', 'Z'),
+        range('0', '9'),
+        char('$'),
+        char('_'),
+      ).zeroOrMore(),
+      end(),
+    ).regex(),
+  ).toStrictEqual(/^[a-zA-Z$_][a-zA-Z0-9$_]*$/);
 
   expect(
     concat(
@@ -45,9 +61,9 @@ test('regexp-builder#factory', () => {
       ).optional(),
       any().oneOrMore().lazy().capture(),
       char(':'),
-      range('0', '9').charclass().oneOrMore().capture(),
+      charClass(range('0', '9')).oneOrMore().capture(),
       char(':'),
-      range('0', '9').charclass().oneOrMore().capture(),
+      charClass(range('0', '9')).oneOrMore().capture(),
     ).regex(),
   ).toStrictEqual(
     /^ {4}at (?:(?:[^ ]+ \([^ ]+ at )?([^ ]+) \(?)?(.+?):([0-9]+):([0-9]+)/,
