@@ -8,13 +8,28 @@ import {
   Regex,
 } from './patterns';
 
-export type CharacterClassPatternInput = Character | Range | Regex | RegExp;
+export type CharacterClassPatternInput =
+  | Character
+  | Range
+  | Regex
+  | string
+  | RegExp;
 
-export type PatternInput = Pattern | Range | string | RegExp;
+export type PatternInput = Pattern | string | RegExp;
 
 export type QuantifiableInput = Quantifiable | string | RegExp;
 
-export type ToPattern<T extends PatternInput> = T extends Pattern | Range
+export type ToCharacterClassPattern<T extends PatternInput | Range> = T extends
+  | Pattern
+  | Range
+  ? T
+  : T extends string
+  ? Character | Character[]
+  : Regex;
+
+export type ToPattern<T extends PatternInput | Range> = T extends
+  | Pattern
+  | Range
   ? T
   : T extends string
   ? Character | Concatenation
@@ -24,7 +39,31 @@ export type ToQuantifiable<T extends PatternInput> = T extends Pattern | Range
   ? T
   : Group;
 
-export const toPattern = <T extends PatternInput>(input: T) => {
+export const toCharacterClassPattern = <T extends PatternInput | Range>(
+  input: T,
+) => {
+  if (typeof input === 'string') {
+    if (input.length === 1) {
+      return Character(input) as ToCharacterClassPattern<T>;
+    }
+
+    const patterns: Character[] = [];
+
+    for (const character of input) {
+      patterns.push(Character(character));
+    }
+
+    return patterns;
+  }
+
+  if (input instanceof RegExp) {
+    return Regex(input) as ToCharacterClassPattern<T>;
+  }
+
+  return input as ToCharacterClassPattern<T>;
+};
+
+export const toPattern = <T extends PatternInput | Range>(input: T) => {
   if (typeof input === 'string') {
     if (input.length === 1) {
       return Character(input) as ToPattern<T>;

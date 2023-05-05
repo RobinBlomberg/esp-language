@@ -16,7 +16,7 @@ test('regexp-builder#factory', () => {
   expect(
     $.concat(
       /^/,
-      /[a-zA-Z$_]/,
+      $.class($.range('a', 'z'), $.range('A', 'Z'), '$_'),
       /[a-zA-Z0-9$_]*/,
       /\(/,
       /(.*)/,

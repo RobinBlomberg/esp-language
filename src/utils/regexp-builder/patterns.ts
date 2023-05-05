@@ -4,6 +4,7 @@ import {
   CharacterClassPatternInput,
   PatternInput,
   QuantifiableInput,
+  toCharacterClassPattern,
   toPattern,
   toQuantifiable,
 } from './to-pattern';
@@ -139,7 +140,7 @@ export const CharacterClass = (
   isNegated: boolean,
   patternInputs: CharacterClassPatternInput[],
 ): CharacterClass => {
-  const patterns = patternInputs.map(toPattern);
+  const patterns = patternInputs.map(toCharacterClassPattern).flat();
 
   return toWithoutGroupQuantifiable({
     type: PatternType.CharacterClass,

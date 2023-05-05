@@ -34,7 +34,7 @@ export const $ = Object.assign(
     char: (value: string) => {
       return Character(value);
     },
-    class: (...patternInputs: (Character | Range | Regex)[]) => {
+    class: (...patternInputs: CharacterClassPatternInput[]) => {
       return CharacterClass(false, patternInputs);
     },
     concat: (...patternInputs: PatternInput[]) => {
