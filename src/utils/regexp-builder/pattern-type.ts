@@ -8,6 +8,7 @@ export const enum PatternType {
   Group = 'Group',
   Quantifier = 'Quantifier',
   Range = 'Range',
+  Regex = 'Regex',
   Start = 'Start',
   String = 'String',
 }

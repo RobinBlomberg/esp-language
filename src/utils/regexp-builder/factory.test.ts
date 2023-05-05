@@ -9,6 +9,7 @@ import {
   not,
   or,
   range,
+  regex,
   start,
   string,
 } from './factory';
@@ -31,17 +32,14 @@ test('regexp-builder#factory', () => {
   expect(
     concat(
       start(),
-      charClass(range('a', 'z'), range('A', 'Z'), char('$'), char('_')),
-      charClass(
-        range('a', 'z'),
-        range('A', 'Z'),
-        range('0', '9'),
-        char('$'),
-        char('_'),
-      ).zeroOrMore(),
+      regex(/[a-zA-Z$_]/),
+      regex(/[a-zA-Z0-9$_]/).zeroOrMore(),
+      char('('),
+      any().zeroOrMore().capture(),
+      char(')'),
       end(),
     ).regex(),
-  ).toStrictEqual(/^[a-zA-Z$_][a-zA-Z0-9$_]*$/);
+  ).toStrictEqual(/^[a-zA-Z$_][a-zA-Z0-9$_]*\((.*)\)$/);
 
   expect(
     concat(

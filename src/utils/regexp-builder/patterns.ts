@@ -19,7 +19,7 @@ export type Character = QuantifiableBase & {
 export type CharacterClass = QuantifiableBase & {
   type: PatternType.CharacterClass;
   isNegated: boolean;
-  patterns: (Character | Range)[];
+  patterns: (Character | Range | Regex)[];
   negated: () => CharacterClass;
 };
 
@@ -47,6 +47,7 @@ export type Pattern =
   | End
   | Group
   | Quantifier
+  | Regex
   | Start;
 
 export type PatternBase = {
@@ -77,6 +78,11 @@ export type Range = PatternBase & {
   from: string;
   to: string;
   negated: () => CharacterClass;
+};
+
+export type Regex = QuantifiableBase & {
+  type: PatternType.Regex;
+  value: RegExp;
 };
 
 export type Start = PatternBase & {
@@ -110,7 +116,7 @@ export const Character = (value: string): Character => {
 
 export const CharacterClass = (
   isNegated: boolean,
-  patterns: (Character | Range)[],
+  patterns: (Character | Range | Regex)[],
 ): CharacterClass => {
   return QuantifiableBase({
     type: PatternType.CharacterClass,
@@ -211,6 +217,13 @@ export const Range = (from: string, to: string): Range => {
   }) as Range;
 
   return self;
+};
+
+export const Regex = (value: RegExp): Regex => {
+  return QuantifiableBase({
+    type: PatternType.Regex,
+    value,
+  });
 };
 
 export const Start = (): Start => {

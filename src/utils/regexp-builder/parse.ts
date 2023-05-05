@@ -30,10 +30,12 @@ export const parse = (pattern: Pattern): string => {
       for (const child of pattern.patterns) {
         if (child.type === 'Character') {
           output += child.value;
-        } else {
+        } else if (child.type === 'Range') {
           output += child.from.replace(/-/g, '\\-');
           output += '-';
           output += child.to.replace(/-/g, '\\-');
+        } else {
+          output += parse(child);
         }
       }
 
@@ -102,6 +104,8 @@ export const parse = (pattern: Pattern): string => {
 
       return output;
     }
+    case PatternType.Regex:
+      return pattern.value.source;
     case PatternType.Start:
       return '^';
   }

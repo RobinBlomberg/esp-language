@@ -8,6 +8,7 @@ import {
   Group,
   Pattern,
   Range,
+  Regex,
   Start,
 } from './patterns';
 
@@ -23,7 +24,7 @@ export const char = (value: string) => {
   return Character(value);
 };
 
-export const charClass = (...patterns: (Character | Range)[]) => {
+export const charClass = (...patterns: (Character | Range | Regex)[]) => {
   return CharacterClass(false, patterns);
 };
 
@@ -61,6 +62,10 @@ export const range = (from: string, to: string) => {
 
 range.charClass = (from: string, to: string) => {
   return CharacterClass(false, [Range(from, to)]);
+};
+
+export const regex = (value: RegExp) => {
+  return Regex(value);
 };
 
 export const start = () => {
