@@ -4,7 +4,7 @@ import { IdentifierToken, KeywordToken, PunctuatorToken } from './token';
 
 suite('lexAll', () => {
   it('should return a list of tokens', () => {
-    expect(lexAll('const add = (a, b) {', 0)).toEqual([
+    expect(lexAll('const add = (a, b) {', 0)).toStrictEqual([
       KeywordToken(0, 5, 'const'),
       IdentifierToken(6, 9, 'add'),
       PunctuatorToken(10, 11, '='),
