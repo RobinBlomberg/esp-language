@@ -24,7 +24,7 @@
       "patterns": [
         {
           "name": "entity.name.function.esp",
-          "match": "(?<![a-zA-Z0-9$_])[a-zA-Z$_][a-zA-Z0-9$_]*(?![a-zA-Z0-9$_])(?=\\s*(?:\\(|(?:=\\s*)?\\(*:\\s*\\())"
+          "match": "(?<![a-zA-Z0-9$_])[a-zA-Z$_][a-zA-Z0-9$_]*(?![a-zA-Z0-9$_])(?=\\s*(?:\\(|(?::\\s*\\(*)|(?:=\\s*(?::\\s*\\(*))))"
         }
       ]
     },
@@ -32,13 +32,13 @@
       "patterns": [
         {
           "name": "comment.block.esp",
-          "begin": "\\/\\*",
+          "begin": "/\\*",
           "beginCaptures": {
             "0": {
               "name": "punctuation.definition.comment.esp"
             }
           },
-          "end": "\\*\\/",
+          "end": "\\*/",
           "endCaptures": {
             "0": {
               "name": "punctuation.definition.comment.esp"
@@ -46,7 +46,7 @@
           }
         },
         {
-          "begin": "\\/\\/",
+          "begin": "//",
           "beginCaptures": {
             "0": {
               "name": "comment.line.double-slash.esp"
@@ -60,7 +60,7 @@
     "Constant": {
       "patterns": [
         {
-          "match": "(\\bfalse\\b)|(\\bInfinity\\b)|(\\bNaN\\b)|(\\bnull\\b)|(\\btrue\\b)|(\\bundefined\\b)|(\\bbreak\\b|\\bcontinue\\b|\\bdo\\b|\\bfor\\b|\\bwhile\\b)|(\\bconst\\b|\\blet\\b)|(\\belse\\b|\\bif\\b)|(\\bmatch\\b)|(\\bnew\\b)|(\\bof\\b)|(\\breturn\\b)|(\\bthrow\\b)|(\\x2d\\x2d)|(\\x2d|\\*\\*=|\\*=|/=|&&=|%=|\\+=|\\|\\|=)|(\\x2d=|\\*|\\*\\*|/|%|\\+)|(!|\\?\\?|\\?\\?=|&&|\\|\\|)|(!=|==)|(\\?)|(&|\\^|\\||~)|(&=|\\^=|<<=|>>=|>>>=|\\|=)|(\\+\\+)|(<|<=|>|>=)|(<<|>>|>>>)|(=)|(,)|(;)|(\\.)|(\\(|\\))|(\\[|\\])|(\\{|\\})",
+          "match": "(\\bfalse\\b)|(\\bInfinity\\b)|(\\bNaN\\b)|(\\bnull\\b)|(\\btrue\\b)|(\\bundefined\\b)|(\\bbreak\\b|\\bcontinue\\b|\\bdo\\b|\\bfor\\b|\\bwhile\\b)|(\\bconst\\b|\\blet\\b)|(\\belse\\b|\\bif\\b)|(\\bmatch\\b)|(\\bnew\\b)|(\\bof\\b)|(\\breturn\\b)|(\\bthrow\\b)|(--)|(-|\\*\\*=|\\*=|/=|&&=|%=|\\+=|\\|\\|=)|(-=|\\*|\\*\\*|/|%|\\+)|(!|\\?\\?|\\?\\?=|&&|\\|\\|)|(!=|==)|(\\?)|(&|\\^|\\||~)|(&=|\\^=|<<=|>>=|>>>=|\\|=)|(\\+\\+)|(<|<=|>|>=)|(<<|>>|>>>)|(=)|(,)|(;)|(\\.)|(\\(|\\))|(\\[|\\])|(\\{|\\})",
           "captures": {
             "1": {
               "name": "constant.language.boolean.false.esp"
@@ -184,7 +184,7 @@
       "patterns": [
         {
           "name": "constant.numeric.decimal.esp",
-          "match": "\\b(?:0|[1-9][0-9]*)(?:\\.[0-9]*)?\\b"
+          "match": "\\b(?:0|[1-9]\\d*)(?:\\.\\d+)?\\b"
         }
       ]
     },

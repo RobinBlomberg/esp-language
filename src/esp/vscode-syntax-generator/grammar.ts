@@ -1,51 +1,15 @@
-import { escape } from '../../utils/regexp';
-import { Name } from './names';
 import {
-  ConstantKeywordNames,
-  ControlKeywordNames,
-  OperatorNames,
-  PunctuationNames,
-} from './semantic-names';
-import { Captures, Language, Pattern } from './types';
-
-const constant = (): Pattern => {
-  const nameMatchesMap: { [K in Name]?: string[] } = {};
-
-  for (const [match, name] of [
-    ...Object.entries(ConstantKeywordNames),
-    ...Object.entries(ControlKeywordNames),
-    ...Object.entries(OperatorNames),
-    ...Object.entries(PunctuationNames),
-  ]) {
-    if (name) {
-      (nameMatchesMap[name] ??= []).push(match);
-    }
-  }
-
-  const captures: Captures = {};
-  let index = 1;
-  let match = '';
-
-  for (const [name, matches] of Object.entries(nameMatchesMap)) {
-    if (index >= 2) {
-      match += '|';
-    }
-
-    match += `(${matches
-      .map((m) =>
-        /^[a-zA-Z$_][a-zA-Z0-9$_]*$/.test(m) ? `\\b${escape(m)}\\b` : escape(m),
-      )
-      .join('|')})`;
-    captures[index] = { name };
-    index++;
-  }
-
-  return { match, captures };
-};
-
-const identifier = () => {
-  return /(?<![a-zA-Z0-9$_])[a-zA-Z$_][a-zA-Z0-9$_]*(?![a-zA-Z0-9$_])/.source;
-};
+  callIdentifier,
+  commentBlockEnd,
+  commentBlockStart,
+  commentLineEnd,
+  commentLineStart,
+  constant,
+  identifier,
+  number,
+  stringEscape,
+} from './regexes';
+import { Language, Pattern } from './types';
 
 const include = (id: string) => {
   return {
@@ -82,7 +46,7 @@ export const language: Language = {
       patterns: [
         {
           name: 'entity.name.function.esp',
-          match: `${identifier()}${/(?=\s*(?:\(|(?:=\s*)?\(*:\s*\())/.source}`,
+          match: callIdentifier,
         },
       ],
     },
@@ -90,27 +54,27 @@ export const language: Language = {
       patterns: [
         {
           name: 'comment.block.esp',
-          begin: /\/\*/.source,
+          begin: commentBlockStart,
           beginCaptures: { 0: { name: 'punctuation.definition.comment.esp' } },
-          end: /\*\//.source,
+          end: commentBlockEnd,
           endCaptures: { 0: { name: 'punctuation.definition.comment.esp' } },
         },
         {
-          begin: /\/\//.source,
+          begin: commentLineStart,
           beginCaptures: { 0: { name: 'comment.line.double-slash.esp' } },
-          end: /(?=$)/.source,
+          end: commentLineEnd,
           contentName: 'comment.line.double-slash.esp',
         },
       ],
     },
     Constant: {
-      patterns: [constant()],
+      patterns: [constant],
     },
     Identifier: {
       patterns: [
         {
           name: 'variable.other.readwrite.esp',
-          match: identifier(),
+          match: identifier,
         },
       ],
     },
@@ -121,13 +85,13 @@ export const language: Language = {
       patterns: [
         {
           name: 'constant.numeric.decimal.esp',
-          match: /\b(?:0|[1-9][0-9]*)(?:\.[0-9]*)?\b/.source,
+          match: number,
         },
       ],
     },
     StringEscape: {
       name: 'constant.character.escape.esp',
-      match: /\\./.source,
+      match: stringEscape,
     },
     StringLiteral: {
       patterns: [stringLiteral('single', "'"), stringLiteral('double', '"')],
