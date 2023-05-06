@@ -13,7 +13,7 @@ suite('ExponentiationExpression', () => {
   test(/* s */ `UpdateExpression '**' ExponentiationExpression`, () => {
     ok('a**b');
     ok('++a**b');
-    error('-a**b');
+    ok('-a**b');
     error('a**');
   });
 
