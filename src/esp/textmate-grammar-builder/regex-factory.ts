@@ -11,13 +11,13 @@ import {
   RegExpPattern,
 } from '../../regexp';
 import * as p from './regexp-patterns';
-import { ESPScopeSelector } from './scope-selectors';
+import { ESPScopeSelector } from './scope-selector-factory';
 import {
-  ConstantKeywordNames,
-  ControlKeywordNames,
-  OperatorNames,
-  PunctuationNames,
-} from './semantic-names';
+  ConstantKeywordScopeSelectors,
+  ControlKeywordScopeSelectors,
+  OperatorScopeSelectors,
+  PunctuationScopeSelectors,
+} from './scope-selectors';
 import { TextMate } from './textmate';
 
 export const regex = {
@@ -46,16 +46,16 @@ export const regex = {
     },
   },
   constant: () => {
-    const nameMatchesMap: { [K in ESPScopeSelector]?: string[] } = {};
+    const scopeSelectorValueMap: { [K in ESPScopeSelector]?: string[] } = {};
 
-    for (const [match, name] of [
-      ...Object.entries(ConstantKeywordNames),
-      ...Object.entries(ControlKeywordNames),
-      ...Object.entries(OperatorNames),
-      ...Object.entries(PunctuationNames),
+    for (const [value, scopeSelector] of [
+      ...Object.entries(ConstantKeywordScopeSelectors),
+      ...Object.entries(ControlKeywordScopeSelectors),
+      ...Object.entries(OperatorScopeSelectors),
+      ...Object.entries(PunctuationScopeSelectors),
     ]) {
-      if (name) {
-        (nameMatchesMap[name] ??= []).push(match);
+      if (scopeSelector) {
+        (scopeSelectorValueMap[scopeSelector] ??= []).push(value);
       }
     }
 
@@ -63,26 +63,29 @@ export const regex = {
     const captures: TextMate.Captures = {};
     let index = 0;
 
-    for (const [name, matches] of Object.entries(nameMatchesMap)) {
+    for (const [scopeSelector, values] of Object.entries(
+      scopeSelectorValueMap,
+    )) {
       alternatives.push(
         capture(
           or(
-            ...matches.map((match) =>
-              p.identifier.toRegExp().test(match)
-                ? concat(boundary.word, one(match), boundary.word)
-                : one(match),
+            ...values.map((value) =>
+              p.identifier.toRegExp().test(value)
+                ? concat(boundary.word, one(value), boundary.word)
+                : one(value),
             ),
           ),
         ),
       );
 
-      captures[index + 1] = { name };
+      captures[index + 1] = { name: scopeSelector };
       index++;
     }
 
-    const match = or(...alternatives).compile();
-
-    return { match, captures };
+    return {
+      match: or(...alternatives).compile(),
+      captures,
+    };
   },
   identifier: () => p.identifier.compile(),
   number: () =>

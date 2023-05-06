@@ -2,7 +2,7 @@ const createPattern = (name: string) => {
   return () => ({ include: `#${name}` });
 };
 
-export type PatternName = keyof typeof pattern;
+export type ESPPatternName = keyof typeof pattern;
 
 export const pattern = {
   callIdentifier: createPattern('callIdentifier'),

@@ -1,10 +1,10 @@
-import { PatternName, pattern } from './pattern-factory';
+import { ESPPatternName, pattern } from './pattern-factory';
 import { regex } from './regex-factory';
-import { scope } from './scope-selectors';
+import { scope } from './scope-selector-factory';
 import { TextMate } from './textmate';
 
 export type Repository = {
-  [K in PatternName]: TextMate.Pattern;
+  [K in ESPPatternName]: TextMate.Pattern;
 };
 
 export const patterns = [
