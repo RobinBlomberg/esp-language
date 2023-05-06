@@ -1,5 +1,4 @@
 import { writeFile } from 'node:fs/promises';
-import { clear, green } from '../../ansi/escape-codes';
 import { patterns, repository } from './repository';
 import { TextMate } from './textmate';
 
@@ -13,6 +12,4 @@ export const generate = async (path: string) => {
   const data = JSON.stringify(language, null, 2);
 
   await writeFile(path, data, 'utf8');
-
-  console.info(`${green}ESP TextMate grammar successfully generated.${clear}`);
 };
