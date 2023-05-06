@@ -1,14 +1,14 @@
-import { concat, group, lookahead, lookbehind, one } from '../../regexp';
+import { concat, lookahead, lookbehind, one } from '../../regexp';
 
 export const callOpenParen = one('(');
 
-export const functionExpressionOperator = group(
+export const functionExpressionOperator = concat(
   one(':'),
   one(/\s/).star(),
   one('(').star(),
 );
 
-export const functionDeclarationOperator = group(
+export const functionDeclarationOperator = concat(
   one('='),
   one(/\s/).star(),
   functionExpressionOperator,

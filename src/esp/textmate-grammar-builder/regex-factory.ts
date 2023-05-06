@@ -4,7 +4,6 @@ import {
   capture,
   concat,
   end,
-  group,
   lookahead,
   one,
   or,
@@ -26,7 +25,7 @@ export const regex = {
       p.identifier,
       lookahead(
         one(/\s/).star(),
-        group(
+        concat(
           or(
             p.callOpenParen,
             p.functionExpressionOperator,
