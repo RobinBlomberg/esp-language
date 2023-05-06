@@ -1,24 +1,36 @@
-import { $ } from '../regexp-builder';
+import {
+  any,
+  capture,
+  concat,
+  createRegExp,
+  end,
+  group,
+  one,
+  or,
+  start,
+} from '../regexp';
 
-const digit = $.range('0', '9').class();
-const nonZeroDigit = $.range('1', '9').class();
-const integer = $.or('0', $.concat(nonZeroDigit, digit.star()));
-const nonSpaces = $.not(' ').plus();
+const integer = or(one('0'), concat(one(/[1-9]/), one(/\d/).star()));
 
-export const INTEGER_REGEXP = $.concat($.start(), integer, $.end()).regex();
+export const INTEGER_REGEXP = createRegExp([start, integer, end]);
 
-export const STACK_FRAME_REGEXP = $.concat(
-  $.start(),
-  $('    at '),
-  $.group(
-    $.group(nonSpaces, $(' ('), nonSpaces, $(' at ')).optional(),
-    nonSpaces.capture(),
-    $(' '),
-    $('(').optional(),
+export const STACK_FRAME_REGEXP = createRegExp([
+  start,
+  one('    at '),
+  group(
+    group(
+      one(/[^ ]/).plus(),
+      one(' ('),
+      one(/[^ ]/).plus(),
+      one(' at '),
+    ).optional(),
+    capture(one(/[^ ]/).plus()).name('functionName'),
+    one(' '),
+    one('(').optional(),
   ).optional(),
-  $.any().plus().lazy().capture(),
-  $(':'),
-  integer.capture(),
-  $(':'),
-  integer.capture(),
-).regex();
+  capture(any.plus().lazy()).name('fileName'),
+  one(':'),
+  capture(integer).name('lineNumber'),
+  one(':'),
+  capture(integer).name('columnNumber'),
+]);

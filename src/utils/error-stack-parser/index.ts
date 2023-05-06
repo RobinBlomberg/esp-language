@@ -1,3 +1,4 @@
+import { matchRegExp } from '../regexp';
 import { INTEGER_REGEXP, STACK_FRAME_REGEXP } from './regexes';
 
 const parseFileName = (fileName: string | undefined) => {
@@ -42,13 +43,13 @@ export const parseErrorStack = (stack: string) => {
 };
 
 export const parseStackFrame = (stackFrame: string) => {
-  const matches = stackFrame.match(STACK_FRAME_REGEXP);
+  const match = matchRegExp(stackFrame, STACK_FRAME_REGEXP);
 
-  if (matches) {
-    const [, functionName, fileName, lineNumber, columnNumber] = matches;
+  if (match) {
+    const { functionName, fileName, lineNumber, columnNumber } = match.groups;
 
     return {
-      functionName: functionName || null,
+      functionName: functionName ?? null,
       fileName: parseFileName(fileName),
       lineNumber: parseInteger(lineNumber),
       columnNumber: parseInteger(columnNumber),

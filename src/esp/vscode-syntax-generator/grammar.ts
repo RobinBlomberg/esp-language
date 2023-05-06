@@ -1,4 +1,4 @@
-import { escapeRegExpString } from '../../utils/escape-regexp-string';
+import { escape } from '../../utils/regexp';
 import { Name } from './names';
 import {
   ConstantKeywordNames,
@@ -33,9 +33,7 @@ const constant = (): Pattern => {
 
     match += `(${matches
       .map((m) =>
-        /^[a-zA-Z$_][a-zA-Z0-9$_]*$/.test(m)
-          ? `\\b${escapeRegExpString(m)}\\b`
-          : escapeRegExpString(m),
+        /^[a-zA-Z$_][a-zA-Z0-9$_]*$/.test(m) ? `\\b${escape(m)}\\b` : escape(m),
       )
       .join('|')})`;
     captures[index] = { name };
