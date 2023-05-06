@@ -1,7 +1,7 @@
 {
   "scripts": {
     "check": "tsc",
-    "grammar:watch": "ts-node-dev --quiet --watch ./src/esp/textmate-grammar-builder/build.ts --respawn ./bin/esp.ts --generate-syntax \"%HOMEPATH%/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/esp/syntaxes/esp.tmLanguage.json,./dist/esp.tmLanguage.json\"",
+    "grammar:watch": "ts-node-dev --quiet --watch ./src/esp/textmate-grammar-builder/build.ts --respawn ./bin/esp.ts --build-grammar \"%HOMEPATH%/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/esp/syntaxes/esp.tmLanguage.json,./dist/esp.tmLanguage.json\"",
     "lint": "eslint src",
     "start:watch": "ts-node-dev --quiet --respawn --watch ./src,./.test.esp ./bin/esp.ts ./.test.esp",
     "start": "ts-node-dev --quiet --watch ./src,./.test.esp ./bin/esp.ts ./.test.esp",

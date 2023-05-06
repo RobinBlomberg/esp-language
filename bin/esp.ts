@@ -2,6 +2,7 @@
 
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { clear, green } from '../src/ansi/escape-codes';
 import { ESP } from '../src/esp';
 
 const logHelpAndExit = () => {
@@ -32,15 +33,21 @@ const logHelpAndExit = () => {
         }),
       );
 
+      console.info(
+        `${green}ESP TextMate grammar${
+          unresolvedPaths.length === 1 ? '' : 's'
+        } successfully generated.${clear}`,
+      );
+
       break;
     }
     default: {
-      const unresolvedPath = args[0];
-      if (!unresolvedPath) {
+      const arg = args[0];
+      if (!arg || arg.startsWith('--')) {
         return logHelpAndExit();
       }
 
-      const sourceFileName = resolve(process.cwd(), unresolvedPath);
+      const sourceFileName = resolve(process.cwd(), arg);
       const source = readFileSync(sourceFileName, 'utf8');
       ESP.VM.run(source, sourceFileName);
     }
