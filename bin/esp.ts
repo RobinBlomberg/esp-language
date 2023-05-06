@@ -20,13 +20,20 @@ const logHelpAndExit = () => {
 
   switch (args[0]) {
     case '--generate-syntax': {
-      const unresolvedPath = args[1];
-      if (!unresolvedPath) {
+      const pathInput = args[1];
+      if (!pathInput) {
         return logHelpAndExit();
       }
 
-      const path = resolve(process.cwd(), unresolvedPath);
-      await ESP.VSCodeSyntaxGenerator.generate(path);
+      const unresolvedPaths = pathInput.split(',');
+
+      await Promise.all(
+        unresolvedPaths.map(async (unresolvedPath) => {
+          const path = resolve(process.cwd(), unresolvedPath);
+          await ESP.VSCodeSyntaxGenerator.generate(path);
+        }),
+      );
+
       break;
     }
     default: {
