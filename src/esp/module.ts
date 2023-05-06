@@ -1,3 +1,4 @@
+export * as Cli from './cli';
 export * as Grammar from './grammar';
 export * as Lexer from './lexer';
 export * as Parser from './parser';
