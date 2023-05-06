@@ -3,11 +3,8 @@ import { createRegExp, createRegExp as r } from './create-regexp';
 import { _ } from './factory';
 import { RegExpPattern } from './patterns/pattern';
 
-const expectIt = (
-  regex: RegExp | RegExpPattern | RegExpPattern[],
-  flags?: string,
-) => {
-  return expect(createRegExp(regex, flags));
+const expectIt = (...args: [RegExp] | RegExpPattern[]) => {
+  return expect(createRegExp(...args));
 };
 
 suite('createRegExp', () => {
@@ -16,7 +13,6 @@ suite('createRegExp', () => {
       test('single character', () => {
         expectIt(_('a')).toStrictEqual(/a/);
         expectIt(_('.')).toStrictEqual(/\./);
-        expectIt([_('a'), _('b')]).toStrictEqual(/ab/);
       });
 
       test('multiple characters', () => {
@@ -148,14 +144,13 @@ suite('createRegExp', () => {
 
   suite('Backreference', () => {
     test('non-named', () => {
-      expectIt([_.capture(_('a')), _.ref(1)]).toStrictEqual(/(a)\1/);
+      expectIt(_.capture(_('a')), _.ref(1)).toStrictEqual(/(a)\1/);
     });
 
     test('named', () => {
-      expectIt([
-        _.capture(_('a')).name('letter'),
-        _.ref('letter'),
-      ]).toStrictEqual(/(?<letter>a)\k<letter>/);
+      expectIt(_.capture(_('a')).name('letter'), _.ref('letter')).toStrictEqual(
+        /(?<letter>a)\k<letter>/,
+      );
     });
   });
 });

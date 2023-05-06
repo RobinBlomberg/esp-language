@@ -1,12 +1,12 @@
-import { createRegExp } from './create-regexp';
+import { createRegExpWithFlags } from './create-regexp';
 
 export const testRegExp = (
   string: string,
-  pattern: RegExp,
+  regex: RegExp,
   index?: number,
   flags?: string,
 ) => {
-  const regexp = createRegExp(pattern, flags);
+  const regexp = createRegExpWithFlags(regex, flags);
 
   if (index !== undefined) {
     regexp.lastIndex = index;

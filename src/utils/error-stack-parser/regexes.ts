@@ -12,9 +12,9 @@ import {
 
 const integer = or(one('0'), concat(one(/[1-9]/), one(/\d/).star()));
 
-export const INTEGER_REGEXP = createRegExp([start, integer, end]);
+export const INTEGER_REGEXP = createRegExp(start, integer, end);
 
-export const STACK_FRAME_REGEXP = createRegExp([
+export const STACK_FRAME_REGEXP = createRegExp(
   start,
   one('    at '),
   group(
@@ -33,4 +33,4 @@ export const STACK_FRAME_REGEXP = createRegExp([
   capture(integer).name('lineNumber'),
   one(':'),
   capture(integer).name('columnNumber'),
-]);
+);

@@ -12,13 +12,13 @@ test('testRegExp', () => {
 
   const fractional = capture(one('.'), one(/\d/).plus()).name('fractional');
 
-  const number = createRegExp([
+  const number = createRegExp(
     sign.optional(),
     boundary.word,
     integer,
     boundary.word,
     fractional.optional(),
-  ]);
+  );
 
   expect(testRegExp('-123', number)).toBe(true);
   expect(testRegExp('-0123', number)).toBe(false);

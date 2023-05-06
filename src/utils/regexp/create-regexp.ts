@@ -1,9 +1,14 @@
-import { toArray } from '../util';
 import { compile } from './compile';
 import { RegExpPattern } from './patterns/pattern';
 
-export const createRegExp = (
-  regex: RegExp | RegExpPattern | RegExpPattern[],
+export const createRegExp = (...args: [RegExp] | RegExpPattern[]) => {
+  return args[0] instanceof RegExp
+    ? new RegExp(args[0].source)
+    : new RegExp(compile(...(args as RegExpPattern[])));
+};
+
+export const createRegExpWithFlags = (
+  regex: RegExp | RegExpPattern,
   flags?: string,
 ) => {
   let newFlags;
@@ -24,5 +29,5 @@ export const createRegExp = (
 
   return regex instanceof RegExp
     ? new RegExp(regex.source, newFlags)
-    : new RegExp(compile(...toArray(regex)), newFlags);
+    : new RegExp(compile(regex), newFlags);
 };

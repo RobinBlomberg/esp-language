@@ -1,4 +1,10 @@
-import { createRegExp } from './create-regexp';
+import { createRegExpWithFlags } from './create-regexp';
+
+export type RegExpExecArrayWithIndices = RegExpExecArray & {
+  indices: [number, number][] & {
+    groups: Record<string, [number, number]>;
+  };
+};
 
 export type RegExpMatchResult = {
   match: string;
@@ -12,17 +18,17 @@ export type RegExpMatchResult = {
 
 export const matchRegExp = (
   string: string,
-  pattern: RegExp,
+  regex: RegExp,
   index?: number,
   flags?: string,
 ): RegExpMatchResult | null => {
-  const regexp = createRegExp(pattern, flags);
+  const regexp = createRegExpWithFlags(regex, flags);
 
   if (index !== undefined) {
     regexp.lastIndex = index;
   }
 
-  const result = regexp.exec(string);
+  const result = regexp.exec(string) as RegExpExecArrayWithIndices | null;
 
   if (!result) {
     return null;
@@ -31,7 +37,7 @@ export const matchRegExp = (
   return {
     match: result[0],
     index: result.index,
-    indices: result.indices![0]!,
+    indices: result.indices?.[0]!,
     captures: result.slice(1),
     captureIndices: result.indices?.slice(1) ?? [],
     groups: { ...result.groups },
