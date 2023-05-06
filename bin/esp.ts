@@ -8,9 +8,7 @@ const logHelpAndExit = () => {
   console.info('Usage: esp [options] <file>');
   console.info();
   console.info('Options:');
-  console.info(
-    '  --generate-syntax  generate a syntax highlighting file for VS Code',
-  );
+  console.info('  --build-grammar  generate ESP TextMate grammar');
   console.info();
   process.exit(1);
 };
@@ -19,7 +17,7 @@ const logHelpAndExit = () => {
   const args = process.argv.slice(2);
 
   switch (args[0]) {
-    case '--generate-syntax': {
+    case '--build-grammar': {
       const pathInput = args[1];
       if (!pathInput) {
         return logHelpAndExit();
@@ -30,7 +28,7 @@ const logHelpAndExit = () => {
       await Promise.all(
         unresolvedPaths.map(async (unresolvedPath) => {
           const path = resolve(process.cwd(), unresolvedPath);
-          await ESP.VSCodeSyntaxGenerator.generate(path);
+          await ESP.TextMateGrammarGenerator.generate(path);
         }),
       );
 

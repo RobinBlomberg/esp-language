@@ -1,5 +1,5 @@
 import console from 'console';
-import { black, clear, red } from '../../utils/ansi-escape-codes';
+import { black, clear, red } from '../../utils/ansi/escape-codes';
 import { stylize } from '../lexer';
 import { Error } from './errors';
 import { indexToPosition } from './index-position-converter';

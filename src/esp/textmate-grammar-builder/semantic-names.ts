@@ -4,9 +4,9 @@ import {
   Operator,
   Punctuation,
 } from '../grammar';
-import { Name } from './names';
+import { ESPScopeSelector } from './scope-selectors';
 
-export const ConstantKeywordNames: Record<ConstantKeyword, Name> = {
+export const ConstantKeywordNames: Record<ConstantKeyword, ESPScopeSelector> = {
   [ConstantKeyword.False]: 'constant.language.boolean.false.esp',
   [ConstantKeyword.Infinity]: 'constant.language.infinity.esp',
   [ConstantKeyword.NaN]: 'constant.language.nan.esp',
@@ -15,18 +15,14 @@ export const ConstantKeywordNames: Record<ConstantKeyword, Name> = {
   [ConstantKeyword.Undefined]: 'constant.language.undefined.esp',
 };
 
-export const ControlKeywordNames: Record<ControlKeyword, Name> = {
-  // [ControlKeyword.Async]: 'storage.modifier.async.esp',
-  // [ControlKeyword.Await]: 'keyword.control.flow.esp',
+export const ControlKeywordNames: Record<ControlKeyword, ESPScopeSelector> = {
   [ControlKeyword.Break]: 'keyword.control.loop.esp',
   [ControlKeyword.Const]: 'storage.type.esp',
   [ControlKeyword.Continue]: 'keyword.control.loop.esp',
   [ControlKeyword.Do]: 'keyword.control.loop.esp',
   [ControlKeyword.Else]: 'keyword.control.conditional.esp',
-  // [ControlKeyword.Export]: 'keyword.control.export.esp',
   [ControlKeyword.For]: 'keyword.control.loop.esp',
   [ControlKeyword.If]: 'keyword.control.conditional.esp',
-  // [ControlKeyword.Import]: 'keyword.control.import.esp',
   [ControlKeyword.Let]: 'storage.type.esp',
   [ControlKeyword.Match]: 'keyword.control.switch.esp',
   [ControlKeyword.New]: 'keyword.operator.new.esp',
@@ -36,7 +32,7 @@ export const ControlKeywordNames: Record<ControlKeyword, Name> = {
   [ControlKeyword.While]: 'keyword.control.loop.esp',
 };
 
-export const OperatorNames: Record<Operator, Name> = {
+export const OperatorNames: Record<Operator, ESPScopeSelector> = {
   '--': 'keyword.operator.decrement.esp',
   '-': 'keyword.operator.assignment.compound.esp',
   '-=': 'keyword.operator.arithmetic.esp',
@@ -81,7 +77,7 @@ export const OperatorNames: Record<Operator, Name> = {
   '~': 'keyword.operator.bitwise.esp',
 };
 
-export const PunctuationNames: Record<Punctuation, Name | null> = {
+export const PunctuationNames: Record<Punctuation, ESPScopeSelector | null> = {
   ',': 'punctuation.separator.comma.esp',
   ';': 'punctuation.terminator.statement.esp',
   ':': null,
