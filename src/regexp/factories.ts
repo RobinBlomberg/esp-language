@@ -1,14 +1,16 @@
 import { BoundaryType } from './boundary-type';
-import { Backreference } from './patterns/backreference';
-import { BoundaryAssertion } from './patterns/boundary-assertion';
-import { CapturingGroup } from './patterns/capturing-group';
-import { CharacterSequence } from './patterns/character-sequence';
-import { Concatenation } from './patterns/concatenation';
-import { Disjunction } from './patterns/disjunction';
-import { LookaroundAssertion } from './patterns/lookaround-assertion';
-import { NonCapturingGroup } from './patterns/non-capturing-group';
-import { RegExpPattern } from './patterns/pattern';
-import { Quantifier } from './patterns/quantifier';
+import {
+  Backreference,
+  BoundaryAssertion,
+  CapturingGroup,
+  CharacterSequence,
+  Concatenation,
+  Disjunction,
+  LookaroundAssertion,
+  NonCapturingGroup,
+  Quantifier,
+  RegExpPattern,
+} from './patterns';
 
 export const any = new CharacterSequence(/./);
 

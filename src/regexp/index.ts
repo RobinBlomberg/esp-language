@@ -6,4 +6,5 @@ export * from './factories';
 export * from './factory';
 export * from './match-regexp';
 export * from './pattern-type';
+export * from './patterns';
 export * from './test-regexp';

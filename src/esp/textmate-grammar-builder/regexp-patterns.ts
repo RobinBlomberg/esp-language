@@ -1,4 +1,4 @@
-import { concat, group, lookahead, lookbehind, one } from '../../utils/regexp';
+import { concat, group, lookahead, lookbehind, one } from '../../regexp';
 
 export const callOpenParen = one('(');
 

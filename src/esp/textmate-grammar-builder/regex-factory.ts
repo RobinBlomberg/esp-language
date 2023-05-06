@@ -9,7 +9,7 @@ import {
   one,
   or,
   RegExpPattern,
-} from '../../utils/regexp';
+} from '../../regexp';
 import * as p from './regexp-patterns';
 import { ESPScopeSelector } from './scope-selectors';
 import {

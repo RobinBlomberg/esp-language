@@ -26,7 +26,7 @@ export type StackFrame = {
   columnNumber: number | null;
 };
 
-export const parseErrorStack = (stack: string) => {
+export const parse = (stack: string) => {
   const lines = stack.split('\n');
   const stackFrames: StackFrame[] = [];
 

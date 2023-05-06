@@ -13,7 +13,7 @@ import {
   repeat,
   start,
 } from './factories';
-import { CharacterSequence } from './patterns/character-sequence';
+import { CharacterSequence } from './patterns';
 
 export type _ = typeof _;
 

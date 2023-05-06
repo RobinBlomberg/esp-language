@@ -1,5 +1,5 @@
 import { PatternType } from './pattern-type';
-import { RegExpPattern } from './patterns/pattern';
+import { RegExpPattern } from './patterns';
 
 export const compile = (...patterns: RegExpPattern[]): string => {
   let output = '';

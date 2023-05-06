@@ -6,7 +6,7 @@ import {
   magenta,
   red,
   yellow,
-} from '../../utils/ansi/escape-codes';
+} from '../../ansi/escape-codes';
 import { ConstantKeywordsSet, OperatorsSet } from '../grammar';
 import { lexAll } from './lex-all';
 import { Token } from './token';

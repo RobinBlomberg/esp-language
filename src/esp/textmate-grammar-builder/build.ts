@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import { clear, green } from '../../utils/ansi/escape-codes';
+import { clear, green } from '../../ansi/escape-codes';
 import { patterns, repository } from './repository';
 import { TextMate } from './textmate';
 

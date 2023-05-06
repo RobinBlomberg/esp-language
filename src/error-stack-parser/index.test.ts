@@ -1,7 +1,7 @@
 import { expect, suite, test } from 'vitest';
-import { parseErrorStack, parseStackFrame } from '.';
+import { parse, parseStackFrame } from '.';
 
-suite('error-stack-parser', () => {
+suite('parse', () => {
   test('parseStackFrame', () => {
     expect(parseStackFrame('    at C:\\foo\\bar.js:6:28')).toEqual({
       functionName: null,
@@ -35,9 +35,9 @@ suite('error-stack-parser', () => {
     });
   });
 
-  test('parseErrorStack', () => {
+  test('parse', () => {
     expect(
-      parseErrorStack(
+      parse(
         'Error:\n' +
           '    at C:\\foo\\bar.js:6:28\n' +
           '    at file:///C:/foo/bar.js:131:13\n' +
