@@ -77,4 +77,48 @@ suite('Range', () => {
       });
     });
   });
+
+  suite('reverse', () => {
+    suite('iteration', () => {
+      suite('number', () => {
+        test('exclusive range', () => {
+          const output: number[] = [];
+          for (const v of new Range(0, 5).reverse()) output.push(v);
+          expect(output).toStrictEqual([4, 3, 2, 1, 0]);
+        });
+
+        test('inclusive range', () => {
+          const output: number[] = [];
+          for (const v of new Range(0, 5, true).reverse()) output.push(v);
+          expect(output).toStrictEqual([5, 4, 3, 2, 1, 0]);
+        });
+      });
+
+      suite('string', () => {
+        test('exclusive range', () => {
+          const output: string[] = [];
+          for (const v of new Range('b', 'f').reverse()) output.push(v);
+          expect(output).toStrictEqual(['e', 'd', 'c', 'b']);
+        });
+
+        test('inclusive range', () => {
+          const output: string[] = [];
+          for (const v of new Range('b', 'f', true).reverse()) output.push(v);
+          expect(output).toStrictEqual(['f', 'e', 'd', 'c', 'b']);
+        });
+      });
+    });
+
+    suite('spreading', () => {
+      test('exclusive range', () => {
+        expect([...new Range(0, 5).reverse()]).toStrictEqual([4, 3, 2, 1, 0]);
+      });
+
+      test('inclusive range', () => {
+        expect([...new Range(0, 5, true).reverse()]).toStrictEqual([
+          5, 4, 3, 2, 1, 0,
+        ]);
+      });
+    });
+  });
 });
