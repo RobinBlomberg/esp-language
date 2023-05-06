@@ -5,8 +5,12 @@ import { Quantifiable } from './quantifiable';
  * @see https://tc39.es/ecma262/#prod-RegularExpressionClass
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions#escaping
  */
-const CHARACTER_SEQUENCE_REGEXP =
-  /^(?:[^.*+?^${}()|[\]\\]|\.|\\.|\\x[0-9a-fA-F]{2}|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]{4}\}|\\[pP]\{[^}]+\}|\[(?:[^\]\\]|\\.)*\])+$/;
+export const CHARACTER_REGEXP =
+  /^(?:[^.*+?^${}()|[\]\\]|\.|\\.|\\x[0-9a-fA-F]{2}|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]{4}\}|\\[pP]\{[^}]+\}|\[(?:[^\]\\]|\\.)*\])$/;
+
+export const CHARACTER_SEQUENCE_REGEXP = new RegExp(
+  `${CHARACTER_REGEXP.source.slice(0, -1)}+$`,
+);
 
 export class CharacterSequence extends Quantifiable {
   readonly type = PatternType.CharacterSequence;

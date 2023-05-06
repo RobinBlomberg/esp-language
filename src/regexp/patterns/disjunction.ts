@@ -1,8 +1,8 @@
 import { PatternType } from '../pattern-type';
-import { BasePattern } from './base-pattern';
 import { RegExpPattern } from './pattern';
+import { Quantifiable } from './quantifiable';
 
-export class Disjunction extends BasePattern {
+export class Disjunction extends Quantifiable {
   readonly type = PatternType.Disjunction;
 
   constructor(readonly alternatives: RegExpPattern[]) {

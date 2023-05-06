@@ -6,7 +6,6 @@ export * from './character-sequence';
 export * from './concatenation';
 export * from './disjunction';
 export * from './lookaround-assertion';
-export * from './non-capturing-group';
 export * from './pattern';
 export * from './quantifiable';
 export * from './quantifier';

@@ -1,8 +1,8 @@
 import { PatternType } from '../pattern-type';
-import { BasePattern } from './base-pattern';
 import { RegExpPattern } from './pattern';
+import { Quantifiable } from './quantifiable';
 
-export class Concatenation extends BasePattern {
+export class Concatenation extends Quantifiable {
   readonly type = PatternType.Concatenation;
 
   constructor(readonly elements: RegExpPattern[]) {

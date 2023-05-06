@@ -7,7 +7,6 @@ import {
   Concatenation,
   Disjunction,
   LookaroundAssertion,
-  NonCapturingGroup,
   Quantifier,
   RegExpPattern,
 } from './patterns';
@@ -28,10 +27,6 @@ export const concat = (...elements: RegExpPattern[]) => {
 };
 
 export const end = new BoundaryAssertion(BoundaryType.End);
-
-export const group = (...elements: RegExpPattern[]) => {
-  return new NonCapturingGroup(elements);
-};
 
 export const lookahead = (...elements: RegExpPattern[]) => {
   return new LookaroundAssertion(false, false, elements);

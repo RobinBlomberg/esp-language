@@ -91,8 +91,8 @@ export const regex = {
   number: () =>
     concat(
       boundary.word,
-      group(or(one('0'), concat(one(/[1-9]/), one(/\d/).star()))),
-      group(one('.'), one(/\d/).plus()).optional(),
+      concat(or(one('0'), concat(one(/[1-9]/), one(/\d/).star()))),
+      concat(one('.'), one(/\d/).plus()).optional(),
       boundary.word,
     ).compile(),
   stringEscape: () => concat(one('\\'), any).compile(),

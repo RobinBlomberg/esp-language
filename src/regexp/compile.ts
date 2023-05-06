@@ -1,5 +1,25 @@
 import { PatternType } from './pattern-type';
-import { RegExpPattern } from './patterns';
+import { CHARACTER_REGEXP, RegExpPattern } from './patterns';
+
+const compileChild = (pattern: RegExpPattern): string => {
+  return mustChildBeParenthesized(pattern)
+    ? `(?:${compile(pattern)})`
+    : compile(pattern);
+};
+
+const mustChildBeParenthesized = (pattern: RegExpPattern) => {
+  switch (pattern.type) {
+    case PatternType.CharacterSequence:
+      return typeof pattern.value === 'string'
+        ? pattern.value.length >= 2
+        : !CHARACTER_REGEXP.test(pattern.value.source);
+    case PatternType.Concatenation:
+    case PatternType.Disjunction:
+      return true;
+    default:
+      return false;
+  }
+};
 
 export const compile = (...patterns: RegExpPattern[]): string => {
   let output = '';
@@ -37,7 +57,7 @@ export const compile = (...patterns: RegExpPattern[]): string => {
         }
 
         for (const element of pattern.elements) {
-          output += compile(element);
+          output += compileChild(element);
         }
 
         output += ')';
@@ -72,7 +92,7 @@ export const compile = (...patterns: RegExpPattern[]): string => {
         break;
       case PatternType.Concatenation:
         for (const element of pattern.elements) {
-          output += compile(element);
+          output += compileChild(element);
         }
         break;
       case PatternType.Disjunction:
@@ -81,7 +101,7 @@ export const compile = (...patterns: RegExpPattern[]): string => {
             output += '|';
           }
 
-          output += compile(pattern.alternatives[i]!);
+          output += compileChild(pattern.alternatives[i]!);
         }
         break;
       case PatternType.LookaroundAssertion:
@@ -94,22 +114,13 @@ export const compile = (...patterns: RegExpPattern[]): string => {
         output += pattern.negative ? '!' : '=';
 
         for (const element of pattern.elements) {
-          output += compile(element);
-        }
-
-        output += ')';
-        break;
-      case PatternType.NonCapturingGroup:
-        output += '(?:';
-
-        for (const element of pattern.elements) {
-          output += compile(element);
+          output += compileChild(element);
         }
 
         output += ')';
         break;
       case PatternType.Quantifier:
-        output += compile(pattern.pattern);
+        output += compileChild(pattern.pattern);
 
         if (pattern.minCount === 0 && pattern.maxCount === 1) {
           output += '?';

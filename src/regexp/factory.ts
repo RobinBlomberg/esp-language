@@ -4,7 +4,6 @@ import {
   capture,
   concat,
   end,
-  group,
   lookahead,
   lookbehind,
   one,
@@ -26,7 +25,6 @@ _.boundary = boundary;
 _.capture = capture;
 _.concat = concat;
 _.end = end;
-_.group = group;
 _.lookahead = lookahead;
 _.lookbehind = lookbehind;
 _.one = one;

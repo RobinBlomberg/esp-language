@@ -1,4 +1,4 @@
-import { expect, suite, test } from 'vitest';
+import { expect, it, suite, test } from 'vitest';
 import { createRegExp, createRegExp as r } from './create-regexp';
 import { _ } from './factory';
 import { RegExpPattern } from './patterns/pattern';
@@ -61,10 +61,6 @@ suite('createRegExp', () => {
     });
   });
 
-  test('NonCapturingGroup', () => {
-    expectIt(_.group(_('a'), _('b'))).toStrictEqual(/(?:ab)/);
-  });
-
   suite('CapturingGroup', () => {
     test('non-named', () => {
       expectIt(_.capture(_('a'), _('b'))).toStrictEqual(/(ab)/);
@@ -77,14 +73,9 @@ suite('createRegExp', () => {
     });
   });
 
-  suite('Alternation', () => {
-    test('character', () => {
-      expectIt(_.or(_('a'), _('b'))).toStrictEqual(/a|b/);
-    });
-
-    test('group', () => {
-      expectIt(_.or(_.group(_('a'), _('b')), _('c'))).toStrictEqual(/(?:ab)|c/);
-    });
+  test('Alternation', () => {
+    expectIt(_.or(_('a'), _('b'))).toStrictEqual(/a|b/);
+    expectIt(_.or(_.concat(_('a'), _('b')), _('c'))).toStrictEqual(/(?:ab)|c/);
   });
 
   suite('Quantifier', () => {
@@ -112,10 +103,7 @@ suite('createRegExp', () => {
       expectIt(_('a').optional()).toStrictEqual(/a?/);
       expectIt(_('a').star()).toStrictEqual(/a*/);
       expectIt(_('a').plus()).toStrictEqual(/a+/);
-    });
-
-    test('quantified group', () => {
-      expectIt(_.group(_('a'), _('b')).optional()).toStrictEqual(/(?:ab)?/);
+      expectIt(_.concat(_('a'), _('b')).optional()).toStrictEqual(/(?:ab)?/);
     });
 
     test('quantified character class', () => {
@@ -123,11 +111,17 @@ suite('createRegExp', () => {
     });
   });
 
-  test('Concatenation', () => {
-    expectIt(_.concat(_('a'), _('b'))).toStrictEqual(/ab/);
-    expectIt(_.or(_('0'), _.concat(_(/[1-9]/), _(/\d/).star()))).toStrictEqual(
-      /0|[1-9]\d*/,
-    );
+  suite('Concatenation', () => {
+    it('should concatenate the patterns', () => {
+      expectIt(_.concat(_('a'), _('b'))).toStrictEqual(/ab/);
+    });
+
+    it('should parenthesize when necessary', () => {
+      expectIt(
+        _.or(_('0'), _.concat(_(/[1-9]/), _(/\d/).star())),
+      ).toStrictEqual(/0|(?:[1-9]\d*)/);
+      expectIt(_.concat(_('a'), _('b')).optional()).toStrictEqual(/(?:ab)?/);
+    });
   });
 
   test('BoundaryAssertion', () => {

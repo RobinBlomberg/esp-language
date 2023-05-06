@@ -5,7 +5,6 @@ import { CharacterSequence } from './character-sequence';
 import { Concatenation } from './concatenation';
 import { Disjunction } from './disjunction';
 import { LookaroundAssertion } from './lookaround-assertion';
-import { NonCapturingGroup } from './non-capturing-group';
 import { Quantifier } from './quantifier';
 
 export type RegExpPattern =
@@ -16,5 +15,4 @@ export type RegExpPattern =
   | Concatenation
   | Disjunction
   | LookaroundAssertion
-  | NonCapturingGroup
   | Quantifier;

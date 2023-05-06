@@ -6,6 +6,5 @@ export const enum PatternType {
   Concatenation = 'Concatenation',
   Disjunction = 'Disjunction',
   LookaroundAssertion = 'LookaroundAssertion',
-  NonCapturingGroup = 'NonCapturingGroup',
   Quantifier = 'Quantifier',
 }
