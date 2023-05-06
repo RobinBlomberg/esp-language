@@ -1,7 +1,8 @@
 import { PatternType } from '../pattern-type';
+import { BasePattern } from './base-pattern';
 import { RegExpPattern } from './pattern';
 
-export class Quantifier {
+export class Quantifier extends BasePattern {
   readonly type = PatternType.Quantifier;
 
   constructor(
@@ -10,6 +11,8 @@ export class Quantifier {
     readonly maxCount: number,
     readonly isLazy: boolean,
   ) {
+    super();
+
     if (minCount < 0) {
       throw new Error(
         'Quantifier minimum count must be greater than or equal to zero.',

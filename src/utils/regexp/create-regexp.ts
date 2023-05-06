@@ -1,10 +1,18 @@
 import { compile } from './compile';
 import { RegExpPattern } from './patterns/pattern';
 
-export const createRegExp = (...args: [RegExp] | RegExpPattern[]) => {
-  return args[0] instanceof RegExp
-    ? new RegExp(args[0].source)
-    : new RegExp(compile(...(args as RegExpPattern[])));
+export const createRegExp = (
+  ...args: [RegExp | string] | [RegExpPattern, ...RegExpPattern[]]
+) => {
+  if (args[0] instanceof RegExp) {
+    return new RegExp(args[0].source);
+  }
+
+  if (typeof args[0] === 'string') {
+    return new RegExp(args[0]);
+  }
+
+  return new RegExp(compile(...(args as RegExpPattern[])));
 };
 
 export const createRegExpWithFlags = (

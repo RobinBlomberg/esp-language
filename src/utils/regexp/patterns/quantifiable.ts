@@ -1,7 +1,8 @@
+import { BasePattern } from './base-pattern';
 import { RegExpPattern } from './pattern';
 import { Quantifier } from './quantifier';
 
-export class Quantifiable {
+export class Quantifiable extends BasePattern {
   optional(this: RegExpPattern) {
     return new Quantifier(this, 0, 1, false);
   }

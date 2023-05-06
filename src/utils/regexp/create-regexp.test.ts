@@ -3,7 +3,9 @@ import { createRegExp, createRegExp as r } from './create-regexp';
 import { _ } from './factory';
 import { RegExpPattern } from './patterns/pattern';
 
-const expectIt = (...args: [RegExp] | RegExpPattern[]) => {
+const expectIt = (
+  ...args: [RegExp | string] | [RegExpPattern, ...RegExpPattern[]]
+) => {
   return expect(createRegExp(...args));
 };
 
