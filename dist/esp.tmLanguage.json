@@ -1,0 +1,240 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "ESP",
+  "scopeName": "source.esp",
+  "patterns": [
+    {
+      "include": "#Comment"
+    },
+    {
+      "include": "#Constant"
+    },
+    {
+      "include": "#CallIdentifier"
+    },
+    {
+      "include": "#Identifier"
+    },
+    {
+      "include": "#Literal"
+    }
+  ],
+  "repository": {
+    "CallIdentifier": {
+      "patterns": [
+        {
+          "name": "entity.name.function.esp",
+          "match": "(?<![a-zA-Z0-9$_])[a-zA-Z$_][a-zA-Z0-9$_]*(?![a-zA-Z0-9$_])(?=\\s*(?:\\(|(?:=\\s*)?\\(*:\\s*\\())"
+        }
+      ]
+    },
+    "Comment": {
+      "patterns": [
+        {
+          "name": "comment.block.esp",
+          "begin": "\\/\\*",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.esp"
+            }
+          },
+          "end": "\\*\\/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.esp"
+            }
+          }
+        },
+        {
+          "begin": "\\/\\/",
+          "beginCaptures": {
+            "0": {
+              "name": "comment.line.double-slash.esp"
+            }
+          },
+          "end": "(?=$)",
+          "contentName": "comment.line.double-slash.esp"
+        }
+      ]
+    },
+    "Constant": {
+      "patterns": [
+        {
+          "match": "(\\bfalse\\b)|(\\bInfinity\\b)|(\\bNaN\\b)|(\\bnull\\b)|(\\btrue\\b)|(\\bundefined\\b)|(\\bbreak\\b|\\bcontinue\\b|\\bdo\\b|\\bfor\\b|\\bwhile\\b)|(\\bconst\\b|\\blet\\b)|(\\belse\\b|\\bif\\b)|(\\bmatch\\b)|(\\bnew\\b)|(\\bof\\b)|(\\breturn\\b)|(\\bthrow\\b)|(\\x2d\\x2d)|(\\x2d|\\*\\*=|\\*=|/=|&&=|%=|\\+=|\\|\\|=)|(\\x2d=|\\*|\\*\\*|/|%|\\+)|(!|\\?\\?|\\?\\?=|&&|\\|\\|)|(!=|==)|(\\?)|(&|\\^|\\||~)|(&=|\\^=|<<=|>>=|>>>=|\\|=)|(\\+\\+)|(<|<=|>|>=)|(<<|>>|>>>)|(=)|(,)|(;)|(\\.)|(\\(|\\))|(\\[|\\])|(\\{|\\})",
+          "captures": {
+            "1": {
+              "name": "constant.language.boolean.false.esp"
+            },
+            "2": {
+              "name": "constant.language.infinity.esp"
+            },
+            "3": {
+              "name": "constant.language.nan.esp"
+            },
+            "4": {
+              "name": "constant.language.null.esp"
+            },
+            "5": {
+              "name": "constant.language.boolean.true.esp"
+            },
+            "6": {
+              "name": "constant.language.undefined.esp"
+            },
+            "7": {
+              "name": "keyword.control.loop.esp"
+            },
+            "8": {
+              "name": "storage.type.esp"
+            },
+            "9": {
+              "name": "keyword.control.conditional.esp"
+            },
+            "10": {
+              "name": "keyword.control.switch.esp"
+            },
+            "11": {
+              "name": "keyword.operator.new.esp"
+            },
+            "12": {
+              "name": "keyword.operator.expression.of.esp"
+            },
+            "13": {
+              "name": "keyword.control.flow.esp"
+            },
+            "14": {
+              "name": "keyword.control.trycatch.esp"
+            },
+            "15": {
+              "name": "keyword.operator.decrement.esp"
+            },
+            "16": {
+              "name": "keyword.operator.assignment.compound.esp"
+            },
+            "17": {
+              "name": "keyword.operator.arithmetic.esp"
+            },
+            "18": {
+              "name": "keyword.operator.logical.esp"
+            },
+            "19": {
+              "name": "keyword.operator.comparison.esp"
+            },
+            "20": {
+              "name": "keyword.operator.ternary.esp"
+            },
+            "21": {
+              "name": "keyword.operator.bitwise.esp"
+            },
+            "22": {
+              "name": "keyword.operator.assignment.compound.bitwise.esp"
+            },
+            "23": {
+              "name": "keyword.operator.increment.esp"
+            },
+            "24": {
+              "name": "keyword.operator.relational.esp"
+            },
+            "25": {
+              "name": "keyword.operator.bitwise.shift.esp"
+            },
+            "26": {
+              "name": "keyword.operator.assignment.esp"
+            },
+            "27": {
+              "name": "punctuation.separator.comma.esp"
+            },
+            "28": {
+              "name": "punctuation.terminator.statement.esp"
+            },
+            "29": {
+              "name": "punctuation.accessor.esp"
+            },
+            "30": {
+              "name": "meta.brace.round.esp"
+            },
+            "31": {
+              "name": "meta.brace.square.esp"
+            },
+            "32": {
+              "name": "punctuation.definition.block.esp"
+            }
+          }
+        }
+      ]
+    },
+    "Identifier": {
+      "patterns": [
+        {
+          "name": "variable.other.readwrite.esp",
+          "match": "(?<![a-zA-Z0-9$_])[a-zA-Z$_][a-zA-Z0-9$_]*(?![a-zA-Z0-9$_])"
+        }
+      ]
+    },
+    "Literal": {
+      "patterns": [
+        {
+          "include": "#NumericLiteral"
+        },
+        {
+          "include": "#StringLiteral"
+        }
+      ]
+    },
+    "NumericLiteral": {
+      "patterns": [
+        {
+          "name": "constant.numeric.decimal.esp",
+          "match": "\\b(?:0|[1-9][0-9]*)(?:\\.[0-9]*)?\\b"
+        }
+      ]
+    },
+    "StringEscape": {
+      "name": "constant.character.escape.esp",
+      "match": "\\\\."
+    },
+    "StringLiteral": {
+      "patterns": [
+        {
+          "name": "string.quoted.single.esp",
+          "begin": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.esp"
+            }
+          },
+          "end": "'",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.esp"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#StringEscape"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.double.esp",
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.esp"
+            }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.esp"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#StringEscape"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
