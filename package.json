@@ -5,7 +5,8 @@
     "lint": "eslint src",
     "start:watch": "ts-node-dev --quiet --respawn --watch ./src,./.test.esp ./bin/esp.ts ./.test.esp",
     "start": "ts-node-dev --quiet --watch ./src,./.test.esp ./bin/esp.ts ./.test.esp",
-    "test": "vitest"
+    "test": "vitest",
+    "test:parser": "vitest esp/parser"
   },
   "devDependencies": {
     "@robinblomberg/eslint-config-prettier": "^0.1.4",
