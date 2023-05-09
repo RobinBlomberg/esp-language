@@ -5,6 +5,8 @@ export namespace syntax {
 
   export type Punctuator = (typeof punctuators)[number];
 
+  export type Keyword = (typeof keywords)[number];
+
   export const unaryOperators = ['-', '!'] as const;
 
   export const unaryOperatorsSet = new Set(unaryOperators);
@@ -18,4 +20,8 @@ export namespace syntax {
   ];
 
   export const punctuatorsSet = new Set(punctuators);
+
+  export const keywords = ['return', 'throw'] as const;
+
+  export const keywordsSet = new Set(keywords);
 }

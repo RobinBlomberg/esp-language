@@ -23,6 +23,7 @@
     ],
     "rules": {
       "@typescript-eslint/method-signature-style": 0,
+      "@typescript-eslint/no-confusing-non-null-assertion": 0,
       "@typescript-eslint/no-magic-numbers": 0,
       "@typescript-eslint/no-non-null-asserted-optional-chain": 0,
       "@typescript-eslint/prefer-nullish-coalescing": 0,

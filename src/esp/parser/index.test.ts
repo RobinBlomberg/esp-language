@@ -1,9 +1,9 @@
 import { expect, suite, test } from 'vitest';
 import { parser } from '.';
 import { cst } from '../cst';
-import { token } from '../token';
+import { mock } from './mock';
 
-const createTest = <V extends cst.Node>(
+const createAsserter = <V extends cst.Node>(
   parse: (data: string, s: number) => V,
 ) => {
   return (data: string, v: V) => {
@@ -12,100 +12,89 @@ const createTest = <V extends cst.Node>(
 };
 
 const is = {
-  primaryExpression: createTest(parser.parsePrimaryExpression),
-  unaryExpression: createTest(parser.parseUnaryExpression),
-  binaryExpression: createTest(parser.parseBinaryExpression),
-  consequentExpression: createTest(parser.parseConsequentExpression),
+  primex: createAsserter(parser.parsePrimaryExpression),
+  unex: createAsserter(parser.parseUnaryExpression),
+  binex: createAsserter(parser.parseBinaryExpression),
+  conex: createAsserter(parser.parseConsequentExpression),
 };
 
 suite('parser', () => {
   suite('PrimaryExpression', () => {
     test('Invalid', () => {
-      is.primaryExpression('¤', cst.Invalid());
+      is.primex(mock.invalid.data, mock.invalid.node());
     });
 
     test('NumberLiteral', () => {
-      is.primaryExpression('0', cst.NumberLiteral(0, 1, 0));
-      is.primaryExpression('01', cst.NumberLiteral(0, 1, 0));
-      is.primaryExpression('120', cst.NumberLiteral(0, 3, 120));
-      is.primaryExpression('0.120', cst.NumberLiteral(0, 5, 0.12));
-      is.primaryExpression('120.120', cst.NumberLiteral(0, 7, 120.12));
+      is.primex(mock.number.data, mock.number.node());
+      is.primex('01', cst.NumberLiteral(0, 1, 0));
+      is.primex('120', cst.NumberLiteral(0, 3, 120));
+      is.primex('0.120', cst.NumberLiteral(0, 5, 0.12));
+      is.primex('120.120', cst.NumberLiteral(0, 7, 120.12));
     });
 
     test('StringLiteral', () => {
-      is.primaryExpression("'ab'", cst.StringLiteral(0, 4, 'ab'));
+      is.primex(mock.string.data, mock.string.node());
+      is.primex("'ab'", cst.StringLiteral(0, 4, 'ab'));
+      is.primex("'a\\'b'", cst.StringLiteral(0, 6, "a'b"));
     });
 
     test('BooleanLiteral', () => {
-      is.primaryExpression('true', cst.BooleanLiteral(0, 4, true));
-      is.primaryExpression('false', cst.BooleanLiteral(0, 5, false));
+      is.primex(mock.bool.data, mock.bool.node());
+      is.primex('false', cst.BooleanLiteral(0, 5, false));
     });
 
     test('Identifier', () => {
-      is.primaryExpression('falsey', cst.Identifier(0, 6, 'falsey'));
+      is.primex(mock.id.data, mock.id.node());
+      is.primex('falsey', cst.Identifier(0, 6, 'falsey'));
     });
   });
 
-  test('UnaryExpression', () => {
-    is.unaryExpression('¤', cst.Invalid());
-    is.unaryExpression('a', cst.Identifier(0, 1, 'a'));
-    is.unaryExpression(
-      '-a',
-      cst.UnaryExpression(
-        0,
-        2,
-        token.UnaryOperator(0, 1, '-'),
-        cst.Identifier(1, 2, 'a'),
-      ),
-    );
+  suite('UnaryExpression', () => {
+    test('Invalid', () => {
+      is.unex(mock.invalid.data, mock.invalid.node());
+    });
+
+    test('PrimaryExpression', () => {
+      is.unex(mock.primary.data, mock.primary.node());
+    });
+
+    test('UnaryExpression', () => {
+      is.unex(mock.unary.data, mock.unary.node());
+    });
   });
 
-  test('BinaryExpression', () => {
-    is.binaryExpression('a', cst.Identifier(0, 1, 'a'));
-    is.binaryExpression('a+', cst.Invalid(2));
-    is.binaryExpression(
-      'a+b',
-      cst.BinaryExpression(
-        0,
-        3,
-        cst.Identifier(0, 1, 'a'),
-        token.BinaryOperator(1, 2, '+'),
-        cst.Identifier(2, 3, 'b'),
-      ),
-    );
+  suite('BinaryExpression', () => {
+    test('Invalid', () => {
+      is.binex(mock.invalid.data, mock.invalid.node());
+      is.binex('a+', mock.invalid.node(2));
+    });
+
+    test('UnaryExpression', () => {
+      is.binex(mock.unary.data, mock.unary.node());
+    });
+
+    test('BinaryExpression', () => {
+      is.binex(mock.binary.data, mock.binary.node());
+    });
   });
 
   suite('ConsequentExpression', () => {
-    test('BinaryExpression', () => {
-      is.consequentExpression('a', cst.Identifier(0, 1, 'a'));
-      is.consequentExpression(
-        'a+b',
-        cst.BinaryExpression(
-          0,
-          3,
-          cst.Identifier(0, 1, 'a'),
-          token.BinaryOperator(1, 2, '+'),
-          cst.Identifier(2, 3, 'b'),
-        ),
-      );
+    test('Invalid', () => {
+      is.conex(mock.invalid.data, mock.invalid.node());
+      is.conex('return', mock.invalid.node());
     });
 
-    test('Invalid', () => {
-      is.consequentExpression('return', cst.Invalid());
+    test('BinaryExpression', () => {
+      is.conex(mock.id.data, mock.id.node());
+      is.conex(mock.binary.data, mock.binary.node());
     });
 
     test('ReturnExpression', () => {
-      is.consequentExpression(
-        'return a',
-        cst.ReturnExpression(0, 8, cst.Identifier(7, 8, 'a')),
-      );
+      is.conex(mock.returning.data, mock.returning.node());
     });
 
     test('ThrowExpression', () => {
-      is.consequentExpression(
-        'throw a',
-        cst.ThrowExpression(0, 7, cst.Identifier(6, 7, 'a')),
-      );
+      is.conex(mock.throwing.data, mock.throwing.node());
     });
   });
 });

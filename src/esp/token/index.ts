@@ -21,7 +21,7 @@ export namespace token {
 
   export type Invalid = Token<Type.Invalid, undefined>;
 
-  export type Identifier = Token<Type.Identifier>;
+  export type Identifier<T extends string = string> = Token<Type.Identifier, T>;
 
   export type Number = Token<Type.Number>;
 
@@ -33,6 +33,12 @@ export namespace token {
   export type UnaryOperator = Punctuator<syntax.UnaryOperator>;
 
   export type BinaryOperator = Punctuator<syntax.BinaryOperator>;
+
+  export type ReturnKeyword = Identifier<'return'>;
+
+  export type ThrowKeyword = Identifier<'throw'>;
+
+  export type Keyword = ReturnKeyword | ThrowKeyword;
 
   export const Token = <
     T extends Type = Type,
@@ -47,8 +53,11 @@ export namespace token {
   export const Invalid = (s = 0): Invalid =>
     Token(Type.Invalid, s, s, undefined);
 
-  export const Identifier = (s: number, e: number, v: string): Identifier =>
-    Token(Type.Identifier, s, e, v);
+  export const Identifier = <T extends string = string>(
+    s: number,
+    e: number,
+    v: T,
+  ): Identifier<T> => Token(Type.Identifier, s, e, v);
 
   export const Number = (s: number, e: number, v: string): Number =>
     Token(Type.Number, s, e, v);
@@ -73,4 +82,10 @@ export namespace token {
     e: number,
     v: syntax.BinaryOperator,
   ): BinaryOperator => Punctuator(s, e, v);
+
+  export const ReturnKeyword = (s: number, e: number): ReturnKeyword =>
+    Identifier(s, e, 'return');
+
+  export const ThrowKeyword = (s: number, e: number): ThrowKeyword =>
+    Identifier(s, e, 'throw');
 }

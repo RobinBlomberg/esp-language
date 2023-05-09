@@ -15,7 +15,16 @@ export namespace parser {
     }
 
     const string = lexer.lexString(d, s);
-    if (string.v) return cst.StringLiteral(string.s, string.e, string.v);
+    if (string.v) {
+      const end = string.v.length - 1;
+      let value = '';
+
+      for (let i = 1; i < end; i++) {
+        value += string.v[i]! === '\\' ? string.v[++i]! : string.v[i]!;
+      }
+
+      return cst.StringLiteral(string.s, string.e, value);
+    }
 
     const name = lexer.lexIdentifier(d, s);
     switch (name.v) {
@@ -54,19 +63,18 @@ export namespace parser {
   };
 
   export const parseConsequentExpression: Parser<cst.Expression> = (d, s) => {
-    const identifier = lexer.lexIdentifier(d, s);
-    switch (identifier.v) {
-      case 'return': {
-        const argument = parseBinaryExpression(d, identifier.e);
-        if (!argument.v) return cst.Invalid(s);
+    const keyword = lexer.lexKeyword(d, s);
 
-        return cst.ReturnExpression(identifier.s, argument.e, argument);
+    switch (keyword.v) {
+      case 'return': {
+        const argument = parseBinaryExpression(d, keyword.e);
+        if (!argument.v) return cst.Invalid(s);
+        return cst.ReturnExpression(keyword.s, argument.e, keyword, argument);
       }
       case 'throw': {
-        const argument = parseBinaryExpression(d, identifier.e);
+        const argument = parseBinaryExpression(d, keyword.e);
         if (!argument.v) return cst.Invalid(s);
-
-        return cst.ThrowExpression(identifier.s, argument.e, argument);
+        return cst.ThrowExpression(keyword.s, argument.e, keyword, argument);
       }
       default:
         return parseBinaryExpression(d, s);

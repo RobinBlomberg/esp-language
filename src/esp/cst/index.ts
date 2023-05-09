@@ -119,14 +119,17 @@ export namespace cst {
   export const ReturnExpression = (
     s: number,
     e: number,
+    keyword: token.ReturnKeyword,
     argument: Expression,
-  ): ReturnExpression => Node(Type.ReturnExpression, s, e, { argument });
+  ): ReturnExpression =>
+    Node(Type.ReturnExpression, s, e, { keyword, argument });
 
   export const ThrowExpression = (
     s: number,
     e: number,
+    keyword: token.ThrowKeyword,
     argument: Expression,
-  ): ThrowExpression => Node(Type.ThrowExpression, s, e, { argument });
+  ): ThrowExpression => Node(Type.ThrowExpression, s, e, { keyword, argument });
 
   export const invalid = (node: Node | token.Token) => Invalid(node.s);
 }

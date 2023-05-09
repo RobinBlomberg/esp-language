@@ -7,7 +7,11 @@ export namespace lexer {
     s: number,
   ) => T | token.Invalid;
 
-  export const lexIdentifier: Lexer<token.Identifier> = (d, s) => {
+  export const lexIdentifier = <T extends string = string>(
+    d: string,
+    s: number,
+    set?: Set<T>,
+  ) => {
     let c = d[s];
     while (c === ' ' || c === '\t' || c === '\n' || c === '\r') c = d[++s];
     if (!c || c < 'a' || c > 'z') return token.Invalid(s);
@@ -21,7 +25,9 @@ export namespace lexer {
       c = d[++e];
     }
 
-    return token.Identifier(s, e, v);
+    if (set && !set.has(v)) return token.Invalid(s);
+
+    return token.Identifier(s, e, v as T);
   };
 
   export const lexNumber: Lexer<token.Number> = (d, s) => {
@@ -73,7 +79,7 @@ export namespace lexer {
       e++;
     }
 
-    return token.Punctuator<T>(s, e + 1, v as T);
+    return token.Punctuator(s, e + 1, v as T);
   };
 
   export const lexString: Lexer<token.String> = (d, s) => {
@@ -81,12 +87,13 @@ export namespace lexer {
     while (c === ' ' || c === '\t' || c === '\n' || c === '\r') c = d[++s];
     if (!c || c !== "'") return token.Invalid(s);
 
-    let v = '';
+    let v = c;
     let e = s;
     c = d[++e];
 
     while (c && c !== "'") {
       if (c === '\\') {
+        v += c;
         c = d[++e];
         if (!c) return token.Invalid(s);
       }
@@ -96,6 +103,7 @@ export namespace lexer {
     }
 
     if (!c) return token.Invalid(s);
+    v += c;
     ++e;
 
     return token.String(s, e, v);
@@ -107,5 +115,9 @@ export namespace lexer {
 
   export const lexBinaryOperator: Lexer<token.BinaryOperator> = (d, s) => {
     return lexPunctuator(d, s, syntax.binaryOperatorsSet);
+  };
+
+  export const lexKeyword: Lexer<token.Keyword> = (d, s) => {
+    return lexIdentifier(d, s, syntax.keywordsSet);
   };
 }

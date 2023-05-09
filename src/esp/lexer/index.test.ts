@@ -49,8 +49,8 @@ suite('parser', () => {
     is.string('¤', token.Invalid());
     is.string("'\\", token.Invalid());
     is.string("'", token.Invalid());
-    is.string("''", token.String(0, 2, ''));
-    is.string("'ab'", token.String(0, 4, 'ab'));
-    is.string("'a\\'b'", token.String(0, 6, "a'b"));
+    is.string("''", token.String(0, 2, "''"));
+    is.string("'ab'", token.String(0, 4, "'ab'"));
+    is.string("'a\\'b'", token.String(0, 6, "'a\\'b'"));
   });
 });
