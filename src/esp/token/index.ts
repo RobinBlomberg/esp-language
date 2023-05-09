@@ -34,11 +34,19 @@ export namespace token {
 
   export type BinaryOperator = Punctuator<syntax.BinaryOperator>;
 
+  export type FalseKeyword = Identifier<'false'>;
+
+  export type TrueKeyword = Identifier<'true'>;
+
+  export type ConstantKeyword = FalseKeyword | TrueKeyword;
+
   export type ReturnKeyword = Identifier<'return'>;
 
   export type ThrowKeyword = Identifier<'throw'>;
 
-  export type Keyword = ReturnKeyword | ThrowKeyword;
+  export type ControlKeyword = ReturnKeyword | ThrowKeyword;
+
+  export type Keyword = ConstantKeyword | ControlKeyword;
 
   export const Token = <
     T extends Type = Type,
@@ -82,6 +90,12 @@ export namespace token {
     e: number,
     v: syntax.BinaryOperator,
   ): BinaryOperator => Punctuator(s, e, v);
+
+  export const FalseKeyword = (s: number, e: number): FalseKeyword =>
+    Identifier(s, e, 'false');
+
+  export const TrueKeyword = (s: number, e: number): TrueKeyword =>
+    Identifier(s, e, 'true');
 
   export const ReturnKeyword = (s: number, e: number): ReturnKeyword =>
     Identifier(s, e, 'return');

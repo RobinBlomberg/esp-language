@@ -1,4 +1,5 @@
 import { cst } from '../cst';
+import { syntax } from '../syntax';
 import { token } from '../token';
 
 export namespace mock {
@@ -57,12 +58,14 @@ export namespace mock {
     };
   };
 
-  export const unaryOp = createMockFactory(['-'] as const, ([op]) =>
-    token.UnaryOperator(op.s, op.e, op.v),
+  export const unaryOp = createMockFactory(
+    [syntax.operator.unary.Negate] as const,
+    ([op]) => token.UnaryOperator(op.s, op.e, op.v),
   );
 
-  export const binaryOp = createMockFactory(['+'] as const, ([op]) =>
-    token.BinaryOperator(op.s, op.e, op.v),
+  export const binaryOp = createMockFactory(
+    [syntax.operator.binary.Plus] as const,
+    ([op]) => token.BinaryOperator(op.s, op.e, op.v),
   );
 
   export const invalid = createMockFactory(['¤'] as const, ([value]) =>
@@ -77,8 +80,9 @@ export namespace mock {
     cst.StringLiteral(value.s, value.e, ''),
   );
 
-  export const bool = createMockFactory(['true'] as const, ([value]) =>
-    cst.BooleanLiteral(value.s, value.e, true),
+  export const bool = createMockFactory(
+    [syntax.keyword.constant.True] as const,
+    ([value]) => cst.BooleanLiteral(value.s, value.e, true),
   );
 
   export const id = createMockFactory(['a'] as const, ([name]) =>
@@ -100,7 +104,7 @@ export namespace mock {
   );
 
   export const returnKeyword = createMockFactory(
-    ['return'] as const,
+    [syntax.keyword.control.Return] as const,
     ([value]) => token.ReturnKeyword(value.s, value.e),
   );
 
@@ -110,8 +114,9 @@ export namespace mock {
       cst.ReturnExpression(keyword.s, argument.e, keyword, argument),
   );
 
-  export const throwKeyword = createMockFactory(['throw'] as const, ([value]) =>
-    token.ThrowKeyword(value.s, value.e),
+  export const throwKeyword = createMockFactory(
+    [syntax.keyword.control.Throw] as const,
+    ([value]) => token.ThrowKeyword(value.s, value.e),
   );
 
   export const throwing = createMockFactory(

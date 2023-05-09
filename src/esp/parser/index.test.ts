@@ -1,6 +1,7 @@
 import { expect, suite, test } from 'vitest';
 import { parser } from '.';
 import { cst } from '../cst';
+import { syntax } from '../syntax';
 import { mock } from './mock';
 
 const createAsserter = <V extends cst.Node>(
@@ -81,7 +82,7 @@ suite('parser', () => {
   suite('ConsequentExpression', () => {
     test('Invalid', () => {
       is.conex(mock.invalid.data, mock.invalid.node());
-      is.conex('return', mock.invalid.node());
+      is.conex(syntax.keyword.control.Return, mock.invalid.node());
     });
 
     test('BinaryExpression', () => {

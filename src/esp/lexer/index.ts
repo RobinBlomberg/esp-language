@@ -64,7 +64,7 @@ export namespace lexer {
   >(
     d: string,
     s: number,
-    set: Set<T> = syntax.punctuatorsSet as Set<T>,
+    set: Set<T> = syntax.punctuatorSet as Set<T>,
   ) => {
     let v = d[s];
     while (v === ' ' || v === '\t' || v === '\n' || v === '\r') v = d[++s];
@@ -110,14 +110,14 @@ export namespace lexer {
   };
 
   export const lexUnaryOperator: Lexer<token.UnaryOperator> = (d, s) => {
-    return lexPunctuator(d, s, syntax.unaryOperatorsSet);
+    return lexPunctuator(d, s, syntax.unaryOperatorSet);
   };
 
   export const lexBinaryOperator: Lexer<token.BinaryOperator> = (d, s) => {
-    return lexPunctuator(d, s, syntax.binaryOperatorsSet);
+    return lexPunctuator(d, s, syntax.binaryOperatorSet);
   };
 
-  export const lexKeyword: Lexer<token.Keyword> = (d, s) => {
-    return lexIdentifier(d, s, syntax.keywordsSet);
+  export const lexControlKeyword: Lexer<token.ControlKeyword> = (d, s) => {
+    return lexIdentifier(d, s, syntax.controlKeywordSet);
   };
 }

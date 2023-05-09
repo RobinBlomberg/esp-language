@@ -37,7 +37,7 @@ suite('parser', () => {
   test('Punctuator', () => {
     is.punctuator('¤', token.Invalid());
 
-    for (const punctuator of syntax.punctuators) {
+    for (const punctuator of syntax.punctuatorList) {
       is.punctuator(
         punctuator,
         token.Punctuator(0, punctuator.length, punctuator),
