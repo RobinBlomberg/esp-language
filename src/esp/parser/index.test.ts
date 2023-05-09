@@ -75,12 +75,37 @@ suite('parser', () => {
     );
   });
 
-  test('ConsequentExpression', () => {
-    is.consequentExpression('a', cst.Identifier(0, 1, 'a'));
-    is.consequentExpression('return', cst.Invalid());
-    is.consequentExpression(
-      'return a',
-      cst.ReturnExpression(0, 8, cst.Identifier(7, 8, 'a')),
-    );
+  suite('ConsequentExpression', () => {
+    test('BinaryExpression', () => {
+      is.consequentExpression('a', cst.Identifier(0, 1, 'a'));
+      is.consequentExpression(
+        'a+b',
+        cst.BinaryExpression(
+          0,
+          3,
+          cst.Identifier(0, 1, 'a'),
+          token.BinaryOperator(1, 2, '+'),
+          cst.Identifier(2, 3, 'b'),
+        ),
+      );
+    });
+
+    test('Invalid', () => {
+      is.consequentExpression('return', cst.Invalid());
+    });
+
+    test('ReturnExpression', () => {
+      is.consequentExpression(
+        'return a',
+        cst.ReturnExpression(0, 8, cst.Identifier(7, 8, 'a')),
+      );
+    });
+
+    test('ThrowExpression', () => {
+      is.consequentExpression(
+        'throw a',
+        cst.ThrowExpression(0, 7, cst.Identifier(6, 7, 'a')),
+      );
+    });
   });
 });

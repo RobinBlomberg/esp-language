@@ -10,6 +10,7 @@ export namespace cst {
     UnaryExpression = 'UnaryExpression',
     BinaryExpression = 'BinaryExpression',
     ReturnExpression = 'ReturnExpression',
+    ThrowExpression = 'ThrowExpression',
   }
 
   export type Node<T extends Type = Type, V = unknown> = {
@@ -50,14 +51,18 @@ export namespace cst {
     | NumberLiteral
     | StringLiteral
     | UnaryExpression
-    | ReturnExpression;
+    | ReturnExpression
+    | ThrowExpression;
 
   export type ReturnExpression = Node<
     Type.ReturnExpression,
     { argument: Expression }
   >;
 
-  export type Statement = ReturnExpression;
+  export type ThrowExpression = Node<
+    Type.ThrowExpression,
+    { argument: Expression }
+  >;
 
   export const Node = <T extends Type, V>(
     t: T,
@@ -116,6 +121,12 @@ export namespace cst {
     e: number,
     argument: Expression,
   ): ReturnExpression => Node(Type.ReturnExpression, s, e, { argument });
+
+  export const ThrowExpression = (
+    s: number,
+    e: number,
+    argument: Expression,
+  ): ThrowExpression => Node(Type.ThrowExpression, s, e, { argument });
 
   export const invalid = (node: Node | token.Token) => Invalid(node.s);
 }

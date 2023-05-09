@@ -62,6 +62,12 @@ export namespace parser {
 
         return cst.ReturnExpression(identifier.s, argument.e, argument);
       }
+      case 'throw': {
+        const argument = parseBinaryExpression(d, identifier.e);
+        if (!argument.v) return cst.Invalid(s);
+
+        return cst.ThrowExpression(identifier.s, argument.e, argument);
+      }
       default:
         return parseBinaryExpression(d, s);
     }
