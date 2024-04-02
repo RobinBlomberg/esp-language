@@ -4,7 +4,6 @@ import {
   concat,
   createRegExp,
   end,
-  group,
   one,
   or,
   start,
@@ -17,8 +16,8 @@ export const INTEGER_REGEXP = createRegExp(start, integer, end);
 export const STACK_FRAME_REGEXP = createRegExp(
   start,
   one('    at '),
-  group(
-    group(
+  capture(
+    capture(
       one(/[^ ]/).plus(),
       one(' ('),
       one(/[^ ]/).plus(),
