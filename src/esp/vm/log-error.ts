@@ -46,7 +46,7 @@ export const logError = (
 
   const maxLineNumberWidth = String(lineNumber).length;
 
-  for (const line of lineLocations.slice(-3)) {
+  for (const line of lineLocations.slice(-4)) {
     const lineNumberWidth = String(line.lineNumber).length;
     const padding = ' '.repeat(maxLineNumberWidth - lineNumberWidth);
     const margin = `${padding}${black}${line.lineNumber} │${clear} `;
@@ -79,6 +79,5 @@ export const logError = (
         functionName ? `${functionName} (${location})` : location
       }${clear}`,
     );
-    console.error();
   }
 };
